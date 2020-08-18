@@ -18,63 +18,37 @@ use App\Models\InventoryMeta;
 use App\Models\InventoryAttribute;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-class InventoriesController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
+class InventoriesController extends Controller {
 
-//        $sellerProfile = Merchant::where('user_id',Sentinel::getUser()->id)->first();
-//        $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
-//        $inventory = Inventory::all();
-//        $item = Product::where('user_id',Sentinel::getUser()->id)->get();
-//
-//        $size= Size::all();
-//        $color = Color::all();
-//        return view ('merchant.inventory.index',compact('inventory','item','size','color','sellerProfile','shopProfile'));
-
-
-        $inventories        = Inventory::where('shop_id',Baazar::shop()->id)->with('item')->with('invenMeta')->where('type','ecommerce')->orderBy('product_id')->paginate(10); 
-        $item               = Product::where('user_id',Sentinel::getUser()->id)->where('type','ecommerce')->get(); 
-        $color              = Color::all(); 
-        $inventoryAttriSize = InventoryAttributeOption::with('attribute')->where('inventory_attribute_id',1)->first();
-        $productAttriSize   = InventoryAttributeOption::where('inventory_attribute_id',1)->get();
-        $inventoryAttriCapa = InventoryAttributeOption::with('attribute')->where('inventory_attribute_id',2)->first();
-        $productAttriCapa   = InventoryAttributeOption::where('inventory_attribute_id',2)->get();
-
-        if($request->has('color')){
-            $inventories        = Inventory::where('shop_id',Baazar::shop()->id)->with('item')->with('invenMeta')->where('type','ecommerce')->where('color_name',$request->color)->paginate(10); 
-            //dd($inventories);
+    public function index(Request $request){
+        $select['product'] = 'all';
+        $inventories        = Inventory::where('shop_id',Baazar::shop()->id)->with('item')->where('type','ecommerce');
+        $inventoriesOutStock        = Inventory::where('shop_id',Baazar::shop()->id)->with('item')->where('type','ecommerce');
+        $products = Product::where('shop_id',Baazar::shop()->id)->where('type','ecommerce')->get();
+        if($request->has('product')){
+            $product = Product::where('slug',$request->product)->first();
+            if($product){
+                $inventories = $inventories->where('product_id',$product->id);
+                $inventoriesOutStock = $inventoriesOutStock->where('product_id',$product->id);
+            }
+            $select['product'] = $request->product;
         }
+        $inventories = $inventories->orderBy('product_id')->where('qty_stock','>',0)->paginate(20)->withPath("inventories?product={$select['product']}");
+        $inventoriesOutStock = $inventoriesOutStock->orderBy('product_id')->where('qty_stock','<=',0)->paginate(20)->withPath("inventories?product={$select['product']}");
 
-        $inventory =([
-            'color' => request('color'),
-        ]);
-
-        return view ('merchant.inventory.ecommerceInventroy.index',compact('inventories','item','color','inventoryAttriSize','productAttriSize','inventoryAttriCapa','productAttriCapa'));
-
+        return view ('merchant.inventory.ecommerceInventroy.index',compact('inventories','products','select','inventoriesOutStock'));//,'item','color','inventoryAttriSize','productAttriSize','inventoryAttriCapa','productAttriCapa'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $inventory          = Inventory::all();
+    public function create(){
+        // $inventory          = Inventory::all();
         $item               = Product::where('user_id',Sentinel::getUser()->id)->where('type','ecommerce')->get();
-        $shopProfile        = Shop::where('user_id',Sentinel::getUser()->id)->first();
-        $size               = Size::all();
+        // $shopProfile        = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        // $size               = Size::all();
         $color              = Color::all();
-        $inventoryAttriSize = InventoryAttributeOption::with('attribute')->where('inventory_attribute_id',1)->first();
-        $inventoryAttriCapa = InventoryAttributeOption::with('attribute')->where('inventory_attribute_id',2)->first();
-        $productAttriSize   = InventoryAttributeOption::where('inventory_attribute_id',1)->get();
-        $productAttriCapa   = InventoryAttributeOption::where('inventory_attribute_id',2)->get();
+        // $inventoryAttriSize = InventoryAttributeOption::with('attribute')->where('inventory_attribute_id',1)->first();
+        // $inventoryAttriCapa = InventoryAttributeOption::with('attribute')->where('inventory_attribute_id',2)->first();
+        // $productAttriSize   = InventoryAttributeOption::where('inventory_attribute_id',1)->get();
+        // $productAttriCapa   = InventoryAttributeOption::where('inventory_attribute_id',2)->get();
         return view ('merchant.inventory.ecommerceInventroy.create',compact('inventory','item','size','color','shopProfile','productAttriSize','productAttriCapa','inventoryAttriSize','inventoryAttriCapa'));
     }
 
@@ -82,38 +56,35 @@ class InventoriesController extends Controller
         foreach($images as $color => $image){
             ItemImage::where('color_slug',$color)->where('product_id',$itemId)->forceDelete();
           foreach($image as $img){
+            $cID = Color::where('slug',$color)->first();
             $i = 0;
             $image = [
               'product_id' => $itemId,
               'color_slug' => $color,
+              'color_id'   => $cID ? $cID->id : 0,
               'sort'       => ++$i,
               'org_img'    => Baazar::base64Upload($img,'orgimg',$shop->slug,$color),
             ];
             ItemImage::create($image);
           }
         }
-      }
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Inventory $inventory,Request $request)
-    {
+
+    public function store(Inventory $inventory,Request $request){
         // dd($request->all());
         $shopId = Shop::where('user_id',Sentinel::getUser()->id)->first();
-        $product = Product::with('itemimage')->where('user_id',Sentinel::getUser()->id)->first();
-        //dd($product);
+        $product = Product::with('itemimage')->where('id',$request->product_id)->first();
         $this->validateForm($request);
         $slug = Baazar::getUniqueSlug($inventory, $product->name);
         $shop = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;
+        $cID = Color::where('slug',$request->color_name)->first();
         if($shop){
             $data = [
                 'product_id'    => $request->product_id,
-                'slug'          => Str::slug($slug.'-'.rand(1000,10000)),
+                'slug'          => Str::slug($slug.'-'.$product->id.$request->color_name.rand(1000,10000)),//Str::slug($slug.'-'.rand(1000,10000)),
                 'color_name'    => $request->color_name,
+                'color_id'      => $cID ? $cID->id : 0,
                 'size_id'       => $request->size_id,
                 'price'         => $request->price,
                 'qty_stock'     => $request->qty_stock,
@@ -127,72 +98,42 @@ class InventoriesController extends Controller
             ];
     
             $inventory = Inventory::create($data);
-    
-            $inventoryAtti = [
-                'name'        => $request->name,
-                'value'       => $request->value,
-                'inventory_id'=> $inventory->id,
-                'product_id'  => $inventory->product_id,
-            ];
-            InventoryMeta::create($inventoryAtti);
+            
+            if($request->has('inventoryAttr')){
+                foreach($request->inventoryAttr as $iname => $ival){
+                    $inventoryAtti = [
+                        'name'        => $iname,
+                        'value'       => $ival,
+                        'inventory_id'=> $inventory->id,
+                        'product_id'  => $inventory->product_id,
+                    ];
+                    InventoryMeta::create($inventoryAtti);  
+                }
+            }
+            
 
             if($request->images){
                 $this->addImages($request->images,$inventory->product_id,$shop);
             } 
             Session::flash('success', 'Inventory Added Successfully!');
         }
-        
         return redirect('merchant/e-commerce/inventories');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Inventory $inventory)
-    {
-
+    public function show(Inventory $inventory){
         return view ('merchant.inventory.ecommerceInventroy.show',compact('inventory'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($slug)
-    {
-        $inventory          = Inventory::with(['item.itemimage'])->where('slug',$slug)->where('type','ecommerce')->first(); 
-        $item               = Product::where('user_id',Sentinel::getUser()->id)->get();
-        $shopProfile        = Shop::where('user_id',Sentinel::getUser()->id)->first();
-        $size               = Size::all();
-        $color              = Color::all();
-        $productAttriSize   = InventoryAttributeOption::where('inventory_attribute_id',1)->get();
-        $productAttriCapa   = InventoryAttributeOption::where('inventory_attribute_id',2)->get();
-        $inventoryAttriSize = InventoryAttributeOption::with('attribute')->where('inventory_attribute_id',1)->first();
-        $inventoryAttriCapa = InventoryAttributeOption::with('attribute')->where('inventory_attribute_id',2)->first(); 
-        $inventoryMeta      = InventoryMeta::all();  
-        $itemImages         = $inventory->item->itemimage->groupBy('color_slug');
-        //dd($itemImages);
-        return view ('merchant.inventory.ecommerceInventroy.edit',compact('inventory','item','itemImages','size','color','shopProfile','inventoryAttriSize','inventoryAttriCapa','productAttriSize','productAttriCapa','inventoryMeta'));
+    public function edit($slug){
+        $inventory          = Inventory::with(['item.itemimage','item.category.inventoryAttributes.options','color','invenMeta'])->where('slug',$slug)->where('type','ecommerce')->first(); 
+        $itemImages         = $inventory->item->itemimage->where('product_id',$inventory->product_id)->where('color_id',$inventory->color_id)->groupBy('color_slug')->toArray();
+        return view ('merchant.inventory.ecommerceInventroy.edit',compact('inventory','itemImages'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request,$slug)
-    {
-        //dd($request->all());
+
+    public function update(Request $request,$slug){
+        // dd($request->all());
         $inventory  = Inventory::where('slug',$slug)->first();
-        $inventMeta = InventoryMeta::where('inventory_id',$inventory->id)->first();
-        //dd($inventMeta);
          $shop = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;
         $this->validateForm($request);
         $data = [  
@@ -206,30 +147,26 @@ class InventoriesController extends Controller
             'updated_at'    => now(),
         ];
         $inventory->update($data);
-        $inventoryAtti = [
-            'name'        => $request->name,
-            'value'       => $request->value,  
-        ]; 
-        $inventMeta->update($inventoryAtti);
+        if($request->has('inventoryAttr')){
+            foreach($request->inventoryAttr as $iname => $ival){
+                $inventMeta = InventoryMeta::where('inventory_id',$inventory->id)->where('name', $iname)->first();
+                $inventMeta->update([
+                    'value'       => $ival,  
+                ]); 
+            }
+        }
         if($request->images){
             $this->addImages($request->images,$inventory->product_id,$shop);
         }
-        Session::flash('warning', 'Inventory update Successfully!');
+        Session::flash('success', 'Inventory update Successfully!');
         return redirect('merchant/e-commerce/inventories');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+
+    public function destroy($id){
         $inventory = Inventory::find($id);
         $inventory->delete();
-
-        Session::flash('error', 'Inventory Deleted Successfully!');
+        Session::flash('success', 'Inventory Deleted Successfully!');
         return redirect('merchant/e-commerce/inventories');
     }
 
@@ -241,12 +178,11 @@ class InventoriesController extends Controller
             //'color_name' => 'required',
             'qty_stock'  => 'required',
             'price'      => 'required',
-//            'size_id' => 'required',
+            // 'size_id' => 'required',
         ]);
     }
 
     public function inventoryColor(Request $request){
-
         $color = $request->color;
         $item  = $request->item;
         $inventory =  ItemImage::where('color_slug',$color)->where('product_id',$item);

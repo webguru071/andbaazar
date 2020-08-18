@@ -5,16 +5,13 @@
     <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <style>
-            /* .inputfield{
-                height: 45px!important;
-            } */
-            .bottom{
-                margin-bottom: 25px;
-            }
-           
+        .bottom{
+            margin-bottom: 25px;
+        }
         .h-100{
             height: 70px !important;
             padding: 2px;
+            width: 103px;
         }
         .drop-area{
             display: flex;
@@ -65,15 +62,6 @@
         </style>
     @endpush
     @include('elements.alert')
-    {{-- @component('layouts.inc.breadcrumb')
-        @slot('pageTitle')
-            Vendor Dashboard
-        @endslot
-        @slot('page')
-            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-            <li class="breadcrumb-item active" aria-current="page">Inventory</li>
-        @endslot
-    @endcomponent --}}
 
     <!--  dashboard section start -->
     <section class="dashboard-section section-b-space">
@@ -91,85 +79,35 @@
                                 @csrf
                                 @method('put') 
                                 <div class="form-row">
-                                    
-        
                                     <div class="col-md-6">
                                         <label for="product_id">Product <span class="text-danger"> *</span></label><span class="text-danger">{{ $errors->first('product_id') }}</span>
-                                        <select name="product_id" class="form-control px-10" id="product_id"  autocomplete="off" disabled>
-                                            <option value="" selected disabled>Select Product</option>
-                                            @foreach ($item as $row)
-                                                <option data-cat="{{$row->category_id}}" value="{{ $row->id }}" @if($row->id == $inventory->product_id) selected @endif>{{$row->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12 d-none">
-                                        <label for="color_id" class="col-xl-3 col-md-4"></label>
-                                        <div id="dropzone-main" class="img-upload-area" data-color="main"><label class="mt-3"><b>Feature Images :</b><span class="text-danger" id="message_main_img"></span></label>
-                                            <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
-                                                <span class="dz-message color-main d-none">
-                                                    <h2>Drag & Drop Your Files</h2>
-                                                </span>
-                                                    
-                            
-                                            </div>
-                                            <small>Remember Your featured file will be the first one.</small><br>
-                                        </div>
+                                        <input type="text" class="form-control" value="{{$inventory->item->name}}" readonly>
                                     </div>
         
                                     <div class="col-md-6">
                                         <label for="color_id">Color <span class="text-danger"> *</span></label><span class="text-danger">{{ $errors->first('color_name') }}</span>
-                                        <select name="color_name" class="form-control color_id"   autocomplete="off" id="selectColor" disabled>
-                                            <option value="" selected disabled>Select Color</option>
-                                            @foreach ($color as $row)
-                                                <option  value="{{ $row->slug }}" {{(ucfirst($row->slug) == ucfirst($inventory->color_name))? 'selected' : ''}}>{{$row->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" readonly class="form-control" value="{{$inventory->color->name}}">
                                     </div>
         
                                     <div class="col-md-12"> 
                                         <label for="" class="col-xl-3 col-md-8"></label>
                                         <div class="drops dropzone-previews"></div>
-                                        <div class="inputs">
-        
-                                        </div> 
+                                        <div class="inputs"></div> 
                                     </div>
-        
-                                    <div class="col-md-12"> 
-                                        
-                                       @foreach($inventoryMeta as $meta)
-                                       @if($loop->first)
-                                       @if($meta->name == 'size')
-                                       <label for="size_id">Size <span class="text-danger"> *</span></label><span class="text-danger">{{ $errors->first('size_id') }}</span>
-                                       <input type="hidden" name="name" value="{{ $inventoryAttriCapa->attribute->name }}">
-                                        <select name="value" class="form-control size inputfield" id="size_id" autocomplete="off">
-                                            <option value="" selected disabled>Select Size</option>
-                                            @foreach ($productAttriSize as $row)
-                                                <option value="{{ $row->option }}" @if($row->option == $inventory->invenMeta->value) selected @endif>{{$row->option}}</option>
-                                            @endforeach
-                                        </select>
-                                        @else
-                                        @endif
-                                        @endif
-                                        @endforeach 
-                                    </div>
-                                    <div class="col-md-12"> 
-                                        @foreach($inventoryMeta as $inv)
-                                        @if($loop->first)
-                                        @if($inv->name == 'storage Capacity')
-                                        <label for="size_id">Storage Capacity <span class="text-danger"> *</span></label><span class="text-danger">{{ $errors->first('size_id') }}</span>
-                                        <input type="hidden" name="name" value="{{ $inventoryAttriCapa->attribute->name }}">
-                                        <select name="value" class="form-control capacity inputfield" id="size_id" autocomplete="off">
-                                            <option value="" selected disabled>Select Capacity</option>
-                                            @foreach ($productAttriCapa as $row)
-                                                <option value="{{ $row->option }}" @if($row->option == $inventory->invenMeta->value) selected @endif>{{$row->option}}</option>
-                                            @endforeach
-                                        </select>
-                                        @else 
-        
-                                        @endif
-                                        @endif
-                                        @endforeach
-                                    </div>
+                                    
+                                    @foreach($inventory->item->category->inventoryAttributes as $meta)
+                                        <div class="col-md-12">
+                                            <label for="size_id">{{$meta->name}} <span class="text-danger"> *</span></label><span class="text-danger">{{ $errors->first('size_id') }}</span>
+                                            <select name="inventoryAttr[{{$meta->name}}]" class="form-control" autocomplete="off">
+                                                <option value="" selected disabled>Select {{$meta->name}}</option>
+                                                @foreach ($meta->options as $row)
+                                                    <option value="{{ $row->option }}" @if($row->option == $inventory->invenMeta->value) selected @endif>{{$row->option}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endforeach
+
+
                                     <div class="col-md-6 mt-2">
                                         <label for="price">Price <span class="text-danger"> *</span></label><span class="text-danger">{{ $errors->first('Price') }}</span>
                                         <input type="number" class="form-control inputfield" name="price" id="price" value="{{ old('price',$inventory->price) }}">
@@ -216,34 +154,15 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
     <script>
-
-        //Rendering Main images into Dropzone
-        $( "#sortable-main" ).sortable({
-            placeholder: "ui-state-highlight",
-            revert: true,
-        });
-        $("#sortable-main").disableSelection();
-        // setup("my-awesome-dropzone-main",'main');
-        var mockFile = [];
-        @foreach($itemImages['main'] as $img)
-            mockFiles = {
-                name:'img-'+'{{$img->color_slug}}',
-                size:{{$img->id}},
-                dataURL: "{{asset('/')}}"+"{{$img->org_img}}"
-            }
-            mockFile.push(mockFiles);
-        @endforeach
-        setup("my-awesome-dropzone-main",'main',mockFile);
-
         //Rendering Other images into Dropzone
         @foreach($itemImages as $color=>$imges)
         mockFile = [];
 
         @foreach($imges as $img)
             mockFiles = {
-                name:'img-'+'{{$img->color_slug}}',
-                size:{{$img->id}},
-                dataURL: "{{asset('/')}}"+"{{$img->org_img}}"
+                name:'img-'+'{{$img['color_slug']}}',
+                size:{{$img['id']}},
+                dataURL: "{{asset('/')}}"+"{{$img['org_img']}}"
             }
             mockFile.push(mockFiles);
         @endforeach
@@ -253,28 +172,28 @@
         @endif
         @endforeach 
 
-        //get inventories attributes 
-        //Drug & Drop script start
-        $( "#sortable-red").sortable({
-            placeholder: "ui-state-highlight",
-            revert: true,
-        });
+        // get inventories attributes 
+        // Drug & Drop script start
+        // $( "#sortable-red").sortable({
+        //     placeholder: "ui-state-highlight",
+        //     revert: true,
+        // });
 
-        //dropzone scripts
-        $('#selectColor').change(function(){  
-            var flag = 0;
-            var color = $(this).val(); 
-            $('.img-upload-area').each(function(){
-                if(color == $(this).data('color')){
-                    flag = 1;
-                }
-            });
-            if(flag == 0){
-                appendDrops(color);
-            }else{
-                swal("The selected color already been exits", {icon: "warning",buttons: false,timer: 2000});
-            }
-        });
+        // // dropzone scripts
+        // $('#selectColor').change(function(){  
+        //     var flag = 0;
+        //     var color = $(this).val(); 
+        //     $('.img-upload-area').each(function(){
+        //         if(color == $(this).data('color')){
+        //             flag = 1;
+        //         }
+        //     });
+        //     if(flag == 0){
+        //         appendDrops(color);
+        //     }else{
+        //         swal("The selected color already been exits", {icon: "warning",buttons: false,timer: 2000});
+        //     }
+        // });
         function appendDrops(color,mockFile=''){
             $('.inputs').html('');
             $('.drops').html(
@@ -306,7 +225,7 @@
                         });
                 $("#sortable-"+color ).disableSelection();
                 setup("my-awesome-dropzone"+color,color,mockFile);
-                inventoryRows(color);
+                // inventoryRows(color);
         }
 
         Dropzone.autoDiscover = false;
@@ -422,41 +341,6 @@
                 </div>`
             };
             var myDropzone = new Dropzone(`.${id}`, options);
-        }
-
-        function removeColorItem(color){
-
-            swal({
-                title: "Are you sure to delete it?",
-                text: "To continue this action!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        swal("Your action has beed done! :)", {
-                            icon: "success",
-                            buttons: false,
-                            timer: 1000
-                        });
-                        $('#dropzone-'+color).remove();
-                        $('input[name^="images['+color+']"]').each(function() {
-                            $(this).remove();
-                        });
-                        document.querySelectorAll('.newRow option').forEach(item => {
-                            if(item.innerHTML == color){
-                                if(item.selected == true){
-                                    item.style.background = 'red';
-                                    item.style.color = 'white';
-                                    item.parentElement.style.border = '2px solid red';
-                                }else{
-                                    item.remove()
-                                }
-                            }
-                        })
-                    }
-                });
         }
         
     </script>

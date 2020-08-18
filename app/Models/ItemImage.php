@@ -14,6 +14,7 @@ class ItemImage extends Model
   protected $fillable = [
     'product_id',
     'color_slug',
+    'color_id',
     'sort',
     'org_img',
     'list_img',

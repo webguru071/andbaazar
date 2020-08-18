@@ -5,6 +5,7 @@
         .h-100{
             height: 70px !important;
             padding: 2px;
+            width: 103px;
         }
         .drop-area{
             display: flex;

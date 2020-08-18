@@ -39,28 +39,40 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-      // $cats = \DB::table('products')->select('category_id')->distinct()->get();
-      // dd($cats);
+      $filter = [
+        'category'  => '',
+        'status'  => '',
+        'keyword'  => '',
+      ];
+      $findCat = Product::where('shop_id',Baazar::shop()->id);
+      $categories = $findCat->select('category_id')->with('category')->distinct()->get();
+
       $product = Product::where('shop_id',Baazar::shop()->id);
 
-      $cat = $product->select('category_id')->distinct()->get();
-      // dd($cat);
-      // $sellerProfile = Merchant::with('rejectvalue')->where('user_id',Sentinel::getUser()->id)->first();
-      $product = Product::where('shop_id',Baazar::shop()->id)->where('type','ecommerce')->paginate(2);
-      // $items = Product::with('inventory')->paginate('10');
-
-      if ($request->has('cat')){
-        $product = Product::where('shop_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','ecommerce')->paginate(2);            
+      //Category Filter
+      if ($request->has('category') && !empty($request->category)){
+        $catId = Category::where('slug',$request->category)->first();
+        if($catId){
+          $product = $product->where('category_id',$catId->id);
+        }
+        $filter['category'] = $request->category;
       }
-    
-      if ($request->has('status')){
-        $product = Product::orderBy('status','asc')->Where('status',$request->status)->where('type','ecommerce')->paginate(2);   
-      } 
-      $categories = ([
-        'cat'      =>request('cat'),
-        'status'   => request('status'),
-      ]);
-      return view ('merchant.product.index',compact('product'));
+      
+      //status Filter
+      if ($request->has('status') && !empty($request->status)){
+        $product = $product->where('status',$request->status);
+        $filter['status'] = $request->status;
+      }
+
+      //status Filter
+      if ($request->has('keyword') && !empty($request->keyword)){
+        $product = $product->where('name','like','%'.$request->keyword.'%');
+        $filter['keyword'] = $request->keyword;
+      }
+
+      $product = $product->paginate(10);
+      $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
+      return view ('merchant.product.index',compact('product','categories','filter'));
 
     }
 
@@ -150,10 +162,12 @@ class ProductsController extends Controller
     public function addImages($images, $itemId,$shop){
       foreach($images as $color => $image){
         foreach($image as $img){
+          $cID = Color::where('slug',$color)->first();
           $i = 0;
           $image = [
             'product_id' => $itemId,
             'color_slug' => $color,
+            'color_id'   => $cID ? $cID->id : 0,
             'sort'       => ++$i,
             'org_img'    => Baazar::base64Upload($img,'orgimg',$shop->slug,$color),
           ];
