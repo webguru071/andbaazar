@@ -11,6 +11,7 @@ use Session;
 use Baazar;
 use App\Models\Reject;
 use App\Models\RejectValue;
+use DB;
 
 class NewsfeedController extends Controller
 {
@@ -22,9 +23,11 @@ class NewsfeedController extends Controller
     public function index()
     {
         $newsFeed = Newsfeed::where('user_id',Sentinel::getUser()->id)->where('title','!=','')->paginate(10);
+        $rejectReason = RejectValue::where('user_id',Sentinel::getUser()->id)->where('type','feed')->get();
+        // dd($rejectReason);
        
         
-        return view('merchant.newsFeed.index',compact('newsFeed'));
+        return view('merchant.newsFeed.index',compact('newsFeed','rejectReason'));
     }
 
     /**
@@ -60,7 +63,7 @@ class NewsfeedController extends Controller
 
         Session::flash('success','News feed Added successfully');
 
-        return redirect('merchant/newsfeed');
+        return redirect('merchant/newsfeed/news');
     }
 
     /**
@@ -109,7 +112,7 @@ class NewsfeedController extends Controller
 
         Session::flash('success','News feed update successfully');
 
-        return redirect('merchant/newsfeed');
+        return redirect('merchant/newsfeed/news');
          
     }
 
@@ -126,7 +129,7 @@ class NewsfeedController extends Controller
 
         Session::flash('error','News feed delete successfully');
 
-        return redirect('merchant/newsfeed');
+        return redirect('merchant/newsfeed/news');
     }
 
     public function feedlist()
@@ -151,10 +154,9 @@ class NewsfeedController extends Controller
     }
 
     public function reject(Request $request,$slug){
-        $data =  Newsfeed::where('slug',$slug)->first();
-
-        $data->update([
-            'rej_desc' => $request->rej_desc,
+        $data =  Newsfeed::where('slug',$slug)->first(); 
+        
+        $data->update([ 
             'status'=>'Reject'
             ]);
 

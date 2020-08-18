@@ -53,7 +53,7 @@
                             <div class="">
                                 @foreach($row->itemimage as $itemimg)
                                     @if($loop->first)
-                                        <a href="{{ url('/merchant/product/'.$row->slug) }}"><img src="{{ !empty($row->image) ? asset($row->image) : asset('/uploads/shops/products/product.png') }}" class="img-fluid blur-up lazyload bg-img" alt=""></a>
+                                        <a href="{{ url('/merchant/e-commerce/products/'.$row->slug) }}"><img src="{{ !empty($row->image) ? asset($row->image) : asset('/uploads/shops/products/product.png') }}" class="img-fluid blur-up lazyload bg-img" alt=""></a>
                                     @endif
                                 @endforeach 
                             </div>

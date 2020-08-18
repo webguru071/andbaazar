@@ -111,21 +111,37 @@
                                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ url('merchant/product/rejected/'.$product->slug)}}" method="post" style="margin-top:-2px" id="deleteButton({{ $product->id }})">
+                                                <form action="{{ url('merchant/e-commerce/products/rejected/'.$product->slug)}}" method="post" style="margin-top:-2px" id="deleteButton({{ $product->id }})">
                                                 @csrf
                                                 @method('put')
-                                                <div class="form">
-                                                    <div class="form-group">
-                                                        <label for="validationCustom01" class="mb-1">Description :</label>
-                                                        <textarea class="form-control" name="rej_desc" id="validationCustom01" type="text" required></textarea>
+                                                <div class="form" id="again">
+                                                    <div class="card-body">
+                                                        <div class="form-check">
+                                                            @foreach($rejectlist as $row)
+                                                            <label class="form-check-label" for="check1">
+                                                                <input type="checkbox" class="form-check-input" id="checked" name="rej_name[]" value="{{$row->rej_name}}">{{$row->rej_name}}
+                                                            </label><br>
+                                                            <input type="hidden" name="type" class="form-control" value="sme">
+                                                            @endforeach
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary">Reject</button>
+                                                 </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Reject</button>
+                                                    </form> 
+                                                    </div>
                                                 </form>
-                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                                                </div>
-                                                </form>
+                                                <form id="rejectId" role="form" action="" class="form-material form" method="post">
+                                                    @csrf
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleInputPassword1 ">Others</label>
+                                                        <input type="text" class="form-control" id="rej_name" name="rej_name" placeholder=" if need add another reasoan ">
+                                                        <input type="hidden" name="type" class="form-control" value="product"> 
+                                                        <div class="form-group  float-right">
+                                                          <span id="saveReason" class="btn btn-success mt-2 float-right btn-sm">Add</span>
+                                                        </div>
+                                                    </div>
+                                                 </form>
                                             </div>
                                         </div>
                                     </div>
@@ -173,5 +189,27 @@
             }) 
          })
      });
+
+     $('#saveReason').click(function(e){ 
+    e.preventDefault();
+    const name = $('#rej_name').val(); 
+    if(name == '' ){
+        alert ('Required Filed Must be filled');
+    }else{
+        var formData = $("#rejectId").serialize(); 
+        $.ajax({
+            type: 'POST',
+            url:"{{ url('/andbaazaradmin/reject-name/') }}", 
+            data: formData,
+            dataType: "json",
+            success: function(response){
+                var name = $('#rej_name').val(''); 
+                if(response){
+                    $("#again").load(" #again");
+                } 
+            }
+        })
+    }
+});
  </script>
 @endpush

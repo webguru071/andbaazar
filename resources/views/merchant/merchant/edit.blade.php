@@ -46,7 +46,7 @@
                 @include('layouts.inc.sidebar.vendor-sidebar',[$active='profile'])
 
              <div class="col-sm-9 register-page contact-page">
-                    <form class="theme-form" action="{{ url('merchant/merchant/'.$seller->slug) }}" method="post" enctype="multipart/form-data" id="validateForm">
+                    <form class="theme-form" action="{{ url('merchant/update/'.$seller->slug) }}" method="post" enctype="multipart/form-data" id="validateForm">
                         @csrf
                         @method('put')
                         <div class="form-row">

@@ -49,8 +49,9 @@
             </div>
 
             <div class="modal-body">
-                <form class="needs-validation" novalidate="" action="{{ url('merchant/merchant/resubmit/'.$seller->id) }}" method="post" enctype="multipart/form-data" id="myform">
-                    @csrf @method('put')
+                <form class="needs-validation" novalidate="" action="{{ url('merchant/resubmit/'.$seller->id) }}" method="post" enctype="multipart/form-data" id="myform">
+                    @csrf 
+                    @method('put')
                     <div class="form"></div>
                     <div class="form">
                         If you fill your all information.Please fill the yes check box and click submit.

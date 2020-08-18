@@ -21,7 +21,7 @@
                   <div class="collapse" id="submenu1" aria-expanded="false">
                     <ul class="flex-column pl-2 nav">
                       <li class="nav-item"> 
-                        <a  class="nav-link {{$active == 'product' ? 'active' : ''}}" href="{{ url('merchant/products') }}">E-commerce Products</a>
+                        <a  class="nav-link {{$active == 'product' ? 'active' : ''}}" href="{{ url('merchant/e-commerce/products') }}">E-commerce Products</a>
                         <a  class="nav-link {{$active == 'smeProduct' ? 'active' : ''}}" href="{{ url('merchant/sme/products') }}">SME Products</a>
                       </li>
                     </ul>
@@ -47,7 +47,7 @@
                 
                 <li class="nav-item"><a  class="nav-link {{$active == 'shop' ? 'active' : ''}}" href="{{ url('merchant/shop') }}">shop</a>
                 </li>
-                <li class="nav-item"><a  class="nav-link {{$active == 'newsfeed' ? 'active' : ''}}" href="{{ url('merchant/newsfeed') }}">News Feed</a></li>
+                <li class="nav-item"><a  class="nav-link {{$active == 'newsfeed' ? 'active' : ''}}" href="{{ url('merchant/newsfeed/news') }}">News Feed</a></li>
 
                 <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#settings">settings</a></li> 
                 

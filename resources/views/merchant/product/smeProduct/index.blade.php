@@ -117,7 +117,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title f-w-600" id="exampleModalLabel">Reject Description</h5>
+                                        <h5 class="modal-title f-w-600" id="exampleModalLabel">Reject Reason</h5>
                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                     </div>
 
@@ -127,7 +127,13 @@
                                                 <div class="form-group">
                                                     <label for="validationCustom01" class="mb-1">Description :</label>
                                                     <div>
-                                                        {{ $row->rej_desc }}
+                                                        @php $i  = 0; @endphp
+                                                        @foreach($rejectReason as $row)
+                                                        <ol>
+                                                            <span class="text-danger">{{ ++$i }} .</span>
+                                                            <li><b class="text-danger">{{$row->rej_name." "}}</b></li>
+                                                        </ol>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                             </div>

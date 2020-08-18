@@ -201,12 +201,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <form action="{{ url('merchant/merchant/approvement/'.$row->id) }}" method="post" style="margin-top: -2px;" id="deleteButton({{ $row->id }})">
+                                                        <form action="{{ url('merchant/approvement/'.$row->id) }}" method="post" style="margin-top: -2px;" id="deleteButton({{ $row->id }})">
                                                             @csrf
                                                             <button type="submit" class="btn btn-info">Approve</button>
                                                         </form>
                                                         <button type="button" class="btn btn-warning ml-1 btnClosePopup" data-toggle="modal" id="" data-original-title="test" data-target="#exampleModal">Reject</button>
-                                                        <form action="{{ url('merchant/merchant/profiledelete/'.$row->id) }}" method="post" style="margin-top: -2px;" id="deleteButton({{ $row->id }})">
+                                                        <form action="{{ url('merchant/profiledelete/'.$row->id) }}" method="post" style="margin-top: -2px;" id="deleteButton({{ $row->id }})">
                                                             @csrf
                                                             <button type="submit" class="btn btn-primary m-l-b">Hard Reject</button>
                                                         </form>
@@ -222,9 +222,10 @@
                                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form action="{{ url('merchant/merchant/rejected/'.$row->id)}}" method="post" style="margin-top: -2px;" id="deleteButton({{ $row->id }})">
-                                                            @csrf @method('put')
-                                                            <div class="form">
+                                                        <form action="{{ url('merchant/rejected/'.$row->id)}}" method="post" style="margin-top: -2px;" id="deleteButton({{ $row->id }})">
+                                                            @csrf 
+                                                            @method('put')
+                                                            <div class="form" id="again">
                                                                 <div class="form-group">
                                                                     <div class="card">
                                                                         <div class="card-body">
@@ -248,8 +249,8 @@
                                                            @csrf
                                                            <div class="form-group mt-2">
                                                                <label for="exampleInputPassword1 ">Others</label>
-                                                               <input type="text" class="form-control" id="rej_name" name="rej_name[]" placeholder=" if need add another reasoan ">
-                                                               <!-- <button class="btn btn-success mt-3 float-right btn-sm">save</button> -->
+                                                               <input type="text" class="form-control" id="rej_name" name="rej_name" placeholder=" if need add another reasoan ">
+                                                               <input type="hidden" name="type" class="form-control" value="profile">
                                                                <div class="form-group  float-right">
                                                                  <span id="saveReason" class="btn btn-success mt-2 float-right btn-sm">Add</span>
                                                                </div>
@@ -358,28 +359,24 @@
 
 </script>
 
-<script>
-
-
-$('#saveReason').click(function(e){
+<script> 
+$('#saveReason').click(function(e){ 
     e.preventDefault();
-    const name = $('#rej_name').val();
+    const name = $('#rej_name').val(); 
     if(name == '' ){
         alert ('Required Filed Must be filled');
     }else{
-        var formData = $("#rejectId").serialize();
-        //alert(formData);
+        var formData = $("#rejectId").serialize(); 
         $.ajax({
             type: 'POST',
-            url:"{{ url('/andbaazaradmin/reject-name/') }}",
+            url:"{{ url('/andbaazaradmin/reject-name/') }}", 
             data: formData,
             dataType: "json",
             success: function(response){
-                var option = `<option value='${response.id}' selected>${response.rej_name}</option>`;
-                $('#checked').append(option);
-                // $(".new-patient").modal("hide");
-                swal(response.rej_name+" Inserted as Reject Reason!", {icon: "success",buttons: false,timer: 2000});
-                $('#rejectId')[0].reset();
+                var name = $('#rej_name').val('');
+                if(response){
+                    $("#again").load(" #again");
+                } 
             }
         })
     }

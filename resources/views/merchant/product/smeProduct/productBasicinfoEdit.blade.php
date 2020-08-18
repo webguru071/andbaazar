@@ -128,7 +128,7 @@
             var li ='';
             $.ajax({
                 type:"get",
-                url:"{{ url('/merchant/product/subCategoryChild/{id}') }}",
+                url:"{{ url('/merchant/e-commerce/products/subCategoryChild/{id}') }}",
                 data:{ 'subCatId': val },
                 success:function(data){
                         li += `<div class="col-md-3 cat-level p-2 level-${nextLevel}">

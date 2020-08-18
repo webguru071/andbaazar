@@ -96,7 +96,7 @@
                                                                     </div> 
                                                                     <div>
                                                                         <div class="m-l-reject"> 
-                                                                        <button type="button" class="btn btn-sm btn-primary btnClosePopup" data-toggle="modal" data-original-title="test" data-target="#exampleModal">Reject</button>
+                                                                        <button type="button" class="btn btn-sm btn-primary btnClosePopup" data-toggle="modal" data-original-title="test" data-target="#exampleModal{{ $row->id }}">Reject</button>
                                                                         </div> 
                                                                     </div>
                                                                     
@@ -111,7 +111,7 @@
                                                     </div>
                                                 </div>
                                             </div> 
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                              <div class="modal fade" id="exampleModal{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -122,7 +122,7 @@
                                                             <form action="{{ url('merchant/newsfeed/reject/'.$row->slug)}}" method="post" style="margin-top:-2px" id="">
                                                                 @csrf
                                                                 @method('put')
-                                                                <div class="form">
+                                                                <div class="form" id="again">
                                                                     <div class="card-body">
                                                                         <div class="form-check">
                                                                             @foreach($rejectlist as $row)
@@ -138,6 +138,17 @@
                                                                     <button type="submit" class="btn btn-primary">Reject</button> 
                                                                 </div>
                                                             </form>
+                                                            <form id="rejectId" role="form" action="" class="form-material form" method="post">
+                                                                @csrf
+                                                                <div class="form-group mt-2">
+                                                                    <label for="exampleInputPassword1 ">Others</label>
+                                                                    <input type="text" class="form-control" id="rej_name" name="rej_name" placeholder=" if need add another reasoan ">
+                                                                    <input type="hidden" name="type" class="form-control" value="feed"> 
+                                                                    <div class="form-group  float-right">
+                                                                      <span id="saveReason" class="btn btn-success mt-2 float-right btn-sm">Add</span>
+                                                                    </div>
+                                                                </div>
+                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -158,5 +169,27 @@
        $(".btnClosePopup").click(function () {
             $(".feednewsmodal").modal("hide");
         });
+
+        $('#saveReason').click(function(e){ 
+    e.preventDefault();
+    const name = $('#rej_name').val(); 
+    if(name == '' ){
+        alert ('Required Filed Must be filled');
+    }else{
+        var formData = $("#rejectId").serialize(); 
+        $.ajax({
+            type: 'POST',
+            url:"{{ url('/andbaazaradmin/reject-name/') }}", 
+            data: formData,
+            dataType: "json",
+            success: function(response){
+                var name = $('#rej_name').val(''); 
+                if(response){
+                    $("#again").load(" #again");
+                } 
+            }
+        })
+    }
+});
   </script>
 @endpush

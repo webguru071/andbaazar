@@ -554,10 +554,10 @@ class MerchantController extends Controller{
     }
 
     public function statusUpdate(Request $request,$id){
-        $request->validate([ 
-            'yes'        => 'accepted'
-        ]);
-        $merchantProfile = Merchant::find($id); 
+        // $request->validate([ 
+        //     'yes'        => 'accepted'
+        // ]);
+        $merchantProfile = Merchant::find($id);  
         $merchantProfile->update([
             'status' => 'Inactive',
         ]);

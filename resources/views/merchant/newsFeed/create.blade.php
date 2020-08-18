@@ -39,7 +39,7 @@
                  <h3>Add News Feed</h3>
                  <div class="card">
                         <div class="card-body">
-                        <form class="them-form" action="{{ route('newsFeed') }}" method="post" enctype="multipart/form-data" id="validateForm">
+                        <form class="them-form" action="{{ route('NewsFeed') }}" method="post" enctype="multipart/form-data" id="validateForm">
                                 @csrf 
                                 <div class="form-row">
                                     <div class="col-md-4 text-left">

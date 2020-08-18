@@ -27,15 +27,12 @@ Route::group(['prefix' => 'merchant'],function () {
 Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],function () {
     Route::get('dashboard','MerchantController@dashboard');
 
-    Route::post('merchant/approvement/{id}','MerchantController@approvement');
-    Route::post('merchant/profiledelete/{id}','MerchantController@profileDelete');
-    Route::put('merchant/rejected/{id}','MerchantController@rejected');
+    Route::post('approvement/{id}','MerchantController@approvement');
+    Route::post('profiledelete/{id}','MerchantController@profileDelete');
+    Route::put('rejected/{id}','MerchantController@rejected');
 
-    Route::put('merchant/{slug}','MerchantController@update');
-    Route::put('merchant/resubmit/{id}','MerchantController@statusUpdate');
-    Route::get('merchant/{id}','MerchantController@show');
-
-
+    Route::put('update/{slug}','MerchantController@update');
+    Route::put('resubmit/{id}','MerchantController@statusUpdate'); 
     
     Route::get('profile','MerchantController@create');
     Route::post('profile','MerchantController@store')->name('sellerUpdate');
@@ -51,25 +48,31 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
     Route::get('dropzone', 'DropzoneController@ProductsController');
     Route::post('dropzone/store', 'DropzoneController@ProductsController')->name('dropzone.store');
 
-    Route::Post('product/get-brand/','ProductsController@getBrand');
-    Route::get('product/subCategoryChild/{id}','ProductsController@subCategoryChild');
-    Route::post('product/approvement/{slug}','ProductsController@approvement');
-    Route::put('product/rejected/{slug}','ProductsController@rejected');
-    Route::get('product/vendorshow/{slug}','ProductsController@vendorshow');
+   
+    
+    // E-commerce Products Are Start// 
+    Route::group(['prefix' => 'e-commerce'],function(){
+        Route::Post('products/get-brand/','ProductsController@getBrand');
+        Route::get('products/subCategoryChild/{id}','ProductsController@subCategoryChild');
+        Route::post('products/approvement/{slug}','ProductsController@approvement');
+        Route::put('products/rejected/{slug}','ProductsController@rejected');
+        
 
-    Route::get('products','ProductsController@index')->middleware('isMerchantActive');
-    Route::get('products/new','ProductsController@create')->middleware('isMerchantActive');;
-    Route::post('products/new','ProductsController@store')->name('product.store')->middleware('isMerchantActive');;
-    Route::get('products/view/{slug}','ProductsController@show')->middleware('isMerchantActive');
-    Route::get('products/update/{slug}/productupdate','ProductsController@edit');
-    Route::put('products/update/{slug}','ProductsController@update'); 
-    Route::post('products/single-inventory-delete','ProductsController@deleteInventory'); 
-    Route::get('product','ProductsController@clear'); 
-    Route::resource('product','ProductsController');
+        Route::get('products','ProductsController@index')->middleware('isMerchantActive');
+        Route::get('products/new','ProductsController@create')->middleware('isMerchantActive');
+        Route::post('products/new','ProductsController@store')->name('product.store')->middleware('isMerchantActive');
+        Route::get('products/update/{slug}/productupdate','ProductsController@edit');
+        Route::put('products/update/{slug}','ProductsController@update');
+        Route::post('products/single-inventory-delete','ProductsController@deleteInventory');
+        Route::get('products','ProductsController@clear'); 
+        Route::resource('products','ProductsController');
 
-
-
-
+        Route::get('inventories/new','InventoriesController@create');
+        Route::post('inventories/new','InventoriesController@store')->name('inventory.store');
+        Route::get('inventories/update/{slug}/invertoryupdate','InventoriesController@edit');
+        Route::put('inventories/update/{slug}','InventoriesController@update');
+        Route::resource('inventories','InventoriesController');
+    });
     // Sme Products Are Start//
     Route::group(['prefix' => 'sme'],function(){
         Route::get('products','SmeProductController@index')->middleware('isMerchantActive');
@@ -92,27 +95,26 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
 
 
 
-    Route::get('inventories','InventoriesController@index')->middleware('isMerchantActive');
-    Route::get('inventories/view/{slug}','InventoriesController@show');
-    Route::get('e-commerce/inventories/new','InventoriesController@create');
-    Route::post('e-commerce/inventories/new','InventoriesController@store')->name('inventory.store');
-    Route::get('e-commerce/inventories/update/{slug}/invertoryupdate','InventoriesController@edit');
-    Route::put('e-commerce/inventories/update/{slug}','InventoriesController@update');
+ 
     Route::get('inventories/inventoryAttrioption/{id}','InventoriesController@inventoryAttrioption');
     Route::get('inventories/inventorycolor','InventoriesController@inventoryColor');
     Route::get('inventories/inventory/{id}','AjaxController@searchColorWiseInventory');
-    Route::resource('e-commerce/inventories','InventoriesController');
+   
 
     Route::post('get-inventory-attr','InventoryAttributeController@getInventoryAttr');
     Route::post('get-inventory-attr-new-Inventory','InventoryAttributeController@getInventoryAttrOnNewInventory');
     Route::post('get-category-attr','CategoriesController@getCategoryAttr');
-    Route::get('newsfeed/new','NewsfeedController@create');
-    Route::post('newsfeed/new','NewsfeedController@store')->name('newsFeed');
-    Route::get('newsfeed/update/{slug}/newsfeedupdate','NewsfeedController@edit'); 
-    Route::put('newsfeed/update/{slug}','NewsfeedController@update');
-    Route::post('newsfeed/approvement/{slug}','NewsfeedController@approvement');
-    Route::put('newsfeed/reject/{slug}','NewsfeedController@reject');
-    Route::resource('newsfeed','NewsfeedController');
+
+    Route::group(['prefix' => 'newsfeed'], function () {
+        Route::get('new','NewsfeedController@create');
+        Route::post('new','NewsfeedController@store')->name('NewsFeed');
+        Route::get('update/{slug}/newsfeedupdate','NewsfeedController@edit'); 
+        Route::put('update/{slug}','NewsfeedController@update');
+        Route::post('approvement/{slug}','NewsfeedController@approvement');
+        Route::put('reject/{slug}','NewsfeedController@reject');
+        Route::resource('news','NewsfeedController'); 
+    });
+   
 
     Route::post('shop-logo-crop', 'MerchantController@shopLogoCrop')->name('shop-logo-crop');
     Route::post('shop-banar-crop', 'MerchantController@shopBanarCrop')->name('shop-banar-crop');

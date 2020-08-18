@@ -286,7 +286,7 @@
         $(document).on("click", "span.rowRemove ", function () { 
             var thisRow = $(this).parents("tr"); 
             var productId = thisRow.find('.product_id').val(); 
-            var actionUrl = '{{ url("merchant/products/single-inventory-delete/") }}';
+            var actionUrl = '{{ url("merchant/e-commerce/products/single-inventory-delete/") }}';
             var token = "{{ csrf_token() }}";
 
             $.ajax({

@@ -26,6 +26,8 @@ use App\Models\Newsfeed;
 use Sentinel;
 use Session;
 use Baazar;
+use App\Models\Reject;
+use App\Models\RejectValue;
 
 class SmeProductController extends Controller
 {
@@ -38,6 +40,7 @@ class SmeProductController extends Controller
     {
         $sellerProfile = Merchant::with('rejectvalue')->where('user_id',Sentinel::getUser()->id)->first();
         $product = Product::where('shop_id',Baazar::shop()->id)->where('type','sme')->paginate(10);
+        $rejectReason = RejectValue::where('user_id',Sentinel::getUser()->id)->where('type','sme')->get();
 
       // $items = Product::with('inventory')->paginate('10');
       
@@ -56,7 +59,7 @@ class SmeProductController extends Controller
       'status'   => request('status'),
   ]);
 
-      return view ('merchant.product.smeProduct.index',compact('product','sellerProfile'));
+      return view ('merchant.product.smeProduct.index',compact('product','sellerProfile','rejectReason'));
 
    
     }
@@ -228,9 +231,10 @@ class SmeProductController extends Controller
       $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
       $productCapasize = InventoryMeta::where('product_id',$product->id)->get();
       $imageColor  = ItemImage::select('color_slug')->where('color_slug','!=','main')->where('product_id',$product->id)->distinct()->get();
+      $rejectlist = Reject::where('type','product')->get();
       // dd($imageColor);
 
-      return view('merchant.product.smeProduct.show',compact('product','shopProfile','productImage','productCapasize','imageColor'));
+      return view('merchant.product.smeProduct.show',compact('product','shopProfile','productImage','productCapasize','imageColor','rejectlist'));
   }
 
   public function smeproductList(){ 
@@ -308,14 +312,7 @@ class SmeProductController extends Controller
           $this->addImages($request->images,$product->id,$shop);
         }
 
-        $newsFeed = [
-          'title'      => $request->title,
-          'image'      => Baazar::fileUpload($request,'image','old_image','/uploads/newsfeed_image'),
-          'news_desc'  => $request->news_desc,  
-          'updated_at' => now(),
-        ];
-        $newsFeedUpdate->update($newsFeed);
- 
+        
         Session::flash('success', 'SME Product updated Successfully!');
 
         return redirect('merchant/sme/products');

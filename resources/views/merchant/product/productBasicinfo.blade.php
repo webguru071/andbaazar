@@ -138,7 +138,7 @@
             var li ='';
             $.ajax({
                 type:"get",
-                url:"{{ url('/merchant/product/subCategoryChild/{id}') }}",
+                url:"{{ url('/merchant/e-commerce/products/subCategoryChild/{id}') }}",
                 data:{ 'subCatId': val },
                 success:function(data){
                         li += `<div class="col-md-3 cat-level p-2 level-${nextLevel}">
@@ -184,7 +184,7 @@
         function getBrands(cid){
             $.ajax({
                 type:"POST",
-                url:"{{ url('/merchant/product/get-brand/') }}",
+                url:"{{ url('/merchant/e-commerce/products/get-brand/') }}",
                 data:{ 'cat': cid ,'_token':'{{csrf_token()}}'},
                 success:function(data){
                     $('#brand').html(data);

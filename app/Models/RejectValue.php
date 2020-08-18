@@ -8,7 +8,7 @@ use App\Models\Merchant;
 
 class RejectValue extends Model
 {
-    protected $fillable = ['rej_name','type','merchant_id','user_id']; 
+    protected $fillable = ['rej_name','type','merchant_id','product_id','user_id']; 
 
     public function merchant(){
      return $this->belongsTo(Merchant::class,'merchant_id');
