@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 route::get('check',function(){
     return response()->json(['amer'=>'ki','ta'=>'jani na']);
 });
-route::get('checks','CategoriesController@getData');
+
 include('frontend.php');
 include('merchant.php');
 include('agent.php');
