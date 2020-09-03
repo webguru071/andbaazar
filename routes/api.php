@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 route::get('checks','CategoriesController@getData');
+route::get('product/{slug}','ApiRequestConrtoller@singleProduct');
+route::get('products','ApiRequestConrtoller@products');
