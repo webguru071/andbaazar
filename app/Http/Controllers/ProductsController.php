@@ -47,7 +47,10 @@ class ProductsController extends Controller
       $cat = $product->select('category_id')->distinct()->get();
       // dd($cat);
       // $sellerProfile = Merchant::with('rejectvalue')->where('user_id',Sentinel::getUser()->id)->first();
-      $product = Product::where('shop_id',Baazar::shop()->id)->where('type','ecommerce')->paginate(10);
+      $item = product::where('user_id',Sentinel::getUser()->id)->get();
+      // dd($item);
+      $product = Product::with('rejectvalue')->where('shop_id',Baazar::shop()->id)->where('type','ecommerce')->paginate(10);
+      // dd($product);
       $rejectReason = RejectValue::where('user_id',Sentinel::getUser()->id)->where('type','ecommerce')->get();
       // dd($rejectReason);
       // $items = Product::with('inventory')->paginate('10');

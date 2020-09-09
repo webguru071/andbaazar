@@ -108,6 +108,10 @@ class Product extends Model
       return $this->hasOne(Newsfeed::class,'product_id');
     }  
 
+    public function rejectvalue(){
+      return $this->hasMany(RejectValue::class,'product_id');
+    }
+
      public static function getSubcategory($categoryId){
       return DB::table('categories')
                  ->select('id','name')
