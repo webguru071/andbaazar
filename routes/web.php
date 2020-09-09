@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+route::get('check',function(){
+    return response()->json(['amer'=>'ki','ta'=>'jani na']);
+});
+
 include('frontend.php');
 include('merchant.php');
 include('agent.php');

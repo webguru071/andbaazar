@@ -8,6 +8,7 @@
      .h-100{
             height: 70px !important;
             padding: 2px;
+            width: 103px;
         }
         .drop-area{
             display: flex;
@@ -76,7 +77,7 @@
                                     <select name="product_id" class="form-control px-10" id="product_id"  autocomplete="off">
                                         <option value="" selected disabled>Select Product</option>
                                         @foreach ($item as $row)
-                                            <option  value="{{ $row->id }}">{{$row->name}}</option>
+                                            <option  value="{{ $row->id }}" data-cat="{{ $row->category_id }}">{{$row->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -96,26 +97,11 @@
                                         <div class="inputs"></div> 
                                 </div>
         
-                                <div class="col-md-12">
-                                    <label for="size_id" class="siz">Size <span class="text-danger "> *</span></label><span class="text-danger">{{ $errors->first('size_id') }}</span>
-                                    <input type="hidden" name="name" value="{{ $inventoryAttriSize->attribute->name }}">
-                                    <select name="value" class="form-control size" id="size_id" autocomplete="off">
-                                        <option value="" selected disabled>Select Size</option>
-                                        @foreach ($productAttriSize as $row)
-                                            <option value="{{ $row->option }}">{{$row->option}}</option>
-                                        @endforeach
-                                    </select>
+                                
+                                <div class="col-md-12" id="Inventory-attr">
                                 </div>
-                                <div class="col-md-12">
-                                    <label for="size_id" class="capa">Storage Capacity <span class="text-danger"> *</span></label><span class="text-danger">{{ $errors->first('size_id') }}</span>
-                                    <input type="hidden" name="name" value="{{ $inventoryAttriCapa->attribute->name }}">
-                                    <select name="value" class="form-control capacity" id="size_id" autocomplete="off">
-                                        <option value="" selected disabled>Select Size</option>
-                                        @foreach ($productAttriCapa as $row)
-                                            <option value="{{ $row->option }}">{{$row->option}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
+
                                 <div class="col-md-6 mt-1">
                                     <label for="price">Price <span class="text-danger"> *</span></label><span class="text-danger">{{ $errors->first('Price') }}</span>
                                     <input type="number" class="form-control inputfield" name="price" id="price" value="{{ old('price') }}">
@@ -166,37 +152,22 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
 <!-- <script src="{{ asset('') }}/js/select2.min.js"></script> -->
-    <script> 
-        $(document).ready(function () {
-            $('.size').hide();
-            $('.capacity').hide();
-            $('.siz').hide();
-            $('.capa').hide();
-            $('#product_id').on('change',function () {
-                var cat = $(this).find(':selected').data('cat');
+    <script>
+
+        $('#product_id').on('change',function () {
+            var cat = $(this).find(':selected').data('cat');
             console.log(cat);
-                if(cat == 2){
-                    $('.size').hide();
-                    $('.siz').hide();
-                    $('.capacity').show();
-                    $('.capa').show();
+            $.ajax({
+                type:'POST',
+                url:"{{url('merchant/get-inventory-attr-new-Inventory')}}",
+                data:{'cat_id':cat,'_token':'{{csrf_token()}}'},
+                dataType:'json',
+                success:function(data){
+                    $('#Inventory-attr').html(data.option);
                 }
-                if(cat == 3){
-                    $('.size').show();
-                    $('.siz').show();
-                    $('.capacity').hide();
-                    $('.capa').hide();
-                }
-                if(cat != 2 && cat != 3){
-                    $('.size').hide();
-                    $('.siz').hide();
-                    $('.capacity').hide();
-                    $('.capa').hide();
-                }
-            })
+            });
         });
 
-        
 
         //dropzone scripts
         $('#selectColor').change(function(){

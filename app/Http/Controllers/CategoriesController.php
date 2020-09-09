@@ -11,6 +11,10 @@ use Session;
 use Baazar;
 class CategoriesController extends Controller
 {
+    public function getData(){
+        $cats = Category::where('parent_id',0)->get();
+        return response()->json($cats);
+    }
     /**
      * Display a listing of the resource.
      *

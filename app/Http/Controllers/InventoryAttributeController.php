@@ -27,7 +27,26 @@ class InventoryAttributeController extends Controller
                             </select>
                         </td>';
         }
-
         echo json_encode(['label' => $allTheads, 'option' => $allOptions]);
     }
+
+    public function getInventoryAttrOnNewInventory(Request $request){
+        $allTheads = '';
+        $allOptions = '';
+        // dd($request->all());
+        $cat = Category::find($request->cat_id);
+        // dd($cat);
+        foreach($cat->inventoryAttributes as $att){
+            $options = '';
+            foreach($att->options as $opt){
+                $options .= '<option value="'.$opt->option.'">'.$opt->option.'</option>';
+            }
+            $allOptions .= '<select name="inventoryAttr['.$att->name.']" class="form-control">
+                                <option value="" selected disabled>Select '.$att->name.'</option>
+                                '.$options.'
+                            </select>';
+        }
+        echo json_encode(['option' => $allOptions]);
+    }
+    
 }

@@ -32,19 +32,22 @@
             <div class="col-md-9">
                 <div class="top-sec">
                     <h3>E-commerce Products</h3>
-                    <a href="{{ url('merchant/e-commerce/products/new') }}" class="btn btn-sm btn-solid">Add New</a>
+                    <a href="{{ url('merchant/products/new') }}" class="btn btn-sm btn-solid">Add New</a>
                 </div>
+                <form action="" method="get">
                 <div class="filter-area d-flex">
+
+                    
                     <div class="form-group mr-1">
-                        <input type="text" id="search" class="form-control" placeholder="Search Here..." />                     
+                        <input type="text" name="keyword" class="form-control" placeholder="Search Here..." value="{{$filter['keyword']}}" />                     
                     </div>
                     <div class="form-group mr-1">
                         <div class="input-group">
                             <span class="input-group-addon bg-primary p-2 font-weight-bold text-white">Category</span>
-                            <select name="" class="form-control" id="category">
-                            <option value="Select">Search Category</option>
-                            @foreach($product as $row)                               
-                                <option value="{{ $row->category_slug }}">  {{$row->category_slug}}</option>
+                            <select name="category" class="form-control" id="category">
+                            <option value="">All Category</option>
+                            @foreach($categories as $cat)                               
+                                <option value="{{ $cat->category->slug }}" {{$filter['category'] == $cat->category->slug ? 'selected':''}}>  {{$cat->category->name}}</option>
                             @endforeach
                             </select>
                         </div>                    
@@ -52,16 +55,20 @@
                     <div class="form-group mr-2">
                         <div class="input-group">
                             <span class="input-group-addon bg-primary p-2 font-weight-bold text-white">Status</span>
-                            <select name="" class="form-control" id="status">
-                                <option value="Select">Search Status</option>
-                                <option value="Active">Active</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Rejected">Rejected</option>
+                            <select name="status" class="form-control" id="status">
+                                <option value="">All Status</option>
+                                <option value="Active" {{$filter['status'] == 'Active' ? 'selected':''}}>Active</option>
+                                <option value="Pending" {{$filter['status'] == 'Pending' ? 'selected':''}}>Pending</option>
+                                <option value="Rejected" {{$filter['status'] == 'Rejected' ? 'selected':''}}>Rejected</option>
                             </select>
                         </div>
                     </div>
-                    <a href="{{url('merchant/e-commerce/products')}}" class="btn btn-info btn-sm text-white font-weight-bold" style="padding: 8px; height: 38px;">Clear</a>
+                    <button class="btn btn-success btn-sm text-white font-weight-bold mr-1" style="padding: 8px; height: 38px;" type="sumbit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                    @if($filter['status'] != '' || $filter['keyword'] != '' || $filter['category'] != '')
+                        <a href="{{url('/merchant/products')}}" class="btn btn-info btn-sm text-white font-weight-bold" style="padding: 8px; height: 38px;"> <i class="fa fa-refresh" aria-hidden="true"></i> Clear</a>
+                    @endif
                 </div>
+            </form>
                 <table class="table-responsive-md table mb-0 table-striped mt-2">
                     <thead>
                         <tr>
@@ -100,7 +107,7 @@
                             <td class="d-flex justify-content-between">
                                 <ul>
                                     <li>
-                                        <a href="{{ url('merchant/e-commerce/products/update/'.$row->slug.'/productupdate') }}">
+                                        <a href="{{ url('merchant/products/update/'.$row->slug.'/productupdate') }}">
                                             <button class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
                                         </a>
                                     </li>
@@ -118,7 +125,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title f-w-600" id="exampleModalLabel">Reject Reason</h5>
+                                        <h5 class="modal-title f-w-600" id="exampleModalLabel">Reject Description</h5>
                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                     </div>
 
@@ -128,13 +135,7 @@
                                                 <div class="form-group">
                                                     <label for="validationCustom01" class="mb-1">Description :</label>
                                                     <div>
-                                                        @php $i  = 0; @endphp
-                                                        @foreach($rejectReason as $row)
-                                                        <ol>
-                                                            <span class="text-danger">{{ ++$i }} .</span>
-                                                            <li><b class="text-danger">{{$row->rej_name." "}}</b></li>
-                                                        </ol>
-                                                        @endforeach
+                                                        {{ $row->rej_desc}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,20 +164,20 @@
 @endsection 
 @push('js')
 <script>
-    $("#search").keyup(function () {
-        var value = this.value.toLowerCase().trim();
-        $("table tr").each(function (index) {
-            if (!index) return;
-            $(this)
-                .find("td")
-                .each(function () {
-                    var id = $(this).text().toLowerCase().trim();
-                    var not_found = id.indexOf(value) == -1;
-                    $(this).closest("tr").toggle(!not_found);
-                    return not_found;
-                });
-          });
-    });
+    // $("#search").keyup(function () {
+    //     var value = this.value.toLowerCase().trim();
+    //     $("table tr").each(function (index) {
+    //         if (!index) return;
+    //         $(this)
+    //             .find("td")
+    //             .each(function () {
+    //                 var id = $(this).text().toLowerCase().trim();
+    //                 var not_found = id.indexOf(value) == -1;
+    //                 $(this).closest("tr").toggle(!not_found);
+    //                 return not_found;
+    //             });
+    //       });
+    // });
 </script>
 
 <script>

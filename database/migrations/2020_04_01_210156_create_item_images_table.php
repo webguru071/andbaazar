@@ -17,6 +17,7 @@ class CreateItemImagesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('product_id')->nullable();
             $table->string('color_slug')->default('main');
+            $table->integer('color_id')->default(0);
             $table->integer('sort')->nullable();
             $table->text('org_img')->nullable();
             $table->text('list_img')->nullable();

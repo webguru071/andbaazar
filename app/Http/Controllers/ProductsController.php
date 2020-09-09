@@ -39,6 +39,7 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
+
       // $cats = \DB::table('products')->select('category_id')->distinct()->get();
       // dd($cats);
       $product = Product::with('user')->where('shop_id',Baazar::shop()->id);
@@ -57,16 +58,42 @@ class ProductsController extends Controller
 
       if ($request->has('cat')){
         $product = Product::where('shop_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','ecommerce')->paginate(10);            
+
+      $filter = [
+        'category'  => '',
+        'status'  => '',
+        'keyword'  => '',
+      ];
+      $findCat = Product::where('shop_id',Baazar::shop()->id);
+      $categories = $findCat->select('category_id')->with('category')->distinct()->get();
+
+      $product = Product::where('shop_id',Baazar::shop()->id);
+
+      //Category Filter
+      if ($request->has('category') && !empty($request->category)){
+        $catId = Category::where('slug',$request->category)->first();
+        if($catId){
+          $product = $product->where('category_id',$catId->id);
+        }
+        $filter['category'] = $request->category;
+
       }
-    
-      if ($request->has('status')){
-        $product = Product::orderBy('status','asc')->Where('status',$request->status)->where('type','ecommerce')->paginate(10);   
-      } 
-      $categories = ([
-        'cat'      =>request('cat'),
-        'status'   => request('status'),
-      ]);
-      return view ('merchant.product.index',compact('product','rejectReason'));
+      
+      //status Filter
+      if ($request->has('status') && !empty($request->status)){
+        $product = $product->where('status',$request->status);
+        $filter['status'] = $request->status;
+      }
+
+      //status Filter
+      if ($request->has('keyword') && !empty($request->keyword)){
+        $product = $product->where('name','like','%'.$request->keyword.'%');
+        $filter['keyword'] = $request->keyword;
+      }
+
+      $product = $product->paginate(10);
+      $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
+      return view ('merchant.product.index',compact('product','categories','filter'));
 
     }
 
@@ -156,10 +183,12 @@ class ProductsController extends Controller
     public function addImages($images, $itemId,$shop){
       foreach($images as $color => $image){
         foreach($image as $img){
+          $cID = Color::where('slug',$color)->first();
           $i = 0;
           $image = [
             'product_id' => $itemId,
             'color_slug' => $color,
+            'color_id'   => $cID ? $cID->id : 0,
             'sort'       => ++$i,
             'org_img'    => Baazar::base64Upload($img,'orgimg',$shop->slug,$color),
           ];
@@ -340,7 +369,14 @@ class ProductsController extends Controller
         }
         if($request->images){
           $this->addImages($request->images,$product->id,$shop);
-        }  
+        } 
+        $newsFeed = [
+          'title'      => $request->title,
+          'image'      => Baazar::fileUpload($request,'image','old_image','/uploads/newsfeed_image'),
+          'news_desc'  => $request->news_desc,  
+          'updated_at' => now(),
+        ];
+        $newsFeedUpdate->update($newsFeed);
         Session::flash('success', 'Product updated Successfully!');
 
         return back();
@@ -411,7 +447,6 @@ class ProductsController extends Controller
                 'rej_name'      => $request->rej_name[$i],
                 'type'          => $request->type,
                 'merchant_id'   => $data->id,
-                'product_id'    => $data->id,
                 'user_id'       => $data->user_id,
             ]);
             // dd($data);
@@ -463,7 +498,13 @@ class ProductsController extends Controller
          return redirect('merchant/product');
     }
 
-    
+    public function vendorshow($slug){
+
+    //  $product = Product::with('category')->where('user_id',Sentinel::getUser()->id)->first();
+      $product = Product::with(['category','itemimage'])->where('slug',$slug)->first();
+      $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
+      return view('merchant.product.vendorshow',compact('product','shopProfile'));
+    }
 
     public function colorWiseImage(Request $request){
       $imgcolor = $request->imgcolor;

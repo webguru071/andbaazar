@@ -87,8 +87,8 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
 
         Route::get('inventories/new','SmeInventoryController@create');
         Route::post('inventories/new','SmeInventoryController@store')->name('smeinventory.store');
-        Route::get('inventrories/update/{slug}/smeinventroyupdate','SmeInventoryController@edit');
-        Route::put('inventrories/update/{slug}','SmeInventoryController@update');
+        Route::get('inventories/update/{slug}/smeinventroyupdate','SmeInventoryController@edit');
+        Route::put('inventories/update/{slug}','SmeInventoryController@update');
         Route::resource('inventories','SmeInventoryController');
 
     });
@@ -102,6 +102,7 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
    
 
     Route::post('get-inventory-attr','InventoryAttributeController@getInventoryAttr');
+    Route::post('get-inventory-attr-new-Inventory','InventoryAttributeController@getInventoryAttrOnNewInventory');
     Route::post('get-category-attr','CategoriesController@getCategoryAttr');
 
     Route::group(['prefix' => 'newsfeed'], function () {
