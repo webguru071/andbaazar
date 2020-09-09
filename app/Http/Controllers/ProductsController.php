@@ -39,6 +39,26 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
+
+      // $cats = \DB::table('products')->select('category_id')->distinct()->get();
+      // dd($cats);
+      $product = Product::with('user')->where('shop_id',Baazar::shop()->id);
+     
+
+      $cat = $product->select('category_id')->distinct()->get();
+      // dd($cat);
+      // $sellerProfile = Merchant::with('rejectvalue')->where('user_id',Sentinel::getUser()->id)->first();
+      $item = product::where('user_id',Sentinel::getUser()->id)->get();
+      // dd($item);
+      $product = Product::with('rejectvalue')->where('shop_id',Baazar::shop()->id)->where('type','ecommerce')->paginate(10);
+      // dd($product);
+      $rejectReason = RejectValue::where('user_id',Sentinel::getUser()->id)->where('type','ecommerce')->get();
+      // dd($rejectReason);
+      // $items = Product::with('inventory')->paginate('10');
+
+      if ($request->has('cat')){
+        $product = Product::where('shop_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','ecommerce')->paginate(10);            
+
       $filter = [
         'category'  => '',
         'status'  => '',
@@ -56,6 +76,7 @@ class ProductsController extends Controller
           $product = $product->where('category_id',$catId->id);
         }
         $filter['category'] = $request->category;
+
       }
       
       //status Filter

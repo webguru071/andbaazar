@@ -95,10 +95,10 @@
                                                     <label for="validationCustom01" class="mb-1">Description :</label>
                                                     <div>
                                                         @php $i  = 0; @endphp
-                                                        @foreach($rejectReason as $row)
+                                                        @foreach($row->rejectvalue as $reason)
                                                         <ol>
                                                             <span class="text-danger">{{ ++$i }} .</span>
-                                                            <li><b class="text-danger">{{$row->rej_name." "}}</b></li>
+                                                            <li><b class="text-danger">{{$reason->rej_name." "}}</b></li>
                                                         </ol>
                                                         @endforeach
                                                     </div>
