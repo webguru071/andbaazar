@@ -96,6 +96,7 @@ class ProductsController extends Controller
       return view ('merchant.product.index',compact('product','categories','filter'));
 
     }
+    }
 
     /**
      * Show the form for creating a new resource.
