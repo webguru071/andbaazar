@@ -230,4 +230,11 @@ class Baazar
     public function randString($length = 10) {
         return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
     }
+
+    public function apiSuccess($data,$msg=''){
+        return response()->json(['data'=>$data,'error'=>false,'msg'=>$msg]);
+    }
+    public function apiError($msg=''){
+        return response()->json(['data'=>'','error'=>true,'msg'=>$msg]);
+    }
 }

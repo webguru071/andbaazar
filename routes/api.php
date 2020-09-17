@@ -20,3 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 route::get('checks','CategoriesController@getData');
 route::get('product/{slug}','ApiRequestConrtoller@singleProduct');
 route::get('products','ApiRequestConrtoller@products');
+route::get('unique-colors','ApiRequestConrtoller@getColors');
+route::get('unique-size','ApiRequestConrtoller@getSizes');
+Route::post('registration','Api\CustomerApiController@registration');
+Route::post('login','Api\CustomerApiController@login');
+// Route::post('login','CustomerController@userloginprocess')->name('userloginprocess');

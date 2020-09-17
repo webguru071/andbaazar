@@ -31,8 +31,10 @@ use App\Models\Tag;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Newsfeed;
+use Laravel\Passport\HasApiTokens;
 class User extends EloquentUser
 {
+  use HasApiTokens;
     protected $fillable = [
         'first_name','last_name','type','email', 'password',
     ];
