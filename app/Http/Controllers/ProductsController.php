@@ -50,25 +50,22 @@ class ProductsController extends Controller
       // $sellerProfile = Merchant::with('rejectvalue')->where('user_id',Sentinel::getUser()->id)->first();
       $item = product::where('user_id',Sentinel::getUser()->id)->get();
       // dd($item);
-      $product = Product::with('rejectvalue')->where('shop_id',Baazar::shop()->id)->where('type','ecommerce')->paginate(10);
+      $product = Product::with('rejectvalue')->where('shop_id',Baazar::shop()->id)->where('type','ecommerce');
       // dd($product);
       $rejectReason = RejectValue::where('user_id',Sentinel::getUser()->id)->where('type','ecommerce')->get();
       // dd($rejectReason);
       // $items = Product::with('inventory')->paginate('10');
-
-      if ($request->has('cat')){
-        $product = Product::where('shop_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','ecommerce')->paginate(10);            
-
       $filter = [
         'category'  => '',
         'status'  => '',
         'keyword'  => '',
       ];
-      $findCat = Product::where('shop_id',Baazar::shop()->id);
-      $categories = $findCat->select('category_id')->with('category')->distinct()->get();
+      $findCat = Product::where('shop_id',Baazar::shop()->id)->where('type','ecommerce');
+          $categories = $findCat->select('category_id')->with('category')->distinct()->get();
 
-      $product = Product::where('shop_id',Baazar::shop()->id);
-
+      if ($request->has('cat')){
+        $product = Product::where('shop_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','ecommerce');
+        }
       //Category Filter
       if ($request->has('category') && !empty($request->category)){
         $catId = Category::where('slug',$request->category)->first();
@@ -91,11 +88,14 @@ class ProductsController extends Controller
         $filter['keyword'] = $request->keyword;
       }
 
+      // dd($product);
       $product = $product->paginate(10);
       $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
       return view ('merchant.product.index',compact('product','categories','filter'));
 
     }
+  // }
+    
 
     /**
      * Show the form for creating a new resource.
