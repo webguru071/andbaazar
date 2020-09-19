@@ -8,54 +8,55 @@ use App\Models\Size;
 class ApiRequestConrtoller extends Controller
 {
     public function singleProduct($slug){
-        // $product = Product::where('id',$slug)->with(['category','inventory','itemimage'])->first();
+        $product = Product::where('id',$slug)->with(['category','inventory','itemimage'])->first();
         // dd($product);
-        // $data = [];
-        // $data = [
-        //     "id" => $product->id,
-        //     "title" => $product->name,
-        //     "description" => $product->description,
-        //     "type" => $product->category->name,
-        //     "brand" => $product->brand_id,
-        //     "collection" => [
-        //         'New Products'
-        //     ],
-        //     "category" => $product->category->name,
-        //     "price" => $product->price,
-        //     "sale" => true,
-        //     "discount" => 0,
-        //     "stock" => 50,
-        //     "new" => true,
-        //     "tags" => [
-        //         "new",
-        //         "s",
-        //         "m",
-        //         "yellow",
-        //         "white",
-        //         "pink",
-        //         "nike"
-        //     ],
-        // ];
-        // foreach($product->inventory as $variants){
-        //     $data['variants'][] = [
-        //         "variant_id" => $variants->id,
-        //         "id" => $variants->id,
-        //         "sku" => $variants->seller_sku,
-        //         "size" => 's',
-        //         "color" => strtolower($variants->color_name),
-        //         "image_id" => 111,
-        //         "price"  => $variants->price,
-        //     ];
-        // }
-        // foreach($product->itemimage as $img){
-        //     $data['images'][$img->color_slug][] = [
-        //         "image_id" => $img->id,
-        //         "id" => $img->id,
-        //         "alt" => $img->color_slug,
-        //         "src" => asset($img->org_img),
-        //     ];
-        // }
-        
+        $data = [];
+        $data = [
+            "id" => $product->id,
+            "title" => $product->name,
+            "description" => $product->description,
+            "type" => $product->category->name,
+            "brand" => $product->brand_id,
+            "collection" => [
+                'New Products'
+            ],
+            "category" => $product->category->name,
+            "price" => $product->price,
+            "sale" => true,
+            "discount" => 0,
+            "stock" => 50,
+            "new" => true,
+            "tags" => [
+                "new",
+                "s",
+                "m",
+                "yellow",
+                "white",
+                "pink",
+                "nike"
+            ],
+        ];
+        foreach($product->inventory as $variants){
+            $data['variants'][strtolower($variants->color_name)][] = [
+                // "variant_id" => $variants->id,
+                // "id" => $variants->id,
+                "sku" => $variants->seller_sku,
+                "size" => 's',
+                "discount" => 10,
+                // "color" => strtolower($variants->color_name),
+                // "image_id" => 111,
+                "price"  => $variants->price,
+            ];
+        }
+        foreach($product->itemimage as $img){
+            $data['images'][$img->color_slug][] = [
+                "image_id" => $img->id,
+                "id" => $img->id,
+                "alt" => $img->color_slug,
+                "src" => asset($img->org_img),
+            ];
+        }
+        return response()->json($data); 
         $data = [
             "id" => 1,
             "title" => "trim dress asdfasdfasdf",

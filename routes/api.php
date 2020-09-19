@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -22,3 +23,7 @@ route::get('product/{slug}','ApiRequestConrtoller@singleProduct');
 route::get('products','ApiRequestConrtoller@products');
 route::get('unique-colors','ApiRequestConrtoller@getColors');
 route::get('unique-size','ApiRequestConrtoller@getSizes');
+Route::post('registration','Api\CustomerApiController@registration');
+Route::post('login','Api\CustomerApiController@login');
+Route::get('me','Api\CustomerApiController@me')->middleware('ApiAuth');
+// Route::post('login','CustomerController@userloginprocess')->name('userloginprocess');

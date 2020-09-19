@@ -34,7 +34,7 @@ use App\Models\Newsfeed;
 class User extends EloquentUser
 {
     protected $fillable = [
-        'first_name','last_name','type','email', 'password',
+        'first_name','last_name','type','email', 'password','api_token'
     ];
     protected $loginNames = ['email','type'];
 
