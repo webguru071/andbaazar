@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Product;
 use App\Models\Color;
 use App\User;
+use App\Models\Auctionproduct;
 
 class ItemImage extends Model
 {
@@ -14,6 +15,7 @@ class ItemImage extends Model
   protected $fillable = [
     'product_id',
     'color_slug',
+    'type',
     'color_id',
     'sort',
     'org_img',
@@ -27,6 +29,11 @@ class ItemImage extends Model
   {
       return $this->belongsTo(Product::class, 'product_id');
   }
+  public function auctionproduct(){
+    return $this->belongsTo(Auctionproduct::class,'product_id');
+  }
+
+
 
   // public function color()
   // {
