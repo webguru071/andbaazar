@@ -15,6 +15,7 @@ class CreateAuctionproductsTable extends Migration
     {
         Schema::create('auctionproducts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->string('images');
             $table->enum('type',['krishi','other'])->default('other');
             $table->text('description');
@@ -22,6 +23,7 @@ class CreateAuctionproductsTable extends Migration
             $table->boolean('sold')->default(0)->change();
             $table->string('qty');
             $table->string('unit'); 
+            $table->text('category_slug')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('merchant_id');
             $table->unsignedBigInteger('user_id')->nullable(); 

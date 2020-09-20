@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Auctionproduct extends Model
 {
-    //
+    protected $fillable = ['images','type',];
 }
