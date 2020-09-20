@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAuctionbidsTable extends Migration
+class CreateCommentauctionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,14 @@ class CreateAuctionbidsTable extends Migration
      */
     public function up()
     {
-        Schema::create('auctionbids', function (Blueprint $table) {
+        Schema::create('commentauctions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('date');
-            $table->unsignedBigInteger('auction_id');
-            $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('auctionproduct_id');
-            $table->string('rate');
-            $table->text('message')->nullable();
-            $table->boolean('autobid')->default(0)->change();
-            $table->integer('autobid_increases')->nullable();
+            $table->integer('parent_id')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->text('comments');
             $table->timestamps();
 
-            $table->foreign('auction_id')->references('id')->on('auctions')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('auctionproduct_id')->references('id')->on('auctionproducts')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
@@ -40,6 +33,6 @@ class CreateAuctionbidsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('auctionbids');
+        Schema::dropIfExists('commentauctions');
     }
 }

@@ -26,9 +26,11 @@ class CreateAuctionsTable extends Migration
             $table->text('seller_comment')->nullable();
             $table->integer('number_of_bids')->default(0);
             $table->unsignedBigInteger('order_id')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps(); 
             
             $table->foreign('auctionproduct_id')->references('id')->on('auctionproducts')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
