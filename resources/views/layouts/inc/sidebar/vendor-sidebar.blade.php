@@ -23,6 +23,7 @@
                       <li class="nav-item"> 
                         <a  class="nav-link {{$active == 'product' ? 'active' : ''}}" href="{{ url('merchant/e-commerce/products') }}">E-commerce Products</a>
                         <a  class="nav-link {{$active == 'smeProduct' ? 'active' : ''}}" href="{{ url('merchant/sme/products') }}">SME Products</a>
+                        <a  class="nav-link {{$active == 'auction' ? 'active' : ''}}" href="{{ url('merchant/auction/products') }}">Auction</a>
                       </li>
                     </ul>
                   </div> 
@@ -38,6 +39,7 @@
                       </li>
                     </ul>
                   </div> 
+                </li>            
                 </li>
                 
                 

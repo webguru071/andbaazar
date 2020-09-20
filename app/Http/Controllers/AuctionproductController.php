@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Auctionproduct;
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use Sentinel;
 use Session;
 use Baazar;
 use App\Models\ItemImage;
 use App\Models\Merchant; 
+=======
+use App\Models\Category;
+use Sentinel;
+use Session;
+use Baazar;
+>>>>>>> 1b02400c6e3074466ea777e45b3d8cf0d803084d
 
 class AuctionproductController extends Controller
 {
@@ -19,7 +26,7 @@ class AuctionproductController extends Controller
      */
     public function index()
     {
-        //
+        return view('auction.product.index');
     }
 
     /**
@@ -29,7 +36,8 @@ class AuctionproductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::where('parent_id',0)->get();
+        return view('auction.product.create',compact('categories'));
     }
 
     public function addImages($images, $itemId){
