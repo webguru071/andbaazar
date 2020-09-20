@@ -10,12 +10,13 @@ use App\Mail\ProductRejectMail;
 use App\Models\RejectValue;
 use App\Models\Category;
 use App\Models\Auctionproduct;
+use App\Models\ItemImage;
+use App\Models\Merchant; 
 use Sentinel;
 use Session;
 use Baazar;
-use App\Models\ItemImage;
-use App\Models\Merchant;  
-use App\Models\Category;
+ 
+
 
 
 
@@ -30,7 +31,7 @@ class AuctionproductController extends Controller
     {
          // $cats = \DB::table('products')->select('category_id')->distinct()->get();
       // dd($cats);
-      $product = Auctionproduct::with('user')->where('shop_id',Baazar::shop()->id);
+      $product = Auctionproduct::with('user')->where('merchant_id',Baazar::shop()->id);
      
 
       $cat = $product->select('category_id')->distinct()->get();
@@ -38,7 +39,7 @@ class AuctionproductController extends Controller
       // $sellerProfile = Merchant::with('rejectvalue')->where('user_id',Sentinel::getUser()->id)->first();
       $item = Auctionproduct::where('user_id',Sentinel::getUser()->id)->get();
       // dd($item);
-      $product = Auctionproduct::with('rejectvalue')->where('shop_id',Baazar::shop()->id)->where('type','ecommerce');
+      $product = Auctionproduct::with('rejectvalue')->where('merchant_id',Baazar::shop()->id)->where('type','ecommerce');
       // dd($product);
       $rejectReason = RejectValue::where('user_id',Sentinel::getUser()->id)->where('type','ecommerce')->get();
       // dd($rejectReason);
@@ -48,11 +49,11 @@ class AuctionproductController extends Controller
         'status'  => '',
         'keyword'  => '',
       ];
-      $findCat = Auctionproduct::where('shop_id',Baazar::shop()->id)->where('type','ecommerce');
+      $findCat = Auctionproduct::where('merchant_id',Baazar::shop()->id)->where('type','ecommerce');
           $categories = $findCat->select('category_id')->with('category')->distinct()->get();
 
       if ($request->has('cat')){
-        $product = Auctionproduct::where('shop_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','ecommerce');
+        $product = Auctionproduct::where('merchant_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','ecommerce');
         }
       //Category Filter
       if ($request->has('category') && !empty($request->category)){
@@ -167,9 +168,10 @@ class AuctionproductController extends Controller
      * @param  \App\Auctionproduct  $auctionproduct
      * @return \Illuminate\Http\Response
      */
-    public function edit($slug)
+    public function edit()
     {
-        //
+        $categories = Auctionproduct::all(); 
+       return view('auction.product.edit',compact('categories'));
     }
 
     /**

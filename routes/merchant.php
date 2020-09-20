@@ -98,6 +98,7 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
      Route::group(['prefix' => 'auction'],function(){
         Route::get('products/new','AuctionproductController@create');
         Route::post('products/new','AuctionproductController@store')->name('auctionstore');
+        Route::get('products/edit','AuctionproductController@edit');
         Route::resource('products','AuctionproductController');
         // Route::get('products','AuctionproductController@index');
         // Route::get('add','AuctionproductController@create'); 
