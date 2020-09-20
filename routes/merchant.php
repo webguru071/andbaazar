@@ -131,6 +131,7 @@ Route::post('get-ward', 'AjaxController@getWard')->name('get-ward');
 
 // Inventory import
 Route::get('attributeImport', 'ExportImportController@importExportView');
+Route::post('attributeImport','ExportImportController@import')->name('attributestore');
 Route::get('invExport', 'ExportImportController@export')->name('export');
 Route::post('invImport', 'ExportImportController@import')->name('import'); 
 
