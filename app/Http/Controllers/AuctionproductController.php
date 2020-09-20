@@ -4,18 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Auctionproduct;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
+
 use Sentinel;
 use Session;
 use Baazar;
 use App\Models\ItemImage;
-use App\Models\Merchant; 
-=======
+use App\Models\Merchant;  
 use App\Models\Category;
-use Sentinel;
-use Session;
-use Baazar;
->>>>>>> 1b02400c6e3074466ea777e45b3d8cf0d803084d
+
+
 
 class AuctionproductController extends Controller
 {
@@ -66,13 +63,15 @@ class AuctionproductController extends Controller
      */
     public function store(Request $request,Auctionproduct $auctionproduct)
     {
+        // dd($request->all());
         $merchantId =  Merchant::where('user_id',Sentinel::getUser()->id)->first();
         $slug       = Baazar::getUniqueSlug($auctionproduct,$request->name);
         $feature    = Baazar::base64Uploadauction($request->images['main'][0],$slug,'featured');
+        dd($feature);
 
         $data = [
             'name'          => $request->name,
-            'images'        => $feature,
+            'image'         => $feature,
             'slug'          => $slug,
             'description'   => $request->description,
             'qty'           => $request->qty,

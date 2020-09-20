@@ -9,7 +9,7 @@ use App\Models\Merchant;
 
 class Auctionproduct extends Model
 {
-    protected $fillable = ['name','slug','images','type','description','category_slug','category_id','merchant_id','user_id'];
+    protected $fillable = ['name','slug','image','type','description','category_slug','qty','unit','category_id','merchant_id','user_id'];
 
     public function getRouteKeyName()
     {

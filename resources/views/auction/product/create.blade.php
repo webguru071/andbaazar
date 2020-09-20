@@ -113,6 +113,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
+                            <form action="{{route('auctionstore')}}" method="POST" method="post" class="form" id="validateForm" enctype="multipart/form-data">
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -150,7 +152,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div id="dropzone-main" class="img-upload-area" data-color="main">
+                                    {{-- <div id="dropzone-main" class="img-upload-area" data-color="main">
                                         <label class="mt-3"><b>Images :</b><span class="text-danger" id="message_main_img"></span></label>
                                         <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
                                             <span class="dz-message color-main">
@@ -158,6 +160,15 @@
                                             </span>
                                         </div>
                                         <small>Remember Your featured file will be the first one.</small><br />
+                                    </div> --}}
+                                    <label for="color_id" class="col-xl-3 col-md-4"></label>
+                                    <div id="dropzone-main" class="img-upload-area" data-color="main"><label class="mt-3"><b>Images :</b><span class="text-danger" id="message_main_img"></span></label>
+                                        <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
+                                            <span class="dz-message color-main">
+                                                <h2>Drag & Drop Your Files</h2>
+                                            </span>
+                                        </div>
+                                        <small>Remember Your featured file will be the first one.</small><br>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -171,8 +182,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group margin">
-                                            <label for="brand_id">Quantity<span>*</span></label>
-                                            <input type="text" class="form-control" name="qty" id="qty" />
+                                            <label for="qty">Quantity<span>*</span></label>
+                                            <input type="number" class="form-control" name="qty" id="qty" />
                                             <span class="text-danger" id="message_qty"></span>
                                             @if ($errors->has('qty'))
                                             <span class="text-danger">{{ $errors->first('qty') }}</span>
@@ -195,6 +206,7 @@
                     </div>                    
                 </div>
                 <button class="btn btn-success custom float-right ml-2 w-5"  type="submit">Save</button> 
+            </form> 
             </div>          
         </div>   
                  
@@ -348,14 +360,14 @@
                 var self = this;
                 self.on("dragleave", function(event) {});
 
-                self.on("thumbnail", function(file){
-                    if(file.size < 3000000){
-                        $('.inputs').append(`<input type="hidden" class="image-class-${color}" name="images[${color}][]" id="id${file.size}" value="${file.dataURL}">`);
-                    }else{
-                        swal("Maximum size reached", {icon: "warning",buttons: false,timer: 2000});
-                        this.removeFile(file);
-                    }
-                });              
+                // self.on("thumbnail", function(file){
+                //     if(file.size < 3000000){
+                //         $('.inputs').append(`<input type="hidden" class="image-class-${color}" name="images[${color}][]" id="id${file.size}" value="${file.dataURL}">`);
+                //     }else{
+                //         swal("Maximum size reached", {icon: "warning",buttons: false,timer: 2000});
+                //         this.removeFile(file);
+                //     }
+                // });              
 
                 // Send file starts
                 self.on("sending", function(file) {
