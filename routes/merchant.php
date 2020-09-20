@@ -76,7 +76,7 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
     // Sme Products Are Start//
     Route::group(['prefix' => 'sme'],function(){
         Route::get('products','SmeProductController@index')->middleware('isMerchantActive');
-        Route::get('products/new','SmeProductController@create')->middleware('isMerchantActive');;
+        Route::get('products/new','SmeProductController@create')->middleware('isMerchantActive');
         Route::post('products/new','SmeProductController@store')->name('smeproduct.store')->middleware('isMerchantActive');;
         Route::get('products/view/{slug}','SmeProductController@show')->middleware('isMerchantActive');
         Route::get('products/update/{slug}/','SmeProductController@edit');
@@ -92,6 +92,16 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
         Route::resource('inventories','SmeInventoryController');
 
     });
+
+    // Auction Product Start //
+
+     Route::group(['prefix' => 'auction'],function(){
+        Route::get('products','AuctionController@index');
+        Route::get('add','AuctionController@create'); 
+        Route::post('add','AuctionController@store');       
+    }); 
+   // Auction Product End //
+
 
 
 

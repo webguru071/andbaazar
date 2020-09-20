@@ -18,6 +18,7 @@ class CreateAuctionproductsTable extends Migration
             $table->string('images');
             $table->enum('type',['krishi','other'])->default('other');
             $table->text('description');
+            $table->string('slug')->nullable();
             $table->boolean('sold')->default(0)->change();
             $table->string('qty');
             $table->string('unit'); 
