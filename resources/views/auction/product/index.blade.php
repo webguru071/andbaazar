@@ -32,7 +32,7 @@
             <div class="col-md-9">
                 <div class="top-sec">
                     <h3>Auction Products</h3>
-                    <a href="{{ url('merchant/auction/products/create') }}" class="btn btn-sm btn-solid">Add New</a>
+                    <a href="{{ url('merchant/auction/products/new') }}" class="btn btn-sm btn-solid">Add New</a>
                 </div>
                 <form action="" method="get">
                 <div class="filter-area d-flex">
