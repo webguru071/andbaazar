@@ -23,6 +23,7 @@ class CreateItemImagesTable extends Migration
             $table->text('list_img')->nullable();
             $table->text('thumb_img')->nullable();
             $table->text('compressed_img')->nullable();
+            $table->string('type')->nullable();
             $table->boolean('active')->default(1)->change();
             // $table->unsignedBigInteger('user_id');
             $table->softDeletes();
