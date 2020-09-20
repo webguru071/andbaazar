@@ -96,9 +96,10 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
     // Auction Product Start //
 
      Route::group(['prefix' => 'auction'],function(){
-        Route::get('products','AuctionController@index');
-        Route::get('add','AuctionController@create'); 
-        Route::post('add','AuctionController@store');       
+        Route::resource('products','AuctionproductController');
+        // Route::get('products','AuctionproductController@index');
+        // Route::get('add','AuctionproductController@create'); 
+        // Route::post('add','AuctionproductController@store');       
     }); 
    // Auction Product End //
 

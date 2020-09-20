@@ -39,6 +39,8 @@
                     </ul>
                   </div> 
                 </li>
+                <li class="nav-item"><a  class="nav-link {{$active == 'auction' ? 'active' : ''}}" href="{{ url('merchant/auction/products') }}">Auction</a>
+                </li>
                 
                 
                 <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#orders">Orders</a> </li>

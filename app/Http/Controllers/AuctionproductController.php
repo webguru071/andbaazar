@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Auctionproduct;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use Sentinel;
+use Session;
+use Baazar;
 
 class AuctionproductController extends Controller
 {
@@ -14,7 +18,7 @@ class AuctionproductController extends Controller
      */
     public function index()
     {
-        //
+        return view('auction.product.index');
     }
 
     /**
@@ -24,7 +28,8 @@ class AuctionproductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all(); 
+        return view('auction.product.create',compact('categories'));
     }
 
     /**
