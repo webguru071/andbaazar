@@ -131,7 +131,7 @@ class Baazar
         }
     }
 
-    public function base64Uploadauction($image_file,$name){
+    public function base64Uploadauction($image_file,$name,$color){
         $t = substr($image_file,0,11);
         if($t == 'data:image/'){
             list($type, $image_file) = explode(';', $image_file);
@@ -139,15 +139,15 @@ class Baazar
             if($this->is_base64($image_file)){
                 $image_file = base64_decode($image_file);
                 $image_name= $name.rand().'.png';
-                $db_img = 'uploads/auction/'.$name.'-'.$image_name;
+                $db_img = 'uploads/auction/'.$name.'-'.$color.'-'.$image_name;
                 $path = public_path($db_img);
                 file_put_contents($path, $image_file);
                 return $db_img;            
             }
         }else{
-            // dd($image_file);
+            dd($image_file);
             $path = explode('/public/',$image_file);
-            // return $path[1];
+            return $path[1];
         }
     }
 

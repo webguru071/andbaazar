@@ -14,8 +14,11 @@ use App\Models\ItemImage;
 use App\Models\Merchant; 
 use Sentinel;
 use Session;
-use Baazar;
+use Baazar; 
+use App\Models\Color;
+
  
+
 
 
 
@@ -95,21 +98,22 @@ class AuctionproductController extends Controller
     }
 
     public function addImages($images, $itemId){
-        // foreach($images as $color => $image){
-          foreach($images as $img){
-            // $cID = Color::where('slug',$color)->first();
-            // $i = 0;
+      foreach($images as $color => $image){
+          foreach($image as $img){
+            $cID = Color::where('slug',$color)->first();
+            $i = 0;
             $image = [
-              'product_id' => $itemId,
-            //   'color_slug' => $color,
-            //   'color_id'   => $cID ? $cID->id : 0,
-            //   'sort'       => ++$i,
+              'product_id' => $itemId, 
+              'color_slug' => $color,
+              'color_id'   => $cID ? $cID->id : 0,
+              'sort'       => ++$i,
               'type' => 'Auction',
-              'org_img'    => Baazar::base64Uploadauction($img,'orgimg'),
+              'org_img'    => Baazar::base64Uploadauction($img,'orgimg',$color),
             ];
+            // dd($image);
             ItemImage::create($image);
           }
-        // }
+         }
       }
 
     /**
@@ -123,8 +127,13 @@ class AuctionproductController extends Controller
         // dd($request->all());
         $merchantId =  Merchant::where('user_id',Sentinel::getUser()->id)->first();
         $slug       = Baazar::getUniqueSlug($auctionproduct,$request->name);
+<<<<<<< HEAD
         $feature    = Baazar::auctionUpload($request->image['main'][0],$slug,'featured');
         // dd($feature)      
+=======
+        $feature    = Baazar::base64Uploadauction($request->images['main'][0],$slug,'featured');
+        // dd($feature);
+>>>>>>> b8fca9042e2d55b3a2306f28a09e5e0f30e1e1b0
 
         $data = [
             'name'          => $request->name,
@@ -139,6 +148,7 @@ class AuctionproductController extends Controller
             'user_id'       => Sentinel::getUser()->id,
             'created_at'    => now(),
         ];
+        
 
         $auctionproduct = Auctionproduct::create($data);
 

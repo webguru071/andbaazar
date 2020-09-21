@@ -23,6 +23,7 @@ class CreateAuctionproductsTable extends Migration
             $table->boolean('sold')->default(0)->change();
             $table->string('qty');
             $table->string('unit'); 
+            $table->enum('status',['Active','Reject','Pending'])->default('Pending');
             $table->text('category_slug')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('merchant_id');
