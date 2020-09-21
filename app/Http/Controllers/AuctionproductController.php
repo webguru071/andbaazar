@@ -32,60 +32,31 @@ class AuctionproductController extends Controller
      */
     public function index(Request $request)
     {
-         // $cats = \DB::table('products')->select('category_id')->distinct()->get();
-      // dd($cats);
-      $product = Auctionproduct::with('user')->where('merchant_id',Baazar::shop()->id);
-     
-
-      $cat = $product->select('category_id')->distinct()->get();
-      // dd($cat);
       // $sellerProfile = Merchant::with('rejectvalue')->where('user_id',Sentinel::getUser()->id)->first();
-      $item = Auctionproduct::where('user_id',Sentinel::getUser()->id)->get();
-      // dd($item);
-      $product = Auctionproduct::with('rejectvalue')->where('merchant_id',Baazar::shop()->id)->where('type','ecommerce');
-      // dd($product);
-      $rejectReason = RejectValue::where('user_id',Sentinel::getUser()->id)->where('type','ecommerce')->get();
-      // dd($rejectReason);
+        $product = Auctionproduct::all();
+        $rejectReason = RejectValue::where('user_id',Sentinel::getUser()->id)->where('type','sme')->get();
+
       // $items = Product::with('inventory')->paginate('10');
-      $filter = [
-        'category'  => '',
-        'status'  => '',
-        'keyword'  => '',
-      ];
-      $findCat = Auctionproduct::where('merchant_id',Baazar::shop()->id)->where('type','ecommerce');
-          $categories = $findCat->select('category_id')->with('category')->distinct()->get();
-
-      if ($request->has('cat')){
-        $product = Auctionproduct::where('merchant_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','ecommerce');
-        }
-      //Category Filter
-      if ($request->has('category') && !empty($request->category)){
-        $catId = Category::where('slug',$request->category)->first();
-        if($catId){
-          $product = $product->where('category_id',$catId->id);
-        }
-        $filter['category'] = $request->category;
-
-      }
       
-      //status Filter
-      if ($request->has('status') && !empty($request->status)){
-        $product = $product->where('status',$request->status);
-        $filter['status'] = $request->status;
-      }
 
-      //status Filter
-      if ($request->has('keyword') && !empty($request->keyword)){
-        $product = $product->where('name','like','%'.$request->keyword.'%');
-        $filter['keyword'] = $request->keyword;
-      }
+  //    if ($request->has('cat')){
 
-      // dd($product);
-      $product = $product->paginate(10);
-      $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
-      return view ('auction.product.index',compact('product','categories','filter'));       
+  //       $product = Product::where('shop_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','sme')->paginate(10);            
+  //   } 
+    
+  //   if ($request->has('status')){   
+  //     $product =Product::orderBy('status','asc')->Where('status',$request->status)->where('type','sme')->paginate(10);
+  //   // dd($product);        
+  // } 
+  //   $categories = ([
+  //     'cat'      =>request('cat'),
+  //     'status'   => request('status'),
+  // ]);
+
+  return view('auction.product.index',compact('product'));
+
+   
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -103,7 +74,7 @@ class AuctionproductController extends Controller
             $cID = Color::where('slug',$color)->first();
             $i = 0;
             $image = [
-              'product_id' => $itemId, 
+              // 'product_id' => $itemId, 
               'color_slug' => $color,
               'color_id'   => $cID ? $cID->id : 0,
               'sort'       => ++$i,
@@ -148,8 +119,8 @@ class AuctionproductController extends Controller
 
         $auctionproduct = Auctionproduct::create($data);
 
-        if($request->image){
-            $this->addImages($request->image,$auctionproduct->id);
+        if($request->images){
+            $this->addImages($request->images,$auctionproduct->id);
           } 
 
           Session::flash('success', 'Auction Product Added Successfully!');
