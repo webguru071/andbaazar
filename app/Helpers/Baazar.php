@@ -35,6 +35,7 @@ use App\Models\Shop;
 use App\Models\Tag;
 use App\Models\Attribute;
 use App\Models\AttributeMeta;
+use App\Models\Auctionproduct;
 use Sentinel;
 use Session;
 
