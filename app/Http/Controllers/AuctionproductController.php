@@ -126,14 +126,10 @@ class AuctionproductController extends Controller
     {
         // dd($request->all());
         $merchantId =  Merchant::where('user_id',Sentinel::getUser()->id)->first();
-        $slug       = Baazar::getUniqueSlug($auctionproduct,$request->name);
-<<<<<<< HEAD
-        $feature    = Baazar::auctionUpload($request->image['main'][0],$slug,'featured');
-        // dd($feature)      
-=======
+        $slug       = Baazar::getUniqueSlug($auctionproduct,$request->name);      
+
         $feature    = Baazar::base64Uploadauction($request->images['main'][0],$slug,'featured');
         // dd($feature);
->>>>>>> b8fca9042e2d55b3a2306f28a09e5e0f30e1e1b0
 
         $data = [
             'name'          => $request->name,
