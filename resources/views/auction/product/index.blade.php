@@ -36,7 +36,7 @@
                     <a href="{{ url('merchant/e-commerce/products/new') }}" class="btn btn-sm btn-solid">Add New</a>
                 </div>
                 <form action="" method="get">
-                <div class="filter-area d-flex">
+                {{-- <div class="filter-area d-flex">
 
                     
                     <div class="form-group mr-1">
@@ -68,7 +68,7 @@
                     @if($filter['status'] != '' || $filter['keyword'] != '' || $filter['category'] != '')
                         <a href="{{url('merchant/auction/products')}}" class="btn btn-info btn-sm text-white font-weight-bold" style="padding: 8px; height: 38px;"> <i class="fa fa-refresh" aria-hidden="true"></i> Clear</a>
                     @endif
-                </div>
+                </div> --}}
             </form>
                 <table class="table-responsive-md table mb-0 table-striped mt-2">
                     <thead>
@@ -106,8 +106,9 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <form action="{{ url('/merchant/product/'.$row->id) }}" method="post" style="margin-top: -2px;" id="deleteButton{{$row->id}}">
-                                            @csrf @method('delete')
+                                        <form action="{{ url('/merchant/auction/products/'.$row->id) }}" method="post" style="margin-top: -2px;" id="deleteButton{{$row->id}}">
+                                            @csrf 
+                                            @method('delete')
                                             <button type="submit" class="btn btn-sm btn-primary" onclick="sweetalertDelete({{$row->id}})"><i class="fa fa-trash-o"></i></button>
                                         </form>
                                     </li>

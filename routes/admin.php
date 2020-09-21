@@ -48,6 +48,10 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
 
    // SME Product list start //
 
+   //Auctionproduct list start
+
+   Route::get('auction/products/','AuctionproductController@auctionProductList');
+
     Route::get('color-image/{color_slug}','ProductsController@colorWiseImage');
 
    Route::resource('/shop','ShopsController');
