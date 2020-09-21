@@ -14,7 +14,16 @@ class CreateKrishiCommentsTable extends Migration
     public function up()
     {
         Schema::create('krishi_comments', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');                     
+            $table->text('comments');
+
+            $table->softDeletes();                            
+            $table->unsignedBigInteger('product_id'); 
+            $table->unsignedBigInteger('parent_id'); 
+            $table->unsignedBigInteger('user_id'); 
+
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');           
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');         
             $table->timestamps();
         });
     }

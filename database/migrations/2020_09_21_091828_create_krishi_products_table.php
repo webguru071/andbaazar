@@ -31,11 +31,14 @@ class CreateKrishiProductsTable extends Migration
             $table->softDeletes();
             $table->unsignedBigInteger('user_id');                  
             $table->unsignedBigInteger('merchant_id'); 
-            // $table->unsignedBigInteger('krishi_category_product_id');    
-        
-            $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('krishi_category_product_id')->references('id')->on('krishi_product_categories')->onDelete('cascade')->onUpdate('cascade');           
+            $table->unsignedBigInteger('krishi_product_category_id');  
+            $table->unsignedBigInteger('shop_id');
+
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade')->onUpdate('cascade');          
+            $table->foreign('krishi_product_category_id')->references('id')->on('krishi_product_categories')->onDelete('cascade')->onUpdate('cascade');           
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            
             $table->timestamps();
         });
     }
