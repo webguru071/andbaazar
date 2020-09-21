@@ -113,13 +113,14 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
-                            <form action="{{route('auctionstore')}}" method="POST" method="post" class="form" id="validateForm" enctype="multipart/form-data">
+                            <form action="{{url('merchant/auction/products/update/'.$auctionproduct->slug)}}"  method="post" class="form" id="validateForm" enctype="multipart/form-data">
                                 @csrf
+                                @method('put')
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="name">Product Name <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" />
+                                            <input class="form-control" type="text" class="form-control" name="name" value="{{ $auctionproduct->name }}" id="name" />
                                             <span class="text-danger" id="message_name"></span>
                                             @if ($errors->has('name'))
                                             <span class="text-danger">{{ $errors->first('name') }}</span>
@@ -128,10 +129,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('name') }}</span>
-                                    <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('name') }}" id="category" placeholder="Category">
+                                    <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('category_slug') }}</span>
+                                    <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('category_slug',$auctionproduct->category_slug) }}" id="category" placeholder="Category">
                                     <span class="text-danger" id="message_category"></span>
-                                    <input type="hidden" name="category_id" id="category_id">
+                                    <input type="hidden" name="category_id" id="category_id" value="{{ old('category_id',$auctionproduct->category_id) }}">
                                     <div class="position-absolute foo p-3" id="catarea" style="display: none">
                                         <div class="categories search-area d-flex scroll border">
                                             <div class="col-md-3 cat-level p-2 level-1">
@@ -152,15 +153,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{-- <div id="dropzone-main" class="img-upload-area" data-color="main">
-                                        <label class="mt-3"><b>Images :</b><span class="text-danger" id="message_main_img"></span></label>
-                                        <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
-                                            <span class="dz-message color-main">
-                                                <h2>Drag & Drop Your Files</h2>
-                                            </span>
-                                        </div>
-                                        <small>Remember Your featured file will be the first one.</small><br />
-                                    </div> --}}
                                     <label for="color_id" class="col-xl-3 col-md-4"></label>
                                     <div id="dropzone-main" class="img-upload-area" data-color="main"><label class="mt-3"><b>Images :</b><span class="text-danger" id="message_main_img"></span></label>
                                         <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
@@ -170,10 +162,11 @@
                                         </div>
                                         <small>Remember Your featured file will be the first one.</small><br>
                                     </div>
+                                    <div class="inputs"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="description" class="">Description<span class="text-danger"> *</span></label>
-                                    <textarea class="form-control summernote" id="description" name="description"></textarea>
+                                    <textarea class="form-control summernote" id="description" name="description">{{$auctionproduct->description}}</textarea>
                                     <span class="text-danger" id="message_description"></span>
                                     @if ($errors->has('description'))
                                     <span class="text-danger">{{ $errors->first('description') }}</span>
@@ -183,7 +176,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group margin">
                                             <label for="qty">Quantity<span>*</span></label>
-                                            <input type="number" class="form-control" name="qty" id="qty" />
+                                            <input type="number" class="form-control" name="qty" id="qty" value="{{ old('qty',$auctionproduct->qty) }}" />
                                             <span class="text-danger" id="message_qty"></span>
                                             @if ($errors->has('qty'))
                                             <span class="text-danger">{{ $errors->first('qty') }}</span>
@@ -193,7 +186,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group margin">
                                             <label for="unit">Unit<span>*</span></label>
-                                            <input type="text" class="form-control" name="unit" id="unit" />
+                                            <input type="text" class="form-control" name="unit" id="unit" value="{{ old('qty',$auctionproduct->unit) }}"/>
                                             <span class="text-danger" id="message_unit"></span>
                                             @if ($errors->has('unit'))
                                             <span class="text-danger">{{ $errors->first('unit') }}</span>
@@ -316,6 +309,233 @@
 
         };
 
+        //Rendering Main images into Dropzone
+        $( "#sortable-main" ).sortable({
+            placeholder: "ui-state-highlight",
+            revert: true,
+        });
+        $("#sortable-main").disableSelection();
+        // setup("my-awesome-dropzone-main",'main');
+        var mockFile = [];
+        @foreach($itemImages['main'] as $img)
+            mockFiles = {
+                name:'img-'+'{{$img->color_slug}}',
+                size:{{$img->id}},
+                dataURL: "{{asset('/')}}"+"{{$img->org_img}}"
+            }
+            mockFile.push(mockFiles);
+        @endforeach
+        setup("my-awesome-dropzone-main",'main',mockFile);
+
+        //Rendering Other images into Dropzone
+        @foreach($itemImages as $color=>$imges)
+        mockFile = [];
+
+        @foreach($imges as $img)
+            mockFiles = {
+                name:'img-'+'{{$img->color_slug}}',
+                size:{{$img->id}},
+                dataURL: "{{asset('/')}}"+"{{$img->org_img}}"
+            }
+            mockFile.push(mockFiles);
+        @endforeach
+        @if($color != 'main')
+            appendDrops('{{$color}}',mockFile);
+            mockFile = [];
+        @endif
+        @endforeach
+
+        //Drug & Drop script start
+        $( "#sortable-red").sortable({
+            placeholder: "ui-state-highlight",
+            revert: true,
+        });
+
+        //dropzone scripts
+        $('#selectColor').change(function(){
+            var flag = 0;
+            var color = $(this).val();
+            $('.img-upload-area').each(function(){
+                if(color == $(this).data('color')){
+                    flag = 1;
+                }
+            });
+            if(flag == 0){
+                appendDrops(color);
+            }else{
+                swal("The selected color already been exits", {icon: "warning",buttons: false,timer: 2000});
+            }
+        });
+        function appendDrops(color,mockFile=''){
+            $('.drops').append(
+                    `<div id="dropzone-${color}" class="img-upload-area" data-color="${color}"><label class="mt-3">Color Family: <b>${color}</b></label>
+                    <span class="btn btn-sm text-danger" onclick="removeColorItem('${color}')"><i class="fa fa-trash"></i></span>
+                    <div class="border m-0 collpanel drop-area row my-awesome-dropzone${color}" id="sortable-${color}">
+                        <span class="dz-message color-${color}">
+                            <h2>Drag & Drop Your Files</h2>
+                        </span>
+                    </div>
+                    <small>Remember Your featured file will be the first one.</small><br></div>`
+                );
+                $( "#sortable-"+color ).sortable({
+                    placeholder: "ui-state-highlight",
+                    revert: true,
+                });
+                $("#sortable-"+color ).disableSelection();
+                setup("my-awesome-dropzone"+color,color,mockFile);
+                inventoryRows(color);
+        }
+
+        Dropzone.autoDiscover = false;
+
+        
+        //function
+        function setup(id,color,mockFile='') {
+            let options = {
+                autoProcessQueue: false,
+                url : '/',
+                thumbnailHeight: 200,
+                thumbnailWidth: 300,
+                maxFilesize: 100,
+                maxFiles: 5,
+                dictResponseError: "Server not Configured",
+                dictFileTooBig: "File too big. Must be less than ",
+                dictCancelUpload: "",
+                acceptedFiles: ".png,.jpg,.jpeg",
+                init: function() {
+
+                    var self = this;
+
+                    // self.on("addedfile", function(file) {
+                    //     $('.color-'+color).addClass('d-none');
+                    // });
+
+                    self.on("dragenter", function(event) {
+                        $('#sortable-'+color).css('background-color','#fff');
+                    });
+                    self.on("dragleave", function(event) {});
+
+                    self.on("thumbnail", function(file){
+                        // console.log(file);
+                        var i = 0;
+                        $('.color-'+color+'-element').each(function(){
+                            i = i+1;
+                        });
+                        if(i > 5){
+                            swal("Maximum Five file are allowed", {icon: "warning",buttons: false,timer: 2000});
+                            this.removeFile(file);
+                            $('#id'+file.size).remove();
+                        }
+
+                        if(file.size < 3000000){
+                            $('.inputs').append(`<input type="hidden" class="image-class-${color}" name="images[${color}][]" id="id${file.size}" value="${file.dataURL}">`);
+                        }else{
+                            swal("Maximum size reached", {icon: "warning",buttons: false,timer: 2000});
+                            this.removeFile(file);
+                        }
+                    });
+
+                    self.on("removedfile", function(file) {
+                        var i = 0;
+                        $('.color-'+color+'-element').each(function(){
+                            i = i+1;
+                        });
+                        if(i === 0){
+                            $('.color-'+color).removeClass('d-none');
+                        }
+                        $('#id'+file.size).remove();
+                    });
+
+                    // Send file starts
+                    self.on("sending", function(file) {
+                        // console.log("upload started", file);
+                    });
+
+                    self.on("complete", function(file, response) {
+                        if (file.name !== "442343.jpg") {
+                            //this.removeFile(file);
+                        }
+                    });
+
+                    self.on("maxFilesize", function(file, response) {
+                        swal("Maximum size reached", {icon: "warning",buttons: false,timer: 2000});
+                        this.removeFile(file);
+                    });
+
+                    self.on("maxfilesexceeded", function(file, response) {
+                        swal("Maximum file reached", {icon: "warning",buttons: false,timer: 2000});
+                        this.removeFile(file);
+                    });
+
+                    self.on("addedfile", function(file) {
+                        const pattern = /\d{6}(\.)(jpg|jpeg|png)/;
+                        if (!pattern.test(file.name)) {
+                            //   this.removeFile(file);
+                        }
+                    });
+
+
+                    // Create the mock file:
+                    // var mockFile = [
+                    //     { name: "Filename", size: 12345 , dataURL:"http://localhost/andbaazar/public/uploads/shops/logos/shop-4.png"},
+                    //     { name: "Filename", size: 12345 , dataURL:"http://localhost/andbaazar/public/uploads/shops/logos/shop-4.png"}
+                    // ];
+
+                    if(mockFile != ''){
+                        mockFile.forEach(mockFile=>{
+                            self.emit("addedfile", mockFile);
+                            self.emit("thumbnail", mockFile, mockFile.dataURL);
+                        });
+                    }
+
+                },
+
+                previewTemplate: `
+                <div class="drop-single color-${color}-element ui-state-default">
+                <a href="javascript:undefined;" data-dz-remove=""><i class="fa fa-trash-o"></i>&nbsp;<span>Remove</span></a>
+                <br/>
+                <span class="dz-upload" data-dz-uploadprogress></span>
+                <img class="h-100" data-dz-thumbnail/>
+                </div>`
+            };
+            var myDropzone = new Dropzone(`.${id}`, options);
+        }
+
+        // function removeColorItem(color){
+
+        //     swal({
+        //         title: "Are you sure to delete it?",
+        //         text: "To continue this action!",
+        //         icon: "warning",
+        //         buttons: true,
+        //         dangerMode: true,
+        //     })
+        //         .then((willDelete) => {
+        //             if (willDelete) {
+        //                 swal("Your action has beed done! :)", {
+        //                     icon: "success",
+        //                     buttons: false,
+        //                     timer: 1000
+        //                 });
+        //                 $('#dropzone-'+color).remove();
+        //                 $('input[name^="images['+color+']"]').each(function() {
+        //                     $(this).remove();
+        //                 });
+        //                 document.querySelectorAll('.newRow option').forEach(item => {
+        //                     if(item.innerHTML == color){
+        //                         if(item.selected == true){
+        //                             item.style.background = 'red';
+        //                             item.style.color = 'white';
+        //                             item.parentElement.style.border = '2px solid red';
+        //                         }else{
+        //                             item.remove()
+        //                         }
+        //                     }
+        //                 })
+        //             }
+        //         });
+        // }
+
     </script>
 
     {{-- Summer Note --}}
@@ -327,7 +547,7 @@
    });
     </script>
   {{-- Image --}}
-    <script>
+    {{-- <script>
           //Drug & Drop script start
         $( "#sortable-red").sortable({
             placeholder: "ui-state-highlight",
@@ -408,7 +628,7 @@
             };
             var myDropzone = new Dropzone(`.${id}`, options);
         }
-    </script>
+    </script> --}}
 @endpush
 
 

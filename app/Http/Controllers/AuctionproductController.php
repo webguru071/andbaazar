@@ -150,8 +150,9 @@ class AuctionproductController extends Controller
     {
       $categories = Category::where('parent_id',0)->get(); 
       $auctionproduct = Auctionproduct::where('slug',$slug)->first();
-      $itemimages =  $auctionproduct->itemimage->groupBy('color_slug');
-       return view('auction.product.edit',compact('categories','auctionproduct'));
+      // dd($auctionproduct);
+      $itemImages =  $auctionproduct->itemimage->groupBy('color_slug');
+       return view('auction.product.edit',compact('categories','auctionproduct','itemImages'));
     }
 
     /**
@@ -163,13 +164,15 @@ class AuctionproductController extends Controller
      */
     public function update(Request $request, Auctionproduct $auctionproduct,$slug)
     {
-        $auctionproductId = Auctionproduct::find('slug',$slug)->first();
-        $auctionproductId->itemimage()->where('type','Auction')->delete();
+      // dd($request->all());
+        $auctionproductId = Auctionproduct::where('slug',$slug)->first();
+        // dd($auctionproductId);
+        $auctionproductId->itemimage()->delete();
         $feature          = Baazar::base64Uploadauction($request->images['main'][0],$slug,'featured');
 
         $data = [
             'name'          => $request->name,
-            'images'        => $feature, 
+            'image'         => $feature, 
             'description'   => $request->description,
             'qty'           => $request->qty,
             'unit'          => $request->unit,
@@ -181,7 +184,7 @@ class AuctionproductController extends Controller
         $auctionproductId->update($data);
 
         if($request->images){
-            $abc = $this->addImages($request->images,$auctionproductId->id);
+             $this->addImages($request->images,$auctionproductId->id);
           } 
 
           Session::flash('success', 'Auction Product updated Successfully!');

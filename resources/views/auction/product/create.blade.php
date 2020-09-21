@@ -173,7 +173,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="color_id" class="col-xl-3 col-md-4"></label>
-                                    <div id="dropzone-main" class="img-upload-area" data-color="main"><label class="mt-3"><b>Feature Images :</b><span class="text-danger" id="message_main_img"></span></label>
+                                    <div id="dropzone-main" class="img-upload-area" data-color="main"><label class="mt-3"><b>Images :</b><span class="text-danger" id="message_main_img"></span></label>
                                         <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
                                             <span class="dz-message color-main">
                                                 <h2>Drag & Drop Your Files</h2>
