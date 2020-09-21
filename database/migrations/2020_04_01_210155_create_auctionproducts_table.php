@@ -28,11 +28,13 @@ class CreateAuctionproductsTable extends Migration
             $table->text('category_slug')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('merchant_id');
+            $table->unsignedBigInteger('shop_id');
             $table->unsignedBigInteger('user_id')->nullable(); 
             $table->timestamps();
             
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

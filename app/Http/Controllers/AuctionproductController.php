@@ -31,40 +31,44 @@ class AuctionproductController extends Controller
      */
     public function index(Request $request)
     {      
-        // $filter = [
-        //   'category'  => '',
-        //   'status'  => '',
-        //   'keyword'  => '',
-        // ];
-        // $findCat = Auctionproduct::where('user_id',Sentinel::getUser()->id);
-        // $categories = $findCat->select('category_id')->with('category')->distinct()->get();
-  
-        $product = Auctionproduct::all();
-  
-        // //Category Filter
-        // if ($request->has('category') && !empty($request->category)){
-        //   $catId = Category::where('slug',$request->category)->first();
-        //   if($catId){
-        //     $product = $product->where('category_id',$catId->id);
-        //   }
-        //   $filter['category'] = $request->category;
-        // }
-        
-        // //status Filter
-        // if ($request->has('status') && !empty($request->status)){
-        //   $product = $product->where('status',$request->status);
-        //   $filter['status'] = $request->status;
-        // }
-  
-        // //status Filter
-        // if ($request->has('keyword') && !empty($request->keyword)){
-        //   $product = $product->where('name','like','%'.$request->keyword.'%');
-        //   $filter['keyword'] = $request->keyword;
-        // }
-  
-        // $product = $product->paginate(10);
-        // $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
-        return view ('auction.product.index',compact('product'));
+      $product      = Auctionproduct::where('shop_id',Baazar::shop()->id)->where('type','other');
+
+      $filter = [
+        'category'  => '',
+        'status'  => '',
+        'keyword'  => '',
+      ];
+
+      $findCat = Auctionproduct::where('shop_id',Baazar::shop()->id)->where('type','other');
+      $categories = $findCat->select('category_id')->with('category')->distinct()->get();
+
+      //Category Filter
+      if ($request->has('category') && !empty($request->category)){
+        $catId = Category::where('slug',$request->category)->first();
+        if($catId){
+          $product = $product->where('category_id',$catId->id);
+        }
+        $filter['category'] = $request->category;
+
+      }
+      
+      //status Filter
+      if ($request->has('status') && !empty($request->status)){
+        $product = $product->where('status',$request->status);
+        $filter['status'] = $request->status;
+      }
+
+      //status Filter
+      if ($request->has('keyword') && !empty($request->keyword)){
+        $product = $product->where('name','like','%'.$request->keyword.'%');
+        $filter['keyword'] = $request->keyword;
+      }
+
+      // dd($product);
+      $product = $product->paginate(10);
+      $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
+      return view ('auction.product.index',compact('product','categories','filter'));
+    
   
       }
    
@@ -111,7 +115,8 @@ class AuctionproductController extends Controller
     {
         // dd($request->all());
         $merchantId =  Merchant::where('user_id',Sentinel::getUser()->id)->first();
-        $slug       = Baazar::getUniqueSlug($auctionproduct,$request->name);      
+        $slug       = Baazar::getUniqueSlug($auctionproduct,$request->name);   
+        $shop = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;   
 
         $feature    = Baazar::base64Uploadauction($request->images['main'][0],$slug,'featured');
         // dd($feature);
@@ -126,6 +131,7 @@ class AuctionproductController extends Controller
             'unit'          => $request->unit,
             'category_slug' => $request->category,
             'category_id'   => $request->category_id,
+            'shop_id'       => $shop->id,
             'merchant_id'   => $merchantId->id,
             'user_id'       => Sentinel::getUser()->id,
             'created_at'    => now(),

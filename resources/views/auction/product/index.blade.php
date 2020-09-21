@@ -33,10 +33,10 @@
             <div class="col-md-9">
                 <div class="top-sec">
                     <h3>Auction Products</h3>
-                    <a href="{{ url('merchant/e-commerce/products/new') }}" class="btn btn-sm btn-solid">Add New</a>
+                    <a href="{{ url('merchant/auction/products/new') }}" class="btn btn-sm btn-solid">Add New</a>
                 </div>
                 <form action="" method="get">
-                {{-- <div class="filter-area d-flex">
+                <div class="filter-area d-flex">
 
                     
                     <div class="form-group mr-1">
@@ -68,7 +68,7 @@
                     @if($filter['status'] != '' || $filter['keyword'] != '' || $filter['category'] != '')
                         <a href="{{url('merchant/auction/products')}}" class="btn btn-info btn-sm text-white font-weight-bold" style="padding: 8px; height: 38px;"> <i class="fa fa-refresh" aria-hidden="true"></i> Clear</a>
                     @endif
-                </div> --}}
+                </div>
             </form>
                 <table class="table-responsive-md table mb-0 table-striped mt-2">
                     <thead>
