@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Attribute;
 use App\Models\InventoryAttribute;
 use App\Models\Brand;
+use App\Models\Auctionproduct;
 use App\User;
 
 class Category extends Model
@@ -56,6 +57,10 @@ class Category extends Model
     public function categoryAttr(){
       return $this->hasMany(Attribute::class,'category_id');
    }
+
+   public function auctionProduct(){
+    return $this->hasMany(Auctionproduct::class,'category_id');
+ }
 
 
 }
