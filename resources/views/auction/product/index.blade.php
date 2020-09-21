@@ -34,41 +34,9 @@
                     <h3>Auction Products</h3>
                     <a href="{{ url('merchant/auction/products/new') }}" class="btn btn-sm btn-solid">Add New</a>
                 </div>
-                <form action="" method="get">
-                <div class="filter-area d-flex">
+               
 
-                    
-                    <div class="form-group mr-1">
-                        <input type="text" name="keyword" class="form-control" placeholder="Search Here..." value="{{$filter['keyword']}}" />                     
-                    </div>
-                    <div class="form-group mr-1">
-                        <div class="input-group">
-                            <span class="input-group-addon bg-primary p-2 font-weight-bold text-white">Category</span>
-                            <select name="category" class="form-control" id="category">
-                            <option value="">All Category</option>
-                            @foreach($categories as $cat)                               
-                                <option value="{{ $cat->category->slug }}" {{$filter['category'] == $cat->category->slug ? 'selected':''}}>  {{$cat->category->name}}</option>
-                            @endforeach
-                            </select>
-                        </div>                    
-                    </div>                   
-                    <div class="form-group mr-2">
-                        <div class="input-group">
-                            <span class="input-group-addon bg-primary p-2 font-weight-bold text-white">Status</span>
-                            <select name="status" class="form-control" id="status">
-                                <option value="">All Status</option>
-                                <option value="Active" {{$filter['status'] == 'Active' ? 'selected':''}}>Active</option>
-                                <option value="Pending" {{$filter['status'] == 'Pending' ? 'selected':''}}>Pending</option>
-                                <option value="Rejected" {{$filter['status'] == 'Rejected' ? 'selected':''}}>Rejected</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button class="btn btn-success btn-sm text-white font-weight-bold mr-1" style="padding: 8px; height: 38px;" type="sumbit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
-                    @if($filter['status'] != '' || $filter['keyword'] != '' || $filter['category'] != '')
-                        <a href="{{url('/merchant/auction/products')}}" class="btn btn-info btn-sm text-white font-weight-bold" style="padding: 8px; height: 38px;"> <i class="fa fa-refresh" aria-hidden="true"></i> Clear</a>
-                    @endif
-                </div>
-            </form>
+
                 <table class="table-responsive-md table mb-0 table-striped mt-2">
                     <thead>
                         <tr>
@@ -91,9 +59,8 @@
                             --}}
                             <td class="text-left">{{$row->name}}</td>
                             <td class="text-left">{{$row->category_slug}}</td>
-                            <td>${{$row->price}}</td>
-                            <td>100</td>
-                            <td>2000</td>
+                            <td>{{$row->qty}}</td>
+                            <td>{{$row->unit}}</td>                           
                             <td>
                                 @if($row->status == 'Pending')
                                 <label class="badge badge-pill badge-primary p-2">Pending</label>
@@ -151,7 +118,7 @@
                     </tbody>
                 </table>
                 <div class ="mt-2">
-                {{$product->links()}}
+              
                 </div>
                
             </div>

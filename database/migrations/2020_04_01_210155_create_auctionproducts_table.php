@@ -16,7 +16,7 @@ class CreateAuctionproductsTable extends Migration
         Schema::create('auctionproducts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->enum('type',['krishi','other'])->default('other');
             $table->text('description');
             $table->string('slug')->nullable();
