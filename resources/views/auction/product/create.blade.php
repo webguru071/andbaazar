@@ -126,6 +126,7 @@
                                             @endif
                                         </div>
                                     </div>
+                                    <input type="hidden" name="email" value="{{ $auctionerId->email }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('name') }}</span>

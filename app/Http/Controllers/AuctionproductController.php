@@ -16,6 +16,9 @@ use Sentinel;
 use Session;
 use Baazar; 
 use App\Models\Color;
+use App\Models\Reject;
+use App\Mail\auctionApprovemail;
+use App\Mail\auctionRejectmail;
 
  
 
@@ -65,7 +68,8 @@ class AuctionproductController extends Controller
     public function create()
     {
         $categories = Category::where('parent_id',0)->get();
-        return view('auction.product.create',compact('categories'));
+        $auctionerId = Merchant::where('user_id',Sentinel::getUser()->id)->first();
+        return view('auction.product.create',compact('categories','auctionerId'));
     }
 
     public function addImages($images, $itemId){
@@ -105,6 +109,7 @@ class AuctionproductController extends Controller
 
         $data = [
             'name'          => $request->name,
+            'email'         => $request->email,
             'image'         => $feature,
             'slug'          => $slug,
             'description'   => $request->description,
@@ -135,9 +140,14 @@ class AuctionproductController extends Controller
      * @param  \App\Auctionproduct  $auctionproduct
      * @return \Illuminate\Http\Response
      */
-    public function show(Auctionproduct $auctionproduct)
+    public function show($id)
     {
-        //
+      $auctionproduct = Auctionproduct::find($id);
+      // dd($auctionproduct);
+      $auctionproductImage = ItemImage::where('color_slug','main')->where('product_id',$auctionproduct->id)->where('type','Auction')->limit(5)->get();
+      // dd($auctionproductImage);
+       $rejectlist = Reject::where('type','auction')->get();
+        return view('auction.product.show',compact('auctionproduct','auctionproductImage','rejectlist'));
     }
 
     /**
@@ -192,6 +202,59 @@ class AuctionproductController extends Controller
         return back();
     }
 
+    public function auctionProductList(){
+      $auctionproduct = Auctionproduct::distinct()->get();
+
+      // dd($auctionproduct);
+
+      return view('auction.product.auctionproduct_list',compact('auctionproduct'));
+    }
+
+    public function approvemetnt($slug){
+      $data = Auctionproduct::where('slug',$slug)->first();
+
+      $data->update(['status' => 'Active']);
+      // dd($data);
+
+      $name =  $data['name'];
+      \Mail::to($data['email'])->send(new auctionApprovemail($data, $name));
+
+      Session::flash('success', 'Auction Product Approve Successfully!');
+
+      return back();
+    }
+
+    public function rejected(Request $request,$slug){
+      $data = Auctionproduct::where('slug',$slug)->first();
+
+      $data->update([
+        'status' => 'Reject',
+        'rej_desc' => $request->rej_desc,
+        ]);
+
+        $rejct_value = RejectValue::where('id', $data->id)->first();
+
+        $rej_list = count($_POST['rej_name']);
+        
+        for($i = 0; $i<$rej_list; $i++){        
+                $rejct_value=RejectValue::create([
+                'rej_name'      => $request->rej_name[$i],
+                'type'          => $request->type,
+                'merchant_id'   => $data->id,
+                'user_id'       => $data->user_id,
+            ]);
+            // dd($data);
+        } 
+        
+        $name = $data['name'];
+        $rej_desc = $data['rej_desc'];
+        \Mail::to($data['email'])->send(new auctionRejectmail($data, $name,$rej_desc));
+        
+        Session::flash('warning', 'Auction Product Rejected Successfully!');
+
+        return back();
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -200,7 +263,12 @@ class AuctionproductController extends Controller
      */
     public function destroy($id)
     {
-        $auctionproduct = Auctionproduct::find($id);
-        $auctionproduct->itemimage()->where('type','Auction')->delete();
+        $auctionproduct = Auctionproduct::find($id); 
+        $auctionproduct->delete();
+
+        Session::flash('error', 'Auction Product Deleted Successfully!');
+
+        return redirect('merchant/auction/products');
+
     }
 }

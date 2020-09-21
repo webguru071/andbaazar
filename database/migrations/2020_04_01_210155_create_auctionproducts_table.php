@@ -17,6 +17,7 @@ class CreateAuctionproductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('image')->nullable();
+            $table->string('email')->nullable();
             $table->enum('type',['krishi','other'])->default('other');
             $table->text('description');
             $table->string('slug')->nullable();
