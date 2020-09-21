@@ -186,6 +186,7 @@ class ProductsController extends Controller
             'color_slug' => $color,
             'color_id'   => $cID ? $cID->id : 0,
             'sort'       => ++$i,
+            'type'       => 'ecommerce',
             'org_img'    => Baazar::base64Upload($img,'orgimg',$shop->slug,$color),
           ];
           ItemImage::create($image);

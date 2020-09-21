@@ -144,6 +144,7 @@ class SmeProductController extends Controller
               'product_id' => $itemId,
               'color_slug' => $color,
               'sort'       => ++$i,
+              'type'       => 'sme',
               'org_img'    => Baazar::base64Upload($img,'orgimg',$shop->slug,$color),
             ];
             ItemImage::create($image);

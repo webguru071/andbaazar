@@ -145,7 +145,7 @@ class Baazar
                 return $db_img;            
             }
         }else{
-            dd($image_file);
+            // dd($image_file);
             $path = explode('/public/',$image_file);
             return $path[1];
         }

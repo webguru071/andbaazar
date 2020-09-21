@@ -83,11 +83,12 @@ class AuctionproductController extends Controller
             $cID = Color::where('slug',$color)->first();
             $i = 0;
             $image = [
-              // 'product_id' => $itemId, 
+
+              'product_id' => $itemId, 
               'color_slug' => $color,
               'color_id'   => $cID ? $cID->id : 0,
               'sort'       => ++$i,
-              'type' => 'Auction',
+              'type'       => 'Auction',
               'org_img'    => Baazar::base64Uploadauction($img,'orgimg',$color),
             ];
             // dd($image);
@@ -154,10 +155,13 @@ class AuctionproductController extends Controller
      * @param  \App\Auctionproduct  $auctionproduct
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($slug)
     {
-        $categories = Auctionproduct::all(); 
-       return view('auction.product.edit',compact('categories'));
+      $categories = Category::where('parent_id',0)->get(); 
+      $auctionproduct = Auctionproduct::where('slug',$slug)->first();
+      // dd($auctionproduct);
+      $itemImages =  $auctionproduct->itemimage->groupBy('color_slug');
+       return view('auction.product.edit',compact('categories','auctionproduct','itemImages'));
     }
 
     /**
@@ -169,13 +173,15 @@ class AuctionproductController extends Controller
      */
     public function update(Request $request, Auctionproduct $auctionproduct,$slug)
     {
-        $auctionproductId = Auctionproduct::find('slug',$slug)->first();
-        $auctionproductId->itemimage()->where('type','Auction')->delete();
+      // dd($request->all());
+        $auctionproductId = Auctionproduct::where('slug',$slug)->first();
+        // dd($auctionproductId);
+        $auctionproductId->itemimage()->delete();
         $feature          = Baazar::base64Uploadauction($request->images['main'][0],$slug,'featured');
 
         $data = [
             'name'          => $request->name,
-            'images'        => $feature, 
+            'image'         => $feature, 
             'description'   => $request->description,
             'qty'           => $request->qty,
             'unit'          => $request->unit,
@@ -187,7 +193,7 @@ class AuctionproductController extends Controller
         $auctionproductId->update($data);
 
         if($request->images){
-            $this->addImages($request->images,$auctionproductId->id);
+             $this->addImages($request->images,$auctionproductId->id);
           } 
 
           Session::flash('success', 'Auction Product updated Successfully!');
@@ -201,8 +207,9 @@ class AuctionproductController extends Controller
      * @param  \App\Auctionproduct  $auctionproduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Auctionproduct $auctionproduct)
+    public function destroy($id)
     {
-        //
+        $auctionproduct = Auctionproduct::find($id);
+        $auctionproduct->itemimage()->where('type','Auction')->delete();
     }
 }

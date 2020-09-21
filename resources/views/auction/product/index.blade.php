@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 @extends('merchant.master') 
 @section('content') 
 @push('css')
@@ -105,8 +99,9 @@
                             </td>
                             <td class="d-flex justify-content-between">
                                 <ul>
-                                    <li>
-                                        <a href="{{ url('merchant/products/update/'.$row->slug.'/productupdate') }}">
+                                    <li>                                
+                                        <a href="{{ url('merchant/auction/products/update/'.$row->slug.'/auctionupdate') }}">
+
                                             <button class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
                                         </a>
                                     </li>
