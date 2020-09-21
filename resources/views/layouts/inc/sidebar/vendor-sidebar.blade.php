@@ -13,9 +13,7 @@
         </div>
         <div class="faq-tab">
             <ul class="nav nav-tabs" id="top-tab" role="tablist">
-                <li class="nav-item {{$active == 'dashboard' ? 'active' : ''}}"><a  class="nav-link  {{$active == 'dashboard' ? 'active' : ''}}" href="{{ url('merchant/dashboard') }}">dashboard</a></li>
-                                       
-
+                <li class="nav-item {{$active == 'dashboard' ? 'active' : ''}}"><a  class="nav-link  {{$active == 'dashboard' ? 'active' : ''}}" href="{{ url('merchant/dashboard') }}">dashboard</a></li>                                     
                 <li class="nav-item"> 
                   <a class="nav-link collapsed text-truncate navSymbol" href="#submenu1" data-toggle="collapse" data-target="#submenu1"> <span class="d-none d-sm-inline">Products</span></a> 
                   <div class="collapse" id="submenu1" aria-expanded="false">
