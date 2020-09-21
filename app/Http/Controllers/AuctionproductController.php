@@ -11,6 +11,7 @@ use Baazar;
 use App\Models\ItemImage;
 use App\Models\Merchant;  
 use App\Models\Category;
+use App\Models\Color;
 
 
 
@@ -38,21 +39,22 @@ class AuctionproductController extends Controller
     }
 
     public function addImages($images, $itemId){
-        // foreach($images as $color => $image){
-          foreach($images as $img){
-            // $cID = Color::where('slug',$color)->first();
-            // $i = 0;
+      foreach($images as $color => $image){
+          foreach($image as $img){
+            $cID = Color::where('slug',$color)->first();
+            $i = 0;
             $image = [
-              'product_id' => $itemId,
-            //   'color_slug' => $color,
-            //   'color_id'   => $cID ? $cID->id : 0,
-            //   'sort'       => ++$i,
+              'product_id' => $itemId, 
+              'color_slug' => $color,
+              'color_id'   => $cID ? $cID->id : 0,
+              'sort'       => ++$i,
               'type' => 'Auction',
-              'org_img'    => Baazar::base64Uploadauction($img,'orgimg'),
+              'org_img'    => Baazar::base64Uploadauction($img,'orgimg',$color),
             ];
+            // dd($image);
             ItemImage::create($image);
           }
-        // }
+         }
       }
 
     /**
@@ -67,7 +69,7 @@ class AuctionproductController extends Controller
         $merchantId =  Merchant::where('user_id',Sentinel::getUser()->id)->first();
         $slug       = Baazar::getUniqueSlug($auctionproduct,$request->name);
         $feature    = Baazar::base64Uploadauction($request->images['main'][0],$slug,'featured');
-        dd($feature);
+        // dd($feature);
 
         $data = [
             'name'          => $request->name,
@@ -82,6 +84,7 @@ class AuctionproductController extends Controller
             'user_id'       => Sentinel::getUser()->id,
             'created_at'    => now(),
         ];
+        
 
         $auctionproduct = Auctionproduct::create($data);
 
