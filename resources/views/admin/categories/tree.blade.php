@@ -50,7 +50,8 @@
                                     <th width="50" class="text-center">Sl</th>
                                     <th>Categories Name</th>
                                     <th width="250">Slug</th>
-                                    <th width="150" class="text-center">Commision</th>
+                                    <th width="150" class="text-center">Type</th>
+                                    <th width="150" class="text-center">Commision</th> 
                                     <th width="80" class="text-center">Action</th>
                                 </tr>
                             </thead>

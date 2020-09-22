@@ -233,6 +233,7 @@ class Baazar
                 <td class='text-center'>{$cat->id}</td>
                 <td><span class='{$bold}' style='margin-left: {$mleft}px;{$bl}'> &nbsp; {$cat->name}</span></td>
                 <td>&nbsp;{$cat->slug}</td>
+                <td class='text-center'>&nbsp;{$cat->type}</td>
                 <td class='text-center'>{$cat->percentage}%</td>
                 <td >";
                 $html .="<a href='{$editUrl}' class='btn btn-sm btn-primary' title='Edit'><i class='fa fa-edit'></i> </a>&nbsp;";

@@ -19,19 +19,19 @@ class CreateKrishiProductsTable extends Migration
             $table->string('slug')->nullable();
             $table->string('image')->nullable();
             $table->text('description');
-            $table->string('video_url');
-            $table->string('available_from');
-            $table->string('frequency_support');
-            $table->text('available_stock');
-            $table->string('allow customer offer');
-            $table->string('status');
-            $table->string('view');
+            $table->string('video_url')->nullable();
+            $table->string('available_from')->nullable();
+            $table->string('frequency_support')->nullable();
+            $table->text('available_stock')->nullable();
+            $table->string('allow customer offer')->nullable();
+            $table->enum('status',['Active','Pending','Reject'])->default('Pending');
+            $table->string('view')->nullable();
             $table->date('date');  
 
             $table->softDeletes();
             $table->unsignedBigInteger('user_id');                  
             $table->unsignedBigInteger('merchant_id'); 
-            $table->unsignedBigInteger('krishi_product_category_id');  
+            $table->unsignedBigInteger('krishi_product_category_id')->nullable();  
             $table->unsignedBigInteger('shop_id');
 
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');
