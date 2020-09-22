@@ -241,14 +241,16 @@ class AuctionproductController extends Controller
 
     public function rejected(Request $request,$slug){
       $data = Auctionproduct::where('slug',$slug)->first();
+      // dd($data);
 
       $data->update([
         'status' => 'Reject',
         'rej_desc' => $request->rej_desc,
         ]);
 
-        $rejct_value = RejectValue::where('id', $data->id)->first();
-
+        $rejct_value = RejectValue::where('user_id', $data->user_id)->first();
+        //  dd($rejct_value);
+       
         $rej_list = count($_POST['rej_name']);
         
         for($i = 0; $i<$rej_list; $i++){        
@@ -260,9 +262,13 @@ class AuctionproductController extends Controller
             ]);
             // dd($data);
         } 
+      
+
+        $rej_desc = RejectValue::where('type','auction')->latest()->get();
+        // dd($rej_desc);
         
         $name = $data['name'];
-        $rej_desc = $data['rej_desc'];
+        // $rej_desc = $rejct_value['rej_name'];
         \Mail::to($data['email'])->send(new auctionRejectmail($data, $name,$rej_desc));
         
         Session::flash('warning', 'Auction Product Rejected Successfully!');

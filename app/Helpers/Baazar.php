@@ -151,6 +151,26 @@ class Baazar
         }
     }
 
+    public function base64Uploadkrishi($image_file,$name,$color){
+        $t = substr($image_file,0,11);
+        if($t == 'data:image/'){
+            list($type, $image_file) = explode(';', $image_file);
+            list(, $image_file)      = explode(',', $image_file);
+            if($this->is_base64($image_file)){
+                $image_file = base64_decode($image_file);
+                $image_name= $name.rand().'.png';
+                $db_img = 'uploads/krishi/'.$name.'-'.$color.'-'.$image_name;
+                $path = public_path($db_img);
+                file_put_contents($path, $image_file);
+                return $db_img;            
+            }
+        }else{
+            // dd($image_file);
+            $path = explode('/public/',$image_file);
+            return $path[1];
+        }
+    }
+
    public function insertRecords($data, $parent_id = 0,$parent_slug = 0) {
     //    dd($data);
         foreach($data as $row) {
@@ -264,6 +284,7 @@ class Baazar
                 <td class='text-center'>{$cat->id}</td>
                 <td><span class='{$bold}' style='margin-left: {$mleft}px;{$bl}'> &nbsp; {$cat->name}</span></td>
                 <td>&nbsp;{$cat->slug}</td>
+                <td class='text-center'>&nbsp;{$cat->type}</td>
                 <td class='text-center'>{$cat->percentage}%</td>
                 <td >";
                 $html .="<a href='{$editUrl}' class='btn btn-sm btn-primary' title='Edit'><i class='fa fa-edit'></i> </a>&nbsp;";

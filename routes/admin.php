@@ -61,7 +61,7 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
 
 //    Krishi Product  Start //
 
-Route::resource('products/krishi/category','KrishiCategoryController');
+// Route::resource('products/krishi/category','KrishiCategoryController');
  
 });
 
