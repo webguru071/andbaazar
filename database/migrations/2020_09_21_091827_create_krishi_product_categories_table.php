@@ -14,7 +14,10 @@ class CreateKrishiProductCategoriesTable extends Migration
     public function up()
     {
         Schema::create('krishi_product_categories', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');  
+            $table->integer('name');
+            $table->string('slug')->nullable();        
+            $table->text('description');          
             $table->timestamps();
         });
     }

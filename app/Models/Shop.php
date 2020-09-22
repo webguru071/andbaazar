@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Shop;
 use App\Models\Merchant;
 use App\Models\OrderItem;
+use App\Models\Auctionproduct;
 use App\User;
 
 class Shop extends Model
@@ -29,4 +30,7 @@ class Shop extends Model
  public function orderitem(){
    return $this->hasMany(OrderItem::class,'shop_id');
  }
+ public function auctionProduct(){
+  return $this->hasMany(Auctionproduct::class,'shop_id');
+}
 }

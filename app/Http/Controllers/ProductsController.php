@@ -39,11 +39,7 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-      $product      = Product::with('user')->where('shop_id',Baazar::shop()->id);
-      $cat          = $product->select('category_id')->distinct()->get();
-      // $item         = product::where('user_id',Sentinel::getUser()->id)->get();
       $product      = Product::with('rejectvalue')->where('shop_id',Baazar::shop()->id)->where('type','ecommerce');
-      $rejectReason = RejectValue::where('user_id',Sentinel::getUser()->id)->where('type','ecommerce')->get();
 
       $filter = [
         'category'  => '',
@@ -54,10 +50,6 @@ class ProductsController extends Controller
       $findCat = Product::where('shop_id',Baazar::shop()->id)->where('type','ecommerce');
       $categories = $findCat->select('category_id')->with('category')->distinct()->get();
 
-      if ($request->has('cat')){
-        $product = Product::where('shop_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','ecommerce');
-      }
-      
       //Category Filter
       if ($request->has('category') && !empty($request->category)){
         $catId = Category::where('slug',$request->category)->first();
