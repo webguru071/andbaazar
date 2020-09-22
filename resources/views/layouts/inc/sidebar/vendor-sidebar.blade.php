@@ -39,6 +39,19 @@
                   </div> 
                 </li>            
                 </li>
+
+                <li class="nav-item">
+                  <a class="nav-link collapsed text-truncate Symbol" href="#submenu2" data-toggle="collapse" data-target="#submenu3"> <span class="d-none d-sm-inline">Krishi Baazar</span></a>
+                  <div class="collapse" id="submenu3" aria-expanded="false">
+                    <ul class="flex-column pl-2 nav">
+                      <li class="nav-item"> 
+                        <a  class="nav-link {{$active == 'category' ? 'active' : ''}}" href="{{ url('merchant/krishi/category') }}">Category</a>
+                        <a  class="nav-link {{$active == 'products' ? 'active' : ''}}" href="{{ url('merchant/krishi/products') }}">Products</a>
+                      </li>
+                    </ul>
+                  </div> 
+                </li>            
+                </li>
                 
                 
                 <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#orders">Orders</a> </li>
