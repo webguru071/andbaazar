@@ -107,7 +107,15 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
         // Route::get('add','AuctionproductController@create'); 
         // Route::post('add','AuctionproductController@store');       
     }); 
+
    // Auction Product End //
+
+  //    Krishi Baazar Start   //
+  Route::group(['prefix' => 'krishi'],function(){ 
+    Route::resource('category','KrishiProductCategoryController');
+      
+  }); 
+ //    Krishi Baazar End    //
 
 
 

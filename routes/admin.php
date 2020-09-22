@@ -58,6 +58,11 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
 
    Route::get('category_setup','CategorySetupController@index');
 
+
+//    Krishi Product  Start //
+
+Route::resource('products/krishi/category','KrishiCategoryController');
+ 
 });
 
 // Category import

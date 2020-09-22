@@ -26,6 +26,14 @@
                                 </ul>
                             </li> 
 
+                            <li class="{{ request()->is('andbaazaradmin/products/krishi/category*') ? 'active' : '' }}">
+                                <a href="#" ><i class="fa fa-cubes"></i> <span>Krishi Categories</span> <i class="fa fa-angle-right pull-right"></i></a>
+                                <ul class="sidebar-submenu">
+                                    <li class="{{ request()->is('andbaazaradmin/products/krishi/category') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/products/krishi/category') }}" class="{{ request()->is('andbaazaradmin/products/krishi/category') ? 'active' : '' }}" ><i class="fa fa-server"></i>Add Category</a></li>
+                                    <li class="{{ request()->is('andbaazaradmin/products/krishi/category/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/products/krishi/all-category') }}" class="{{ request()->is('andbaazaradmin/products/krishi/all-category') ? 'active' : '' }}"><i class="fa fa-sliders"></i> All Category</a></li>
+                                </ul>
+                            </li> 
+
                             <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="{{url('andbaazaradmin/products/tag')}}" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-tags"></i> Tags</a></li>
 
                             <li class="{{ request()->is('andbaazaradmin/products/color/*') ? 'active' : '' }}"><a href="{{url('andbaazaradmin/products/color')}}" class="{{ request()->is('andbaazaradmin/products/color') ? 'active' : '' }}"><i class="fa fa-puzzle-piece"></i> Color</a></li>
