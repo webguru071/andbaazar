@@ -140,8 +140,12 @@ class CategoriesTableSeeder extends Seeder
       \Baazar::insertRecordsSme($textile_weaving_factories);
       echo  'Pottery Done....';
 
-// Krishi Product Category //
+   // Krishi Product Category //
 
+    \Baazar::insertRecordsKrishi($egg);
+    echo  'Betel Done....';
+
+  // Krishi Product Category End //
 
    	}
 
