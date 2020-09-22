@@ -112,7 +112,10 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
 
   //    Krishi Baazar Start   //
   Route::group(['prefix' => 'krishi'],function(){ 
-    Route::resource('category','KrishiProductCategoryController');
+    // Route::resource('category','KrishiProductCategoryController');
+    Route::get('products/new','KrishiProductController@create');
+    Route::post('products/new','KrishiProductController@store')->name('krishiproductstore');
+    Route::resource('products','KrishiProductController');
       
   }); 
  //    Krishi Baazar End    //
