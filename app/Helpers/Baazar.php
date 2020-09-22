@@ -195,6 +195,8 @@ class Baazar
         }
     }
 
+    // SME category insert //
+
     public function insertRecordsSme($data, $parent_id = 0,$parent_slug = 0) {
         //    dd($data);
             foreach($data as $row) {
@@ -217,6 +219,35 @@ class Baazar
                 }
             }
         }
+
+    // SME category insert End //
+
+   // Krishi category insert //
+
+        public function insertRecordsKrishi($data, $parent_id = 0,$parent_slug = 0) {
+            //    dd($data);
+                foreach($data as $row) {
+                    // $slug = Str::slug($row['0']);
+                    $category = New Category;
+                    $slug = $this->getUniqueSlug($category,$row['0']);
+                    $data = [
+                        'name'          => $row['0'],
+                        'slug'          => $slug,
+                        'parent_slug'   => $parent_slug,
+                        'parent_id'     => $parent_id, 
+                        'type'          => 'krishi',
+                        'percentage'    => 2,
+                        'user_id'       => 1,
+                        'is_last'       => isset($row["child"]) ? 0 : 1,
+                    ];
+                    $cat = Category::create($data);
+                    if (isset($row["child"])){
+                        $this->insertRecordsKrishi($row["child"], $cat->id,$slug);
+                    }
+                }
+            }
+
+            // Krishi category insert  End//
 
     public function short_text($text, $limit){
         return strlen($text) > $limit ? substr($text,0,$limit).".." : $text;
