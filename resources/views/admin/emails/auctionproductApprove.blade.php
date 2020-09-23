@@ -534,7 +534,7 @@
         <tr>
             <td>
                 <div style="overflow:hidden;display:none;font-size:1px;color:#ffffff;line-height:1px;font-family:Arial;maxheight:0px;max-width:0px;opacity:0;">
-                    Eamil For Auction product Approvement
+                    Eamil For Krishi product Approvement
                 </div>
             </td>
         </tr>
@@ -635,7 +635,7 @@
 
                                           Dear Seller ,
                                           <p>
-                                            your product has been published for auction. <br> Now all register customer can bids on your auction product.
+                                            your product has been published for Sell. <br> Now all register customer can buy  your  product.
                                           </p>
                                         </div>
                                     </td>

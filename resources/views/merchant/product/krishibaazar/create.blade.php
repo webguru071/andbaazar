@@ -8,15 +8,12 @@
 {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> --}}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
 
-
-
-
 <style>
 
     /* select2 */
 
 
-        .select2-selection {
+    .select2-selection {
     height: 34px !important; 
     font-size: 13px;
     font-family: 'Open Sans', sans-serif;
@@ -113,13 +110,13 @@
     color: #c4c4c4 !important; 
     }
     .select2-selection {
-  height: 34px !important; 
-  font-size: 13px;
-  font-family: 'Open Sans', sans-serif;
-  border-radius: 0 !important;
-  border: solid 1px #c4c4c4 !important;
-  padding-left: 4px;
-  padding-top:7px;
+    height: 34px !important; 
+    font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 0 !important;
+    border: solid 1px #c4c4c4 !important;
+    padding-left: 4px;
+    padding-top:7px;
 }
 
 .select2-selection--multiple {
