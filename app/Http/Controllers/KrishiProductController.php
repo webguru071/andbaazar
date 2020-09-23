@@ -6,6 +6,7 @@ use App\Models\KrishiProduct;
 use Illuminate\Http\Request;
 use App\Models\Merchant; 
 use App\Models\ItemImage;
+use App\Models\Category;
 use DB;
 use Sentinel;
 use Session;
@@ -34,7 +35,8 @@ class KrishiProductController extends Controller
     public function create()
     {
         $krishiId = Merchant::where('user_id',Sentinel::getUser()->id)->first();
-        return view('merchant.product.krishibaazar.create',compact('krishiId'));
+        $categories = Category::where('parent_id',0)->where('type','krishi')->get();
+        return view('merchant.product.krishibaazar.create',compact('krishiId','categories'));
     }
 
     public function addImages($images, $itemId){
@@ -78,7 +80,7 @@ class KrishiProductController extends Controller
             'description'   => $request->description,
             'video_url'     => $request->video_url,
             'date'          => $request->date,
-            'category_slug' => $request->category_slug,
+            'category_slug' => $request->category,
             'category_id'   => $request->category_id,
             'merchant_id'   => $merchantId->id,
             'shop_id'       => $shop->id,

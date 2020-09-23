@@ -134,7 +134,7 @@
                                     </div> 
                                     <input type="hidden" name="email" value="{{ $krishiId->email }}">
                                 </div>
-                                {{-- <div class="form-group">
+                                <div class="form-group">
                                     <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('name') }}</span>
                                     <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('name') }}" id="category" placeholder="Category">
                                     <span class="text-danger" id="message_category"></span>
@@ -157,7 +157,7 @@
                                             <span class="btn btn-sm btn-danger m-1" id="clear">Clear</span>
                                         </div>
                                     </div>
-                                </div>  --}}
+                                </div> 
                                 <div class="form-group">
                                     <label for="color_id" class="col-xl-3 col-md-4"></label>
                                     <div id="dropzone-main" class="img-upload-area" data-color="main"><label class="mt-3"><b>Images :</b><span class="text-danger" id="message_main_img"></span></label>
