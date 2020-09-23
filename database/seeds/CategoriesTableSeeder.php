@@ -9,13 +9,13 @@ class CategoriesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run(){
-		include('CategoriesAttr/Mobiles_Tablets.php');
-    include('CategoriesAttr/Computers_Laptop.php');
+   public function run(){
+	include('CategoriesAttr/Mobiles_Tablets.php');
+   include('CategoriesAttr/Computers_Laptop.php');
     // include('CategoriesAttr/TV_Audio.php');
-    include('CategoriesAttr/Camera.php');
-    include('CategoriesAttr/tv_audio_video_gaming.php');
-    include('CategoriesAttr/Home_Appliance.php');
+   include('CategoriesAttr/Camera.php');
+   include('CategoriesAttr/tv_audio_video_gaming.php');
+   include('CategoriesAttr/Home_Appliance.php');
    include('CategoriesAttr/Fashion.php');
    include('CategoriesAttr/Health_Beauty.php');
    include('CategoriesAttr/Bags_Travels.php');
@@ -34,6 +34,8 @@ class CategoriesTableSeeder extends Seeder
    include('CategoriesAttr/Groceries.php');
    include('CategoriesAttr/Furniture_Décor.php');
    include('CategoriesAttr/Tools_DIY_Outdoor.php');
+
+   // Sme Category //
    include('Smecategory/Bambao_and_cane_industries.php');
    include('Smecategory/Brass_bell-metal.php');
    include('Smecategory/Cool_Mat.php');
@@ -44,6 +46,26 @@ class CategoriesTableSeeder extends Seeder
    include('Smecategory/Ornaments .php');
    include('Smecategory/Pottery .php');
    include('Smecategory/Textile_Weaving_factories.php');
+
+   // Krishi Category //
+   include('KrishiCategory/Betel.php');
+   include('KrishiCategory/Dal.php');
+   include('KrishiCategory/Egg.php');
+   include('KrishiCategory/Fertilizer.php');
+   include('KrishiCategory/Fibre.php');
+   include('KrishiCategory/Fish.php');
+   include('KrishiCategory/Food_Grains.php');
+   include('KrishiCategory/Fruit.php');
+   include('KrishiCategory/Leather.php');
+   include('KrishiCategory/Meat.php');
+   include('KrishiCategory/Milk.php');
+   include('KrishiCategory/Oil.php');
+   include('KrishiCategory/Spices.php');
+   include('KrishiCategory/Tobacco.php');
+   include('KrishiCategory/Vegetables.php');
+   include('KrishiCategory/Others.php');
+
+
 	// dd($mobiles_tablets);
      
       \Baazar::insertRecords($mobiles_tablets);
@@ -140,10 +162,55 @@ class CategoriesTableSeeder extends Seeder
       \Baazar::insertRecordsSme($textile_weaving_factories);
       echo  'Pottery Done....';
 
-   // Krishi Product Category //
+   // Krishi Product Category // 
+    \Baazar::insertRecordsKrishi($betel);
+    echo  'Betel Done....';
 
-   //  \Baazar::insertRecordsKrishi($egg);
-   //  echo  'Betel Done....';
+
+    \Baazar::insertRecordsKrishi($dal);
+    echo  'Dal Done....';
+
+    \Baazar::insertRecordsKrishi($egg);
+    echo  'Egg Done....';
+
+    \Baazar::insertRecordsKrishi($fertilizer);
+    echo  'Fertilizer Done....';
+
+    \Baazar::insertRecordsKrishi($fibre);
+    echo  'Fibre Done....';
+
+    \Baazar::insertRecordsKrishi($fish);
+    echo  'Fish Done....';
+
+    \Baazar::insertRecordsKrishi($food_grains);
+    echo  'Food Grains Done....';
+
+    \Baazar::insertRecordsKrishi($fruit);
+    echo  'Fruit Done....';
+
+    \Baazar::insertRecordsKrishi($leather);
+    echo  'Leather Done....';
+
+    \Baazar::insertRecordsKrishi($meat);
+    echo  'Meat Done....';
+
+    \Baazar::insertRecordsKrishi($milk);
+    echo  'Milk Done....';
+
+    \Baazar::insertRecordsKrishi($oil);
+    echo  'Oil Done....';
+
+    \Baazar::insertRecordsKrishi($spices);
+    echo  'Spices Done....';
+
+    \Baazar::insertRecordsKrishi($tobacco);
+    echo  'Tobacco Done....';
+
+    \Baazar::insertRecordsKrishi($vegetable);
+    echo  'Vegetables Done....';
+
+    \Baazar::insertRecordsKrishi($others);
+    echo  'Others Done....';
 
   // Krishi Product Category End //
 
