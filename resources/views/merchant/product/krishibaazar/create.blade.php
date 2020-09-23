@@ -299,6 +299,52 @@
                                     @if ($errors->has('description'))
                                     <span class="text-danger">{{ $errors->first('description') }}</span>
                                     @endif
+
+                                </div> 
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="frequency">Frequency</label>
+                                        {{-- <select class="form-control  js-example-basic-multiple" name="frequency[]" multiple="multiple" required>
+                                            <option value="">Select product frequency</option> 
+                                            <option value="sunday">Sunday</option>
+                                            <option value="monday">Monday</option>
+                                            <option value="tuesday">Tuesday</option>
+                                            <option value="wednessday">Wednessday</option>
+                                            <option value="thursday">Thursday</option>
+                                            <option value="friday">Friday</option>
+                                            <option value="saturday">Saturday</option>
+                                            <option value="everyday">Everyday</option>
+                                            <option value="weekly">Weekly</option>
+                                            <option value="fortnightly">Fortnightly</option>
+                                            <option value="monthly">Monthly</option>
+                                        </select> --}}
+                                        {{-- label for="subject">Subject</label> --}}
+  		{{-- <label>:</label> --}} 
+                                    </div>
+                                </div>   
+                                {{-- <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group margin">
+                                            <label for="qty">Quantity<span>*</span></label>
+                                            <input type="number" class="form-control" name="qty" id="qty" />
+                                            <span class="text-danger" id="message_qty"></span>
+                                            @if ($errors->has('qty'))
+                                            <span class="text-danger">{{ $errors->first('qty') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group margin">
+                                            <label for="unit">Unit<span>*</span></label>
+                                            <input type="text" class="form-control" name="unit" id="unit" />
+                                            <span class="text-danger" id="message_unit"></span>
+                                            @if ($errors->has('unit'))
+                                            <span class="text-danger">{{ $errors->first('unit') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div> --}}
+
                                 </div>                                                         
 
                                 <div class="form-unit form-divided">
@@ -317,6 +363,7 @@
                                         <option value="monthly">Monthly</option>      
                                     </select>
                                   </div>                               
+
                             </div>
                         </div>
                     </div>                    

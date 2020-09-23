@@ -119,7 +119,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
-                            <form action="{{route('krishiproductstore')}}" method="POST"  class="form" id="validateForm" enctype="multipart/form-data">
+                            <form action="{{url('merchant/krishi/products/updat/'.$krishiproduct->slug)}}" method="POST"  class="form" id="validateForm" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
                                 <div class="row">
@@ -134,11 +134,11 @@
                                         </div>
                                     </div>  
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('name') }}</span>
-                                    <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('name') }}" id="category" placeholder="Category">
+                                <div class="form-group">
+                                    <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('category_slug') }}</span>
+                                    <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('category_slug',$krishiproduct->category_slug) }}" id="category" placeholder="Category">
                                     <span class="text-danger" id="message_category"></span>
-                                    <input type="hidden" name="category_id" id="category_id">
+                                    <input type="hidden" name="category_id" id="category_id" value="{{ old('category_id',$krishiproduct->category_id) }}">
                                     <div class="position-absolute foo p-3" id="catarea" style="display: none">
                                         <div class="categories search-area d-flex scroll border">
                                             <div class="col-md-3 cat-level p-2 level-1">
@@ -157,7 +157,7 @@
                                             <span class="btn btn-sm btn-danger m-1" id="clear">Clear</span>
                                         </div>
                                     </div>
-                                </div>  --}}
+                                </div>
                                 <div class="form-group">
                                     <label for="color_id" class="col-xl-3 col-md-4"></label>
                                     <div id="dropzone-main" class="img-upload-area" data-color="main"><label class="mt-3"><b>Images :</b><span class="text-danger" id="message_main_img"></span></label>
@@ -198,16 +198,16 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="frequency">Frequency</label>
-                                        <select class="form-control js-example-basic-multiple" name="frequency[]" multiple="multiple">
-                                            <option value="">Select product frequency</option> 
+                                        {{-- <select class="form-control js-example-basic-multiple" name="frequency[]" multiple="multiple" required>
+                                            <option value="">Select product frequency</option>  --}}
                                             {{-- <option {{(old('location') == "Room A1" || in_array("Room A1", $selectedLocations) ? 'selected' : ''}}  value="Room A1">Room A1</option>
                                             <option {{old('location',$project->location) == "Room A1" ? 'selected' : ''}}  value="Room A1">Room A1</option> --}}
                                             
-                                            <option {{ (old('frequency') == 'Sunday' || in_array('Sunday',$frequencyname) ? 'selected' : '') }} value="Sunday">Sunday</option>
+                                            {{-- <option {{ (old('frequency') == 'Sunday' || in_array('Sunday',$frequencyname) ? 'selected' : '') }} value="Sunday">Sunday</option> --}}
                                             
                                             {{-- <option {{old('frequency', )}} --}}
                                             {{-- <option value="{{old('frequency',$frequencyname->frequency) == 'sunday' ? 'selected' : ''}}">Sunday</option> --}}
-                                            <option value="sunday">Sunday</option>
+                                            {{-- <option value="sunday">Sunday</option>
                                             <option value="monday">Monday</option>
                                             <option value="tuesday">Tuesday</option>
                                             <option value="wednessday">Wednessday</option>
@@ -218,14 +218,17 @@
                                             <option value="weekly">Weekly</option>
                                             <option value="fortnightly">Fortnightly</option>
                                             <option value="monthly">Monthly</option>
-                                        </select>
+                                        </select> --}}
+                                        <label>Science<input type="checkbox" name="subject[]" value="Science" <?= (isset($frequency) && (in_array('Science',$freavalue))) ? 'checked="checked"' : '' ?>>
+                                            Arts<input type="checkbox" name="subject[]" value="Arts" <?= (isset($frequency) && (in_array('Arts',$freavalue))) ? 'checked="checked"' : '' ?>>
+                                            Commers<input type="checkbox" name="subject[]" value="Commers" <?= (isset($frequency) && (in_array('Commers',$freavalue))) ? 'checked="checked"' : ''?>></label>
                                     </div>
                                 </div>  
                             </div>
                         </div>
                     </div>                    
                 </div>
-                <button class="btn btn-success custom float-right ml-2 w-5"  type="submit">Save</button> 
+                <button class="btn btn-success custom float-right ml-2 w-5"  type="submit">Update</button> 
             </form> 
             </div>          
         </div>   
