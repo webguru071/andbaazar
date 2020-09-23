@@ -15,6 +15,7 @@
 
     /* select2 */
 
+
         .select2-selection {
     height: 34px !important; 
     font-size: 13px;
@@ -111,6 +112,102 @@
     .select2-selection__placeholder {
     color: #c4c4c4 !important; 
     }
+    .select2-selection {
+  height: 34px !important; 
+  font-size: 13px;
+  font-family: 'Open Sans', sans-serif;
+  border-radius: 0 !important;
+  border: solid 1px #c4c4c4 !important;
+  padding-left: 4px;
+  padding-top:7px;
+}
+
+.select2-selection--multiple {
+  height: 70px !important;
+  width: 975px !important;
+  overflow: hidden;
+}
+
+.select2-selection__choice {
+  height: 40px;
+  line-height: 40px;
+  padding-right: 16px !important;
+  padding-left: 16px !important;
+  background-color: #CAF1FF !important;
+  color: #333 !important;
+  border: none !important;
+  border-radius: 3px !important;
+}
+
+.select2-selection__choice__remove {
+  float: right;
+  margin-right: 0;
+  margin-left: 2px;
+}
+.select2-search--inline .select2-search__field {
+  line-height: 40px;
+  color: #333;
+  width: 100%!important;
+}
+
+.select2-container:hover,
+.select2-container:focus,
+.select2-container:active,
+.select2-selection:hover,
+.select2-selection:focus,
+.select2-selection:active {
+  outline-color: transparent;
+  outline-style: none;
+}
+
+.select2-results__options li {
+  display: block; 
+}
+
+.select2-selection__rendered {
+  transform: translateY(2px);
+}
+
+.select2-selection__arrow {
+  display: none;
+}
+
+.select2-results__option--highlighted {
+  background-color: #CAF1FF !important;
+  color: #333 !important;
+}
+
+.select2-dropdown {
+  border-radius: 0 !important;
+  box-shadow: 0px 3px 6px 0 rgba(0,0,0,0.15) !important;
+  border: none !important;
+  margin-top: 4px !important;
+  width: 366px !important;
+}
+
+.select2-results__option {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  line-height: 24px !important;
+  vertical-align: middle !important;
+  padding-left: 8px !important;
+}
+
+.select2-results__option[aria-selected="true"] {
+  background-color: #eee !important; 
+}
+
+.select2-search__field {
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
+  font-size: 13px;
+  padding-left: 8px !important;
+  border-color: #c4c4c4 !important;
+}
+
+.select2-selection__placeholder {
+  color: #c4c4c4 !important; 
+}
     /* select2  End*/
 
 
@@ -301,6 +398,8 @@
                                     <span class="text-danger">{{ $errors->first('description') }}</span>
                                     @endif
                                 </div>                                                                                 
+                                                                                                                 
+
                                 <div class="form-unit form-divided">
                                     <label for="emp-id" class="form-input-label pr-5">Frequency:</label><br>
                                     <select class="js-example-basic-multiple" name="frequency[]" multiple="multiple">
@@ -315,8 +414,8 @@
                                         <option value="weekly">Weekly</option>
                                         <option value="fortnightly">Fortnightly</option>
                                         <option value="monthly">Monthly</option>      
-                                    </select>
-                                  </div>                            
+                                    </select>                                
+                                  </div>                               
                             </div>
                         </div>
                     </div>                    

@@ -130,17 +130,9 @@ class KrishiProductController extends Controller
             'created_at'    => now(),
 
         ];
-        // $frequency = $data['frequency'];
-        $frequency = '';
-        $freavalue = [];
-        if(isset($_POST['frequency'])){
-            $freavalue = $_POST['frequency'];
-            foreach($freavalue as $val){
-                $frequency .= $val.', ';
-            }
-        }
+        // $frequency = $data['frequency']; 
 
-        $data['frequency'] = implode(',',$request->frequency);
+        $data['frequency'] = json_encode($request->frequency);
 
         $krishiProduct = KrishiProduct::create($data);
 
@@ -244,17 +236,12 @@ class KrishiProductController extends Controller
     public function edit($slug)
     {
         $krishiproduct = KrishiProduct::where('slug',$slug)->first();
-        // $frequencyname = $krishiproduct->pluck('frequency')->toArray();
-        $frequency = '';
-        $freavalue =  $krishiproduct['frequency'];
-        $freavalue = explode(', ', $krishiproduct['frequency']);
-        foreach($freavalue as $val){
-            $frequency .= $val.', ';
-        }
+        $frequencyname = json_decode($krishiproduct->frequency);
+        // dd($frequencyname);
         $itemImages    = $krishiproduct->itemimage->groupBy('color_slug');
         $categories = Category::where('parent_id',0)->where('type','krishi')->get();
-        //  dd($frequencyname['frequency']);
-        return view('merchant.product.krishibaazar.edit',compact('krishiproduct','frequency','freavalue','itemImages','categories'));
+        
+        return view('merchant.product.krishibaazar.edit',compact('krishiproduct','frequencyname','itemImages','categories'));
     }
 
     /**
@@ -285,7 +272,7 @@ class KrishiProductController extends Controller
         // $frequency = $data['frequency'];
        
 
-        $data['frequency'] = implode(',',$request->frequency);
+        $data['frequency'] = json_encode($request->frequency);
 
         $krishiproductId->update($data);
 
@@ -304,8 +291,13 @@ class KrishiProductController extends Controller
      * @param  \App\KrishiProduct  $krishiProduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy(KrishiProduct $krishiProduct)
+    public function destroy($id)
     {
-        //
+        $krishiId = KrishiProduct::find($id);
+        $krishiId->delete();
+
+        Session::flash('error', 'Krishi Product Deleted Successfully!');
+
+        return redirect('merchant/krishi/products');
     }
 }

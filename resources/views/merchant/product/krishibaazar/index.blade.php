@@ -1,3 +1,4 @@
+
 @extends('merchant.master') 
 @section('content') 
 @push('css')
@@ -107,12 +108,12 @@
                             <td class="d-flex justify-content-between">
                                 <ul>
                                     <li>
-                                        <a href="{{ url('merchant/products/update/'.$row->slug.'/productupdate') }}">
+                                        <a href="{{ url('merchant/krishi/proudcts/update/'.$row->slug.'/krishiupdate') }}">
                                             <button class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
                                         </a>
                                     </li>
                                     <li>
-                                        <form action="{{ url('/merchant/product/'.$row->id) }}" method="post" style="margin-top: -2px;" id="deleteButton{{$row->id}}">
+                                        <form action="{{ url('/merchant/krishi/products/'.$row->id) }}" method="post" style="margin-top: -2px;" id="deleteButton{{$row->id}}">
                                             @csrf @method('delete')
                                             <button type="submit" class="btn btn-sm btn-primary" onclick="sweetalertDelete({{$row->id}})"><i class="fa fa-trash-o"></i></button>
                                         </form>
@@ -193,3 +194,4 @@
 // });
 </script>
 @endpush
+
