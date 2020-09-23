@@ -68,7 +68,7 @@
                         <a href="{{url('merchant/auction/products')}}" class="btn btn-info btn-sm text-white font-weight-bold" style="padding: 8px; height: 38px;"> <i class="fa fa-refresh" aria-hidden="true"></i> Clear</a>
                     @endif
                 </div>
-            </form>
+            </form> --}}
                 <table class="table-responsive-md table mb-0 table-striped mt-2">
                     <thead>
                         <tr>                           
@@ -83,7 +83,7 @@
                     <tbody>
                         @forelse($product as $row)
                         <tr>                            
-                            <td class="text-left">{{$row->name}}</td>
+                            {{-- <td class="text-left">{{$row->name}}</td>
                             <td class="text-left">{{$row->category_slug}}</td>
                             <td>{{$row->qty}}</td>
                             <td>{{$row->unit}}</td> 
@@ -95,11 +95,11 @@
                                 @else
                                 <a href="#" id="" class="badge badge-pill badge-danger p-2" data-toggle="modal" data-original-title="test" data-target="#tagEditModal{{$row->id}}">Reject</a>
                                 @endif
-                            </td>
+                            </td> --}}
                             <td class="d-flex justify-content-between">
                                 <ul>
                                     <li>                                
-                                        <a href="{{ url('merchant/auction/products/update/'.$row->slug.'/auctionupdate') }}">
+                                        <a href="{{ url('merchant/krishi/proudcts/update/'.$row->slug.'/krishiupdate') }}">
 
                                             <button class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
                                         </a>
@@ -115,7 +115,7 @@
                             </td>
                         </tr>
 
-                        <div class="modal fade" id="tagEditModal{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        {{-- <div class="modal fade" id="tagEditModal{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -136,7 +136,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                            @empty
                             <tr>
                                 <td colspan="7">No Product found</td>
@@ -149,7 +149,7 @@
                
                 </div>
                
-            </div> --}}
+            </div>
             
         </div>
     </div>

@@ -173,7 +173,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group margin">
-                                            <label for="date">Date of birth<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('date') }}</span>
+                                            <label for="date">Product add Date<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('date') }}</span>
                                             <input type="text"  class="form-control inputfield  @error('date') border-danger @enderror datepickerPreviousOnly" required name="date" value="{{ old('date') }}"   id="" placeholder="YYYY/MM/DD" autocomplete="off">
                                         </div>
                                     </div> 

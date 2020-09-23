@@ -115,6 +115,7 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
     // Route::resource('category','KrishiProductCategoryController');
     Route::get('products/new','KrishiProductController@create');
     Route::post('products/new','KrishiProductController@store')->name('krishiproductstore');
+    Route::get('proudcts/update/{slug}/krishiupdate','KrishiProductController@edit');
     Route::resource('products','KrishiProductController');
       
   }); 

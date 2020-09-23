@@ -142,8 +142,8 @@ class CategoriesTableSeeder extends Seeder
 
    // Krishi Product Category //
 
-    \Baazar::insertRecordsKrishi($egg);
-    echo  'Betel Done....';
+   //  \Baazar::insertRecordsKrishi($egg);
+   //  echo  'Betel Done....';
 
   // Krishi Product Category End //
 

@@ -22,7 +22,8 @@ class KrishiProductController extends Controller
      */
     public function index()
     {
-        return view('merchant.product.krishibaazar.index');
+        $product      = KrishiProduct::all();
+        return view('merchant.product.krishibaazar.index',compact('product'));
     }
 
     /**
@@ -66,20 +67,21 @@ class KrishiProductController extends Controller
     {
         // dd($request->all());
         $merchantId =  Merchant::where('user_id',Sentinel::getUser()->id)->first();
-        $shop = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;
+        $shop       = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;
         $slug       = Baazar::getUniqueSlug($krishiProduct,$request->name); 
         $feature    = Baazar::base64Uploadkrishi($request->images['main'][0],$slug,'featured');
         $data = [
-            'name'  => $request->name,
-            'image' => $feature,
-            'email' => $request->email,
-            'description' => $request->description,
-            'video_url'  => $request->video_url,
-            'date'       => $request->date,
+            'name'          => $request->name,
+            'slug'          => $slug,
+            'image'         => $feature,
+            'email'         => $request->email,
+            'description'   => $request->description,
+            'video_url'     => $request->video_url,
+            'date'          => $request->date,
             'category_slug' => $request->category_slug,
-            'category_id' => $request->category_id,
-            'merchant_id' => $merchantId->id,
-            'shop_id' => $shop->id,
+            'category_id'   => $request->category_id,
+            'merchant_id'   => $merchantId->id,
+            'shop_id'       => $shop->id,
             'user_id'       => Sentinel::getUser()->id,
             'created_at'    => now(),
 
@@ -117,9 +119,13 @@ class KrishiProductController extends Controller
      * @param  \App\KrishiProduct  $krishiProduct
      * @return \Illuminate\Http\Response
      */
-    public function edit(KrishiProduct $krishiProduct)
+    public function edit($slug)
     {
-        //
+        $krishiproduct = KrishiProduct::where('slug',$slug)->first();
+        $frequencyname = $krishiproduct->pluck('frequency')->toArray();
+        $itemImages    = $krishiproduct->itemimage->groupBy('color_slug');
+        //  dd($frequencyname['frequency']);
+        return view('merchant.product.krishibaazar.edit',compact('krishiproduct','frequencyname','itemImages'));
     }
 
     /**
