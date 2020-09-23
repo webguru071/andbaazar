@@ -218,8 +218,13 @@ class KrishiProductController extends Controller
      * @param  \App\KrishiProduct  $krishiProduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy(KrishiProduct $krishiProduct)
+    public function destroy($id)
     {
-        //
+        $krishiId = KrishiProduct::find($id);
+        $krishiId->delete();
+
+        Session::flash('error', 'Krishi Product Deleted Successfully!');
+
+        return redirect('merchant/krishi/products');
     }
 }
