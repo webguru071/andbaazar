@@ -21,10 +21,48 @@ class KrishiProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $product      = KrishiProduct::all();
-        return view('merchant.product.krishibaazar.index',compact('product'));
+
+        $product      = KrishiProduct::where('shop_id',Baazar::shop()->id)->where('type','krishi');
+
+      $filter = [
+        'category'  => '',
+        'status'  => '',
+        'keyword'  => '',
+      ];
+
+      $findCat = KrishiProduct::where('shop_id',Baazar::shop()->id)->where('type','krishi');
+      $categories = $findCat->select('category_id')->with('category')->distinct()->get();
+
+      //Category Filter
+      if ($request->has('category') && !empty($request->category)){
+        $catId = Category::where('slug',$request->category)->first();
+        if($catId){
+          $product = $product->where('category_id',$catId->id);
+        }
+        $filter['category'] = $request->category;
+
+      }
+      
+      //status Filter
+      if ($request->has('status') && !empty($request->status)){
+        $product = $product->where('status',$request->status);
+        $filter['status'] = $request->status;
+      }
+
+      //status Filter
+      if ($request->has('keyword') && !empty($request->keyword)){
+        $product = $product->where('name','like','%'.$request->keyword.'%');
+        $filter['keyword'] = $request->keyword;
+      }
+
+      // dd($product);
+      $product = $product->paginate(10);
+      $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
+      return view ('merchant.product.krishibaazar.index',compact('product','categories','filter'));
+       
+      
     }
 
     /**

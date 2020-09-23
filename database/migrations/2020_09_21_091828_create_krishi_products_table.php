@@ -21,6 +21,7 @@ class CreateKrishiProductsTable extends Migration
             $table->string('email')->nullable();
             $table->text('description');
             $table->string('video_url')->nullable();
+            $table->enum('type',['krishi','other'])->default('krishi');
             $table->string('available_from')->nullable();
             $table->boolean('frequency_support')->default(1)->change();
             $table->text('available_stock')->nullable();
