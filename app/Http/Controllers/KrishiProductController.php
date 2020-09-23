@@ -13,6 +13,9 @@ use Session;
 use Baazar; 
 use App\Models\Color;
 use App\Models\Reject;
+use App\Models\RejectValue;
+use App\Mail\KrishiProductApprovemail;
+use App\Mail\KrishiProductRejectMail;
 
 class KrishiProductController extends Controller
 {
@@ -157,9 +160,13 @@ class KrishiProductController extends Controller
      * @param  \App\KrishiProduct  $krishiProduct
      * @return \Illuminate\Http\Response
      */
-    public function show(KrishiProduct $krishiProduct)
+    public function show($id)
     {
-        //
+       $krishiproduct = KrishiProduct::find($id);
+       $krishiproductImage = ItemImage::where('color_slug','main')->where('product_id',$krishiproduct->id)->where('type','krishi')->limit(5)->get();    
+       $rejectlist = Reject::where('type','krishi')->get();
+
+       return view('merchant.product.krishibaazar.show',compact('krishiproduct','krishiproductImage','rejectlist'));
     }
 
     /**
@@ -168,6 +175,72 @@ class KrishiProductController extends Controller
      * @param  \App\KrishiProduct  $krishiProduct
      * @return \Illuminate\Http\Response
      */
+
+    //  Krishi Product List in Admin Panel //
+
+    public function krishiProductList(){
+        
+        $krishiproduct = KrishiProduct::distinct()->get();
+        return view('merchant.product.krishibaazar.product_list',compact('krishiproduct'));
+    }
+
+
+    public function approvemetnt($slug){
+        $data = KrishiProduct::where('slug',$slug)->first();
+        // dd( $data);
+  
+        $data->update(['status' => 'Active']);
+        // dd($data);
+  
+        $name =  $data['name'];
+        \Mail::to($data['email'])->send(new KrishiProductApprovemail($data, $name));
+  
+        Session::flash('success', 'Krishi Product Approve Successfully!');
+  
+        return back();
+      }
+
+
+      public function rejected(Request $request,$slug){
+        $data = KrishiProduct::where('slug',$slug)->first();
+        // dd($data);
+  
+        $data->update([
+          'status' => 'Reject',
+          'rej_desc' => $request->rej_desc,
+          ]);
+  
+          $rejct_value = RejectValue::where('user_id', $data->user_id)->first();
+          //  dd($rejct_value);
+         
+          $rej_list = count($_POST['rej_name']);
+          
+          for($i = 0; $i<$rej_list; $i++){        
+                  $rejct_value=RejectValue::create([
+                  'rej_name'      => $request->rej_name[$i],
+                  'type'          => $request->type,
+                  'merchant_id'   => $data->id,
+                  'user_id'       => $data->user_id,
+              ]);
+              // dd($data);
+          } 
+        
+  
+          $rej_desc = RejectValue::where('type','krishi')->latest()->get();
+          // dd($rej_desc);
+          
+          $name = $data['name'];
+          // $rej_desc = $rejct_value['rej_name'];
+          \Mail::to($data['email'])->send(new KrishiProductRejectMail($data, $name,$rej_desc));
+          
+          Session::flash('warning', 'Krishi Product Rejected Successfully!');
+  
+          return back();
+      }
+  
+
+     //  Krishi Product List in Admin Panel End //
+
     public function edit($slug)
     {
         $krishiproduct = KrishiProduct::where('slug',$slug)->first();

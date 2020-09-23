@@ -15,6 +15,7 @@ class KrishiProduct extends Model
             'slug', 
             'image',
             'email', 
+            'status',
             'description', 
             'video_url',  
             'date',  
