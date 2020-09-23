@@ -111,6 +111,8 @@ class CategoriesTableSeeder extends Seeder
          \Baazar::insertRecords($tools_diy_outdoor);
       echo  'Tools, DIY & Outdoor Done....';
 
+    // Sme Category Start //
+
       \Baazar::insertRecordsSme($bambocane);
       echo  'Bambo Done....';
 
@@ -138,10 +140,13 @@ class CategoriesTableSeeder extends Seeder
       \Baazar::insertRecordsSme($textile_weaving_factories);
       echo  'Pottery Done....';
 
+   // Krishi Product Category //
 
+    \Baazar::insertRecordsKrishi($egg);
+    echo  'Betel Done....';
 
-      // \Baazar::insertRecords($tv_audio);
-      // echo  'TV, Audio  Done...';
+  // Krishi Product Category End //
+
    	}
 
   }
