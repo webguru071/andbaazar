@@ -15,7 +15,7 @@
 
     /* select2 */
 
-    .select2-selection {
+    /* .select2-selection {
   height: 34px !important; 
   font-size: 13px;
   font-family: 'Open Sans', sans-serif;
@@ -109,7 +109,7 @@
 
 .select2-selection__placeholder {
   color: #c4c4c4 !important; 
-}
+} */
     /* select2  End*/
 
 
@@ -347,7 +347,7 @@
 
                                 </div>                                                         
 
-                                <div class="form-unit form-divided">
+                                {{-- <div class="form-unit form-divided">
                                     <label for="emp-id" class="form-input-label pr-5">Frequency:</label><br>
                                     <select class="js-example-basic-multiple" name="frequency[]" multiple="multiple">
                                         <option value="sunday">Sunday</option>
@@ -362,7 +362,7 @@
                                         <option value="fortnightly">Fortnightly</option>
                                         <option value="monthly">Monthly</option>      
                                     </select>
-                                  </div>                               
+                                  </div>                                --}}
 
                             </div>
                         </div>
@@ -390,7 +390,7 @@
 {{-- <script src="{{ asset('material') }}/js/select2.min.js"></script> --}}
 
     <script>
-         $('#category').click(function(){
+        $('#category').click(function(){
             $('#catarea').toggle();
         });
         $('#close').click(function(){
@@ -486,12 +486,7 @@
                 }
             });
 
-        }; 
-
-    //     $(document).ready(function() {
-    // $('.js-example-basic-multiple').select2();
-// });
-// $('.js-example-basic-single').select2();
+        };
 
     </script>
 
@@ -620,17 +615,17 @@
 {{-- Select2 --}}
     <script>
 
-    $(document).ready(function() {
+    // $(document).ready(function() {
     
-    $(".js-example-basic-multiple").select2({
-        placeholder: "Select Frequency"
-    }).on('change', function(e) {
-        if($(this).val() && $(this).val().length) {
-                $(this).next('.select2-container')
-            .find('li.select2-search--inline input.select2-search__field').attr('placeholder', 'Select Frequency');
-        }
-    });
-    });
+    // $(".js-example-basic-multiple").select2({
+    //     placeholder: "Select Frequency"
+    // }).on('change', function(e) {
+    //     if($(this).val() && $(this).val().length) {
+    //             $(this).next('.select2-container')
+    //         .find('li.select2-search--inline input.select2-search__field').attr('placeholder', 'Select Frequency');
+    //     }
+    // });
+    // });
     </script>
 @endpush
 

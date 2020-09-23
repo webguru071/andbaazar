@@ -25,6 +25,7 @@ class KrishiProductController extends Controller
     {
 
         $product      = KrishiProduct::where('shop_id',Baazar::shop()->id)->where('type','krishi');
+        
 
       $filter = [
         'category'  => '',
