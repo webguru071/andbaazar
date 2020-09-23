@@ -4,11 +4,116 @@
 @push('css')
 <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> --}}
+{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> --}}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+
 {{-- <link href="{{ asset('material') }}/css/select2.min.css" rel="stylesheet" /> --}}
 
 
 <style>
+
+    /* select2 */
+
+    .select2-selection {
+  height: 34px !important; 
+  font-size: 13px;
+  font-family: 'Open Sans', sans-serif;
+  border-radius: 0 !important;
+  border: solid 1px #c4c4c4 !important;
+  padding-left: 4px;
+}
+
+.select2-selection--multiple {
+  height: 70px !important;
+  width: 800px !important;
+  overflow: hidden;
+}
+
+.select2-selection__choice {
+  height: 40px;
+  line-height: 40px;
+  padding-right: 16px !important;
+  padding-left: 16px !important;
+  background-color: #CAF1FF !important;
+  color: #333 !important;
+  border: none !important;
+  border-radius: 3px !important;
+}
+
+.select2-selection__choice__remove {
+  float: right;
+  margin-right: 0;
+  margin-left: 2px;
+}
+.select2-search--inline .select2-search__field {
+  line-height: 40px;
+  color: #333;
+  width: 100%!important;
+}
+
+.select2-container:hover,
+.select2-container:focus,
+.select2-container:active,
+.select2-selection:hover,
+.select2-selection:focus,
+.select2-selection:active {
+  outline-color: transparent;
+  outline-style: none;
+}
+
+.select2-results__options li {
+  display: block; 
+}
+
+.select2-selection__rendered {
+  transform: translateY(2px);
+}
+
+.select2-selection__arrow {
+  display: none;
+}
+
+.select2-results__option--highlighted {
+  background-color: #CAF1FF !important;
+  color: #333 !important;
+}
+
+.select2-dropdown {
+  border-radius: 0 !important;
+  box-shadow: 0px 3px 6px 0 rgba(0,0,0,0.15) !important;
+  border: none !important;
+  margin-top: 4px !important;
+  width: 366px !important;
+}
+
+.select2-results__option {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  line-height: 24px !important;
+  vertical-align: middle !important;
+  padding-left: 8px !important;
+}
+
+.select2-results__option[aria-selected="true"] {
+  background-color: #eee !important; 
+}
+
+.select2-search__field {
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
+  font-size: 13px;
+  padding-left: 8px !important;
+  border-color: #c4c4c4 !important;
+}
+
+.select2-selection__placeholder {
+  color: #c4c4c4 !important; 
+}
+    /* select2  End*/
+
+
     #catarea{
             background: #fff;
             border: 1px solid #ddd;
@@ -51,7 +156,7 @@
 
        /* Iamge */
        .h-100{
-            height: 100px !important;
+            height: 10px !important;
             margin: 4px;
         }
         .drop-area{
@@ -102,6 +207,13 @@
         .multepale-select{
             padding-bottom: 100px!important;
         } 
+
+
+
+        /* select2 */
+
+
+        
 </style>
 
 @endpush
@@ -194,48 +306,24 @@
                                     @if ($errors->has('description'))
                                     <span class="text-danger">{{ $errors->first('description') }}</span>
                                     @endif
-                                </div> 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="frequency">Frequency</label>
-                                        <select class="form-control  js-example-basic-multiple" name="frequency[]" multiple="multiple">
-                                            <option value="">Select product frequency</option> 
-                                            <option value="sunday">Sunday</option>
-                                            <option value="monday">Monday</option>
-                                            <option value="tuesday">Tuesday</option>
-                                            <option value="wednessday">Wednessday</option>
-                                            <option value="thursday">Thursday</option>
-                                            <option value="friday">Friday</option>
-                                            <option value="saturday">Saturday</option>
-                                            <option value="everyday">Everyday</option>
-                                            <option value="weekly">Weekly</option>
-                                            <option value="fortnightly">Fortnightly</option>
-                                            <option value="monthly">Monthly</option>
-                                        </select>
-                                    </div>
-                                </div>   
-                                {{-- <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group margin">
-                                            <label for="qty">Quantity<span>*</span></label>
-                                            <input type="number" class="form-control" name="qty" id="qty" />
-                                            <span class="text-danger" id="message_qty"></span>
-                                            @if ($errors->has('qty'))
-                                            <span class="text-danger">{{ $errors->first('qty') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group margin">
-                                            <label for="unit">Unit<span>*</span></label>
-                                            <input type="text" class="form-control" name="unit" id="unit" />
-                                            <span class="text-danger" id="message_unit"></span>
-                                            @if ($errors->has('unit'))
-                                            <span class="text-danger">{{ $errors->first('unit') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                </div>                                                         
+
+                                <div class="form-unit form-divided">
+                                    <label for="emp-id" class="form-input-label pr-5">Frequency:</label><br>
+                                    <select class="js-example-basic-multiple" name="frequency[]" multiple="multiple">
+                                        <option value="sunday">Sunday</option>
+                                        <option value="monday">Monday</option>
+                                        <option value="tuesday">Tuesday</option>
+                                        <option value="wednessday">Wednessday</option>
+                                        <option value="thursday">Thursday</option>
+                                        <option value="friday">Friday</option>
+                                        <option value="saturday">Saturday</option>
+                                        <option value="everyday">Everyday</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="fortnightly">Fortnightly</option>
+                                        <option value="monthly">Monthly</option>      
+                                    </select>
+                                  </div>                               
                             </div>
                         </div>
                     </div>                    
@@ -252,7 +340,13 @@
 <script src="{{ asset('js/jquery-ui.js') }}"></script>
 {{-- <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script> --}}
 <script src="{{ asset('js/dropzone.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> --}}
+
+
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script> --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+
 {{-- <script src="{{ asset('material') }}/js/select2.min.js"></script> --}}
 
     <script>
@@ -354,8 +448,8 @@
 
         }; 
 
-        $(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
+    //     $(document).ready(function() {
+    // $('.js-example-basic-multiple').select2();
 });
 // $('.js-example-basic-single').select2();
 
@@ -482,6 +576,27 @@
             };
             var myDropzone = new Dropzone(`.${id}`, options);
         }
+    </script>
+
+    <script>
+
+// $(document).ready(function() {
+//     $('.js-example-basic-multiple').select2();
+// });
+
+$(document).ready(function() {
+  
+  $(".js-example-basic-multiple").select2({
+    placeholder: "Select Frequency"
+  }).on('change', function(e) {
+  	if($(this).val() && $(this).val().length) {
+			$(this).next('.select2-container')
+      	.find('li.select2-search--inline input.select2-search__field').attr('placeholder', 'Select Frequency');
+    }
+  });
+});
+
+
     </script>
 @endpush
 
