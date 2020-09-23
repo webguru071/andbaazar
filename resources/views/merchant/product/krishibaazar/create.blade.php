@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+{{-- <link href="{{ asset('material') }}/css/select2.min.css" rel="stylesheet" /> --}}
 
 
 <style>
@@ -252,6 +253,7 @@
 {{-- <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script> --}}
 <script src="{{ asset('js/dropzone.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+{{-- <script src="{{ asset('material') }}/js/select2.min.js"></script> --}}
 
     <script>
          $('#category').click(function(){
@@ -355,6 +357,7 @@
         $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
 });
+// $('.js-example-basic-single').select2();
 
     </script>
 
