@@ -6,10 +6,9 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> --}}
 {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> --}}
-
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
 
-{{-- <link href="{{ asset('material') }}/css/select2.min.css" rel="stylesheet" /> --}}
+
 
 
 <style>
@@ -207,12 +206,6 @@
         .multepale-select{
             padding-bottom: 100px!important;
         } 
-
-
-
-        /* select2 */
-
-
         
 </style>
 
@@ -450,7 +443,7 @@
 
     //     $(document).ready(function() {
     // $('.js-example-basic-multiple').select2();
-});
+// });
 // $('.js-example-basic-single').select2();
 
     </script>
@@ -577,26 +570,20 @@
             var myDropzone = new Dropzone(`.${id}`, options);
         }
     </script>
-
+{{-- Select2 --}}
     <script>
 
-// $(document).ready(function() {
-//     $('.js-example-basic-multiple').select2();
-// });
-
-$(document).ready(function() {
-  
-  $(".js-example-basic-multiple").select2({
-    placeholder: "Select Frequency"
-  }).on('change', function(e) {
-  	if($(this).val() && $(this).val().length) {
-			$(this).next('.select2-container')
-      	.find('li.select2-search--inline input.select2-search__field').attr('placeholder', 'Select Frequency');
-    }
-  });
-});
-
-
+    $(document).ready(function() {
+    
+    $(".js-example-basic-multiple").select2({
+        placeholder: "Select Frequency"
+    }).on('change', function(e) {
+        if($(this).val() && $(this).val().length) {
+                $(this).next('.select2-container')
+            .find('li.select2-search--inline input.select2-search__field').attr('placeholder', 'Select Frequency');
+        }
+    });
+    });
     </script>
 @endpush
 
