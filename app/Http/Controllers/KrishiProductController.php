@@ -89,6 +89,14 @@ class KrishiProductController extends Controller
 
         ];
         // $frequency = $data['frequency'];
+        $frequency = '';
+        $freavalue = [];
+        if(isset($_POST['frequency'])){
+            $freavalue = $_POST['frequency'];
+            foreach($freavalue as $val){
+                $frequency .= $val.', ';
+            }
+        }
 
         $data['frequency'] = implode(',',$request->frequency);
 
@@ -124,10 +132,17 @@ class KrishiProductController extends Controller
     public function edit($slug)
     {
         $krishiproduct = KrishiProduct::where('slug',$slug)->first();
-        $frequencyname = $krishiproduct->pluck('frequency')->toArray();
+        // $frequencyname = $krishiproduct->pluck('frequency')->toArray();
+        $frequency = '';
+        $freavalue =  $krishiproduct['frequency'];
+        $freavalue = explode(', ', $krishiproduct['frequency']);
+        foreach($freavalue as $val){
+            $frequency .= $val.', ';
+        }
         $itemImages    = $krishiproduct->itemimage->groupBy('color_slug');
+        $categories = Category::where('parent_id',0)->where('type','krishi')->get();
         //  dd($frequencyname['frequency']);
-        return view('merchant.product.krishibaazar.edit',compact('krishiproduct','frequencyname','itemImages'));
+        return view('merchant.product.krishibaazar.edit',compact('krishiproduct','frequency','freavalue','itemImages','categories'));
     }
 
     /**
@@ -137,9 +152,38 @@ class KrishiProductController extends Controller
      * @param  \App\KrishiProduct  $krishiProduct
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, KrishiProduct $krishiProduct)
+    public function update(Request $request, KrishiProduct $krishiProduct,$slug)
     {
-        //
+        // dd($request->all());
+        $krishiproductId = KrishiProduct::where('slug',$slug)->first();
+        $krishiproductId->itemimage()->delete();
+        $feature    = Baazar::base64Uploadkrishi($request->images['main'][0],$slug,'featured');
+        $data = [
+            'name'          => $request->name, 
+            'image'         => $feature,
+            'email'         => $request->email,
+            'description'   => $request->description,
+            'video_url'     => $request->video_url,
+            'date'          => $request->date,
+            'category_slug' => $request->category,
+            'category_id'   => $request->category_id, 
+            'updated_at'    => now(),
+
+        ];
+        // $frequency = $data['frequency'];
+       
+
+        $data['frequency'] = implode(',',$request->frequency);
+
+        $krishiproductId->update($data);
+
+        if($request->images){
+            $this->addImages($request->images,$krishiproductId->id);
+          } 
+
+        Session::flash('success', 'Krishi Product Update Successfully!');
+
+          return back();
     }
 
     /**

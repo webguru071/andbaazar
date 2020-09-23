@@ -198,7 +198,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="frequency">Frequency</label>
-                                        <select class="form-control  js-example-basic-multiple" name="frequency[]" multiple="multiple">
+                                        {{-- <select class="form-control  js-example-basic-multiple" name="frequency[]" multiple="multiple" required>
                                             <option value="">Select product frequency</option> 
                                             <option value="sunday">Sunday</option>
                                             <option value="monday">Monday</option>
@@ -211,7 +211,10 @@
                                             <option value="weekly">Weekly</option>
                                             <option value="fortnightly">Fortnightly</option>
                                             <option value="monthly">Monthly</option>
-                                        </select>
+                                        </select> --}}
+                                        {{-- label for="subject">Subject</label> --}}
+  		{{-- <label>:</label> --}}
+  		<label>Science<input type="checkbox" name="frequency[]" value="Science" <?= (isset($frequency) && (in_array('Science',$freavalue))) ? 'checked="checked"' : '' ?>>Arts<input type="checkbox" name="frequency[]" value="Arts" <?= (isset($frequency) && (in_array('Arts',$freavalue))) ? 'checked="checked"' : '' ?>>Comears<input type="checkbox" name="frequency[]" value="Comears" <?= (isset($frequency) && (in_array('Comears',$freavalue))) ? 'checked="checked"' : '' ?>></label>
                                     </div>
                                 </div>   
                                 {{-- <div class="row">
