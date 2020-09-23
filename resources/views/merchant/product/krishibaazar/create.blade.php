@@ -15,18 +15,19 @@
 
     /* select2 */
 
-    /* .select2-selection {
+    .select2-selection {
   height: 34px !important; 
   font-size: 13px;
   font-family: 'Open Sans', sans-serif;
   border-radius: 0 !important;
   border: solid 1px #c4c4c4 !important;
   padding-left: 4px;
+  padding-top:7px;
 }
 
 .select2-selection--multiple {
   height: 70px !important;
-  width: 800px !important;
+  width: 975px !important;
   overflow: hidden;
 }
 
@@ -109,7 +110,7 @@
 
 .select2-selection__placeholder {
   color: #c4c4c4 !important; 
-} */
+}
     /* select2  End*/
 
 
@@ -155,7 +156,7 @@
 
        /* Iamge */
        .h-100{
-            height: 10px !important;
+            height: 100px !important;
             margin: 4px;
         }
         .drop-area{
@@ -301,53 +302,9 @@
                                     @endif
 
                                 </div> 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="frequency">Frequency</label>
-                                        {{-- <select class="form-control  js-example-basic-multiple" name="frequency[]" multiple="multiple" required>
-                                            <option value="">Select product frequency</option> 
-                                            <option value="sunday">Sunday</option>
-                                            <option value="monday">Monday</option>
-                                            <option value="tuesday">Tuesday</option>
-                                            <option value="wednessday">Wednessday</option>
-                                            <option value="thursday">Thursday</option>
-                                            <option value="friday">Friday</option>
-                                            <option value="saturday">Saturday</option>
-                                            <option value="everyday">Everyday</option>
-                                            <option value="weekly">Weekly</option>
-                                            <option value="fortnightly">Fortnightly</option>
-                                            <option value="monthly">Monthly</option>
-                                        </select> --}}
-                                        {{-- label for="subject">Subject</label> --}}
-  		{{-- <label>:</label> --}} 
-                                    </div>
-                                </div>   
-                                {{-- <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group margin">
-                                            <label for="qty">Quantity<span>*</span></label>
-                                            <input type="number" class="form-control" name="qty" id="qty" />
-                                            <span class="text-danger" id="message_qty"></span>
-                                            @if ($errors->has('qty'))
-                                            <span class="text-danger">{{ $errors->first('qty') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group margin">
-                                            <label for="unit">Unit<span>*</span></label>
-                                            <input type="text" class="form-control" name="unit" id="unit" />
-                                            <span class="text-danger" id="message_unit"></span>
-                                            @if ($errors->has('unit'))
-                                            <span class="text-danger">{{ $errors->first('unit') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                                                                  
 
-                                </div>                                                         
-
-                                {{-- <div class="form-unit form-divided">
+                                <div class="form-unit form-divided">
                                     <label for="emp-id" class="form-input-label pr-5">Frequency:</label><br>
                                     <select class="js-example-basic-multiple" name="frequency[]" multiple="multiple">
                                         <option value="sunday">Sunday</option>
@@ -362,7 +319,7 @@
                                         <option value="fortnightly">Fortnightly</option>
                                         <option value="monthly">Monthly</option>      
                                     </select>
-                                  </div>                                --}}
+                                  </div>                               
 
                             </div>
                         </div>
@@ -615,17 +572,17 @@
 {{-- Select2 --}}
     <script>
 
-    // $(document).ready(function() {
+    $(document).ready(function() {
     
-    // $(".js-example-basic-multiple").select2({
-    //     placeholder: "Select Frequency"
-    // }).on('change', function(e) {
-    //     if($(this).val() && $(this).val().length) {
-    //             $(this).next('.select2-container')
-    //         .find('li.select2-search--inline input.select2-search__field').attr('placeholder', 'Select Frequency');
-    //     }
-    // });
-    // });
+    $(".js-example-basic-multiple").select2({
+        placeholder: "Select Frequency"
+    }).on('change', function(e) {
+        if($(this).val() && $(this).val().length) {
+                $(this).next('.select2-container')
+            .find('li.select2-search--inline input.select2-search__field').attr('placeholder', 'Select Frequency');
+        }
+    });
+    });
     </script>
 @endpush
 
