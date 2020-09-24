@@ -1,87 +1,102 @@
 @extends('admin.layout.master')
 
 @section('content')
+@push('css')
     <style>
-        .imagestyle{
-            width: 75px;
-            height: 75px;
-            border-width: 4px 4px 4px 4px;border-style: solid;
-            border-color: #ccc;
-        }
-        .divmargin{
-            margin-top: 20px;
-            margin-left: 250px;
-        }
+        .imagestyleIndex{
+        width: 100px;
+        height:100px;
+        /* border-width: 4px 4px 4px 4px; */
+        /* border-style: solid;
+        border-color: #ccc; */
+    } 
+
+    .imagestyle{
+        width: 200px;
+        height: 200px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #ccc;
+        border-bottom: 0px;
+        padding: 10px;
+    }
+
+    #file-upload{
+        display: none;
+    }
+    .uploadbtn{
+        width: 200px;background: #ddd;float: left;text-align: center;
+    }
+    .custom-file-upload {
+        /* border: 1px solid #ccc; */
+        display: inline-block;
+        padding: 9px 40px;
+        cursor: pointer;
+        border-top: 0px;
+    }
     </style>
-    <div class="page-body">
-
-        <!-- Container-fluid starts-->
-        <div class="container-fluid">
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="page-header-left">
-                            <h3>Edit Category
-                                <small>AndBaazar Admin panel</small>
-                            </h3>
+  @endpush
+  @include('elements.alert')
+@component('admin.layout.inc.breadcrumb')
+  @slot('pageTitle')
+      Category
+  @endslot
+  @slot('page')
+      <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+      <li class="breadcrumb-item active" aria-current="page">Category</li>
+  @endslot
+@endcomponent   
+        <div class="container-fluid" style="padding-left: 500px">
+            <div class="row"> 
+                <div class="col-sm-7">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Edit Category</h5>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <ol class="breadcrumb pull-right">
-                            <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
-                            <li class="breadcrumb-item">Categories </li>
-                            <li class="breadcrumb-item active">Edit Category</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Container-fluid Ends-->
-
-        <!-- Container-fluid starts-->
-        <div class="container-fluid">
-            <div class="card tab2-card">
-                <div class="card-header">
-                    <h5>Edit Sub Category</h5>
-                </div>
-                <div class="card-body">
-                    <form class="needs-validation" novalidate="" action="{{ url('/andbaazaradmin/category/'.$category->slug) }}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group row">
-                                    <label for="validationCustom0" class="col-xl-3 col-md-4">Category Name <span>*</span></label>
-                                    <input class="form-control col-md-8" name="name" value="{{ $category->name }}" id="validationCustom0" type="text" required="">
-                                </div>
-                                <div class="form-group row">
-                                    <label for="image" class="col-xl-3 col-md4">Image</label>
-                                    <input type="file" class="form-control col-md-8" name="thumb" id="image" onchange="loadFile(event)">
-                                    <input type="hidden" value="{{$category->thumb}}" name="old_image">
-                                    <div class="divmargin">
+                        <div class="card-body">
+                            <form action="{{ url('/andbaazaradmin/categories/update/'.$category->id) }}" method="post" class="form" id="validateForm" enctype="multipart/form-data">
+                                @csrf
+                                @method('put')
+                                <div class="form-group text-left mb-5 pb-3">  
+                                    <label for="thumb">Logo:</label>
+                                    <div class="mt-0">
                                         @if(!empty($category->thumb))
-                                        <img id="output"  class="imagestyle" src="{{ asset($category->thumb) }}" />
+                                         <img id="output"  class="imagestyle" src="{{ asset($category->thumb) }}"/>
                                         @else
-                                            <img id="output"  class="imagestyle" src="{{ asset('/uploads/category_image/user.png') }}" />
+                                         <img id="output"  class="imagestyle" src="{{ asset('/uploads/brand_image/brand.png') }}" />
                                         @endif
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-xl-3 col-md-4"></label>
-                                    <div class="checkbox checkbox-primary col-md-8">
-                                        <button type="submit"  class="btn btn-primary">Update</button>
+                                    <div class="uploadbtn"> 
+                                        <label for="file-upload" class="custom-file-upload">Upload Here</label>
+                                        <input id="file-upload" type="file" name="thumb" onchange="loadFile(event)"/>
+                                        <input type="hidden" value="{{$category->thumb}}" name="old_image"> 
                                     </div>
+                                </div>                      
+                                <div class="form-group">
+                                    <label for="validationCustom0">Category Name <span class="text-danger">*</span></label>
+                                    <input class="form-control  @error('name') border-danger @enderror" name="name" value="{{old('name',$category->name)  }}" id="validationCustom0" type="text" required="">
+                                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                                </div> 
+                                <div class="form-group ">
+                                    <label for="percentage">Percentage:</label>
+                                    <input type="number" name="percentage" value="{{old('percentage',$category->percentage)}}" class="form-control @error('percentage') border-danger @enderror" id="amount" placeholder="0.00" required autocomplete="off">
+                                    <span class="text-danger">{{ $errors->first('percentage') }}</span>
                                 </div>
-
-                            </div>
+                                <div class="form-group">
+                                    <label for="description">Description:</label>
+                                    <textarea type="text"  name="desc"  class="form-control @error('desc') border-danger @enderror" rows="5">{{$category->desc}}</textarea>
+                                    <span class="text-danger">{{ $errors->first('desc') }}</span>
+                                </div>   
+                                <div class="text-right">
+                                    <button type="submit"  class="btn btn-primary">Update</button>
+                                </div> 
+                             </form>
+                           </div>                                                 
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Container-fluid Ends-->
-
-    </div>
 @endsection
 <script>
     var loadFile = function(event) {

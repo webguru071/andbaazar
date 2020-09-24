@@ -86,8 +86,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
+        $category = Category::find($id);
+        // dd($category);
         return view('admin.categories.edit',compact('category'));
     }
 
@@ -98,23 +100,24 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
+        // dd($request->all());
+        $category = Category::find($id);
         $this->validateForm($request);
         $data =[
             'name'       => $request->name,
             'desc'       => $request->desc,
             'thumb'      => Baazar::fileUpload($request,'thumb','old_image','/uploads/category_image'),
             'percentage' => $request->percentage,
-            'sort'       => $request->sort,
-            'user_id'    => Sentinel::getUser()->id,
+            'sort'       => $request->sort, 
             'updated_at' => now(),
         ];
 
         $category->update($data);
 
         Session::flash('warning', 'Category Updated Successfully');
-        return redirect('andbaazaradmin/products/category');
+        return back();
     }
 
     /**
@@ -134,9 +137,13 @@ class CategoriesController extends Controller
 
     public function manageCategory()
     {
-        $categories = Category::with('allChilds')->where('parent_id',0)->get();
+        $categories          = Category::with('allChilds')->where('parent_id',0)->get();
+        $categoriesEcommerce = Category::with('allChilds')->where('parent_id',0)->where('type','ecommerce')->get();
+        $categoriesSme       = Category::with('allChilds')->where('parent_id',0)->where('type','sme')->get();
+        $categoriesKrishi    = Category::with('allChilds')->where('parent_id',0)->where('type','krishi')->get();
+        // dd($categoriesSme);
         // dd($categories);
-        return view ('admin.categories.tree',compact('categories'));
+        return view ('admin.categories.tree',compact('categories','categoriesEcommerce','categoriesSme','categoriesKrishi'));
         // $categories = Category::where('parent_id',0)->get();
         // $subcategories = Children::all();
         // $allCategories = Category::pluck('name','id')->all();

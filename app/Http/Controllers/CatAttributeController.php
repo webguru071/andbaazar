@@ -61,7 +61,10 @@ class CatAttributeController extends Controller
      */
     public function edit($id)
     {
-       return view('admin.categories.attribute');
+        $categoryid = Category::find($id);
+        $categories = Category::with('allChilds')->where('parent_id',0)->where('id',$categoryid)->get();
+        $category = Category::where('id',$categoryid)->get();
+       return view('admin.categories.attribute',compact('categories','category'));
     }
 
     /**
