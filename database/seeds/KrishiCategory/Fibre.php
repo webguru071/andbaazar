@@ -2,13 +2,27 @@
 
 $fibre  = [
 	[
-        'Fibre',
+        'ফাইবার/আঁশ',
         'child' => [                
-          ['Cotton'],
-          ['White Cotton'],  
-          ['Tossa Cotton'],
-          ['Mesta Cotton '],          
-          ['Others'],           
+          ['সুতি'],
+          ['সাদা তুলা'],  
+          ['টোসা সুতি'],
+          ['মেস্তা সুতি'],          
+          ['অন্যান্য'],           
        ]
      ], 
 ];
+
+
+// $fibre  = [
+// 	[
+//         'Fibre',
+//         'child' => [                
+//           ['Cotton'],
+//           ['White Cotton'],  
+//           ['Tossa Cotton'],
+//           ['Mesta Cotton '],          
+//           ['Others'],           
+//        ]
+//      ], 
+// ];

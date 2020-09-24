@@ -161,37 +161,6 @@
         </div>
     </div>
 </section>
-
 @endsection 
-@push('js')
-<script>
-    // $("#search").keyup(function () {
-    //     var value = this.value.toLowerCase().trim();
-    //     $("table tr").each(function (index) {
-    //         if (!index) return;
-    //         $(this)
-    //             .find("td")
-    //             .each(function () {
-    //                 var id = $(this).text().toLowerCase().trim();
-    //                 var not_found = id.indexOf(value) == -1;
-    //                 $(this).closest("tr").toggle(!not_found);
-    //                 return not_found;
-    //             });
-    //       });
-    // });
-</script>
 
-<script>
-
-// $('#category').on('change',function(){
-//   var cat = $(this).val();  
-//   window.location.href = 'products?page=1&cat=' + cat;
-// });
-
-// $('#status').on('change',function(){
-//   var status = $(this).val();
-//   window.location.href = 'products?page=1&status=' + status;
-// });
-</script>
-@endpush
 
