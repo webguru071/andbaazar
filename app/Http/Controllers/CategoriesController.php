@@ -134,9 +134,12 @@ class CategoriesController extends Controller
 
     public function manageCategory()
     {
-        $categories = Category::with('allChilds')->where('parent_id',0)->get();
+        $categoriesEcommerce = Category::with('allChilds')->where('parent_id',0)->where('type','ecommerce')->get();
+        $categoriesSme       = Category::with('allChilds')->where('parent_id',0)->where('type','sme')->get();
+        $categoriesKrishi    = Category::with('allChilds')->where('parent_id',0)->where('type','krishi')->get();
+        // dd($categoriesSme);
         // dd($categories);
-        return view ('admin.categories.tree',compact('categories'));
+        return view ('admin.categories.tree',compact('categoriesEcommerce','categoriesSme','categoriesKrishi'));
         // $categories = Category::where('parent_id',0)->get();
         // $subcategories = Children::all();
         // $allCategories = Category::pluck('name','id')->all();
