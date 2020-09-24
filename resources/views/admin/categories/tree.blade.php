@@ -113,7 +113,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="cat-search">
-                                        <?php echo Baazar::buildTree($categoriesKrishi,0);?>
+                                        <?php echo Baazar::buildTreekrishi($categoriesKrishi,0);?>
                                     </tbody>
                                 </table>
                             </div>

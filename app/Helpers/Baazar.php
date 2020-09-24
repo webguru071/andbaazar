@@ -278,7 +278,7 @@ class Baazar
         foreach($categories as $cat){
             $bold = ($cat->is_last != 1) ? 'font-weight-bold' :'';
             $bl = ($cat->parent_id != 0) ? 'border-left: 1px solid #000;' :'';
-            $editUrl = url('/andbaazaradmin/category/'.$cat->slug.'/edit');
+            $editUrl = url('/andbaazaradmin/categories/update/'.$cat->id.'/edit');
             $attrUrl = url('andbaazaradmin/category/attribute/'.$cat->slug.'/attribute');
             $html .= "<tr>
                 <td class='text-center'>{$cat->id}</td>
@@ -295,6 +295,32 @@ class Baazar
 
             if(!empty($cat->allChilds)){
                 $html .= $this->buildTree($cat->allChilds,$mleft+50);
+            }
+        }
+        return $html;
+    }
+    public function buildTreekrishi($categories, $mleft = 0) {
+        $html = '';
+        foreach($categories as $cat){
+            $bold = ($cat->is_last != 1) ? 'font-weight-bold' :'';
+            $bl = ($cat->parent_id != 0) ? 'border-left: 1px solid #000;' :'';
+            $editUrl = url('/andbaazaradmin/categories/update/'.$cat->id.'/edit');
+            $attrUrl = url('andbaazaradmin/category/attribute/'.$cat->slug.'/attribute');
+            $html .= "<tr>
+                <td class='text-center'>{$cat->id}</td>
+                <td><span class='{$bold}' style='margin-left: {$mleft}px;{$bl}'> &nbsp; {$cat->name}</span></td>
+                <td>&nbsp;{$cat->slug}</td>
+                <td class='text-center'>&nbsp;{$cat->type}</td>
+                <td class='text-center'>{$cat->percentage}%</td>
+                <td >";
+                $html .="<a href='{$editUrl}' class='btn btn-sm btn-primary ml-4' title='Edit'><i class='fa fa-edit'></i> </a>&nbsp;";
+                // if($cat->is_last == 1){
+                //     $html .= "<a href='{$attrUrl}' class='btn btn-sm btn-info' title='Edit'><i class='fa fa-list-ul'></i> </a>";
+                // }
+                $html .="</td></tr>";
+
+            if(!empty($cat->allChilds)){
+                $html .= $this->buildTreekrishi($cat->allChilds,$mleft+50);
             }
         }
         return $html;

@@ -10,6 +10,9 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
 // Route::prefix('andbaazaradmin')->group(function () {
     Route::get('dashboard','AdminHomeController@dashboard');
     Route::get('products/category-tree-view',['uses'=>'CategoriesController@manageCategory']);
+    Route::get('categories/update/{id}/edit','CategoriesController@edit');
+    Route::put('categories/update/{id}','CategoriesController@update');
+    Route::resource('categories','CategoriesController');
     Route::get('/category/attribute/{slug}/attribute','CatAttributeController@attribute');
     Route::put('/category/attribute','CatAttributeController@attributeset');
     // Route::get('/category/attribute/{slug}/attribute','CatAttributeController@attribute');
