@@ -2,10 +2,21 @@
 
 $betel  = [
 	[
-        'Betel',
+        'সুপারি',
         'child' => [                
-          ['Betel Nut'],
-          ['Betel Leaf'],        
+          ['সুপারি বাদাম'],
+          ['পান পাতা'],       
        ]
      ], 
 ];
+
+
+// $betel  = [
+// 	[
+//         'Betel',
+//         'child' => [                
+//           ['Betel Nut'],
+//           ['Betel Leaf'],        
+//        ]
+//      ], 
+// ];
