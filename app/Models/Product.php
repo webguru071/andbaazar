@@ -154,6 +154,14 @@ class Product extends Model
              ->delete();
    }
 
+   public static function getcategories($catvalue){
+     return DB::table('categories')
+               ->select('id','name')
+               ->where('parent_id','=',0)
+               ->where('type','=',$catvalue)
+               ->get();
+   }
+
 
 
       // public static function getColorWiseImage($imgcolor){

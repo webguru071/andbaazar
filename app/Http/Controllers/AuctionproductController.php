@@ -20,6 +20,7 @@ use App\Models\Color;
 use App\Models\Reject;
 use App\Mail\auctionApprovemail;
 use App\Mail\auctionRejectmail;
+use App\Models\Product;
 
 
 class AuctionproductController extends Controller
@@ -291,5 +292,12 @@ class AuctionproductController extends Controller
 
         return redirect('merchant/auction/products');
 
+    }
+
+    public function categoryid(Request $request){
+      // dd($request->all());
+      $catvalue = $request->catvalue;
+
+      return Product::getcategories($catvalue);
     }
 }

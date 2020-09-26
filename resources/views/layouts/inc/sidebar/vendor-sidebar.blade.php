@@ -15,8 +15,8 @@
             <ul class="nav nav-tabs" id="top-tab" role="tablist">
                 <li class="nav-item {{$active == 'dashboard' ? 'active' : ''}}"><a  class="nav-link  {{$active == 'dashboard' ? 'active' : ''}}" href="{{ url('merchant/dashboard') }}">dashboard</a></li>                                     
                 <li class="nav-item"> 
-                  <a class="nav-link collapsed text-truncate navSymbol" href="#submenu1" data-toggle="collapse" data-target="#submenu1"> <span class="d-none d-sm-inline">Products</span></a> 
-                  <div class="collapse" id="submenu1" aria-expanded="false">
+                  <a class="nav-link  text-truncate navSymbol {{ (Request::is('merchant/e-commerce/products') || Request::is('merchant/sme/products')||Request::is('merchant/krishi/products')||Request::is('merchant/auction/products'))?'':'collapsed'}}" href="#submenu1" data-toggle="collapse" data-target="#submenu1" aria-expanded="{{ (Request::is('merchant/e-commerce/products') || Request::is('merchant/sme/products')||Request::is('merchant/krishi/products')||Request::is('merchant/auction/products'))?'true':'false'}}"> <span class="d-none d-sm-inline">Products</span></a> 
+                  <div class="collapse {{ (Request::is('merchant/e-commerce/products') || Request::is('merchant/sme/products')||Request::is('merchant/krishi/products')||Request::is('merchant/auction/products'))?'show':''}}" id="submenu1">
                     <ul class="flex-column pl-2 nav">
                       <li class="nav-item"> 
                         <a  class="nav-link {{$active == 'product' ? 'active' : ''}}" href="{{ url('merchant/e-commerce/products') }}">E-commerce Products</a>

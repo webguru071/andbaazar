@@ -137,13 +137,19 @@
                                         <div class="categories search-area d-flex scroll border">
                                             <div class="col-md-3 cat-level p-2 level-1">
                                                 <input type="text" class="form-control" onkeyup="categorySearch(1,this)" placeholder="search">
-                                                <ul class="cat-levels" id="">
-                                                    @foreach ($categories as $row)
-                                                    <li onclick="getNextLevel({{$row->id}},1,this)" value="{{ $row->id }}">{{$row->name}} <span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
-                                                    @endforeach
+                                                <ul class="cat-levels">
+                                                    <li value="ecommerce" class="categorytype"><span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>E-commerce</li>
+                                                    <li value="sme" class="categorytype"><span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>SME</li>
+                                                    <li value="krishi" class="categorytype"><span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>Krishi</li>
                                                 </ul>
+                                                {{-- <ul class="cat-levels" id="">
+                                                    @foreach ($categories as $row)
+                                                    <li onclick="getNextLevel({{$row->id}},1,this)" value="{{ $row->id }}">{{$row->name}} <span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li> 
+                                                    @endforeach
+                                                    <li class="categorylist"></li>
+                                                </ul> --}}
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div class="cat-footer p-2">
                                             <p>Current Selection : <span class="currentSelection font-weight-bold"></span></p>
                                             <span class="btn btn-sm btn-info m-1 readonly" id="confirm" data-category="" >Confirm</span>
@@ -220,6 +226,33 @@
             $('#catarea').hide();
         });
 
+        $('.categorytype').on('click',function(){
+            var catvalue = $(this).attr('value');
+            
+            // alert(catvalue);
+            var li = '';
+
+            $.ajax({
+                type:"get",
+                url:"{{url('merchant/auction/category/{type}')}}",
+                data:{'catvalue':catvalue},
+                success:function(data){
+                    console.log(data);
+                    li += `<div class="col-md-3 cat-level p-2 level-2">
+                                    <input type="text" onkeyup="categorySearch(2,this)" class="form-control" placeholder="search">
+                                    <ul class="cat-levels sub">`;
+                    for (var i = 0; i < data.length; i++){
+                        li += `<li onclick="getNextLevel(${data[i].id},2,this)" value="${data[i].id}">${data[i].name}<span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>`;
+                    }
+                    li +=`</ul>
+                                </div>`; 
+                    $('.categories').append(li); 
+                    var far = $('.categories' ).width();
+                    $('.categories').animate({scrollLeft:far},800);
+                }
+            });
+        });
+
         function getNextLevel(val,level,e){
             $('#confirm').addClass('readonly');
             $('#confirm').attr('onclick','ConfirmCategory(0,this)');
@@ -264,9 +297,9 @@
                 $('#category_id').val(id);
                 $('#category').val($('.currentSelection').text());
                 $('#catarea').hide();
-                getCategoryAttr(id);
-                getInventoryAttr(id);
-                getBrands(id);
+                // getCategoryAttr(id);
+                // getInventoryAttr(id);
+                // getBrands(id);
             }
         }
        
