@@ -29,7 +29,7 @@
 <section class="dashboard-section section-b-space">
     <div class="container">
         <div class="row">
-            @include('layouts.inc.sidebar.vendor-sidebar',[$active ='product'])
+            @include('layouts.inc.sidebar.vendor-sidebar',[$active ='auction'])
             <div class="col-md-9">
                 <div class="top-sec">
                     <h3>Auction Products</h3>

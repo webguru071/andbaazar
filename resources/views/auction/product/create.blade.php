@@ -240,7 +240,7 @@
                     console.log(data);
                     li += `<div class="col-md-3 cat-level p-2 level-2">
                                     <input type="text" onkeyup="categorySearch(2,this)" class="form-control" placeholder="search">
-                                    <ul class="cat-levels sub">`;
+                                    <ul class="cat-levels">`;
                     for (var i = 0; i < data.length; i++){
                         li += `<li onclick="getNextLevel(${data[i].id},2,this)" value="${data[i].id}">${data[i].name}<span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>`;
                     }
