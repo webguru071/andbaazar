@@ -35,6 +35,7 @@ use App\Models\Shop;
 use App\Models\Tag;
 use App\Models\Attribute;
 use App\Models\AttributeMeta;
+use App\Models\Auctionproduct;
 use Sentinel;
 use Session;
 
@@ -130,6 +131,46 @@ class Baazar
         }
     }
 
+    public function base64Uploadauction($image_file,$name,$color){
+        $t = substr($image_file,0,11);
+        if($t == 'data:image/'){
+            list($type, $image_file) = explode(';', $image_file);
+            list(, $image_file)      = explode(',', $image_file);
+            if($this->is_base64($image_file)){
+                $image_file = base64_decode($image_file);
+                $image_name= $name.rand().'.png';
+                $db_img = 'uploads/auction/'.$name.'-'.$color.'-'.$image_name;
+                $path = public_path($db_img);
+                file_put_contents($path, $image_file);
+                return $db_img;            
+            }
+        }else{
+            // dd($image_file);
+            $path = explode('/public/',$image_file);
+            return $path[1];
+        }
+    }
+
+    public function base64Uploadkrishi($image_file,$name,$color){
+        $t = substr($image_file,0,11);
+        if($t == 'data:image/'){
+            list($type, $image_file) = explode(';', $image_file);
+            list(, $image_file)      = explode(',', $image_file);
+            if($this->is_base64($image_file)){
+                $image_file = base64_decode($image_file);
+                $image_name= $name.rand().'.png';
+                $db_img = 'uploads/krishi/'.$name.'-'.$color.'-'.$image_name;
+                $path = public_path($db_img);
+                file_put_contents($path, $image_file);
+                return $db_img;            
+            }
+        }else{
+            // dd($image_file);
+            $path = explode('/public/',$image_file);
+            return $path[1];
+        }
+    }
+
    public function insertRecords($data, $parent_id = 0,$parent_slug = 0) {
     //    dd($data);
         foreach($data as $row) {
@@ -174,6 +215,8 @@ class Baazar
         }
     }
 
+    // SME category insert //
+
     public function insertRecordsSme($data, $parent_id = 0,$parent_slug = 0) {
         //    dd($data);
             foreach($data as $row) {
@@ -197,6 +240,35 @@ class Baazar
             }
         }
 
+    // SME category insert End //
+
+   // Krishi category insert //
+
+        public function insertRecordsKrishi($data, $parent_id = 0,$parent_slug = 0) {
+            //    dd($data);
+                foreach($data as $row) {
+                    // $slug = Str::slug($row['0']);
+                    $category = New Category;
+                    $slug = $this->getUniqueSlug($category,$row['0']);
+                    $data = [
+                        'name'          => $row['0'],
+                        'slug'          => $slug,
+                        'parent_slug'   => $parent_slug,
+                        'parent_id'     => $parent_id, 
+                        'type'          => 'krishi',
+                        'percentage'    => 2,
+                        'user_id'       => 1,
+                        'is_last'       => isset($row["child"]) ? 0 : 1,
+                    ];
+                    $cat = Category::create($data);
+                    if (isset($row["child"])){
+                        $this->insertRecordsKrishi($row["child"], $cat->id,$slug);
+                    }
+                }
+            }
+
+            // Krishi category insert  End//
+
     public function short_text($text, $limit){
         return strlen($text) > $limit ? substr($text,0,$limit).".." : $text;
     }
@@ -206,12 +278,13 @@ class Baazar
         foreach($categories as $cat){
             $bold = ($cat->is_last != 1) ? 'font-weight-bold' :'';
             $bl = ($cat->parent_id != 0) ? 'border-left: 1px solid #000;' :'';
-            $editUrl = url('/andbaazaradmin/category/'.$cat->slug.'/edit');
+            $editUrl = url('/andbaazaradmin/categories/update/'.$cat->id.'/edit');
             $attrUrl = url('andbaazaradmin/category/attribute/'.$cat->slug.'/attribute');
             $html .= "<tr>
                 <td class='text-center'>{$cat->id}</td>
                 <td><span class='{$bold}' style='margin-left: {$mleft}px;{$bl}'> &nbsp; {$cat->name}</span></td>
                 <td>&nbsp;{$cat->slug}</td>
+                <td class='text-center'>&nbsp;{$cat->type}</td>
                 <td class='text-center'>{$cat->percentage}%</td>
                 <td >";
                 $html .="<a href='{$editUrl}' class='btn btn-sm btn-primary' title='Edit'><i class='fa fa-edit'></i> </a>&nbsp;";
@@ -222,6 +295,32 @@ class Baazar
 
             if(!empty($cat->allChilds)){
                 $html .= $this->buildTree($cat->allChilds,$mleft+50);
+            }
+        }
+        return $html;
+    }
+    public function buildTreekrishi($categories, $mleft = 0) {
+        $html = '';
+        foreach($categories as $cat){
+            $bold = ($cat->is_last != 1) ? 'font-weight-bold' :'';
+            $bl = ($cat->parent_id != 0) ? 'border-left: 1px solid #000;' :'';
+            $editUrl = url('/andbaazaradmin/categories/update/'.$cat->id.'/edit');
+            $attrUrl = url('andbaazaradmin/category/attribute/'.$cat->slug.'/attribute');
+            $html .= "<tr>
+                <td class='text-center'>{$cat->id}</td>
+                <td><span class='{$bold}' style='margin-left: {$mleft}px;{$bl}'> &nbsp; {$cat->name}</span></td>
+                <td>&nbsp;{$cat->slug}</td>
+                <td class='text-center'>&nbsp;{$cat->type}</td>
+                <td class='text-center'>{$cat->percentage}%</td>
+                <td >";
+                $html .="<a href='{$editUrl}' class='btn btn-sm btn-primary ml-4' title='Edit'><i class='fa fa-edit'></i> </a>&nbsp;";
+                // if($cat->is_last == 1){
+                //     $html .= "<a href='{$attrUrl}' class='btn btn-sm btn-info' title='Edit'><i class='fa fa-list-ul'></i> </a>";
+                // }
+                $html .="</td></tr>";
+
+            if(!empty($cat->allChilds)){
+                $html .= $this->buildTreekrishi($cat->allChilds,$mleft+50);
             }
         }
         return $html;

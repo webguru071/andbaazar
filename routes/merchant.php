@@ -76,7 +76,7 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
     // Sme Products Are Start//
     Route::group(['prefix' => 'sme'],function(){
         Route::get('products','SmeProductController@index')->middleware('isMerchantActive');
-        Route::get('products/new','SmeProductController@create')->middleware('isMerchantActive');;
+        Route::get('products/new','SmeProductController@create')->middleware('isMerchantActive');
         Route::post('products/new','SmeProductController@store')->name('smeproduct.store')->middleware('isMerchantActive');;
         Route::get('products/view/{slug}','SmeProductController@show')->middleware('isMerchantActive');
         Route::get('products/update/{slug}/','SmeProductController@edit');
@@ -92,6 +92,39 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant']],functi
         Route::resource('inventories','SmeInventoryController');
 
     });
+
+    // Auction Product Start //
+
+     Route::group(['prefix' => 'auction'],function(){
+        Route::get('category/{type}','AuctionproductController@categoryid');
+        Route::get('products/new','AuctionproductController@create');
+        Route::post('products/new','AuctionproductController@store')->name('auctionstore');
+        Route::get('products/update/{slug}/auctionupdate','AuctionproductController@edit');
+        Route::put('products/update/{slug}','AuctionproductController@update');
+        Route::post('products/approvement/{slug}','AuctionproductController@approvemetnt');
+        Route::put('products/rejected/{slug}','AuctionproductController@rejected'); 
+        Route::resource('products','AuctionproductController'); 
+        // Route::get('products','AuctionproductController@index');
+        // Route::get('add','AuctionproductController@create'); 
+        // Route::post('add','AuctionproductController@store');       
+    }); 
+
+   // Auction Product End //
+
+  //    Krishi Baazar Start   //
+  Route::group(['prefix' => 'krishi'],function(){ 
+    // Route::resource('category','KrishiProductCategoryController');
+    Route::get('products/new','KrishiProductController@create');
+    Route::post('products/new','KrishiProductController@store')->name('krishiproductstore');
+    Route::get('proudcts/update/{slug}/krishiupdate','KrishiProductController@edit');
+    Route::put('products/updat/{slug}','KrishiProductController@update');
+    Route::post('products/approvement/{slug}','KrishiProductController@approvemetnt');
+    Route::put('products/rejected/{slug}','KrishiProductController@rejected'); 
+    Route::resource('products','KrishiProductController');
+      
+  }); 
+ //    Krishi Baazar End    //
+
 
 
 
@@ -131,6 +164,7 @@ Route::post('get-ward', 'AjaxController@getWard')->name('get-ward');
 
 // Inventory import
 Route::get('attributeImport', 'ExportImportController@importExportView');
+Route::post('attributeImport','ExportImportController@import')->name('attributestore');
 Route::get('invExport', 'ExportImportController@export')->name('export');
 Route::post('invImport', 'ExportImportController@import')->name('import'); 
 

@@ -32,7 +32,7 @@
             <div class="col-md-9">
                 <div class="top-sec">
                     <h3>E-commerce Products</h3>
-                    <a href="{{ url('merchant/products/new') }}" class="btn btn-sm btn-solid">Add New</a>
+                    <a href="{{ url('merchant/e-commerce/products/new') }}" class="btn btn-sm btn-solid">Add New</a>
                 </div>
                 <form action="" method="get">
                 <div class="filter-area d-flex">
@@ -65,7 +65,7 @@
                     </div>
                     <button class="btn btn-success btn-sm text-white font-weight-bold mr-1" style="padding: 8px; height: 38px;" type="sumbit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
                     @if($filter['status'] != '' || $filter['keyword'] != '' || $filter['category'] != '')
-                        <a href="{{url('/merchant/products')}}" class="btn btn-info btn-sm text-white font-weight-bold" style="padding: 8px; height: 38px;"> <i class="fa fa-refresh" aria-hidden="true"></i> Clear</a>
+                        <a href="{{url('merchant/e-commerce/products')}}" class="btn btn-info btn-sm text-white font-weight-bold" style="padding: 8px; height: 38px;"> <i class="fa fa-refresh" aria-hidden="true"></i> Clear</a>
                     @endif
                 </div>
             </form>
@@ -112,7 +112,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <form action="{{ url('/merchant/product/'.$row->id) }}" method="post" style="margin-top: -2px;" id="deleteButton{{$row->id}}">
+                                        <form action="{{ url('/merchant/e-commerce/product/'.$row->id) }}" method="post" style="margin-top: -2px;" id="deleteButton{{$row->id}}">
                                             @csrf @method('delete')
                                             <button type="submit" class="btn btn-sm btn-primary" onclick="sweetalertDelete({{$row->id}})"><i class="fa fa-trash-o"></i></button>
                                         </form>

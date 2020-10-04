@@ -23,12 +23,15 @@ class CreateItemImagesTable extends Migration
             $table->text('list_img')->nullable();
             $table->text('thumb_img')->nullable();
             $table->text('compressed_img')->nullable();
+            $table->string('type')->nullable();
             $table->boolean('active')->default(1)->change();
             // $table->unsignedBigInteger('user_id');
+            // $table->unsignedBigInteger('auctionproduct_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('auctionproduct_id')->references('id')->on('auctionproducts')->onDelete('cascade')->onUpdate('cascade');
             // $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade')->onUpdate('cascade');
             // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });

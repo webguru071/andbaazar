@@ -203,6 +203,14 @@
                                 <input type="text"  name="name" value="{{ old('name') }}" required class="form-control @error('name') border-danger @enderror">
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                             </div>
+                            <div class="form-group">
+                                <label for="type">Category type</label>
+                                <select class="form-control" name="type"> 
+                                    <option value="ecommerce">E-Commerce</option>
+                                    <option value="sme">SME</option>
+                                    <option value="krishi">Krishi</option>
+                                </select>
+                            </div>
                             <div class="form-group ">
                                 <label for="percentage">Percentage:</label>
                                 <input type="number" name="percentage" value="{{old('percentage')}} % " class="form-control @error('percentage') border-danger @enderror" id="amount" placeholder="0.00" required autocomplete="off">

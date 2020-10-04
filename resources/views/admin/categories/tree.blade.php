@@ -37,28 +37,88 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <input type="text"  id="sample_search" onkeyup="search_func(this.value);" placeholder="search">
-                        <!-- <h5>
-                            <a href="{{ url('andbaazaradmin/products/subcategory-tree-view') }}">add subcategory</a>
-                        </h5> -->
-                    </div>
-                    <div class="card-body" style="height: 825px;overflow-y: scroll;">
-                        <table border="1" class="table table-borderd table-striped">
-                            <thead>
-                                <tr>
-                                    <th width="50" class="text-center">Sl</th>
-                                    <th>Categories Name</th>
-                                    <th width="250">Slug</th>
-                                    <th width="150" class="text-center">Commision</th>
-                                    <th width="80" class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="cat-search">
-                                <?php echo Baazar::buildTree($categories,0);?>
-                            </tbody>
-                        </table>
-                    </div>
+                    <ul class="nav nav-tabs customtab2 pt-2" role="tablist" id="myTab">
+                        <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#ecommerce" role="tab" aria-expanded="true"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">E-commerce</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#sme" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">SME</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#krishi" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Krishi</span></a> </li> 
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="ecommerce" role="tabpanel" aria-expanded="true">
+                            <div class="card-header d-flex justify-content-between">
+                                <input type="text"  id="sample_search" onkeyup="search_func(this.value);" placeholder="search">
+                                <!-- <h5>
+                                    <a href="{{ url('andbaazaradmin/products/subcategory-tree-view') }}">add subcategory</a>
+                                </h5> -->
+                            </div>
+                            <div class="card-body" style="height: 825px;overflow-y: scroll;">
+                                <table border="1" class="table table-borderd table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th width="50" class="text-center">Sl</th>
+                                            <th>Categories Name</th>
+                                            <th width="250">Slug</th>
+                                            <th width="150" class="text-center">Type</th>
+                                            <th width="150" class="text-center">Commision</th> 
+                                            <th width="80" class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="cat-search">
+                                        <?php echo Baazar::buildTree($categoriesEcommerce,0);?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="sme" role="tabpanel" aria-expanded="false">
+                            <div class="card-header d-flex justify-content-between">
+                                <input type="text"  id="sample_search" onkeyup="search_func(this.value);" placeholder="search">
+                                <!-- <h5>
+                                    <a href="{{ url('andbaazaradmin/products/subcategory-tree-view') }}">add subcategory</a>
+                                </h5> -->
+                            </div>
+                            <div class="card-body" style="height: 825px;overflow-y: scroll;">
+                                <table border="1" class="table table-borderd table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th width="50" class="text-center">Sl</th>
+                                            <th>Categories Name</th>
+                                            <th width="250">Slug</th>
+                                            <th width="150" class="text-center">Type</th>
+                                            <th width="150" class="text-center">Commision</th> 
+                                            <th width="80" class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="cat-search">
+                                        <?php echo Baazar::buildTree($categoriesSme,0);?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="krishi" role="tabpanel" aria-expanded="false">
+                            <div class="card-header d-flex justify-content-between">
+                                <input type="text"  id="sample_search" onkeyup="search_func(this.value);" placeholder="search">
+                                <!-- <h5>
+                                    <a href="{{ url('andbaazaradmin/products/subcategory-tree-view') }}">add subcategory</a>
+                                </h5> -->
+                            </div>
+                            <div class="card-body" style="height: 825px;overflow-y: scroll;">
+                                <table border="1" class="table table-borderd table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th width="50" class="text-center">Sl</th>
+                                            <th>Categories Name</th>
+                                            <th width="250">Slug</th>
+                                            <th width="150" class="text-center">Type</th>
+                                            <th width="150" class="text-center">Commision</th> 
+                                            <th width="80" class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="cat-search">
+                                        <?php echo Baazar::buildTreekrishi($categoriesKrishi,0);?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -77,6 +137,17 @@
         });
 
     }
+</script>
+<script>
+    $(document).ready(function(){
+    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+        localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+});
 </script>
 @endpush
 

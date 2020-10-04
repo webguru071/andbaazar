@@ -89,6 +89,36 @@ class RejectTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
+            [
+                'rej_name'   => 'You auction product image is obscure.',
+                'type'       => 'auction',
+                'user_id'    => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'rej_name'   => 'product condition is not good.',
+                'type'       => 'auction',
+                'user_id'    => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+
+            [
+                'rej_name'   => 'You krishi product image is not related.',
+                'type'       => 'krishi',
+                'user_id'    => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'rej_name'   => 'product condition is not perfect.',
+                'type'       => 'krishi',
+                'user_id'    => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+           
         ];
         DB::table('rejects')->insert($data);
     }

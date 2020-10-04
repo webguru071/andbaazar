@@ -26,6 +26,14 @@
                                 </ul>
                             </li> 
 
+                            <li class="{{ request()->is('andbaazaradmin/products/krishi/category*') ? 'active' : '' }}">
+                                <a href="#" ><i class="fa fa-cubes"></i> <span>Krishi Categories</span> <i class="fa fa-angle-right pull-right"></i></a>
+                                <ul class="sidebar-submenu">
+                                    <li class="{{ request()->is('andbaazaradmin/products/krishi/category') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/products/krishi/category') }}" class="{{ request()->is('andbaazaradmin/products/krishi/category') ? 'active' : '' }}" ><i class="fa fa-server"></i>Add Category</a></li>
+                                    <li class="{{ request()->is('andbaazaradmin/products/krishi/category/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/products/krishi/all-category') }}" class="{{ request()->is('andbaazaradmin/products/krishi/all-category') ? 'active' : '' }}"><i class="fa fa-sliders"></i> All Category</a></li>
+                                </ul>
+                            </li> 
+
                             <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="{{url('andbaazaradmin/products/tag')}}" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-tags"></i> Tags</a></li>
 
                             <li class="{{ request()->is('andbaazaradmin/products/color/*') ? 'active' : '' }}"><a href="{{url('andbaazaradmin/products/color')}}" class="{{ request()->is('andbaazaradmin/products/color') ? 'active' : '' }}"><i class="fa fa-puzzle-piece"></i> Color</a></li>
@@ -39,6 +47,8 @@
                                 <ul class="sidebar-submenu">
                                     <li class="{{ request()->is('andbaazaradmin/e-commerce/products/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/e-commerce/products/')}}" class="{{ request()->is('andbaazaradmin/e-commerce/products/') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i> E-com Products</a></li>
                                     <li class="{{ request()->is('andbaazaradmin/sme/products/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/sme/products/')}}" class="{{ request()->is('andbaazaradmin/sme/products/') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i> SME Products</a></li>
+                                    <li class="{{ request()->is('andbaazaradmin/krishi/products/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/krishi/products/')}}" class="{{ request()->is('andbaazaradmin/krishi/products/') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i> Krishi Products</a></li>
+                                    <li class="{{ request()->is('andbaazaradmin/sme/products/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/auction/products/')}}" class="{{ request()->is('andbaazaradmin/auction/products/') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i> Auction Products</a></li>
                                     <li class="{{ request()->is('andbaazaradmin/products/AllProduct/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/products/AllProduct')}}" class="{{ request()->is('andbaazaradmin/products/AllProduct') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i> All Products </a></li>
                                 </ul>
                             </li>
