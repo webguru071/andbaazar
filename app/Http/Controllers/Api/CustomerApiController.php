@@ -7,15 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 use App\User;
+use App\Models\CustomerShippingAddress;
 use Sentinel;
 use Baazar;
 class CustomerApiController extends Controller
 {
     private $apiToken;
-    public function __construct()
+    private $user;
+    public function __construct(Request $request)
     {
-        // Unique Token
+        $this->middleware(['ApiAuth'])->except('registration','login');
         $this->apiToken = uniqid(base64_encode(Str::random(60)));
+        $this->user = User::where('api_token',$request->header('Authorization'))->first();
     }
 
     // public function __construct(){
@@ -83,5 +86,15 @@ class CustomerApiController extends Controller
     public function me(Request $request){
         $customer = User::where('api_token',$request->header('Authorization'))->first();
         return Baazar::apiSuccess(['user' => ['name' => $customer->first_name.' '.$customer->last_name,'email' => $customer->email]],'Login Successfully');
+    }
+
+    public function shipping(){
+        $shipping = $this->user->buyershippingadd;
+        // dd($shipping);
+        if(count($shipping)){
+            return Baazar::apiSuccess(['shipping' => $shipping],'Shipping find success');
+        }else{
+            return Baazar::apiError('Shipping Not Found');
+        }
     }
 }

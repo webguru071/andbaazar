@@ -27,3 +27,6 @@ Route::post('registration','Api\CustomerApiController@registration');
 Route::post('login','Api\CustomerApiController@login');
 Route::get('me','Api\CustomerApiController@me')->middleware('ApiAuth');
 // Route::post('login','CustomerController@userloginprocess')->name('userloginprocess');
+Route::prefix('customer')->group(function () {
+    Route::get('shipping','Api\CustomerApiController@shipping');
+});
