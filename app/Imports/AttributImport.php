@@ -19,34 +19,34 @@ class AttributImport implements ToModel,WithHeadingRow
     */
     public function model(array $row)
     {
+
         //  dd($row);
         $cat = explode('/',$row['category_slug']);
-        // dd($cat);
-        
-        // $attribute = [
-        //     'label'          => $row['label_name_without_brand'],
-        //     'suggestion'     => $row['suggession'],
-        //     'type'           => $row['type'],
-        //     'required'       => $row['required'],
-        //     // 'search_sidebar' => $row['search_sidebar'],
-        //     'category_id'    => $cat,
-        // ];
-        
-        // $attri = Attribute::create($attribute);
 
-       
-            $vals = explode(',',$row['label_name_without_brand']);
+        $catId = Category::where('slug',$cat)->first();
+
+        // dd($catId->id);
+        
+        
+
+        
+         if(!empty($row['label'])){
+             $vals = explode(',',$row['label']);
+            // dd($vals);
             $attribute = [];
             foreach($vals as $val){
                 $attribute[] = [
-                    'label'          => $val,
-                    'suggestion'     => $row['suggession'],
+                    'label'          => $row['label'],
+                    'suggestion'     => $row['suggestion'],
                     'type'           => $row['type'],
                     'required'       => $row['required'], 
-                    'category_id'    => $cat->id,
+                    'category_id'    => $catId ? $catId->id : 1,
                 ];
             } 
+            // dd($attribute);
             DB::table('attributes')->insert($attribute);
+        }
+           
         
        
         // return new Attribut([

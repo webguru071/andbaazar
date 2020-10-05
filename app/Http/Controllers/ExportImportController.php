@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Excel;
+// use Excel;
 use App\Exports\InventoryExport;
 use App\Imports\InventoryImport;
 use App\Imports\AttributImport;
-// use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Facades\Excel;
+use Session;
 class ExportImportController extends Controller
 {
   public function importExportView()
@@ -26,9 +27,11 @@ class ExportImportController extends Controller
    /**
    * @return \Illuminate\Support\Collection
    */
-   public function import()
+   public function import(Request $request)
    {
-       Excel::import(new AttributImport,request()->file('file'));
+      // if($request->hasFile('Attribute Collections')){
+       Excel::import(new AttributImport,request()->file('file')); 
+   //   }
 
        return back();
    }
