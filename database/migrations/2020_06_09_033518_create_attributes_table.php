@@ -16,9 +16,9 @@ class CreateAttributesTable extends Migration
         Schema::create('attributes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('label');
-            $table->text('suggestion');
+            $table->text('suggestion')->nullable();
             $table->enum('type',['multi-select','select','text','checkbox','radio','number'])->defult('text');
-            $table->integer('required')->default(0);
+            $table->integer('required')->nullable();
             $table->integer('search_sidebar')->default(0);
             $table->unsignedBigInteger('category_id');
             $table->timestamps();
