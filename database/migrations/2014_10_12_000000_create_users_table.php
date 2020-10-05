@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
 
             $table->enum('type',['customers','merchant','admin'])->default('admin');
+            $table->text('api_token')->nullable();
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->softDeletes();

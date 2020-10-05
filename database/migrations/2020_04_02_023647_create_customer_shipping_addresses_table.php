@@ -15,23 +15,25 @@ class CreateCustomerShippingAddressesTable extends Migration
     {
         Schema::create('customer_shipping_addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('slug')->nullable();
-            $table->string('location');
+            $table->string('name');
+            $table->string('phone');
+            $table->string('email');
             $table->text('address');
-            $table->string('country');
-            $table->string('state');
             $table->string('city');
             $table->integer('zip_code');
-            $table->string('phone');
-            $table->string('fax');
-            $table->boolean('active')->default(1)->change();
+            $table->string('location')->nullable();
+            $table->boolean('default')->default(1)->change();
             $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('user_id');
+            // $table->string('slug')->nullable();
+            // $table->string('country')->nullable();
+            // $table->string('state')->nullable();
+            // $table->string('fax');
+            // $table->unsignedBigInteger('user_id');
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

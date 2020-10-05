@@ -36,22 +36,22 @@ class User extends EloquentUser
 {
   use HasApiTokens;
     protected $fillable = [
-        'first_name','last_name','type','email', 'password',
+        'first_name','last_name','type','email', 'password','api_token'
     ];
     protected $loginNames = ['email','type'];
 
     public function buyer(){
-      return $this->hasMany(Customer::class,'buyer_id');
+      return $this->hasMany(Customer::class,'user_id');
    }
 
      public function buyercard(){
-       return $this->hasMany(CustomerCard::class,'buyer_id');
+       return $this->hasMany(CustomerCard::class,'user_id');
     }
       public function buyerpayment(){
         return $this->hasMany(BuyerPayment::class,'payment_method_id');
      }
      public function buyershippingadd(){
-       return $this->hasMany(CustomerShippingAddress::class,'buyer_id');
+       return $this->hasMany(CustomerShippingAddress::class,'user_id');
     }
 
       public function cart(){

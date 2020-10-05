@@ -10,7 +10,7 @@
 <section class="dashboard-section section-b-space">
     <div class="container">
         <div class="row">
-            @include('layouts.inc.sidebar.vendor-sidebar',[$active ='inventory'])
+            @include('layouts.inc.sidebar.vendor-sidebar',[$active ='smeInventory'])
             <div class="col-md-9"> 
                 <div class="top-sec">
                     <h3>Sme Inventory</h3>

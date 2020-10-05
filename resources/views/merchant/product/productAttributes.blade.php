@@ -15,8 +15,8 @@
             <div class="attributes-area col-md-12">
             </div>
             <div class="text-center mt-3">
-                <a class="collapsed btn btn-sm btn-secondery col-md-10 button1"><i class="fa fa-angle-double-down"></i> More</a>
-                <a class="expanded btn btn-sm btn-secondery col-md-10 button1"><i class="fa fa-angle-double-up"></i> Less</a>
+                <a class="decrease btn btn-sm btn-secondery col-md-10 button1"><i class="fa fa-angle-double-down"></i> More</a>
+                <a class="increase btn btn-sm btn-secondery col-md-10 button1"><i class="fa fa-angle-double-up"></i> Less</a>
             </div> 
     </div>
 
@@ -32,7 +32,7 @@
                     $('.attributes-area').html(data.attributes);
                     $('.less').hide();
                     $('.more').show();
-                    $('.expanded').hide(); 
+                    $('.increase').hide(); 
                 }
             })
         }
@@ -40,20 +40,20 @@
     $(document).ready(function(){
         $('.less').hide();
         $('.more').show();
-        $('.expanded').hide(); 
+        $('.increase').hide(); 
     });
 
-    $('.collapsed').on('click',function(){
+    $('.decrease').on('click',function(){
             $('.less').show();
             $('.more').hide();
-            $('.expanded').show(); 
-            $('.collapsed').hide(); 
+            $('.increase').show(); 
+            $('.decrease').hide(); 
         });
-    $('.expanded').on('click',function(){
+    $('.increase').on('click',function(){
         $('.less').hide();
         $('.more').show();
-        $('.expanded').hide(); 
-        $('.collapsed').show(); 
+        $('.increase').hide(); 
+        $('.decrease').show(); 
     });    
    </script>
   @endpush

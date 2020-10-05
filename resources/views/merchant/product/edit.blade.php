@@ -11,8 +11,8 @@
                 @include('layouts.inc.sidebar.vendor-sidebar',[$active ='product'])
                 <!-- address section start -->
                 <div class="col-sm-9 register-page container">
-                    <h3>Edit Product</h3>
-                    <form class="theme-form" action="{{ url('merchant/products/update/'.$product->slug) }}" method="post"  enctype="multipart/form-data">
+                    <h3>Edit Product {{$product->id}}</h3>
+                    <form class="theme-form" action="{{ url('merchant/e-commerce/products/update/'.$product->slug) }}" method="post"  enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <div>
