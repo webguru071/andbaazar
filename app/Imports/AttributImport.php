@@ -21,6 +21,7 @@ class AttributImport implements ToModel,WithHeadingRow
     public function model(array $row)
     {
 
+
 // dd($row);
 //      $cat = explode('/',$row['category_slug']); 
 //         return new Attribute([
@@ -78,6 +79,35 @@ class AttributImport implements ToModel,WithHeadingRow
         //         ];
         //     } 
         //     DB::table('attributes')->insert($attribute);
+
+        //  dd($row);
+        $cat = explode('/',$row['category_slug']);
+
+        $catId = Category::where('slug',$cat)->first();
+
+        // dd($catId->id);
+        
+        
+
+        
+         if(!empty($row['label'])){
+             $vals = explode(',',$row['label']);
+            // dd($vals);
+            $attribute = [];
+            foreach($vals as $val){
+                $attribute[] = [
+                    'label'          => $row['label'],
+                    'suggestion'     => $row['suggestion'],
+                    'type'           => $row['type'],
+                    'required'       => $row['required'], 
+                    'category_id'    => $catId ? $catId->id : 1,
+                ];
+            } 
+            // dd($attribute);
+            DB::table('attributes')->insert($attribute);
+        }
+           
+
         
        
         // // return new Attribut([

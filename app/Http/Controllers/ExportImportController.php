@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Excel;
+// use Excel;
 use App\Exports\InventoryExport;
 use App\Imports\InventoryImport;
 use App\Imports\AttributImport;
 use Illuminate\Support\Facades\DB;
 // use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Facades\Excel;
+use Session;
+
 class ExportImportController extends Controller
 {
   public function importExportView()
