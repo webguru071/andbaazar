@@ -123,7 +123,7 @@
             Import and Export Attribute
         </h2>
 
-        <form action="{{ url('/import_excel/import') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('attributestore')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-4" style="max-width: 500px; margin: 0 auto;">
                 <div class="custom-file text-left">

@@ -31,31 +31,31 @@ class ExportImportController extends Controller
    /**
    * @return \Illuminate\Support\Collection
    */
-   // public function import()
-   // {
-   //     Excel::import(new AttributImport,request()->file('file'));
-
-   //     return back();
-   // }
-
-   function import(Request $request)
+   public function import()
    {
+       Excel::import(new AttributImport,request()->file('file'));
 
-      {
-         Excel::import(new AttributImport,request()->file('file'));
+       return back();
+   }
+
+//    function import(Request $request)
+//    {
+
+//       {
+//          Excel::import(new AttributImport,request()->file('file'));
             
-         return back();
-     }
-     $validator = Validator::make(
-      [
-          'file'      => $file,
-          'extension' => strtolower($file->getClientOriginalExtension()),
-      ],
-      [
-          'file'          => 'required',
-          'extension'      => 'required|mimes:csv'
-      ]
-  );
+//          return back();
+//      }
+//      $validator = Validator::make(
+//       [
+//           'file'      => $file,
+//           'extension' => strtolower($file->getClientOriginalExtension()),
+//       ],
+//       [
+//           'file'          => 'required',
+//           'extension'      => 'required|mimes:csv'
+//       ]
+//   );
     // $this->validate($request, [
     //  'select_file'  => 'required|mimes:xls,xlsx'
     // ]);
@@ -91,5 +91,5 @@ class ExportImportController extends Controller
    //  return back()->with('success', 'Excel Data Imported successfully.');
    // }
 
-}
+
 }
