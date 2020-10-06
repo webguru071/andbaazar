@@ -83,15 +83,14 @@ class AttributImport implements ToModel,WithHeadingRow
         //  dd($row);
         $cat = explode('/',$row['category_slug']);
 
-        $catId = Category::where('slug',$cat)->first();
+        // $catId = Category::where('slug',$cat)->first();
+        
+        $catId = Category::where('slug',$cat[1])->first();
 
         // dd($catId->id);
         
-        
-
-        
-         if(!empty($row['label'])){
-             $vals = explode(',',$row['label']);
+         if(!empty($row['type'])){
+             $vals = explode(',',$row['type']);
             // dd($vals);
             $attribute = [];
             foreach($vals as $val){
@@ -101,11 +100,51 @@ class AttributImport implements ToModel,WithHeadingRow
                     'type'           => $row['type'],
                     'required'       => $row['required'], 
                     'category_id'    => $catId ? $catId->id : 1,
+                    // 'category_id'    => $cat->id,
                 ];
             } 
             // dd($attribute);
-            DB::table('attributes')->insert($attribute);
+
+            // $attr = Attribute::create($attribute);
+
+         $attr = DB::table('attributes')->insert($attribute);
+        //  dd($attr);
+        }     
+
+        $attId = Attribute::all();
+        //  dd($attId);
+
+        // $attId = Attribute::where('id',$attr[1])->first();
+        // dd($attId);
+
+        if(!empty($row['type_value'])){
+            $vals = explode(',',$row['type_value']);
+            $option = [];
+            foreach($vals as $val){
+            $option[] = [
+                'values'  => $val,
+                'attribute_id'  => $attId[1],
+            ];
+            }
+            DB::table('attribute_metas')->insert($option);
         }
+
+
+
+    //   if(!empty($row['type_value'])){
+    //     $vals = explode(',',$row['type_value']);
+    //     $option = [];
+    //     foreach($vals as $val){
+    //       $option[] = [
+    //         'values'  => $val,
+
+    //         // 'inventory_attribute_id'  => $attr->id,
+    //         'attribute_id'    => $attId ? $attId->id : 1,
+    //         // 'attribute_id'  => $attr->id,
+    //       ];
+    //     }
+    //     DB::table('attribute_metas')->insert($option);
+    //   }
            
 
         

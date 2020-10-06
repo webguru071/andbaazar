@@ -15,10 +15,13 @@ class CreateAttributeMetasTable extends Migration
     {
         Schema::create('attribute_metas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('values');          
-            $table->unsignedBigInteger('attribute_id');
+            $table->string('values')->nullable();          
+            $table->unsignedBigInteger('attribute_id')->nullable();
             $table->timestamps();
+
             $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade')->onUpdate('cascade');
+
+            // $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
