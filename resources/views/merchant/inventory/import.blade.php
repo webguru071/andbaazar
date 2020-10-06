@@ -120,7 +120,7 @@
 <body>
     <div class="container mt-5 text-center">
         <h2 class="mb-4">
-            Laravel 7 Import and Export CSV & Excel to Database Example
+            Import and Export Attribute
         </h2>
 
         <form action="{{ url('/import_excel/import') }}" method="POST" enctype="multipart/form-data">
