@@ -92,9 +92,9 @@ class AttributImport implements ToModel,WithHeadingRow
          if(!empty($row['type'])){
              $vals = explode(',',$row['type']);
             // dd($vals);
-            $attribute = [];
+            // $attribute = [];
             foreach($vals as $val){
-                $attribute[] = [
+                $attribute = [
                     'label'          => $row['label'],
                     'suggestion'     => $row['suggestion'],
                     'type'           => $row['type'],
@@ -102,32 +102,43 @@ class AttributImport implements ToModel,WithHeadingRow
                     'category_id'    => $catId ? $catId->id : 1,
                     // 'category_id'    => $cat->id,
                 ];
+
+                $attr = Attribute::create($attribute);
+
+                if(!empty($row['type_value'])){
+                    $vals = explode(',',$row['type_value']);
+                    $option = [];
+                    foreach($vals as $val){
+                    $option[] = [
+                        'values'  => $val,
+                        'attribute_id'  => $attr->id,
+                    ];
+                    }
+                    DB::table('attribute_metas')->insert($option);
+                }
+
             } 
             // dd($attribute);
 
-            // $attr = Attribute::create($attribute);
+            
 
-         $attr = DB::table('attributes')->insert($attribute);
+
+            // I am not happy
+
+            // what is happend? come here..
+        //  $attr = DB::table('attributes')->create($attribute);
         //  dd($attr);
+
+       
         }     
 
-        $attId = Attribute::all();
+        // $attId = Attribute::all();
         //  dd($attId);
 
         // $attId = Attribute::where('id',$attr[1])->first();
         // dd($attId);
 
-        if(!empty($row['type_value'])){
-            $vals = explode(',',$row['type_value']);
-            $option = [];
-            foreach($vals as $val){
-            $option[] = [
-                'values'  => $val,
-                'attribute_id'  => $attId[1],
-            ];
-            }
-            DB::table('attribute_metas')->insert($option);
-        }
+        
 
 
 
