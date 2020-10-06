@@ -163,10 +163,10 @@ Route::post('get-village', 'AjaxController@getVillage')->name('get-village');
 Route::post('get-ward', 'AjaxController@getWard')->name('get-ward');
 
 // Inventory import
-// Route::get('attributeImport', 'ExportImportController@importExportView');
-// Route::post('attributeImport','ExportImportController@import')->name('attributestore');
-Route::get('/import_excel', 'ExportImportController@importExportView');
-Route::post('/import_excel/import', 'ExportImportController@import');
+Route::get('attributeImport', 'ExportImportController@importExportView');
+Route::post('attributeImport','ExportImportController@import')->name('attributestore');
+// Route::get('/import_excel', 'ExportImportController@importExportView');
+// Route::post('/import_excel/import', 'ExportImportController@import');
 
 Route::get('invExport', 'ExportImportController@export')->name('export');
 Route::post('invImport', 'ExportImportController@import')->name('import'); 
