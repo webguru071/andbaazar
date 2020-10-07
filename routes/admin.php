@@ -68,6 +68,17 @@ Route::get('krishi/products/','KrishiProductController@krishiProductList');
 
 
 // Route::resource('products/krishi/category','KrishiCategoryController');
+
+
+// Inventory import
+Route::get('attribute-import', 'ExportImportController@importExportView');
+Route::post('attribute-import','ExportImportController@import')->name('attributestore');
+// Route::get('/import_excel', 'ExportImportController@importExportView');
+// Route::post('/import_excel/import', 'ExportImportController@import');
+
+Route::get('invExport', 'ExportImportController@export')->name('export');
+Route::post('invImport', 'ExportImportController@import')->name('import'); 
+
  
 });
 

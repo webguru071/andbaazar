@@ -92,6 +92,18 @@
                    
 
 
+              {{-- Export Import Route  --}}
+
+                   <li class="{{ request()->is('andbaazaradmin/products/product_list*') ? 'active' : '' }}"> 
+                    <a  href="#" class="sidebar-header"><i data-feather="menu" ></i><span>Import Export</span><i class="fa fa-angle-right pull-right"></i></a>
+                    <ul class="sidebar-submenu">
+                        <li class="{{ request()->is('andbaazaradmin/attribute-import/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/attribute-import/')}}" class="{{ request()->is('andbaazaradmin/attribute-import/') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i>Attribute</a></li>
+                        <li class="{{ request()->is('andbaazaradmin/sme/products/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/sme/products/')}}" class="{{ request()->is('andbaazaradmin/sme/products/') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i> Inventory</a></li>
+                        <li class="{{ request()->is('andbaazaradmin/krishi/products/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/krishi/products/')}}" class="{{ request()->is('andbaazaradmin/krishi/products/') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i> Village</a></li>                       
+                    </ul>
+                </li>
+
+
                    {{-- <li class="{{ request()->is('andbaazaradmin/merchant/*') ? 'active' : '' }}"><a href="#" class="sidebar-header" ><i class="fa fa-facebook"></i> <span>Vendor Profile</span> <i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
                             <li class="{{ request()->is('andbaazaradmin/merchant') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/merchant/') }}" class="{{ request()->is('andbaazaradmin/merchant') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i> Profile list</a></li>
