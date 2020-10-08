@@ -82,7 +82,7 @@ Route::get('export', 'ExportImportController@export')->name('export');
 Route::get('inventory-import', 'InvExportImportController@importExportView');
 Route::post('inventory-import','InvExportImportController@import')->name('inventorystore');
 
-Route::get('export', 'InvExportImportController@export')->name('export');
+Route::get('inventory/export', 'InvExportImportController@export')->name('invexport');
 
 // Inventory import Start//
 

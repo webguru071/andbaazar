@@ -40,9 +40,9 @@
 
                 <button class="btn btn-primary">Import data</button>
 
-                <a class="btn btn-success" href="{{ route('export') }}">Export data</a>
+                <a class="btn btn-success" href="{{ route('invexport') }}">Export data</a>
               
-                <a class="btn btn-secondary" href="{{ route('export') }}">Download Sample</a>
+                <a class="btn btn-secondary" href="{{ route('invexport') }}">Download Sample</a>
             </form>
         </div>
     </div>

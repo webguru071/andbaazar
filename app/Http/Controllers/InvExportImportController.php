@@ -13,7 +13,7 @@ class InvExportImportController extends Controller
 {
     public function importExportView()
    {
-      $data = DB::table('attributes')->get();
+      $data = DB::table('inventory_attributes')->get();
     return view('admin.inventory-excel.import',compact('data'));
    }
 
@@ -32,6 +32,6 @@ class InvExportImportController extends Controller
 
    public function export() 
     {
-        return Excel::download(new InventoryExport, 'attributes.xlsx');
+        return Excel::download(new InventoryExport, 'inventory_attributes.xlsx');
     }
 }
