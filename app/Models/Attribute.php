@@ -8,7 +8,7 @@ class Attribute extends Model
 {
     protected $fillable = ['label','suggestion','type','required','search_sidebar','category_id'];
 
-    public function AttributeMeta(){
-        return $this->hasMany(AttributeMeta::class,'attribute_id');
+    public function attributeMeta(){
+        return $this->hasMany(AttributeMeta::class);
     }
 }

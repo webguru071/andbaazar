@@ -37,10 +37,12 @@
                         <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
                 </div>
+
                 <button class="btn btn-primary">Import data</button>
-                <a class="btn btn-success" href="{{ url('import_excel') }}">Export data</a>
+
+                <a class="btn btn-success" href="{{ route('export') }}">Export data</a>
               
-                <a class="btn btn-secondary" href="{{ url('sample/AttributeCollection.xlsx') }}">Download Sample</a>
+                <a class="btn btn-secondary" href="{{ route('export') }}">Download Sample</a>
             </form>
         </div>
     </div>

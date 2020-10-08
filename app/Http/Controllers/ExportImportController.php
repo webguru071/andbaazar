@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Exports\InventoryExport;
 use App\Imports\InventoryImport;
 use App\Imports\AttributImport;
+use App\Exports\AttributeExport;
 use Illuminate\Support\Facades\DB;
-// use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Facades\Excel;
 use Session;
 
@@ -32,5 +32,11 @@ class ExportImportController extends Controller
 
        return back();
    }
+
+   public function export() 
+    {
+        return Excel::download(new AttributeExport, 'attributes.xlsx');
+    }
+   
 
 }
