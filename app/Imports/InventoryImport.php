@@ -22,34 +22,36 @@ class InventoryImport implements ToModel, WithHeadingRow
       // dd($row);
       $cat = explode('/',$row['category_slug']);
       // dd($cat[1]);
+      $catId = Category::where('slug',$cat[1])->first();
 
       // $catId = Category::where('slug',$cat[1])->first()->id;
 
       $inAttr = [
-        'name'  => $row['name'],
+        'name'  => $row['inventory_name'],
         'description' =>'descas asdf asdf',
       ];
       $attr = InventoryAttribute::create($inAttr);
 
       if(empty($row['name'])){
         $relation = [
-              'category_id' => $cat[1],
+              // 'category_id' => $cat[1],
+              'category_id'    => $catId ? $catId->id : 1,  
               'inventory_attribute_id'  => $attr->id,
             ];
           DB::table('inventory_attribute_category')->insert($relation);
           }  
 
-      if(!empty($row['inventory_value'])){
-        $vals = explode(',',$row['inventory_value']);
-        $option = [];
-        foreach($vals as $val){
-          $option[] = [
-            'option'  => $val,
-            'inventory_attribute_id'  => $attr->id,
-          ];
+          if(!empty($row['inventory_value'])){
+            $vals = explode(',',$row['inventory_value']);
+            $option = [];
+            foreach($vals as $val){
+            $value[] = [
+                'option'  => $val,
+                'inventory_attribute_id'  => $attr->id,
+            ];
+            }
+            DB::table('inventory_attribute_options')->insert($value);
         }
-        DB::table('inventory_attribute_options')->insert($option);
-      }
 
       if(!empty($row['category_id'])){
         $vals = explode(',',$row['category_id']);
@@ -62,11 +64,6 @@ class InventoryImport implements ToModel, WithHeadingRow
         }
          dd($relation[1]);
         DB::table('inventory_attribute_category')->insert($relation);
-      }
-    //   $relation = [
-    //     'category_id' => $cat[1],
-    //     'inventory_attribute_id'  => $attr->id,
-    //   ];
-    // DB::table('inventory_attribute_category')->insert($relation);
+      }    
     }
 }
