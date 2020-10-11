@@ -78,7 +78,8 @@
                                 <div class="card mb-4">
                                     <h5 class="card-header">Tag & Model</h5>
                                     <div class="card-body">
-                                        <div class="form-group row">
+                                   
+                                        {{-- <div class="form-group row">
                                             <label for="tag_id" class="col-xl-3 col-md-4">Tag <span>*</span></label>
                                             <div class="col-md-8 multiple-tag">
                                                 <select class="js-example-basic-multiple form-control" name="tag_id[]" id="tad_id" multiple="multiple" required>
@@ -87,7 +88,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group row">
                                             <label for="model_no" class="col-xl-3 col-md-4">Model No<span>*</span></label>
                                             <input type="text" class="form-control col-md-8" name="model_no" id="model_no"  required="">
@@ -106,6 +107,17 @@
                                                 <span class="text-danger">{{ $errors->first('materials') }}</span>
                                             @endif
                                         </div>
+
+                                        <div class="form-group margin">
+                                            <label for="emp-id" class="form-input-label col-xl-3 col-md-4">Tag:</label><br>
+                                            <div class="col-md-8 multiple-tag">
+                                                <select class="js-example-basic-multiple form-control" name="tag_id[]" id="tad_id" multiple="multiple" required>
+                                                    @foreach ($tag as $row)
+                                                        <option value="{{ $row->name }}">{{$row->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>                              
+                                          </div>
                                     </div>
                                 </div>
                                 <div class="card mb-4 ">
