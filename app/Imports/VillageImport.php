@@ -19,12 +19,6 @@ class VillageImport implements ToModel,WithHeadingRow
     */
     public function model(array $row)
     {
-
-        // $cat = explode('/',$row['category_slug']);
-      
-        // $catId = Category::where('slug',$cat[1])->first();
-
-
         $uni = explode('/',$row['union_slug']);
 
     //   dd( $uni);
@@ -58,10 +52,9 @@ class VillageImport implements ToModel,WithHeadingRow
                 }
                 DB::table('villages')->insert($option);
             }
-        
+         }
       }
-    }
-  }
+   }
 }
 
 
