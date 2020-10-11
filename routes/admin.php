@@ -77,17 +77,28 @@ Route::post('attribute-import','ExportImportController@import')->name('attribute
 
 Route::get('export', 'ExportImportController@export')->name('export');
 
-// Attribute import Start//
+// Attribute import End//
+
+// Inventory import Start//
 
 Route::get('inventory-import', 'InvExportImportController@importExportView');
 Route::post('inventory-import','InvExportImportController@import')->name('inventorystore');
 
 Route::get('inventory/export', 'InvExportImportController@export')->name('invexport');
 
-// Inventory import Start//
-
-
 // Inventory import End//
+
+// Village import Start//
+
+Route::get('village-import', 'InvExportImportController@importExportView');
+Route::post('village-import','InvExportImportController@import')->name('inventorystore');
+
+Route::get('village/export', 'InvExportImportController@export')->name('villageexport');
+
+// Village import End//
+
+
+
  
 });
 
