@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Exports\InventoryExport;
 use App\Imports\InventoryImport;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,7 @@ class InvExportImportController extends Controller
     public function importExportView()
    {
       $data = DB::table('inventory_attributes')->get();
-    return view('admin.inventory-excel.import',compact('data'));
+    return view('admin.excel_import_export.inventory.import',compact('data'));
    }
 
    /**
@@ -26,7 +27,9 @@ class InvExportImportController extends Controller
    public function import()
    {
        Excel::import(new InventoryImport,request()->file('file'));
-
+       
+       Session::flash('success', 'Inventory Import Successfully!');
+       
        return back();
    }
 

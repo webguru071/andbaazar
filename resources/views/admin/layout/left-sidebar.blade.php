@@ -99,7 +99,7 @@
                     <ul class="sidebar-submenu">
                         <li class="{{ request()->is('andbaazaradmin/attribute-import/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/attribute-import/')}}" class="{{ request()->is('andbaazaradmin/attribute-import/') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i>Attribute</a></li>
                         <li class="{{ request()->is('andbaazaradmin/inventory-import/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/inventory-import/')}}" class="{{ request()->is('andbaazaradmin/inventory-import/') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i>Inventory</a></li>                      
-                        <li class="{{ request()->is('andbaazaradmin/krishi/products/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/krishi/products/')}}" class="{{ request()->is('andbaazaradmin/krishi/products/') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i> Village</a></li>                       
+                        <li class="{{ request()->is('andbaazaradmin/village-import/*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/village-import/')}}" class="{{ request()->is('andbaazaradmin/village-import/') ? 'active' : '' }}" ><i class="fa fa-pencil-square-o"></i> Village</a></li>                       
                     </ul>
                 </li>
 

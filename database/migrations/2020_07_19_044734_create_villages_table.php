@@ -16,9 +16,9 @@ class CreateVillagesTable extends Migration
         Schema::create('villages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('union_id');
-            $table->string('name');
-            $table->string('bn_name')->nullable();
-            $table->string('slug');
+            $table->string('name')->nullable();
+            $table->text('bn_name')->nullable();
+            $table->string('slug')->nullable();
             $table->string('url')->nullable();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();

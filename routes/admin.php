@@ -90,10 +90,10 @@ Route::get('inventory/export', 'InvExportImportController@export')->name('invexp
 
 // Village import Start//
 
-Route::get('village-import', 'InvExportImportController@importExportView');
-Route::post('village-import','InvExportImportController@import')->name('inventorystore');
+Route::get('village-import', 'VillageExportImportController@importExportView');
+Route::post('village-import','VillageExportImportController@import')->name('villagestore');
 
-Route::get('village/export', 'InvExportImportController@export')->name('villageexport');
+Route::get('village/export', 'VillageExportImportController@export')->name('villageexport');
 
 // Village import End//
 
