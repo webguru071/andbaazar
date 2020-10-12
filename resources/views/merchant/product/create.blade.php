@@ -78,6 +78,24 @@
                                 <div class="card mb-4">
                                     <h5 class="card-header">Tag & Model</h5>
                                     <div class="card-body">
+
+
+                                        <div class="row">
+                                            <label for="materials" class="col-xl-3 col-md-4">Tag<span>*</span></label>
+                                            <div class="col-md-8">
+                                                <div class="form-group margin">                        
+                                                    <select class="js-example-basic-multiple form-control" name="tag_id[]" id="tad_id" multiple="multiple" required>
+                                                        @foreach ($tag as $row)
+                                                            <option value="{{ $row->name }}">{{$row->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="text-danger" id="message_video_url"></span>
+                                                    @if ($errors->has('video_url'))
+                                                        <span class="text-danger">{{ $errors->first('video_url') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
                                    
                                         {{-- <div class="form-group row">
                                             <label for="tag_id" class="col-xl-3 col-md-4">Tag <span>*</span></label>
@@ -108,7 +126,7 @@
                                             @endif
                                         </div>
 
-                                        <div class="form-group margin">
+                                        {{-- <div class="form-group margin">
                                             <label for="emp-id" class="form-input-label col-xl-3 col-md-4">Tag:</label><br>
                                             <div class="col-md-8 multiple-tag">
                                                 <select class="js-example-basic-multiple form-control" name="tag_id[]" id="tad_id" multiple="multiple" required>
@@ -117,7 +135,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>                              
-                                          </div>
+                                          </div> --}}
                                     </div>
                                 </div>
                                 <div class="card mb-4 ">
@@ -215,7 +233,9 @@
 
 <!-- <link rel="stylesheet" type="text/css" href="{{asset('css')}}/select2.min.css"> -->
 
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+
+{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> --}}
 
 <style>
     .categoryBox{
@@ -302,7 +322,7 @@ span.select2.select2-container.select2-container--default {
     padding-bottom: 0px !important;
     padding-right: 0px !important;
     height: 40px !important;
-}
+} 
 
     #personal_information{
         display:none;
@@ -332,13 +352,211 @@ span.select2.select2-container.select2-container--default {
         border-top: 0px;
     }
 
+ /* select2 */
+
+ .select2-selection {
+    height: 34px !important; 
+    font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 0 !important;
+    border: solid 1px #c4c4c4 !important;
+    padding-left: 4px;
+    padding-top:7px;
+    }
+
+    .select2-selection--multiple {
+    height: 70px !important;
+    width: 75px !important;
+    overflow: hidden;
+    }
+
+    .select2-selection__choice {
+    height: 40px;
+    line-height: 40px;
+    padding-right: 16px !important;
+    padding-left: 16px !important;
+    background-color: #CAF1FF !important;
+    color: #333 !important;
+    border: none !important;
+    border-radius: 3px !important;
+    }
+
+    .select2-selection__choice__remove {
+    float: right;
+    margin-right: 0;
+    margin-left: 2px;
+    }
+    .select2-search--inline .select2-search__field {
+    line-height: 40px;
+    color: #333;
+    width: 100%!important;
+    }
+
+    .select2-container:hover,
+    .select2-container:focus,
+    .select2-container:active,
+    .select2-selection:hover,
+    .select2-selection:focus,
+    .select2-selection:active {
+    outline-color: transparent;
+    outline-style: none;
+    }
+
+    .select2-results__options li {
+    display: block; 
+    }
+
+    .select2-selection__rendered {
+    transform: translateY(2px);
+    }
+
+    .select2-selection__arrow {
+    display: none;
+    }
+
+    .select2-results__option--highlighted {
+    background-color: #CAF1FF !important;
+    color: #333 !important;
+    }
+
+    .select2-dropdown {
+    border-radius: 0 !important;
+    box-shadow: 0px 3px 6px 0 rgba(0,0,0,0.15) !important;
+    border: none !important;
+    margin-top: 4px !important;
+    width: 366px !important;
+    }
+
+    .select2-results__option {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    line-height: 24px !important;
+    vertical-align: middle !important;
+    padding-left: 8px !important;
+    }
+
+    .select2-results__option[aria-selected="true"] {
+    background-color: #eee !important; 
+    }
+
+    .select2-search__field {
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+    font-size: 13px;
+    padding-left: 8px !important;
+    border-color: #c4c4c4 !important;
+    }
+
+    .select2-selection__placeholder {
+    color: #c4c4c4 !important; 
+    }
+    .select2-selection {
+    height: 34px !important; 
+    font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 0 !important;
+    border: solid 1px #c4c4c4 !important;
+    padding-left: 4px;
+    padding-top:7px;
+}
+
+.select2-selection--multiple {
+  height: 70px !important;
+  width:665px !important;
+  margin-right:20px;
+  overflow: hidden;
+}
+
+.select2-selection__choice {
+  height: 40px;
+  line-height: 40px;
+  padding-right: 16px !important;
+  padding-left: 16px !important;
+  background-color: #CAF1FF !important;
+  color: #333 !important;
+  border: none !important;
+  border-radius: 3px !important;
+}
+
+.select2-selection__choice__remove {
+  float: right;
+  margin-right: 0;
+  margin-left: 2px;
+}
+.select2-search--inline .select2-search__field {
+  line-height: 40px;
+  color: #333;
+  width: 100%!important;
+}
+
+.select2-container:hover,
+.select2-container:focus,
+.select2-container:active,
+.select2-selection:hover,
+.select2-selection:focus,
+.select2-selection:active {
+  outline-color: transparent;
+  outline-style: none;
+}
+
+.select2-results__options li {
+  display: block; 
+}
+
+.select2-selection__rendered {
+  transform: translateY(2px);
+}
+
+.select2-selection__arrow {
+  display: none;
+}
+
+.select2-results__option--highlighted {
+  background-color: #CAF1FF !important;
+  color: #333 !important;
+}
+
+.select2-dropdown {
+  border-radius: 0 !important;
+  box-shadow: 0px 3px 6px 0 rgba(0,0,0,0.15) !important;
+  border: none !important;
+  margin-top: 4px !important;
+  width: 366px !important;
+}
+
+.select2-results__option {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+  line-height: 24px !important;
+  vertical-align: middle !important;
+  padding-left: 8px !important;
+}
+
+.select2-results__option[aria-selected="true"] {
+  background-color: #eee !important; 
+}
+
+.select2-search__field {
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
+  font-size: 13px;
+  padding-left: 8px !important;
+  border-color: #c4c4c4 !important;
+}
+
+.select2-selection__placeholder {
+  color: #c4c4c4 !important; 
+}
+    /* select2  End*/
 
 </style>
 @endpush
 @push('js') 
 <!-- <script src="{{ asset('js/summernote.min.js') }}"></script> -->
 
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+{{-- 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> --}}
 
 <!-- <script src="{{ asset('') }}/js/select2.min.js"></script> -->
 

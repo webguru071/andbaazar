@@ -114,7 +114,8 @@
 
 .select2-selection--multiple {
   height: 70px !important;
-  width: 975px !important;
+  width:665px !important;
+  margin-right:20px;
   overflow: hidden;
 }
 
@@ -271,6 +272,36 @@
                     </div>
                 </div>
 
+                
+                
+                {{-- <div class="row">
+                    <label for="materials" class="col-xl-3 col-md-4">Tag<span>*</span></label>
+                    <div class="col-md-8">
+                        <div class="form-group margin">                        
+                            <select class="js-example-basic-multiple form-control" name="tag_id[]" id="tad_id" multiple="multiple" required>
+                                @foreach ($tag as $row)
+                                    <option value="{{ $row->name }}">{{$row->name}}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger" id="message_video_url"></span>
+                            @if ($errors->has('video_url'))
+                                <span class="text-danger">{{ $errors->first('video_url') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                </div> --}}
+
+                {{-- <div class="form-group row margin">
+                    <label for="materials" class="col-xl-3 col-md-4">Materials<span>*</span></label>
+                    <input type="text" class="form-control col-md-8" name="materials" id="materials"  required="">
+                    <label for="model_no" class="col-xl-3 col-md-4"><span></span></label>
+                    <span class="text-danger" id="message_materials"></span>
+                    @if ($errors->has('materials'))
+                        <span class="text-danger">{{ $errors->first('materials') }}</span>
+                    @endif
+                </div> --}}
+
+               
                 <div class="form-group">
                     <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('name') }}</span>
                     <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('name') }}" id="category" placeholder="Category">
