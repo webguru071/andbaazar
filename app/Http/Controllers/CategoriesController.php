@@ -203,7 +203,7 @@ class CategoriesController extends Controller
             switch($att->type){
                 case "select":
                     $attributesHTML .= "<select name='attribute[{$att->id}]' class='col-sm-3 form-control' id=''>";
-                        foreach($att->options as $opt){
+                        foreach($att->attributeMeta as $opt){
                             $attributesHTML .= "<option value='{$opt->values}'>{$opt->values}</option>";
                         }
                         $attributesHTML .= "</select>";
