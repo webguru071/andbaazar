@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\ToModel;
 use App\Models\Union;
 use App\Models\Village;
-
+use Baazar;
 
 class VillageImport implements ToModel,WithHeadingRow
 {
@@ -19,41 +19,40 @@ class VillageImport implements ToModel,WithHeadingRow
     */
     public function model(array $row)
     {
-        $uni = explode('/',$row['union_slug']);
+        // $uni = explode('/',$row['union_slug']);
 
     //   dd( $uni);
+        
+        $uniId = Union::where('slug', $row['union_slug'])->first();
+        if($uniId){
 
-        $uniId = Union::where('slug', $uni)->first();
-
-            //   dd( $uniId);
-
-        if(!empty($row['lat'])){
-            $vals = explode(',',$row['lat']);         
-           // dd($vals);         
-           foreach($vals as $val){
-               $village = [
-                //    'bn_name'           => $row['bn_name'],
-                   'lat'               => $row['lat'],
-                   'lng'               => $row['lng'],              
-                   'union_id'          => $uniId ? $uniId->id : 1,                  
-               ];
-
-            //    DB::table('villages')->insert($village);
-               $vill = Village::create($village);
-
-               if(!empty($row['bn_name'])){
-                $vals = explode(',',$row['bn_name']);
-                $option = [];
-                foreach($vals as $val){
-                $option[] = [
-                    'bn_name'           => $val,   
-                    'union_id'          => $uniId ? $uniId->id : 1,                 
-                ];
+            if(!empty($row['lat'])){
+                if(empty($uniId->lat)){
+                    // DB::enableQueryLog();
+                    // dd(DB::getQueryLog());
+                    $uniId->lat = $row['lat'];
+                    $uniId->lng = $row['lng'];
+                    $uniId->save();
                 }
-                DB::table('villages')->insert($option);
             }
-         }
-      }
+
+            if(!empty($row['bn_name'])){
+                $options = [];
+                $vals = explode(',',rtrim($row['bn_name'],','));
+                $villageModel = new Village;
+                foreach($vals as $val){
+                    $name = Baazar::getUniqueSlug($villageModel,$val);
+                    $options[] = [
+                        'name'   => ucfirst($name),
+                        'bn_name'   => $val,
+                        'union_id'  =>$uniId->id,
+                        'slug'      => $name,
+                        'created_at'=> now(),
+                    ];
+                }
+                DB::table('villages')->insert($options);
+            }
+        }
    }
 }
 
