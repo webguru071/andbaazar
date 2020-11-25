@@ -593,13 +593,7 @@
    <!-- <script src="{{asset('frontend')}}/assets/js/preloader.min.js"></script> -->
 
     <!-- Theme js-->
-    <script src="{{asset('frontend')}}/assets/js/script.js"></script>
-
-
-    <script src="{{asset('/')}}js/validator.js"></script>
-
-
-    <script src="{{asset('/')}}js/validatorRules.js"></script>
+    
 
     @include('elements.myjs')
     <script>   

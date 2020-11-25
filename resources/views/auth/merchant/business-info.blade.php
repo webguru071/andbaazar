@@ -22,9 +22,6 @@
     <div class="col-md-5 p-0 card-left">
     </div>
     <div class="col-md-7 p-0 card-right p">
-        <div class="text-right">
-            <span class=""> {{  $seller->verification_token }}</span> 
-        </div>
         <div class="card tab2-card pt-5 pb-5">
             <div class="card-body">
                 <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
@@ -45,7 +42,6 @@
                             <div class="form-group pt-3 pb-3">
                                 <input required  name="verification_token"  type="text" id="text" maxlength="5" class="form-control font-weight-bold @error('verification_token') border-danger @enderror"  placeholder="" id="exampleInputEmail12"> 
                                 <span class="text-danger">{{$errors->first('verification_token')}}</span>
-                                <input type="hidden" name="token" value={{ $seller->remember_token }}>
                             </div>  
                             <div class="form-button text-right">
                                 <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Verify</button> 
@@ -53,10 +49,6 @@
                         </form>
                         <span class="btn disabled" id="Resend" type="submit"> <i class="fa fa-refresh"></i> Resend <span class="c"></span></span> 
                     </div>
-            <form action="{{ route('updateToken') }}" method="post" id="resendform" style="d-none">
-                @csrf 
-                <input type="hidden" name="token" value={{$seller->remember_token}}>
-            </form> 
         </div>
     </div>
 </div> 
