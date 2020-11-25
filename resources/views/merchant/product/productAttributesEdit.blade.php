@@ -26,7 +26,7 @@
             @switch($metas->attributes->type)
                 @case('select')
                     <select name="attribute[{{$metas->attributes->id}}]" class="col-sm-3 form-control" id="">
-                        @foreach ($metas->attributes->options as $row)
+                        @foreach ($metas->attributes->attributeMeta as $row)
                             <option value="Other" {{$row->values == $metas->attr_value ? 'selected' : ''}}>{{$row->values}}</option>
                         @endforeach
                     </select>
