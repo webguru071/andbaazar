@@ -78,7 +78,7 @@ class geotableseeder extends Seeder
                 'upazila_id'    => $union['upazilla_id'],
                 'name'          => $union['name'],
                 'bn_name'       => $union['bn_name'],
-                'slug'          => Str::slug($union['name']),
+                'slug'          => isset($union['slug']) ? $union['slug'] :Str::slug($union['name']),
                 'url'           => $union['url'],
                 'created_at'    => now()
             ];
