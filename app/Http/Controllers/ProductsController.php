@@ -276,6 +276,7 @@ class ProductsController extends Controller
      */
     public function edit($slug){
         $product = Product::with(['item_meta.attributes.options','news','itemimage','inventory.invenMeta','category.inventoryAttributes.options'])->where('slug',$slug)->first(); 
+        dd($product);
         $itemImages = $product->itemimage->groupBy('color_slug'); 
         // dd($newsFeed);
         // dd($product->category->inventoryAttributes);
