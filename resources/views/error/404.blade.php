@@ -309,9 +309,9 @@
 				<a href="mailto:" target="_blank"><i class="fa fa-envelope fa-2x"></i></a>			
 			</div>
 
-			<div id="cspio-credit">
+			{{-- <div id="cspio-credit">
 					<span>Created with <a target="_blank" href="https://www.comingsoonpage.com"><img id="aff" src="https://static.comingsoonpage.com/cspio-assets/1.0.0/comingsoonpage.com-logo.png" alt="Created by ComingSoonPage.com"></a> Free download <a target="_blank" href="http://www.seedprod.com/free-coming-soon-page/" style="text-decoration:underline" alt="Get your free coming soon page.">here.</a>
-				</span></div>
+				</span></div> --}}
 									    									    			    			    							    			     			    		
 		</div><!-- end of #cspio-content -->
 	</div>

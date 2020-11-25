@@ -186,9 +186,10 @@ class MerchantController extends Controller{
     }
 
     public function shopRegistrationStore(Request $request,Shop $shop){
+        // dd($request->all());
         $request->validate([
             'name'       => 'required',
-            'slogan'     => 'required',
+            // 'slogan'     => 'required',
             // 'phone'      => 'required',
             // 'address'    => 'required',
             // 'zip'        => 'numeric|required',
@@ -206,7 +207,6 @@ class MerchantController extends Controller{
         $slug = Baazar::getUniqueSlug($shop,$request->name);
         $shope = [
             'name'      => $request->name,
-            'slogan'    => $request->slogan,
             'slug'      => $slug,
             'phone'     => $request->phone,
             'email'     => $request->email,
@@ -222,7 +222,16 @@ class MerchantController extends Controller{
 
         Shop::create($shope);
         session()->flash('success','Shop registration Successfully!');
+        return redirect('merchant/business-info'.'?token='.$request->token);
         return redirect('merchant/login');
+    }
+
+    public function businessRegistration(){
+        $seller = Merchant::where('remember_token',$request->token)->first();
+        if(!$seller){
+            return redirect('/');
+        }
+        return view('auth.merchant.business-info');
     }
 
     public function termsCondtion(){

@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 route::get('check',function(){
     return response()->json(['amer'=>'ki','ta'=>'jani na']);
 });
-
-include('frontend.php');
+Route::get('/', 'MerchantController@sellOnAndbaazar');
+// include('frontend.php');
 include('merchant.php');
 include('agent.php');
 include('admin.php');

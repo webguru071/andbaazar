@@ -78,3 +78,7 @@ input.form-control.error {
     padding-bottom: 55px;
     padding-top: 55px;
 }
+
+.auth-form .form-control {
+    border-radius: 0px !important;
+}

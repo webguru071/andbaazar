@@ -4,8 +4,8 @@
 Route::get('sell-on-andbaazar','MerchantController@sellOnAndbaazar');
 Route::post('sell-on-andbaazar','MerchantController@sellOnAndbaazarPost')->name('sellOnAndbaazarPost');
 
+//Registration
 Route::group(['prefix' => 'merchant'],function () {
-    //Registration
     Route::get('otp-varification','MerchantController@getToken')->name('getToken');
     Route::post('otp-varification','MerchantController@postToken')->name('postToken');
     Route::post('token/update','MerchantController@updateToken')->name('updateToken');
@@ -13,6 +13,8 @@ Route::group(['prefix' => 'merchant'],function () {
     Route::post('personal-info','MerchantController@savePersonalInfo')->name('savePersonalInfo');
     Route::get('shop-info','MerchantController@shopRegistration');
     Route::post('shop-info','MerchantController@shopRegistrationStore')->name('sellerShopeRegistration');
+    Route::get('business-info','MerchantController@businessRegistration');
+    Route::post('business-info','MerchantController@businessRegistrationStore')->name('businessShopeRegistration');
     Route::get('terms-condition','MerchantController@termsCondtion');
     //Login
     Route::get('login','MerchantController@merchantlogin');

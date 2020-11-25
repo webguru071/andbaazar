@@ -1,63 +1,8 @@
 @extends('auth.auth-master')
 @section('content')
-@include('elements.alert') 
-@push('css')
-<style>
-/* .authentication-box .container .svg-icon {
-    padding: 0px;
-    margin: 0 auto;
-    border: 2px dashed #ffffff;
-    border-radius: 100%;
-    height: 130px;
-    width: 130px;
-    margin-bottom: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-    .padding{
-            padding: 12px!important;
-        }
-    </style>
-@endpush
+@include('elements.alert')
 <div class="row">
     <div class="col-md-5 p-0 card-left">
-        <div class="card bg-primary padding">
-            <div class="svg-icon">
-                <a href="{{url('/')}}"><img src="{{asset('frontend')}}/assets/images/icon/logo.png"
-                    class="img-fluid blur-up lazyload" alt="image"></a>
-            </div> 
-            <div class="single-item">
-                <div>
-                    <div>
-                        <h3>Welcome to Andbaazar</h3>
-                        <p>This a largest  multivendor ecommerce site.You can bye or sell anything. 
-                             It allows you to create an online marketplace.
-                            Independent vendors can sell their products through a single storefront. 
-                            An online vendor is the one who sells in on the internet marketplace. </p>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <h3>Welcome to Andbaazar</h3>
-                        <p>You can share anything with your friend.Like Comment. You can easily sell door-to-door without much hassle.
-                          Let us take a look at what a multi-vendor marketplace is and
-                          how you can make one successful multi-vendor marketplace using WooCommerce.</p>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <h3>Welcome to Andbaazar</h3>
-                        <p>You can connect to your friend and chat with them by using our site.
-                            online store with all the tools you need to build, manage, and grow your business. 
-                            Ecwid store in minutes with shipping, tax, payment, advertising options ready.
-                             Payment Gateway Support. Free Social Network App. 
-                             Seamless Upgrades. Always Free Plan. Lightning Fast.
-                            Connect your products to people where they shop</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="col-md-7 p-0 card-right">
         <div class="card tab2-card">
@@ -90,9 +35,7 @@
                                     <a href="{{url('merchant/forgot_password')}}" class="btn btn-default forgot-pass">Forget password</a>
                                 </div>
                             </div>
-                            <div class="form-button">
-                                <button class="btn btn-primary" type="submit">Login</button>
-                            </div>   
+                                <button class="btn btn-info mt-4" type="submit">Login</button>
                       </form> 
                 </div>
             </div>

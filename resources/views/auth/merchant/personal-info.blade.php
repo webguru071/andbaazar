@@ -8,13 +8,14 @@
     }
 </style>
 @endpush
-<div class="row"> 
-    <div class="col-md-5 p-0 card-left">
+<div class="row">
+<div class="col-md-5 p-0 card-left">
+</div>
+    {{-- <div class="col-md-5 p-0 card-left">
         <div class="card bg-primary padding">
-            <div class="svg-icon">
-                <a href="{{url('/')}}"><img src="{{asset('frontend')}}/assets/images/icon/logo.png"
-                    class="img-fluid blur-up lazyload" alt="image"></a>
-            </div>
+            {{-- <div class="svg-icon"> --}}
+                {{-- <a href="{{url('/')}}"><img src="{{asset('frontend')}}/assets/images/icon/logo.png" class="img-fluid blur-up lazyload" alt="image"></a> --}}
+            {{-- </div> 
             <div class="single-item">
                 <div>
                     <div>
@@ -45,16 +46,17 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-7 p-0 card-right">
-        <div class="text-right">
-            {{-- <span class=""> {{  $seller->verification_token }}</span>  --}}
-        </div>
+    </div> --}}
+    {{-- <div class="col-md-7 p-0 card-right"> --}}
+        {{-- <div class="text-right">
+            {{-- <span class=""> {{  $seller->verification_token }}</span>
+        </div> --}}
+        <div class="col-md-7 p-0 card-right">
         <div class="card tab2-card">
             <div class="card-body">
                 <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link" id="contact-top-tab" data-toggle="tab" href="#top-contact" role="tab" aria-controls="top-contact" aria-selected="false"><span class="icon-unlock mr-2"></span>Seller Register</a> 
+                        <a class="nav-link" id="contact-top-tab" data-toggle="tab" href="#top-contact" role="tab" aria-controls="top-contact" aria-selected="false"><span class="icon-unlock mr-2"></span>Login Information</a> 
                     </li>
                 </ul>
                     
@@ -101,8 +103,8 @@
                                     <span class="text-danger">{{ $errors->first('agreed') }}</span>
                                 </div>
                             </div>
-                            <div class="form-button mt-2 float-right">
-                                <button class="btn btn-info" type="submit">Register</button>
+                            <div class="form-button mt-4 float-right">
+                                <button class="btn btn-success" type="submit">Register</button>
                             </div> 
                         </form>
                    </div>
