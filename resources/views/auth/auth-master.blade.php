@@ -45,7 +45,7 @@
 
 <!-- page-wrapper Start-->
 <div class="page-wrapper">
-    <div class="authentication-box">
+    <div class="authentication-box" style="background: url({{asset('images/auth-banar.jpg')}}); background-size: cover; background-color:#4841412b">
         <div class="container">
             @yield('content')
         </div>
