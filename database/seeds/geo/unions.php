@@ -2801,7 +2801,7 @@ $unions = array(
   array('id' => '2789','upazilla_id' => '312','name' => 'Dawlatpur','bn_name' => 'দৌলতপুর','url' => 'dawlatpurup.narsingdi.gov.bd'),
   array('id' => '2790','upazilla_id' => '312','name' => 'Krisnopur','bn_name' => 'কৃষ্ণপুর','url' => 'krisnopurup.narsingdi.gov.bd'),
   array('id' => '2791','upazilla_id' => '312','name' => 'Labutala','bn_name' => 'লেবুতলা','url' => 'labutalaup.narsingdi.gov.bd'),
-  array('id' => '2792','upazilla_id' => '312','name' => 'Chandanbari','bn_name' => 'চন্দনবাড়ী','url' => 'chandanbariup.narsingdi.gov.bd'),
+  array('id' => '2792','upazilla_id' => '312','name' => 'Chandanbari','bn_name' => 'চন্দনবাড়ী','slug' => '1-chandanbari','url' => 'chandanbariup.narsingdi.gov.bd'),
   array('id' => '2793','upazilla_id' => '313','name' => 'Alokbali','bn_name' => 'আলোকবালী','url' => 'alokbaliup.narsingdi.gov.bd'),
   array('id' => '2794','upazilla_id' => '313','name' => 'Chardighaldi','bn_name' => 'চরদিঘলদী','url' => 'chardighaldiup.narsingdi.gov.bd'),
   array('id' => '2795','upazilla_id' => '313','name' => 'Chinishpur','bn_name' => 'চিনিশপুর','url' => 'chinishpurup.narsingdi.gov.bd'),
