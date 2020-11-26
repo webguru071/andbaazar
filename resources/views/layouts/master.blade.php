@@ -51,12 +51,12 @@
     @stack('css')
 </head>
 <body>
-    <div class="loader_skeleton">
+    {{-- <div class="loader_skeleton">
         <!--CSS Spinner-->
         <div class="spinner-wrapper">
             <img src="{{asset('preloader.gif')}}" alt="preloader" width="300">
         </div>
-    </div>
+    </div> --}}
 
 
     <!-- header start -->
