@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Helpers\Baazar;
+use App\Models\Union;
 class geotableseeder extends Seeder
 {
     /**
@@ -71,6 +72,8 @@ class geotableseeder extends Seeder
 
 
         //Union data
+        $unionModel = new Union;
+        $baazar = new Baazar;
         $unionData = [];
         foreach($unions as $union){
             $unionData[] = [
@@ -78,7 +81,7 @@ class geotableseeder extends Seeder
                 'upazila_id'    => $union['upazilla_id'],
                 'name'          => $union['name'],
                 'bn_name'       => $union['bn_name'],
-                'slug'          => isset($union['slug']) ? $union['slug'] :Str::slug($union['name']),
+                'slug'          => isset($union['slug']) ? $union['slug'] :$baazar->getUniqueSlug($unionModel,$union['name']),
                 'url'           => $union['url'],
                 'created_at'    => now()
             ];
