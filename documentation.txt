@@ -4,7 +4,7 @@ https://jqueryvalidation.org/
 Date Pickers
 https://github.com/eternicode/bootstrap-datepicker
 
-php artisan db:seed --class=PermissionsTableSeeder
+php artisan db:seed --class=geotableseeder
 
 Sweetalert
 https://sweetalert2.github.io/

@@ -71,22 +71,19 @@ class geotableseeder extends Seeder
         echo 'Upazila Inserted! --';
 
 
-        //Union data
-        $unionModel = new Union;
-        $baazar = new Baazar;
-        $unionData = [];
+        // $unionData = [];
         foreach($unions as $union){
-            $unionData[] = [
+            $unionData = [
                 'id'            => $union['id'],
                 'upazila_id'    => $union['upazilla_id'],
                 'name'          => $union['name'],
                 'bn_name'       => $union['bn_name'],
-                'slug'          => isset($union['slug']) ? $union['slug'] :$baazar->getUniqueSlug($unionModel,$union['name']),
+                'slug'          => isset($union['slug']) ? $union['slug'] :$this->getUniqueSlug($union['name']),
                 'url'           => $union['url'],
                 'created_at'    => now()
             ];
+            DB::table('unions')->insert($unionData);
         }
-        \DB::table('unions')->insert($unionData);
         echo 'Union Inserted!';
 
         //Union data
@@ -126,5 +123,14 @@ class geotableseeder extends Seeder
             \DB::table('municipal_wards')->insert($wardData);
         }
         echo 'Municipal Inserted!';
+    }
+
+    public function getUniqueSlug($value,$row = "slug")
+    {
+        $model = new Union;
+        $slug = Str::slug($value);
+        $slugCount = count($model->whereRaw("{$row} REGEXP '^{$slug}(-[0-9]+)?$' and id != '{$model->id}'")->get());
+        $dd =  ($slugCount > 0) ? "{$slug}-{$slugCount}" : $slug;
+        return $dd;
     }
 }

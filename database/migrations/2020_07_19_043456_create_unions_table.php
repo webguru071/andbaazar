@@ -18,7 +18,7 @@ class CreateUnionsTable extends Migration
             $table->unsignedBigInteger('upazila_id');
             $table->string('name');
             $table->string('bn_name')->nullable();
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('url')->nullable();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
