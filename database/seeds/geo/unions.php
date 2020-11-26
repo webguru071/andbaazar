@@ -2887,7 +2887,7 @@ $unions = array(
   array('id' => '2875','upazilla_id' => '320','name' => 'Mirzapur','bn_name' => 'মির্জাপুর','slug' => '2-mirzapur','url' => 'mirzapurup.gazipur.gov.bd'),
   array('id' => '2876','upazilla_id' => '320','name' => 'Pubail','bn_name' => 'পূবাইল','url' => 'pubailup.gazipur.gov.bd'),
   array('id' => '2877','upazilla_id' => '321','name' => 'Barmi','bn_name' => 'বরমী','url' => 'barmiup.gazipur.gov.bd'),
-  array('id' => '2878','upazilla_id' => '321','name' => 'Gazipur','bn_name' => 'গাজীপুর','url' => 'gazipurup.gazipur.gov.bd'),
+  array('id' => '2878','upazilla_id' => '321','name' => 'Gazipur','slug'=>'1-gazipur','bn_name' => 'গাজীপুর','url' => 'gazipurup.gazipur.gov.bd'),
   array('id' => '2879','upazilla_id' => '321','name' => 'Gosinga','bn_name' => 'গোসিংগা','url' => 'gosingaup.gazipur.gov.bd'),
   array('id' => '2880','upazilla_id' => '321','name' => 'Maona','bn_name' => 'মাওনা','url' => 'maonaup.gazipur.gov.bd'),
   array('id' => '2881','upazilla_id' => '321','name' => 'Kaoraid','bn_name' => 'কাওরাইদ','url' => 'kaoraidup.gazipur.gov.bd'),
