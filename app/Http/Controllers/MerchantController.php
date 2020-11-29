@@ -226,7 +226,7 @@ class MerchantController extends Controller{
         return redirect('merchant/login');
     }
 
-    public function businessRegistration(){
+    public function businessRegistration(Request $request){
         $seller = Merchant::where('remember_token',$request->token)->first();
         if(!$seller){
             return redirect('/');
