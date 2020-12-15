@@ -82,3 +82,226 @@ input.form-control.error {
 .auth-form .form-control {
     border-radius: 0px !important;
 }
+
+
+/* //////////////////////////////////// Hadayet Ali \\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+#sell_on_andbaazar_banner{
+    padding: 20px 0 120px 0;
+    text-align: center;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+.sell-link-top a{
+/* color: #fff; */
+font-weight: 900;
+color: #000;
+font-size: 24px;
+}
+.sell-link-top{
+    text-align: right;
+}
+.sell-link-top i{
+    /* color: #fff; */
+    font-size: 24px;
+}
+.sell-register-from{
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    margin-top: 145px;
+}
+.register-from-top-sell{
+background-color: #0258a8;
+padding: 20px 20px;
+}
+.register-from-top-sell h3{
+    color: #fff;
+}
+#reg-from-area{
+    padding: 30px 25px;
+}
+#reg-from-area .form-control{
+    margin-bottom: 10px;
+}
+.login-buttons{
+    margin-top: 15px;
+}
+.reg-form-button button{
+    width: 100%;
+}
+.reg-form-button button.btn-solid {
+    background-image: linear-gradient(30deg, #0258a8 50%, transparent 50%);
+    border: 2px solid #0258a8;
+}
+.login-buttons a{
+    color: #fff;
+    width: 100%;
+    background-image: linear-gradient(30deg, #0258a8 50%, transparent 50%);
+    border: 2px solid #0258a8;
+}
+.time-line-area{
+position: relative;
+margin-top: 100px;
+}
+.time-line-area ul{
+    display: flex;
+    justify-content: space-between;
+
+}
+.time-line-area ul::after{
+    content: "";
+    position: absolute;
+    width: 100%;
+    top: 70px;
+    border-top: dashed #fff;
+    left: 0;
+    z-index: 1;
+}
+.time-line-area ul li{
+    background: #0258a8;
+    height: 140px;
+    width: 140px;
+    border-radius: 50%;
+    line-height: 37px;
+    position: relative;
+    z-index: 999;
+}
+.arrows{
+    position: absolute;
+    font-size: 40px;
+    top: 49px;
+    left: -32px;
+}
+.arrows i{
+    color: #fff;
+}
+.time-line-items{
+    position: relative;
+}
+.time-line-area ul li:first-child .time-line-items .arrows{
+    display: none;
+}
+.inners-text{
+    padding-top: 35px;
+}
+.inners-text i{
+    color: #fff;
+    font-size: 28px;
+}
+.inners-text p{
+    color: #fff;
+}
+.text-area-faqs h3{
+    padding-bottom: 40px;
+}
+.card-header h5{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#faqs-wrappers{
+    padding: 100px 0;
+}
+#faqs-wrappers .card{
+    margin-bottom: 20px;
+}
+#header-area{
+    background-color: #fff;
+    width: 100%;
+    padding: 25px 0;
+}
+/* footer area start */
+#footer_area_sell_baazar{
+    background: #000000;
+    padding: 120px 0;
+}
+.footer-left-side{
+height: 100%;
+}
+.footer-left-side p{
+position: relative;
+height: 100%;
+}
+.footer-left-side p a{
+    text-decoration: none;
+    color: #fff;
+    padding: 6px 12px;
+}
+.footer-left-side p::after {
+    content: "";
+    background-color: #646665;
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    top: 0;
+    left: 99%;
+    opacity: .3;
+    display: block;
+}
+.footer-left-side p a img{
+    width: 20%;
+}
+.email_area p a{
+    color: #fff;
+}
+.email_area p{
+    color: #fff;
+}
+.subscribe-area p{
+    color: #fff;
+}
+.social-icons{
+    padding-top: 20px;
+}
+.social-icons a i{
+    color: #fff;
+    font-size: 20px;
+    padding-right: 10px;
+}
+.subscribe-area .input-group button{
+color: #fff;
+}
+@media (max-width:992px) {
+    #header-area{
+        text-align: center;
+    }
+    .sell-link-top{
+        text-align: center;
+    }
+.email_area{
+    padding: 30px 0;
+}
+.footer-left-side p::after{
+    display: none;
+}
+.arrows {
+    display: none;
+}
+.time-line-area ul li {
+    width: 100%;
+}
+   }
+@media (max-width:768px) {
+    .time-line-area ul {
+        display: grid;
+        grid-template-columns:auto auto auto;
+    }
+    .time-line-area ul li {
+        width: 140px;
+    }
+    #sell_on_andbaazar_banner {
+        height: 100%;  
+    }
+    .time-line-area ul::after {
+        content: "";
+      display: none;
+    }
+   }
+@media (max-width:480px) {
+    .time-line-area ul {
+        display: grid;
+        grid-template-columns:auto auto;
+    }
+   }
+
