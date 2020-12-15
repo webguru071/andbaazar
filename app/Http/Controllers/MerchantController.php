@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\VendorProfileRejectMail;
 use App\Mail\VendorProfilResubmitMail;
 use Illuminate\Http\Request;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Merchant;
 use App\Models\Geo\Division;
 use App\User;
@@ -21,9 +21,9 @@ class MerchantController extends Controller{
 
     public function dashboard(){
         $reject_value = RejectValue::all();
-        $seller = Merchant::with('rejectvalue')->where('user_id',Sentinel::getUser()->id)->first();
+        $seller = Merchant::with('rejectvalue')->where('user_id',Auth::user()->id)->first();
         //dd($sellerProfile);
-        $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first(); 
+        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
        return view('vendor-deshboard',compact('seller','shopProfile','reject_value'));
     }
 
@@ -38,9 +38,9 @@ class MerchantController extends Controller{
         ];
 
         // if($request->remember == 'on')
-        // 	$user = Sentinel::authenticateAndRemember($credentials);
+        // 	$user = Auth::attempt($credentials,true);
         // else
-        $user = Sentinel::authenticate($credentials);
+        $user = Auth::attempt($credentials);
         // dd($user);
         if($user)
             //return redirect('dashboard');
@@ -69,18 +69,13 @@ class MerchantController extends Controller{
         $slug = Baazar::getUniqueSlug($seller,$request->first_name);
         $token = Baazar::randString(24);
         $verify_number = mt_rand(10000,99999);
-        $Seller = ([
-            'first_name'         => $request->first_name,
-            'last_name'          => $request->last_name,
-            'slug'               => $slug,
-            'phone'              => $request->phone,
-            'verification_token' => $verify_number,
-            'remember_token'     => $token,
-            'reg_step'           => 'otp-varification',
-            'created_at' => now(),
-        ]);
-        Merchant::create($Seller);
-        session()->flash('success','Merchant profile registration 1st stape complete successfully');
+        $allData=$request->all();
+        $allData['slug']=$slug;
+        $allData['verification_token']=$verify_number;
+        $allData['remember_token']=$token;
+        $allData['reg_step']='otp-varification';
+        Merchant::create($allData);
+        session()->flash('success','Merchant profile registration 1st step complete successfully');
         return redirect('merchant/otp-varification'.'?token='.$token);
     }
 
@@ -116,7 +111,7 @@ class MerchantController extends Controller{
         session()->flash('success','Verification Successfully!');
         return redirect('merchant/personal-info'.'?token='.$request->token);
     }
-    
+
     public function personalInfo(Request $request){
         $seller = Merchant::where('remember_token',$request->token)->first();
         if(!$seller){
@@ -135,7 +130,7 @@ class MerchantController extends Controller{
             'agreed'        => 'accepted'
         ]);
 
-        $seller = Sentinel::registerAndActivate([
+        $seller = User::create([
             'first_name' => $request->first_name,
             'last_name'  => $request->last_name,
             'email'      => $request->email,
@@ -196,7 +191,7 @@ class MerchantController extends Controller{
             // 'email'      => 'required|unique:shops,email',
         ]);
         $sellerId = Merchant::where('remember_token',$request->token)->first();
-        
+
         if(!$sellerId){
             return redirect('/');
         }
@@ -316,9 +311,9 @@ class MerchantController extends Controller{
      */
     public function create()
     {
-        $userprofile = Sentinel::getUser();
-        $sellerProfile = Merchant::where('user_id',Sentinel::getUser()->id)->first();
-        $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        $userprofile = Auth::user();
+        $sellerProfile = Merchant::where('user_id',Auth::user()->id)->first();
+        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
         if(!empty($sellerProfile))
             return view('merchant.merchant.update',compact('sellerProfile','userprofile','shopProfile'));
         else
@@ -334,8 +329,8 @@ class MerchantController extends Controller{
     public function store(Request $request, Merchant $seller)
     {
         //dd($request->all());
-        $userprofile = Sentinel::getUser();
-        $sellerId    = Merchant::where('user_id',Sentinel::getUser()->id)->first();
+        $userprofile = Auth::user();
+        $sellerId    = Merchant::where('user_id',Auth::user()->id)->first();
         $this->validateForm($request);
         $slug = Baazar::getUniqueSlug($seller,$request->first_name);
         if($sellerId){
@@ -354,8 +349,8 @@ class MerchantController extends Controller{
                 'last_visited_at'   => now(),
                 'last_visited_from' => $request->last_visited_from,
                 // 'verification_token' => $request->verification_token,
-                // 'remember_token' => $request->remember_token, 
-                'user_id'           => Sentinel::getUser()->id,
+                // 'remember_token' => $request->remember_token,
+                'user_id'           => Auth::user()->id,
                 'updated_at'        => now(),
             ]);
 
@@ -387,7 +382,7 @@ class MerchantController extends Controller{
                 'last_visited_from' => $request->last_visited_from,
                 // 'verification_token' => $request->verification_token,
                 // 'remember_token' => $request->remember_token,
-                'user_id'           => Sentinel::getUser()->id,
+                'user_id'           => Auth::user()->id,
                 'created_at'        => now(),
             ]);
 
@@ -409,7 +404,7 @@ class MerchantController extends Controller{
     }
 
     public function profileImageCrop(Request $request){
-        $profile   = Merchant::find($request->profile); 
+        $profile   = Merchant::find($request->profile);
         if($profile){
             $image_file = $request->picture;
             list($type, $image_file) = explode(';', $image_file);
@@ -449,16 +444,16 @@ class MerchantController extends Controller{
      */
     public function edit($slug)
     {
-        $userprofile = Sentinel::getUser();
+        $userprofile = Auth::user();
         $seller = Merchant::where('slug',$slug)->first();
-        $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
         return view('merchant.merchant.edit',compact('seller','userprofile','shopProfile',''));
     }
 
     public function update(Request $request, $slug)
     {
 
-        $userprofile = Sentinel::getUser();
+        $userprofile = Auth::user();
         $sellerProfile = Merchant::where('slug',$slug)->first();
         $this->validateForm($request);
 
@@ -476,7 +471,7 @@ class MerchantController extends Controller{
             // 'verification_token' => $request->verification_token,
             // 'remember_token' => $request->remember_token,
             'status'            => 'Inactive',
-            'user_id'           => Sentinel::getUser()->id,
+            'user_id'           => Auth::user()->id,
             'updated_at'        => now(),
         ];
 
@@ -517,18 +512,18 @@ class MerchantController extends Controller{
 
     public function rejected(Request $request,$id){
  //dd($request->all());
-        
+
         $data = Merchant::where('id',$id)->first();
         // dd($data);
         $data->update([
             'status'   => 'Reject',
            ]);
-        
+
         $rejct_value = RejectValue::where('id',$id)->first();
 
         $rej_list = count($_POST['rej_name']);
-        
-        for($i = 0; $i<$rej_list; $i++){        
+
+        for($i = 0; $i<$rej_list; $i++){
                 $rejct_value=RejectValue::create([
                 'rej_name'      => $request->rej_name[$i],
                 'type'          => $request->type,
@@ -536,10 +531,10 @@ class MerchantController extends Controller{
                 'user_id'       => $data->user_id,
             ]);
             // dd($data);
-        }      
+        }
         // $reject = Reject::create([
         //     'rej_name' => $request->rej_name[0],
-        //     'user_id'  => Sentinel::getUser()->id, 
+        //     'user_id'  => Auth::user()->id,
         // ]);
 
         // $name    = $data['first_name'];
@@ -554,7 +549,7 @@ class MerchantController extends Controller{
     }
 
     public function profileDelete($id){
-        $merchantProfile = Merchant::find($id); 
+        $merchantProfile = Merchant::find($id);
         $merchantProfile->user()->delete();
         $merchantProfile->delete();
         $merchantProfile->rejectvalue()->delete();
@@ -563,10 +558,10 @@ class MerchantController extends Controller{
     }
 
     public function statusUpdate(Request $request,$id){
-        // $request->validate([ 
+        // $request->validate([
         //     'yes'        => 'accepted'
         // ]);
-        $merchantProfile = Merchant::find($id);  
+        $merchantProfile = Merchant::find($id);
         $merchantProfile->update([
             'status' => 'Inactive',
         ]);

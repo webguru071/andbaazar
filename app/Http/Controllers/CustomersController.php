@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
-use Sentinel;
-use App\User;
 use Baazar;
 use Session;
 
@@ -28,8 +26,8 @@ class CustomersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        $userprofile = Sentinel::getUser();
-        $profile = Customer::where('user_id',Sentinel::getUser()->id)->first();
+        $userprofile = Auth::user();
+        $profile = Customer::where('user_id',Auth::user()->id)->first();
         if(!empty($profile))
             return view('frontend.customers.update',compact('profile','userprofile'));
         else
@@ -43,8 +41,8 @@ class CustomersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        $userprofile = Sentinel::getUser();
-        $buyerId = Customer::where('user_id',Sentinel::getUser()->id)->first();
+        $userprofile = Auth::user();
+        $buyerId = Customer::where('user_id',Auth::user()->id)->first();
         if($buyerId){
            $buyerId->update([
                 'first_name'            => $request->first_name,
@@ -74,7 +72,7 @@ class CustomersController extends Controller
                 'dob'                   => $request->dob,
                 'gender'                => $request->gender,
                 'description'           => $request->description,
-                'user_id'               => Sentinel::getUser()->id,
+                'user_id'               => Auth::user()->id,
                 'created_at'            => now(),
             ];
 

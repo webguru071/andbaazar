@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 class MerchantAccess
 {
     /**
@@ -15,9 +15,9 @@ class MerchantAccess
      */
     public function handle($request, Closure $next)
     {
-        if (Sentinel::getUser()->type == 'merchant' || Sentinel::getUser()->type == 'admin') {
+        if (Auth::user()->type == 'merchant' || Auth::user()->type == 'admin') {
             return $next($request);
         }
-        return redirect('/');//->with('error','Sorry you are not loggedin.');
+        return redirect('/merchant/login');//->with('error','Sorry you are not loggedin.');
     }
 }

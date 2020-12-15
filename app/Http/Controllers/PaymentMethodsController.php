@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PaymentMethod;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Baazar;
 use Session;
 class PaymentMethodsController extends Controller
@@ -27,7 +27,7 @@ class PaymentMethodsController extends Controller
      */
     public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -45,7 +45,7 @@ class PaymentMethodsController extends Controller
             'name' => $request->name,
             'desc' => $request->desc,
             'slug' => $slug,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
 
@@ -62,8 +62,8 @@ class PaymentMethodsController extends Controller
      */
     public function show($id)
     {
-        
-        // 
+
+        //
     }
 
     /**
@@ -73,7 +73,7 @@ class PaymentMethodsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(PaymentMethod $paymentmethod)
-    { 
+    {
         return view('admin.payment_methods.edit',compact('paymentmethod'));
     }
 
@@ -86,11 +86,11 @@ class PaymentMethodsController extends Controller
      */
     public function update(Request $request,PaymentMethod $paymentmethod)
     {
-        $this->validateForm($request); 
+        $this->validateForm($request);
         $data = [
             'name' => $request->name,
             'desc' => $request->desc,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
 
@@ -108,7 +108,7 @@ class PaymentMethodsController extends Controller
      */
     public function destroy(PaymentMethod $paymentmethod)
     {
-        
+
         $paymentmethod->delete();
         Session::flash('error', 'Payment Method Deleted Successfully!');
         return redirect('andbaazaradmin/paymentmethod');

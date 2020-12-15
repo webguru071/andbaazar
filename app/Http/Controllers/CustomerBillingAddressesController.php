@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\CustomerBillingAddress;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
-use Sentinel;
 use Session;
 use Baazar;
 
@@ -19,7 +18,7 @@ class CustomerBillingAddressesController extends Controller
      */
     public function index()
     {
-        $billing = CustomerBillingAddress::where('user_id',Sentinel::getUser()->id)->get();
+        $billing = CustomerBillingAddress::where('user_id',Auth::user()->id)->get();
         return view('frontend.customer_billing_address.index',compact('billing'));
     }
 
@@ -41,7 +40,7 @@ class CustomerBillingAddressesController extends Controller
      */
     public function store(Request $request,CustomerBillingAddress $billing)
     {
-        $customerId = Customer::where('user_id',Sentinel::getUser()->id)->first();
+        $customerId = Customer::where('user_id',Auth::user()->id)->first();
         //dd($buyerId);
         $slug = Baazar::getUniqueSlug($billing,$request->location);
         $this->validateForm($request);
@@ -57,7 +56,7 @@ class CustomerBillingAddressesController extends Controller
                 'phone'         => $request->phone,
                 'fax'           => $request->fax,
                 'customer_id'   =>  $customerId->id,
-                'user_id'       => Sentinel::getUser()->id,
+                'user_id'       => Auth::user()->id,
                 'created_at'    => now(),
             ];
 
@@ -120,7 +119,7 @@ class CustomerBillingAddressesController extends Controller
                 'zip_code'      => $request->zip_code,
                 'phone'         => $request->phone,
                 'fax'           => $request->fax,
-                'user_id'       => Sentinel::getUser()->id,
+                'user_id'       => Auth::user()->id,
                 'updated_at'    => now(),
             ];
 

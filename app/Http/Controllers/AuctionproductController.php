@@ -10,12 +10,12 @@ use App\Models\RejectValue;
 use App\Models\Category;
 use App\Models\Auctionproduct;
 use App\Models\ItemImage;
-use App\Models\Merchant; 
+use App\Models\Merchant;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
-use Sentinel;
 use Session;
-use Baazar; 
+use Baazar;
 use App\Models\Color;
 use App\Models\Reject;
 use App\Mail\auctionApprovemail;
@@ -31,7 +31,7 @@ class AuctionproductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {      
+    {
       $product      = Auctionproduct::where('shop_id',Baazar::shop()->id)->where('type','other');
 
       $filter = [
@@ -52,7 +52,7 @@ class AuctionproductController extends Controller
         $filter['category'] = $request->category;
 
       }
-      
+
       //status Filter
       if ($request->has('status') && !empty($request->status)){
         $product = $product->where('status',$request->status);
@@ -69,10 +69,10 @@ class AuctionproductController extends Controller
       $product = $product->paginate(10);
       $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
       return view ('auction.product.index',compact('product','categories','filter'));
-    
-  
+
+
       }
-   
+
   //   }
     /**
      * Show the form for creating a new resource.
@@ -82,7 +82,7 @@ class AuctionproductController extends Controller
     public function create()
     {
         $categories = Category::where('parent_id',0)->get();
-        $auctionerId = Merchant::where('user_id',Sentinel::getUser()->id)->first();
+        $auctionerId = Merchant::where('user_id',Auth::user()->id)->first();
         return view('auction.product.create',compact('categories','auctionerId'));
     }
 
@@ -93,7 +93,7 @@ class AuctionproductController extends Controller
             $i = 0;
             $image = [
 
-              'product_id' => $itemId, 
+              'product_id' => $itemId,
               'color_slug' => $color,
               'color_id'   => $cID ? $cID->id : 0,
               'sort'       => ++$i,
@@ -115,9 +115,9 @@ class AuctionproductController extends Controller
     public function store(Request $request,Auctionproduct $auctionproduct)
     {
         // dd($request->all());
-        $merchantId =  Merchant::where('user_id',Sentinel::getUser()->id)->first();
-        $slug       = Baazar::getUniqueSlug($auctionproduct,$request->name);   
-        $shop = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;   
+        $merchantId =  Merchant::where('user_id',Auth::user()->id)->first();
+        $slug       = Baazar::getUniqueSlug($auctionproduct,$request->name);
+        $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
 
         $feature    = Baazar::base64Uploadauction($request->images['main'][0],$slug,'featured');
         // dd($feature);
@@ -134,16 +134,16 @@ class AuctionproductController extends Controller
             'category_id'   => $request->category_id,
             'shop_id'       => $shop->id,
             'merchant_id'   => $merchantId->id,
-            'user_id'       => Sentinel::getUser()->id,
+            'user_id'       => Auth::user()->id,
             'created_at'    => now(),
         ];
-        
+
 
         $auctionproduct = Auctionproduct::create($data);
 
         if($request->images){
             $this->addImages($request->images,$auctionproduct->id);
-          } 
+          }
 
           Session::flash('success', 'Auction Product Added Successfully!');
 
@@ -174,7 +174,7 @@ class AuctionproductController extends Controller
      */
     public function edit($slug)
     {
-      $categories = Category::where('parent_id',0)->get(); 
+      $categories = Category::where('parent_id',0)->get();
       $auctionproduct = Auctionproduct::where('slug',$slug)->first();
       // dd($auctionproduct);
       $itemImages =  $auctionproduct->itemimage->groupBy('color_slug');
@@ -198,12 +198,12 @@ class AuctionproductController extends Controller
 
         $data = [
             'name'          => $request->name,
-            'image'         => $feature, 
+            'image'         => $feature,
             'description'   => $request->description,
             'qty'           => $request->qty,
             'unit'          => $request->unit,
             'category_slug' => $request->category,
-            'category_id'   => $request->category_id, 
+            'category_id'   => $request->category_id,
             'updated_at'    => now(),
         ];
 
@@ -211,7 +211,7 @@ class AuctionproductController extends Controller
 
         if($request->images){
              $this->addImages($request->images,$auctionproductId->id);
-          } 
+          }
 
           Session::flash('success', 'Auction Product updated Successfully!');
 
@@ -251,10 +251,10 @@ class AuctionproductController extends Controller
 
         $rejct_value = RejectValue::where('user_id', $data->user_id)->first();
         //  dd($rejct_value);
-       
+
         $rej_list = count($_POST['rej_name']);
-        
-        for($i = 0; $i<$rej_list; $i++){        
+
+        for($i = 0; $i<$rej_list; $i++){
                 $rejct_value=RejectValue::create([
                 'rej_name'      => $request->rej_name[$i],
                 'type'          => $request->type,
@@ -262,16 +262,16 @@ class AuctionproductController extends Controller
                 'user_id'       => $data->user_id,
             ]);
             // dd($data);
-        } 
-      
+        }
+
 
         $rej_desc = RejectValue::where('type','auction')->latest()->get();
         // dd($rej_desc);
-        
+
         $name = $data['name'];
         // $rej_desc = $rejct_value['rej_name'];
         \Mail::to($data['email'])->send(new auctionRejectmail($data, $name,$rej_desc));
-        
+
         Session::flash('warning', 'Auction Product Rejected Successfully!');
 
         return back();
@@ -285,7 +285,7 @@ class AuctionproductController extends Controller
      */
     public function destroy($id)
     {
-        $auctionproduct = Auctionproduct::find($id); 
+        $auctionproduct = Auctionproduct::find($id);
         $auctionproduct->delete();
 
         Session::flash('error', 'Auction Product Deleted Successfully!');

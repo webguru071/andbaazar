@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\OrderItem;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 
 class OrderItemsController extends Controller
 {
@@ -45,7 +45,7 @@ class OrderItemsController extends Controller
             'item_id' =>$request->item_id,
             'color_id' =>$request->color_id,
             'size_id' =>$request->size_id,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Children;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 
@@ -74,7 +74,7 @@ class ChildrenController extends Controller
     {
         $data = [
             'name' => $request->name,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'updated_at' => now(),
         ];
 

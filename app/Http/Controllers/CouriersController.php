@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Courier;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 class CouriersController extends Controller
@@ -27,7 +27,7 @@ class CouriersController extends Controller
      */
     public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -44,7 +44,7 @@ class CouriersController extends Controller
             'name' => $request->name,
             'desc' => $request->desc,
             'slug' => $slug,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
 
@@ -61,7 +61,7 @@ class CouriersController extends Controller
      */
     public function show($id)
     {
-        // 
+        //
     }
 
     /**
@@ -88,7 +88,7 @@ class CouriersController extends Controller
         $data = [
             'name' => $request->name,
             'desc' => $request->desc,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
 

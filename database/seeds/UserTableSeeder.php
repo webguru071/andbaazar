@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-// use Sentinel;
+use App\User;
 class UserTableSeeder extends Seeder
 {
     /**
@@ -12,56 +12,44 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         $users = [
+            [
                 'first_name'    => 'Admin',
                 'last_name'     => 'AndIt',
                 'type'          => 'admin',
                 'email'         => 'admin@andit.com',
-                'password'      => '123456', //123456
+                'password'      => '$2y$10$Q988c.2aEMx7PC4ocmDTNOEVOsp5i9kRWgDsyQNcsS60BDtkBFN6q', //12345678
                 'created_at'    => now(),
                 'updated_at'    => now()
-        ];
-        $user = \Sentinel::registerAndActivate($users);
-        $role = \Sentinel::findRoleBySlug('admin');
-        $role->users()->attach($user->id);
-        $users = [
+            ],
+            [
                 'first_name'    => 'Sofiq',
                 'last_name'     => 'Mia',
                 'email'         => 'buyer@andit.com',
-                'password'      => '123456', //123456
+                'password'      => '$2y$10$Q988c.2aEMx7PC4ocmDTNOEVOsp5i9kRWgDsyQNcsS60BDtkBFN6q', //12345678
                 'type'          => 'customers',
                 'created_at'    => now(),
                 'updated_at'    => now()
-        ];
-        $user = \Sentinel::registerAndActivate($users);
-        $role = \Sentinel::findRoleBySlug('buyer');
-        $role->users()->attach($user->id);
-
-        $users = [
+            ],
+            [
                 'first_name'    => 'Rofiq',
                 'last_name'     => 'Mia',
                 'email'         => 'seller@andit.com',
                 // 'email'         => 'and.baazar@yahoo.com',
-                'password'      => '123456', //123456
+                'password'      => '$2y$10$Q988c.2aEMx7PC4ocmDTNOEVOsp5i9kRWgDsyQNcsS60BDtkBFN6q', //12345678
                 'type'          => 'merchant',
                 'created_at'    => now(),
                 'updated_at'    => now()
-        ];
-        $user = \Sentinel::registerAndActivate($users);
-        $role = \Sentinel::findRoleBySlug('seller');
-        $role->users()->attach($user->id);
-
-        $users = [
+            ],
+            [
                 'first_name'    => 'Oli',
-                'last_name'     => 'Mia',  
+                'last_name'     => 'Mia',
                 'email'         => 'and.baazar@yahoo.com',
-                'password'      => '123456', //123456
+                'password'      => '$2y$10$Q988c.2aEMx7PC4ocmDTNOEVOsp5i9kRWgDsyQNcsS60BDtkBFN6q', //12345678
                 'type'          => 'merchant',
                 'created_at'    => now(),
                 'updated_at'    => now()
+            ]
         ];
-        $user = \Sentinel::registerAndActivate($users);
-        $role = \Sentinel::findRoleBySlug('seller');
-        $role->users()->attach($user->id);
-
+        User::insert($users);
     }
 }

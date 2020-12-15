@@ -1,6 +1,7 @@
 <?php
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -36,7 +37,6 @@ use App\Models\Tag;
 use App\Models\Attribute;
 use App\Models\AttributeMeta;
 use App\Models\Auctionproduct;
-use Sentinel;
 use Session;
 
 class Baazar
@@ -97,12 +97,12 @@ class Baazar
     }
 
     public function shop(){
-        $shop = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        $shop = Shop::where('user_id',Auth::user()->id)->first();
         if(!$shop){return "No Shop Registred";}
         return $shop;
     }
     public function seller(){
-        $seller = Merchant::where('user_id',Sentinel::getUser()->id)->first();
+        $seller = Merchant::where('user_id',Auth::user()->id)->first();
         if(!$seller){return 'No seller registred';}
         return $seller;
     }
@@ -122,7 +122,7 @@ class Baazar
                 $db_img = 'uploads/shops/products/'.$shop.'-'.$name.'-'.$color.'-'.$image_name;
                 $path = public_path($db_img);
                 file_put_contents($path, $image_file);
-                return $db_img;            
+                return $db_img;
             }
         }else{
             // dd($image_file);
@@ -142,7 +142,7 @@ class Baazar
                 $db_img = 'uploads/auction/'.$name.'-'.$color.'-'.$image_name;
                 $path = public_path($db_img);
                 file_put_contents($path, $image_file);
-                return $db_img;            
+                return $db_img;
             }
         }else{
             // dd($image_file);
@@ -162,7 +162,7 @@ class Baazar
                 $db_img = 'uploads/krishi/'.$name.'-'.$color.'-'.$image_name;
                 $path = public_path($db_img);
                 file_put_contents($path, $image_file);
-                return $db_img;            
+                return $db_img;
             }
         }else{
             // dd($image_file);
@@ -181,7 +181,7 @@ class Baazar
                 'name'          => $row['0'],
                 'slug'          => $slug,
                 'parent_slug'   => $parent_slug,
-                'parent_id'     => $parent_id, 
+                'parent_id'     => $parent_id,
                 'percentage'    => 2,
                 'user_id'       => 1,
                 'is_last'       => isset($row["child"]) ? 0 : 1,
@@ -227,7 +227,7 @@ class Baazar
                     'name'          => $row['0'],
                     'slug'          => $slug,
                     'parent_slug'   => $parent_slug,
-                    'parent_id'     => $parent_id, 
+                    'parent_id'     => $parent_id,
                     'type'          => 'sme',
                     'percentage'    => 2,
                     'user_id'       => 1,
@@ -254,7 +254,7 @@ class Baazar
                         'name'          => $row['0'],
                         'slug'          => $slug,
                         'parent_slug'   => $parent_slug,
-                        'parent_id'     => $parent_id, 
+                        'parent_id'     => $parent_id,
                         'type'          => 'krishi',
                         'percentage'    => 2,
                         'user_id'       => 1,

@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Cartalyst\Sentinel\Users\EloquentUser;
 use App\Models\Customer;
 use App\Models\CustomerCard;
 use App\Models\BuyerPayment;
@@ -32,7 +31,8 @@ use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Newsfeed;
 use Laravel\Passport\HasApiTokens;
-class User extends EloquentUser
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class User extends Authenticatable
 {
   use HasApiTokens;
     protected $fillable = [

@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\KrishiProduct;
 use Illuminate\Http\Request;
-use App\Models\Merchant; 
+use App\Models\Merchant;
 use App\Models\ItemImage;
 use App\Models\Category;
 use DB;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
-use Baazar; 
+use Baazar;
 use App\Models\Color;
 use App\Models\Reject;
 use App\Models\RejectValue;
@@ -28,7 +28,7 @@ class KrishiProductController extends Controller
     {
 
         $product      = KrishiProduct::where('shop_id',Baazar::shop()->id)->where('type','krishi');
-        
+
 
       $filter = [
         'category'  => '',
@@ -48,7 +48,7 @@ class KrishiProductController extends Controller
         $filter['category'] = $request->category;
 
       }
-      
+
       //status Filter
       if ($request->has('status') && !empty($request->status)){
         $product = $product->where('status',$request->status);
@@ -65,8 +65,8 @@ class KrishiProductController extends Controller
       $product = $product->paginate(10);
       $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
       return view ('merchant.product.krishibaazar.index',compact('product','categories','filter'));
-       
-      
+
+
     }
 
     /**
@@ -76,7 +76,7 @@ class KrishiProductController extends Controller
      */
     public function create()
     {
-        $krishiId = Merchant::where('user_id',Sentinel::getUser()->id)->first();
+        $krishiId = Merchant::where('user_id',Auth::user()->id)->first();
         $categories = Category::where('parent_id',0)->where('type','krishi')->get();
         return view('merchant.product.krishibaazar.create',compact('krishiId','categories'));
     }
@@ -87,8 +87,8 @@ class KrishiProductController extends Controller
               $cID = Color::where('slug',$color)->first();
               $i = 0;
               $image = [
-  
-                'product_id' => $itemId, 
+
+                'product_id' => $itemId,
                 'color_slug' => $color,
                 'color_id'   => $cID ? $cID->id : 0,
                 'sort'       => ++$i,
@@ -110,9 +110,9 @@ class KrishiProductController extends Controller
     public function store(Request $request,KrishiProduct $krishiProduct)
     {
         // dd($request->all());
-        $merchantId =  Merchant::where('user_id',Sentinel::getUser()->id)->first();
-        $shop       = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;
-        $slug       = Baazar::getUniqueSlug($krishiProduct,$request->name); 
+        $merchantId =  Merchant::where('user_id',Auth::user()->id)->first();
+        $shop       = Merchant::where('user_id',Auth::user()->id)->first()->shop;
+        $slug       = Baazar::getUniqueSlug($krishiProduct,$request->name);
         $feature    = Baazar::base64Uploadkrishi($request->images['main'][0],$slug,'featured');
         $data = [
             'name'          => $request->name,
@@ -126,11 +126,11 @@ class KrishiProductController extends Controller
             'category_id'   => $request->category_id,
             'merchant_id'   => $merchantId->id,
             'shop_id'       => $shop->id,
-            'user_id'       => Sentinel::getUser()->id,
+            'user_id'       => Auth::user()->id,
             'created_at'    => now(),
 
         ];
-        // $frequency = $data['frequency']; 
+        // $frequency = $data['frequency'];
 
         $data['frequency'] = json_encode($request->frequency);
 
@@ -138,12 +138,12 @@ class KrishiProductController extends Controller
 
         if($request->images){
             $this->addImages($request->images,$krishiProduct->id);
-          } 
+          }
 
         Session::flash('success', 'Krishi Product Added Successfully!');
 
           return back();
-        
+
     }
 
     /**
@@ -155,7 +155,7 @@ class KrishiProductController extends Controller
     public function show($id)
     {
        $krishiproduct = KrishiProduct::find($id);
-       $krishiproductImage = ItemImage::where('color_slug','main')->where('product_id',$krishiproduct->id)->where('type','krishi')->limit(5)->get();    
+       $krishiproductImage = ItemImage::where('color_slug','main')->where('product_id',$krishiproduct->id)->where('type','krishi')->limit(5)->get();
        $rejectlist = Reject::where('type','krishi')->get();
 
        return view('merchant.product.krishibaazar.show',compact('krishiproduct','krishiproductImage','rejectlist'));
@@ -171,7 +171,7 @@ class KrishiProductController extends Controller
     //  Krishi Product List in Admin Panel //
 
     public function krishiProductList(){
-        
+
         $krishiproduct = KrishiProduct::distinct()->get();
         return view('merchant.product.krishibaazar.product_list',compact('krishiproduct'));
     }
@@ -180,15 +180,15 @@ class KrishiProductController extends Controller
     public function approvemetnt($slug){
         $data = KrishiProduct::where('slug',$slug)->first();
         // dd( $data);
-  
+
         $data->update(['status' => 'Active']);
         // dd($data);
-  
+
         $name =  $data['name'];
         \Mail::to($data['email'])->send(new KrishiProductApprovemail($data, $name));
-  
+
         Session::flash('success', 'Krishi Product Approve Successfully!');
-  
+
         return back();
       }
 
@@ -196,18 +196,18 @@ class KrishiProductController extends Controller
       public function rejected(Request $request,$slug){
         $data = KrishiProduct::where('slug',$slug)->first();
         // dd($data);
-  
+
         $data->update([
           'status' => 'Reject',
           'rej_desc' => $request->rej_desc,
           ]);
-  
+
           $rejct_value = RejectValue::where('user_id', $data->user_id)->first();
           //  dd($rejct_value);
-         
+
           $rej_list = count($_POST['rej_name']);
-          
-          for($i = 0; $i<$rej_list; $i++){        
+
+          for($i = 0; $i<$rej_list; $i++){
                   $rejct_value=RejectValue::create([
                   'rej_name'      => $request->rej_name[$i],
                   'type'          => $request->type,
@@ -215,21 +215,21 @@ class KrishiProductController extends Controller
                   'user_id'       => $data->user_id,
               ]);
               // dd($data);
-          } 
-        
-  
+          }
+
+
           $rej_desc = RejectValue::where('type','krishi')->latest()->get();
           // dd($rej_desc);
-          
+
           $name = $data['name'];
           // $rej_desc = $rejct_value['rej_name'];
           \Mail::to($data['email'])->send(new KrishiProductRejectMail($data, $name,$rej_desc));
-          
+
           Session::flash('warning', 'Krishi Product Rejected Successfully!');
-  
+
           return back();
       }
-  
+
 
      //  Krishi Product List in Admin Panel End //
 
@@ -240,7 +240,7 @@ class KrishiProductController extends Controller
         // dd($frequencyname);
         $itemImages    = $krishiproduct->itemimage->groupBy('color_slug');
         $categories = Category::where('parent_id',0)->where('type','krishi')->get();
-        
+
         return view('merchant.product.krishibaazar.edit',compact('krishiproduct','frequencyname','itemImages','categories'));
     }
 
@@ -258,19 +258,19 @@ class KrishiProductController extends Controller
         $krishiproductId->itemimage()->delete();
         $feature    = Baazar::base64Uploadkrishi($request->images['main'][0],$slug,'featured');
         $data = [
-            'name'          => $request->name, 
+            'name'          => $request->name,
             'image'         => $feature,
             'email'         => $request->email,
             'description'   => $request->description,
             'video_url'     => $request->video_url,
             'date'          => $request->date,
             'category_slug' => $request->category,
-            'category_id'   => $request->category_id, 
+            'category_id'   => $request->category_id,
             'updated_at'    => now(),
 
         ];
         // $frequency = $data['frequency'];
-       
+
 
         $data['frequency'] = json_encode($request->frequency);
 
@@ -278,7 +278,7 @@ class KrishiProductController extends Controller
 
         if($request->images){
             $this->addImages($request->images,$krishiproductId->id);
-          } 
+          }
 
         Session::flash('success', 'Krishi Product Update Successfully!');
 

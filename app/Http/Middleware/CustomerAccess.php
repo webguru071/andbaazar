@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 class CustomerAccess
 {
     /**
@@ -15,7 +15,7 @@ class CustomerAccess
      */
     public function handle($request, Closure $next)
     {
-        if (Sentinel::getUser()->type != 'customers') {
+        if (Auth::user()->type != 'customers') {
             return redirect('/');//->with('error','Sorry you are not loggedin.');
         }
         return $next($request);

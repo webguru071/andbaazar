@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Currency;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Alert;
 use Baazar;
@@ -29,7 +29,7 @@ class CurrenciesController extends Controller
      */
     public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -47,12 +47,12 @@ class CurrenciesController extends Controller
            'code' =>$request->code,
            'symbol' =>$request->symbol,
            'slug' => $slug,
-           'user_id' => Sentinel::getUser()->id,
+           'user_id' => Auth::user()->id,
            'created_at' => now(),
        ];
 
        Currency::create($data);
-     
+
        Session()->flash('success', 'Currency Inserted Successfully!');
        return redirect('andbaazaradmin/currency');
     }
@@ -65,7 +65,7 @@ class CurrenciesController extends Controller
      */
     public function show($id)
     {
-    //    
+    //
 
     }
 
@@ -94,7 +94,7 @@ class CurrenciesController extends Controller
             'name' =>$request->name,
             'code' =>$request->code,
             'symbol' =>$request->symbol,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
 
@@ -114,7 +114,7 @@ class CurrenciesController extends Controller
     {
         $currency->delete();
 
-       
+
         Session()->flash('error', 'Currency Deleted Successfully!');
         return redirect('andbaazaradmin/currency');
     }

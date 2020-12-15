@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 use Illuminate\Http\Request;
@@ -39,20 +39,20 @@ class BrandController extends Controller
      */
     public function store(Brand $brand,Request $request)
     {
-        
-        $this->validateForm($request);    
+
+        $this->validateForm($request);
         $data = [
-            'name'          => $request->name,           
+            'name'          => $request->name,
             'description'   => $request->description,
-            'image'         => Baazar::fileUpload($request,'image','','/uploads/brand_image'), 
-            'user_id'       => Sentinel::getUser()->id,
+            'image'         => Baazar::fileUpload($request,'image','','/uploads/brand_image'),
+            'user_id'       => Auth::user()->id,
             'created_at'    => now(),
         ];
         Brand::create($data);
         Session::flash('success', 'Brand Inserted Successfully!');
         return redirect('andbaazaradmin/products/brand');
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -87,17 +87,17 @@ class BrandController extends Controller
     {
         $this->validateForm($request);
         $data =[
-            'name'         => $request->name,           
-            'description'  => $request->description,          
-            'image'         => Baazar::fileUpload($request,'image','old_image','/uploads/brand_image'),         
-            'user_id'      => Sentinel::getUser()->id,
+            'name'         => $request->name,
+            'description'  => $request->description,
+            'image'         => Baazar::fileUpload($request,'image','old_image','/uploads/brand_image'),
+            'user_id'      => Auth::user()->id,
             'updated_at'   => now(),
         ];
 
         $brand->update($data);
 
         Session::flash('warning', 'Brand Updated Successfully');
-        return redirect('andbaazaradmin/products/brand');  
+        return redirect('andbaazaradmin/products/brand');
     }
 
     /**
@@ -111,12 +111,12 @@ class BrandController extends Controller
         $brand->delete();
         Session::flash('error', 'Brand Deleted Successfully!');
         return redirect('andbaazaradmin/products/brand');
-    
+
     }
     private function validateForm($request){
         $validatedData = $request->validate([
             'name' => 'required',
-            'description' => 'required', 
+            'description' => 'required',
         ]);
     }
 }

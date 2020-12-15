@@ -4,11 +4,52 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 class AuthController extends Controller{
 
+    public function userLogin(){
+        if (Auth::check()){
+            switch (Auth::user()->user_type) {
+                case "admin":
+                    return redirect('andbaazaradmin/dashboard');
+                case "merchant":
+                    return redirect('merchant/dashboard');
+                default:
+                    return redirect('/');
+            }
+        }
+        else{
+            return view('auth.login');
+        }
+    }
+
+    public function userAuth(Request $request){
+        $credentials = $request->only('email', 'password');
+
+        if($request->remember == 'on')
+            $user = Auth::attempt($credentials, true);
+        else
+            $user = Auth::attempt($credentials);
+
+        if($user){
+            switch ($user->user_type) {
+                case "admin":
+                    return redirect('andbaazaradmin/dashboard');
+                case "merchant":
+                    return redirect('merchant/dashboard');
+                default:
+                    return redirect('/');
+            }
+        }
+        else
+            flash('Invalid username or password')->error();
+            return view('auth.login');
+    }
+
 	public function adminlogin(){
-		if (!Sentinel::check())
+		if (!Auth::check())
 			return view('auth.admin.login');
 		else
 			return redirect('andbaazaradmin/dashboard');
@@ -23,9 +64,9 @@ class AuthController extends Controller{
 		];
 
 		if($request->remember == 'on')
-			$user = Sentinel::authenticateAndRemember($credentials);
+			$user = Auth::attempt($credentials, true);
 		else
-			$user = Sentinel::authenticate($credentials);
+			$user = Auth::attempt($credentials);
 
 		if($user)
 			return redirect('andbaazaradmin/dashboard');
@@ -34,7 +75,7 @@ class AuthController extends Controller{
 	}
 
 	public function logout(){
-		Sentinel::logout(null, true);
+		Auth::logout(null, true);
 		return redirect('/');
 	}
 }

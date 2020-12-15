@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use App\Models\BuyerPayment;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 
 class BuyerPaymentsController extends Controller
 {
@@ -45,7 +45,7 @@ class BuyerPaymentsController extends Controller
             'amount' =>$request->amount,
             'order_id' =>$request->order_id,
             'payment_method_id' =>$request->payment_method_id,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
 

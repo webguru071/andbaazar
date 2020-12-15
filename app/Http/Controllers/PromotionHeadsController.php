@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PromotionHead;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 class PromotionHeadsController extends Controller
@@ -16,7 +16,7 @@ class PromotionHeadsController extends Controller
      */
     public function index()
     {
-      $promotionhead= PromotionHead::all(); 
+      $promotionhead= PromotionHead::all();
       return view('admin.promotionhead.index',compact('promotionhead'));
     }
 
@@ -27,7 +27,7 @@ class PromotionHeadsController extends Controller
      */
     public function create()
     {
-          // 
+          //
     }
 
     /**
@@ -44,7 +44,7 @@ class PromotionHeadsController extends Controller
             'promotion_name' => $request->promotion_name,
             'description'    => $request->description,
             'slug'           => $slug,
-            'user_id'        => Sentinel::getUser()->id,
+            'user_id'        => Auth::user()->id,
             'created_at'     => now(),
         ];
 
@@ -64,7 +64,7 @@ class PromotionHeadsController extends Controller
      */
     public function show(PromotionHead $promotionhead)
     {
-      //  
+      //
     }
 
     /**
@@ -92,12 +92,12 @@ class PromotionHeadsController extends Controller
         $data = [
             'promotion_name' => $request->promotion_name,
             'description'    => $request->description,
-            'user_id'        => Sentinel::getUser()->id,
+            'user_id'        => Auth::user()->id,
             'updated_at'     => now(),
         ];
 
       $promotionhead->update($data);
-     
+
 
      Session::flash('warning', 'Promotion Heads Updated  Successfully!');
 

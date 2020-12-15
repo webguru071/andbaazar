@@ -79,7 +79,7 @@
                             <li class="onhover-dropdown mobile-account"> <i class="fa fa-user" aria-hidden="true"></i>
                                 My Account
                                 <ul class="onhover-show-div">
-                                    @if( Sentinel::getUser())
+                                    @if( Auth::check())
                                     <li class=""><a href="{{ url('/dashboard') }}">My Dashboard</a></li>
                                     <li class=""><a href="{{ url('profile/') }}" data-lng="es">My Profile</a></li>
                                     <li class=""><a href="{{ url('profile/shipping') }}" data-lng="es">My Shippin Address</a></li>
@@ -109,7 +109,7 @@
 
     <!-- footer -->
     <footer class="footer-light">
-        
+
         <section class="section-b-space light-layout">
             <div class="container">
                 <div class="row">
@@ -146,7 +146,7 @@
         {{-- <div class="sub-footer">
             <div class="container">
                 <div class="row">
-                    
+
                 </div>
             </div>
         </div> --}}
@@ -183,7 +183,7 @@
     <!-- Bootstrap js-->
     <script src="{{asset('frontend')}}/assets/js/bootstrap.js"></script>
 
-    
+
 
     <!-- Bootstrap Notification js-->
     <script src="{{asset('frontend')}}/assets/js/bootstrap-notify.min.js"></script>
@@ -214,7 +214,7 @@
         });
         setTimeout(function(){
             $('body').removeAttr('style');
-        },3000); 
+        },3000);
     </script>
 
 </body>

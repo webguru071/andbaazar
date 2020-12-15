@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PromotionUse;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 
 class PromotionUsesController extends Controller
 {
@@ -43,7 +43,7 @@ class PromotionUsesController extends Controller
             'buyer_id' =>$request->buyer_id,
             'promotion_id' =>$request->promotion_id,
             'order_id' =>$request->order_id,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
 

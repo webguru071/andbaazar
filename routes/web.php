@@ -16,6 +16,8 @@ route::get('check',function(){
     return response()->json(['amer'=>'ki','ta'=>'jani na']);
 });
 Route::get('/', 'MerchantController@sellOnAndbaazar');
+Route::get('/login', 'AuthController@userLogin');
+Route::post('/user-auth', 'AuthController@userAuth');
 // include('frontend.php');
 include('merchant.php');
 include('agent.php');

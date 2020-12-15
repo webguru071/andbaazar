@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PromotionPlan;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 class PromotionPlansController extends Controller
@@ -29,7 +29,7 @@ class PromotionPlansController extends Controller
      */
     public function create()
     {
-      // 
+      //
     }
 
     /**
@@ -40,13 +40,13 @@ class PromotionPlansController extends Controller
      */
     public function store(Promotionplan $promotionplan,Request $request)
     {
-      $this->validateForm($request); 
+      $this->validateForm($request);
         $data = [
-          'promotion_id' => $request->promotion_id, 
+          'promotion_id' => $request->promotion_id,
             'from_price' => $request->from_price,
             'to_price'   => $request->to_price,
-            'amount'     => $request->amount, 
-            'user_id'    => Sentinel::getUser()->id,
+            'amount'     => $request->amount,
+            'user_id'    => Auth::user()->id,
             'created_at' => now(),
         ];
 
@@ -63,7 +63,7 @@ class PromotionPlansController extends Controller
      */
     public function show($id)
     {
-      // 
+      //
     }
 
     /**
@@ -92,8 +92,8 @@ class PromotionPlansController extends Controller
           'promotion_id' => $request->promotion_id,
           'from_price'   => $request->from_price,
           'to_price'     => $request->to_price,
-          'amount'       => $request->amount, 
-          'user_id'      => Sentinel::getUser()->id,
+          'amount'       => $request->amount,
+          'user_id'      => Auth::user()->id,
           'created_at'   => now(),
       ];
       $promotionplan->update($data);

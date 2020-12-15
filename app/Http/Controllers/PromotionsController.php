@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Promotion;
 use App\Models\PromotionHead;
-use Sentinel;
 use Session;
 use Baazar;
 class PromotionsController extends Controller
@@ -50,7 +49,7 @@ class PromotionsController extends Controller
             'coupon_code' => $request->coupon_code,
             'promotion_head_id' => $request->promotion_head_id,
             'slug' => $slug,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
         Promotion::create($data);
@@ -97,7 +96,7 @@ class PromotionsController extends Controller
           'valid_to' => $request->valid_to,
           'coupon_code' => $request->coupon_code,
           'promotion_head_id' => $request->promotion_head_id,
-          'user_id' => Sentinel::getUser()->id,
+          'user_id' => Auth::user()->id,
           'created_at' => now(),
       ];
 

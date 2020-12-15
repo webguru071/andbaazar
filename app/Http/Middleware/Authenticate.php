@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 
 class Authenticate
 {
@@ -16,7 +16,7 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if (!Sentinel::check()) {
+        if (!Auth::check()) {
             return redirect('login')->with('error','Sorry you are not loggedin.');
         }
         return $next($request);

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Mail\VendorProfileRejectMail;
 use App\Mail\VendorProfilResubmitMail;
 use Illuminate\Http\Request;
-use Sentinel;
 use App\Agent;
 use App\User;
 use App\Events\SellerRegistration;
@@ -30,7 +29,7 @@ class AgentController extends Controller{
     public function becomeAnAgent(){
         return view('agent.become-an-agent');
     }
-    
+
     /***************
      * Become Agent :POST
      ***************/
@@ -122,7 +121,7 @@ class AgentController extends Controller{
 
         return view('auth.agent.registration',compact('agent'));
     }
-    
+
     /***************
      * Agent Registration :POST
      ***************/
@@ -134,7 +133,7 @@ class AgentController extends Controller{
             'agreed'        => 'accepted'
         ]);
 
-        $seller = Sentinel::registerAndActivate([
+        $seller = User::create([
             'first_name' => $request->first_name,
             'last_name'  => $request->last_name,
             'email'      => $request->email,

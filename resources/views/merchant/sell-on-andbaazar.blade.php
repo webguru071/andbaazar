@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +22,7 @@
     <!--Slick slider css-->
     <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/slick.css">
 
-    
+
     <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/slick-theme.css">
 
     <!-- Animate icon -->
@@ -42,11 +42,11 @@
 
 
    <link rel="stylesheet" type="text/css" href=" https://cdnjs.cloudflare.com/ajax/libs/css-loader/3.3.3/css-loader.css">
-    
-    
+
+
     <!-- <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/preloader.min.css> -->
 
-    <link rel="stylesheet" type="text/css" href="{{asset('/')}}/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
     @stack('css')
 </head>
@@ -80,12 +80,21 @@
                 <h3>Register</h3>
             </div>
             <div class="sell-register-form-inner">
-            <form action="#!" id="reg-from-area">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Your Business Name">
+            <form action="{{route('sellOnAndbaazarPost')}}" id="reg-from-area" method="post">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" name="first_name" placeholder="First name" required>
+                        <span class="text-danger">{{ $errors->first('first_name') }}</span>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name="last_name" placeholder="Last name" required>
+                        <span class="text-danger">{{ $errors->first('last_name') }}</span>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <input type="number" class="form-control" placeholder="Your Phone Number">
+                    <input type="number" name="phone" class="form-control" placeholder="Phone Number" required>
+                    <span class="text-danger">{{ $errors->first('phone') }}</span>
                 </div>
                 <div class="reg-form-button">
                     <button class="btn btn-solid">Create Account</button>
@@ -102,56 +111,56 @@
                 <ul>
                 <li>
                     <div class="time-line-items">
-                    <div class="arrows"> 
+                    <div class="arrows">
                     <i class="fa fa-angle-right " aria-hidden="true"></i>
                     </div>
                   <div class="inners-text">
-                  <i class="fa fa-address-book-o" aria-hidden="true"></i>
-                    <p>Register Now</p> 
+                  <i class="fa fa-edit" aria-hidden="true"></i>
+                    <p>রেজিস্ট্রেশন করুন</p>
                   </div>
                     </div>
                 </li>
                 <li>
                     <div class="time-line-items">
-                    <div class="arrows"> 
+                    <div class="arrows">
                     <i class="fa fa-angle-right " aria-hidden="true"></i>
                     </div>
                     <div class="inners-text">
-                  <i class="fa fa-address-book-o" aria-hidden="true"></i>
-                    <p>Register Now</p> 
+                  <i class="fa fa-th-list" aria-hidden="true"></i>
+                    <p>পণ্য লিস্টিং করুন</p>
                   </div>
                     </div>
                 </li>
                 <li>
                     <div class="time-line-items">
-                    <div class="arrows"> 
+                    <div class="arrows">
                     <i class="fa fa-angle-right " aria-hidden="true"></i>
                     </div>
                     <div class="inners-text">
                   <i class="fa fa-address-book-o" aria-hidden="true"></i>
-                    <p>Register Now</p> 
+                    <p>অর্ডার গ্রহন করুন</p>
                   </div>
                     </div>
                 </li>
                 <li>
                     <div class="time-line-items">
-                    <div class="arrows"> 
+                    <div class="arrows">
                     <i class="fa fa-angle-right " aria-hidden="true"></i>
                     </div>
                     <div class="inners-text">
                   <i class="fa fa-address-book-o" aria-hidden="true"></i>
-                    <p>Register Now</p> 
+                    <p>পণ্য ডেলিভারী করুন</p>
                   </div>
                     </div>
                 </li>
                 <li>
                     <div class="time-line-items">
-                    <div class="arrows"> 
+                    <div class="arrows">
                     <i class="fa fa-angle-right " aria-hidden="true"></i>
                     </div>
                     <div class="inners-text">
                   <i class="fa fa-address-book-o" aria-hidden="true"></i>
-                    <p>Register Now</p> 
+                    <p>মূল্য গ্রহন করুন</p>
                   </div>
                     </div>
                 </li>
@@ -288,7 +297,7 @@
             <a href="#!">Sitemap</a>
             <a href="#!">Our Partner </a>
             <a href="#!">Andbaazar Blog </a>
-            <a href="#!"> Our Address</a>         
+            <a href="#!"> Our Address</a>
             </p>
         </div>
       </div>
@@ -296,7 +305,7 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="email_area">
-            <p><span>Email: &nbsp;<a href="mailto:demo@gmail.com">demo@gmail.com </a>, 
+            <p><span>Email: &nbsp;<a href="mailto:demo@gmail.com">demo@gmail.com </a>,
             <a href="mailto:demo@gmail.com">demo@gmail.com</a></span></p>
             <p><span>Inbox: &nbsp; <a href="https://www.facebook.com">https://www.facebook.com</a></span></p>
             <p><span>Phone: &nbsp;০৯৬৩৮11০৭৭৭, ০১৮456৫২০৮৮, ০১৮12745০৮৬</span></p>
@@ -367,10 +376,10 @@
    <!-- <script src="{{asset('frontend')}}/assets/js/preloader.min.js"></script> -->
 
     <!-- Theme js-->
-    
+
 
     @include('elements.myjs')
-    <script>   
+    <script>
         function openSearch() {
             document.getElementById("search-overlay").style.display = "block";
         }

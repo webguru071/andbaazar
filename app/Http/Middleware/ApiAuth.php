@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Sentinel;
 use Baazar;
 use App\User;
 class ApiAuth

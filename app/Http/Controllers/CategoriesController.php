@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\ProductCategory;
 use App\Models\Children;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 class CategoriesController extends Controller
@@ -59,7 +59,7 @@ class CategoriesController extends Controller
             'thumb'            => Baazar::fileUpload($request,'thumb','','/uploads/category_image'),
             'percentage'       => $request->percentage,
             'sort'             => $request->sort,
-            'user_id'          => Sentinel::getUser()->id,
+            'user_id'          => Auth::user()->id,
             'created_at' => now(),
             ]);
 
@@ -110,7 +110,7 @@ class CategoriesController extends Controller
             'desc'       => $request->desc,
             'thumb'      => Baazar::fileUpload($request,'thumb','old_image','/uploads/category_image'),
             'percentage' => $request->percentage,
-            'sort'       => $request->sort, 
+            'sort'       => $request->sort,
             'updated_at' => now(),
         ];
 
@@ -173,7 +173,7 @@ class CategoriesController extends Controller
         $input['desc']           = $request->desc;
         $input['thumb']          = Baazar::fileUpload($request,'thumb','','/uploads/category_image');
         $input['parent_slug']    = $parent_slug->slug;
-        $input['user_id']        = Sentinel::getUser()->id;
+        $input['user_id']        = Auth::user()->id;
         $input['is_last']        = 1;
         Category::create($input);
         $parent_slug->is_last = 0;

@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Inventory;
 use App\Models\Merchant;
-use Sentinel;
 use Baazar;
 use Session;
 
@@ -23,7 +22,7 @@ class ShopsController extends Controller
     public function index()
     {
         $shop = Shop::all();
-        $seller = Merchant::all();   
+        $seller = Merchant::all();
         return view('admin.shop_list.index',compact('shop','seller'));
     }
 
@@ -33,16 +32,16 @@ class ShopsController extends Controller
      * @return \Illuminate\Http\Response
      */
     // public function create(Request $request)
-        // {  
+        // {
         //     $product = Product::all();
-            
+
         //     // dd($product);
         //     $items = Product::with('inventory')->paginate(2);
 
         //     $category = Category::where('parent_id',0)->get();
 
-        //     $sellerProfile = Merchant::where('user_id',Sentinel::getUser()->id)->first();
-        //     $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        //     $sellerProfile = Merchant::where('user_id',Auth::user()->id)->first();
+        //     $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
 
 
         //     // dd($request->all());
@@ -50,25 +49,25 @@ class ShopsController extends Controller
         //     $categories = new category;
 
         //      if (request()->has('cat')){
-        //          $categories =$categories->where('cat',request('cat'));  
-                
+        //          $categories =$categories->where('cat',request('cat'));
+
         //          dd($categories);
         //      }
 
         //      if (request()->has('sort')){
-        //         $categories =$categories->orderBy('name',request('sort'));             
+        //         $categories =$categories->orderBy('name',request('sort'));
         //     }
 
         // $categories = $categories->paginate(5)->appends([
         //     'cat'      =>request('cat'),
         //     'sort'     => request('sort'),
         // ]);
-        
+
         //     return view('merchant.shops.update',compact('sellerProfile','shopProfile','product','items','category'));
         // }
 
     // public function create(Request $request)
-    // {  
+    // {
     //     $page_size=24;
 
     //     if($request->has('page_size')){
@@ -79,44 +78,44 @@ class ShopsController extends Controller
     //     if ($page_size<24){
     //     $page_size=24;
     //     }
-        
+
     //     //$product = Product::all();
-        
+
     //     // dd($product);
     //     //$items = Product::with('inventory')->paginate(2);
 
     //     $category = Category::where('parent_id',0)->get();
 
-    //     $sellerProfile = Merchant::where('user_id',Sentinel::getUser()->id)->first();
-    //     $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
+    //     $sellerProfile = Merchant::where('user_id',Auth::user()->id)->first();
+    //     $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
 
 
     //     // dd($request->all());
 
     //     $product = Product::all();
-        
+
     //     $items = Product::with('inventory')->paginate($page_size);
     //     // dd($product);
-        
+
     //     if ($request->has('cat')){
-    //          $product = Product::where('category_slug', 'like', '%' . $request->cat . '%')->paginate($page_size); 
-    //         //  dd($product);        
-    //          $items = Product::with('inventory')->where('category_slug', 'like', '%' . $request->cat . '%')->paginate($page_size);          
-    //      }                 
-    //     $product =$product->sortBy('name');         
-    //     // dd($product);          
+    //          $product = Product::where('category_slug', 'like', '%' . $request->cat . '%')->paginate($page_size);
+    //         //  dd($product);
+    //          $items = Product::with('inventory')->where('category_slug', 'like', '%' . $request->cat . '%')->paginate($page_size);
+    //      }
+    //     $product =$product->sortBy('name');
+    //     // dd($product);
 
     // $categories = ([
     //     'cat'      =>request('cat'),
     //     'sort'     => request('sort'),
     // ]);
-       
+
     //     return view('merchant.shops.update',compact('sellerProfile','shopProfile',
     //     'product','items','category'));
     // }
 
     public function create(Request $request)
-    {  
+    {
         $page_size=24;
 
         if($request->has('page_size')){
@@ -127,22 +126,22 @@ class ShopsController extends Controller
         if ($page_size<24){
         $page_size=24;
         }
-        
+
         //$product = Product::all();
-        
+
         // dd($product);
         //$items = Product::with('inventory')->paginate(2);
 
         $category = Category::where('parent_id',0)->get();
 
-        $sellerProfile = Merchant::where('user_id',Sentinel::getUser()->id)->first();
-        $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        $sellerProfile = Merchant::where('user_id',Auth::user()->id)->first();
+        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
 
 
         // dd($request->all());
 
         $product = Product::all();
-        
+
         $items = Product::with('inventory')->paginate($page_size);
         //dd($product);
 
@@ -151,21 +150,21 @@ class ShopsController extends Controller
 
             // dd($sub_categories_id);
 
-             $product = Product::whereIn('category_id', $sub_categories_id)->paginate($page_size);     
-            
-            // dd($product); 
-            
-             $items = Product::with('inventory')->whereIn('category_id', $sub_categories_id)->paginate($page_size); 
+             $product = Product::whereIn('category_id', $sub_categories_id)->paginate($page_size);
+
+            // dd($product);
+
+             $items = Product::with('inventory')->whereIn('category_id', $sub_categories_id)->paginate($page_size);
             //  dd($items);
-         }                 
-        $product =$product->sortBy('name');         
-        //dd($product);          
+         }
+        $product =$product->sortBy('name');
+        //dd($product);
 
     $categories = ([
         'cat'      =>request('cat'),
         'sort'     => request('sort'),
     ]);
-       
+
         return view('merchant.shops.shop_details',compact('sellerProfile','shopProfile',
         'product','items','category'));
     }
@@ -193,7 +192,7 @@ class ShopsController extends Controller
         //
     }
 
-   
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -202,7 +201,7 @@ class ShopsController extends Controller
      */
     public function edit($id)
     {
-        $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
         $shop = Shop::all();
         return view('merchant.shops.edit',compact('shopProfile','shop'));
     }
@@ -216,7 +215,7 @@ class ShopsController extends Controller
      */
     public function update(Request $request)
     {
-        $shop = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        $shop = Shop::where('user_id',Auth::user()->id)->first();
         //dd($shop);
         $this->validateForm($request);
 

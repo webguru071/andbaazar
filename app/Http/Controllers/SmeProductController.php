@@ -20,10 +20,10 @@ use App\Models\Shop;
 use App\Models\Inventory;
 use App\Models\InventoryMeta;
 use App\Models\ItemMeta;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\Brand;
 use App\Models\Newsfeed;
-use Sentinel;
 use Session;
 use Baazar;
 use App\Models\Reject;
@@ -38,22 +38,22 @@ class SmeProductController extends Controller
      */
     public function index(Request $request)
     {
-        $sellerProfile = Merchant::with('rejectvalue')->where('user_id',Sentinel::getUser()->id)->first();
+        $sellerProfile = Merchant::with('rejectvalue')->where('user_id',Auth::user()->id)->first();
         $product = Product::where('shop_id',Baazar::shop()->id)->where('type','sme')->paginate(10);
-        $rejectReason = RejectValue::where('user_id',Sentinel::getUser()->id)->where('type','sme')->get();
+        $rejectReason = RejectValue::where('user_id',Auth::user()->id)->where('type','sme')->get();
 
       // $items = Product::with('inventory')->paginate('10');
-      
+
 
      if ($request->has('cat')){
 
-        $product = Product::where('shop_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','sme')->paginate(10);            
-    } 
-    
-    if ($request->has('status')){   
+        $product = Product::where('shop_id',Baazar::shop()->id)->where('category_slug','like','%'.$request->cat.'%')->where('type','sme')->paginate(10);
+    }
+
+    if ($request->has('status')){
       $product =Product::orderBy('status','asc')->Where('status',$request->status)->where('type','sme')->paginate(10);
-    // dd($product);        
-  } 
+    // dd($product);
+  }
     $categories = ([
       'cat'      =>request('cat'),
       'status'   => request('status'),
@@ -61,7 +61,7 @@ class SmeProductController extends Controller
 
       return view ('merchant.product.smeProduct.index',compact('product','sellerProfile','rejectReason'));
 
-   
+
     }
 
     /**
@@ -79,8 +79,8 @@ class SmeProductController extends Controller
         $subCategories = Category::where('parent_id','!=',0)->get();
         $childCategory = Category::where('parent_id','!=',0)->get();
         $tag = Tag::all();
-        $sellerId = Merchant::where('user_id',Sentinel::getUser()->id)->first();
-        $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        $sellerId = Merchant::where('user_id',Auth::user()->id)->first();
+        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
         return view ('merchant.product.smeProduct.create',compact('category','categories','item','size','color','subCategories','tag','sellerId','shopProfile','childCategory'));
     }
 
@@ -93,7 +93,7 @@ class SmeProductController extends Controller
       $slug = rtrim($slug,',');
       return $slug;
     }
-  
+
 
     public function addInventory($request,$itemId,$shopId,$slug){
         $i = 0;
@@ -117,7 +117,7 @@ class SmeProductController extends Controller
             'seller_sku'      => $request->seller_sku[$i],
             'type'            => 'sme',
             'shop_id'         => $shopId,
-            'user_id'         => Sentinel::getUser()->id,
+            'user_id'         => Auth::user()->id,
             'created_at'      => now(),
           ];
           $inventory = Inventory::create($inventories);
@@ -160,7 +160,7 @@ class SmeProductController extends Controller
      */
     public function store(Product $item, Request $request, Newsfeed $newsfeed)
     {
-        $shop = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;
+        $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
         $newsslug = Baazar::getUniqueSlug($newsfeed,$request->title);
         if($shop){
           $slug = Baazar::getUniqueSlug($item,$request->name);
@@ -181,11 +181,11 @@ class SmeProductController extends Controller
                 'materials'     => $request->materials,
                 'video_url'     => $request->video_url,
                 'category_id'   => $request->category_id,
-                'category_slug' => $request->category,             
+                'category_slug' => $request->category,
                 'tag_slug'      => $this->tagSlug($request->tag_id),
                 'status'        => 'Pending',
                 'shop_id'       => $shop->id,
-                'user_id'       => Sentinel::getUser()->id,
+                'user_id'       => Auth::user()->id,
                 'created_at'    => now(),
             ];
           $item = Product::create($data);
@@ -196,19 +196,19 @@ class SmeProductController extends Controller
           if($request->images){
             $this->addImages($request->images,$item->id,$shop);
           }
-          
+
         $newsFeed = [
           'title'      => $request->title,
           'slug'       => $newsslug,
           'image'      => Baazar::fileUpload($request,'image','','/uploads/newsfeed_image'),
-          'news_desc'  => $request->news_desc, 
+          'news_desc'  => $request->news_desc,
           'product_id' => $item->id,
-          'user_id'    => Sentinel::getUser()->id,
+          'user_id'    => Auth::user()->id,
           'created_at' => now(),
         ];
 
         Newsfeed::create($newsFeed);
-  
+
           // $name = $data['name'];
           //  \Mail::to($sellerId['email'])->send(new ProductApproveRequestMail($sellerId, $name));
           Session::flash('success', 'SME Product Added Successfully!');
@@ -229,7 +229,7 @@ class SmeProductController extends Controller
       $product      = Product::with('itemimage')->where('slug',$product->slug)->where('type','sme')->first();
       $productImage = ItemImage::where('color_slug','main')->where('product_id',$product->id)->limit(5)->get();
       //dd($productImage);
-      $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
+      $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
       $productCapasize = InventoryMeta::where('product_id',$product->id)->get();
       $imageColor  = ItemImage::select('color_slug')->where('color_slug','!=','main')->where('product_id',$product->id)->distinct()->get();
       $rejectlist = Reject::where('type','product')->get();
@@ -238,8 +238,8 @@ class SmeProductController extends Controller
       return view('merchant.product.smeProduct.show',compact('product','shopProfile','productImage','productCapasize','imageColor','rejectlist'));
   }
 
-  public function smeproductList(){ 
-    $items = Product::with('inventory')->where('type','sme')->get();  
+  public function smeproductList(){
+    $items = Product::with('inventory')->where('type','sme')->get();
    return view('merchant.product.smeProduct.product_list',compact('items'));
    }
 
@@ -258,12 +258,12 @@ class SmeProductController extends Controller
       $color              = Color::all();
       $categories         = Category::where('parent_id',0)->get();
       $subCategories      = Category::where('parent_id','!=',0)->get();
-      $tag                = Tag::all(); 
+      $tag                = Tag::all();
       $selected_tags      = [];
       foreach($product->itemtag as $tags){
-        $selected_tags[$tags->id] = $tags; 
+        $selected_tags[$tags->id] = $tags;
       }
-      $shopProfile        = Shop::where('user_id',Sentinel::getUser()->id)->first();
+      $shopProfile        = Shop::where('user_id',Auth::user()->id)->first();
       $productInventories = Inventory::where('product_id',$product->id)->get();
       $porductMeta        = ItemMeta::where('product_id',$product->id)->get();
       //dd($porductMeta);
@@ -277,17 +277,17 @@ class SmeProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug,Product $item){ 
-      $product = Product::where('slug',$slug)->first(); 
+    public function update(Request $request, $slug,Product $item){
+      $product = Product::where('slug',$slug)->first();
       $newsFeedUpdate = Newsfeed::where('product_id',$product->id)->first();
-      $product->item_meta()->delete(); 
+      $product->item_meta()->delete();
       $product->itemimage()->delete();
       $product->inventory()->delete();
-      $shop = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;
+      $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
       $feature = Baazar::base64Upload($request->images['main'][0],$slug,$shop->slug,'featured');
         $data = [
           'name'          => $request->name,
-          'bn_name'       => $request->bn_name, 
+          'bn_name'       => $request->bn_name,
           'image'         => $feature,
           'price'         => is_numeric($request->price)?$request->price:0,
           'model_no'      => $request->model_no,
@@ -302,18 +302,18 @@ class SmeProductController extends Controller
           'category_id'   => $request->category_id,
           'category_slug' => $request->category,
           'brand_id'      => $request->brand_id,
-          'tag_slug'      => $this->tagSlug($request->tag_id), 
+          'tag_slug'      => $this->tagSlug($request->tag_id),
           'updated_at'    => now(),
         ];
 
         $product->update($data);
         $this->addInventory($request,$product->id,$shop->id,$product->slug);
-       
+
         if($request->images){
           $this->addImages($request->images,$product->id,$shop);
         }
 
-        
+
         Session::flash('success', 'SME Product updated Successfully!');
 
         return redirect('merchant/sme/products');

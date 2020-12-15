@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 use App\User;
 use App\Models\CustomerShippingAddress;
-use Sentinel;
 use Baazar;
 class CustomerApiController extends Controller
 {
@@ -41,7 +41,7 @@ class CustomerApiController extends Controller
                 'password' 	=> $request->password,
                 'type' 	    => 'customers',
             ];
-            $customer = Sentinel::registerAndActivate($data);
+            $customer = User::create($data);
             // dd($customer);
             if(!$customer){
                 return response()->json(['data' => '','error' => true,'message' => 'User can\'t register']);
@@ -73,7 +73,7 @@ class CustomerApiController extends Controller
 			'password'	=> $request->password,
 			'type'	    => 'customers',
 		];
-		$customer = Sentinel::authenticate($credentials);
+		$customer = Auth::attempt($credentials);
         if($customer){
             $customer->api_token = $this->apiToken;
             $customer->save();

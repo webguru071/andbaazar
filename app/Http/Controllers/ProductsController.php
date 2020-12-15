@@ -23,10 +23,10 @@ use Illuminate\Support\Str;
 use App\Models\Brand;
 use App\Models\Reject;
 use App\Models\RejectValue;
-use Sentinel;
 use Session;
 use Baazar;
 use App\Models\Newsfeed;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -59,7 +59,7 @@ class ProductsController extends Controller
         $filter['category'] = $request->category;
 
       }
-      
+
       //status Filter
       if ($request->has('status') && !empty($request->status)){
         $product = $product->where('status',$request->status);
@@ -80,7 +80,7 @@ class ProductsController extends Controller
     }
 
   // }
-    
+
 
     //}
 
@@ -91,7 +91,7 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        $category = Category::where('type','ecommerce')->get(); 
+        $category = Category::where('type','ecommerce')->get();
         $item = Product::all();
         $size= Size::all();
         $color = Color::all();
@@ -99,9 +99,9 @@ class ProductsController extends Controller
         $subCategories = Category::where('parent_id','!=',0)->get();
         $childCategory = Category::where('parent_id','!=',0)->get();
         $tag = Tag::all();
-        $sellerId = Merchant::where('user_id',Sentinel::getUser()->id)->first();
-        $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
-  
+        $sellerId = Merchant::where('user_id',Auth::user()->id)->first();
+        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
+
 
         return view ('merchant.product.create',compact('category','categories','item','size','color','subCategories','tag','sellerId','shopProfile','childCategory'));
     }
@@ -137,7 +137,7 @@ class ProductsController extends Controller
           'seller_sku'      => $request->seller_sku[$i],
           'type'            => 'ecommerce',
           'shop_id'         => $shopId,
-          'user_id'         => Sentinel::getUser()->id,
+          'user_id'         => Auth::user()->id,
           'created_at'      => now(),
         ];
         $inventory = Inventory::create($inventories);
@@ -188,7 +188,7 @@ class ProductsController extends Controller
 
     public function store(Product $item, Request $request, Newsfeed $newsfeed){
       // dd($request->all());
-      $shop = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;
+      $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
       $newsslug = Baazar::getUniqueSlug($newsfeed,$request->title);
       if($shop){
         $slug = Baazar::getUniqueSlug($item,$request->name);
@@ -204,7 +204,7 @@ class ProductsController extends Controller
               'description'   => $request->description,
               'email'         => $request->email,
               'type'          => 'ecommerce',
-              'bn_description'=> $request->bn_description,            
+              'bn_description'=> $request->bn_description,
               'made_in'       => $request->made_in,
               'materials'     => $request->materials,
               'video_url'     => $request->video_url,
@@ -214,7 +214,7 @@ class ProductsController extends Controller
               'tag_slug'      => $this->tagSlug($request->tag_id),
               'status'        => 'Pending',
               'shop_id'       => $shop->id,
-              'user_id'       => Sentinel::getUser()->id,
+              'user_id'       => Auth::user()->id,
               'created_at'    => now(),
           ];
         $item = Product::create($data);
@@ -224,15 +224,15 @@ class ProductsController extends Controller
         }
         if($request->images){
           $this->addImages($request->images,$item->id,$shop);
-        } 
+        }
 
         $newsFeed = [
           'title'      => $request->title,
           'slug'       => $newsslug,
           'image'      => Baazar::fileUpload($request,'image','','/uploads/newsfeed_image'),
-          'news_desc'  => $request->news_desc, 
+          'news_desc'  => $request->news_desc,
           'product_id' => $item->id,
-          'user_id'    => Sentinel::getUser()->id,
+          'user_id'    => Auth::user()->id,
           'created_at' => now(),
         ];
 
@@ -259,7 +259,7 @@ class ProductsController extends Controller
         $product      = Product::with('itemimage')->where('slug',$product->slug)->where('type','ecommerce')->first();
         $productImage = ItemImage::where('color_slug','main')->where('product_id',$product->id)->limit(5)->get();
         //dd($productImage);
-        $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
         $productCapasize = InventoryMeta::where('product_id',$product->id)->get();
         $imageColor  = ItemImage::select('color_slug')->where('color_slug','!=','main')->where('product_id',$product->id)->distinct()->get();
         $rejectlist = Reject::where('type','product')->get();
@@ -276,12 +276,12 @@ class ProductsController extends Controller
      */
     public function edit($slug){
 
-        $product = Product::with(['item_meta.attributes.options','news','itemimage','inventory.invenMeta','category.inventoryAttributes.options'])->where('slug',$slug)->first(); 
+        $product = Product::with(['item_meta.attributes.options','news','itemimage','inventory.invenMeta','category.inventoryAttributes.options'])->where('slug',$slug)->first();
         dd($product);
 
-        // $product = Product::with(['item_meta.attributes.attributeMeta','news','itemimage','inventory.invenMeta','category.inventoryAttributes.options'])->where('slug',$slug)->first(); 
+        // $product = Product::with(['item_meta.attributes.attributeMeta','news','itemimage','inventory.invenMeta','category.inventoryAttributes.options'])->where('slug',$slug)->first();
 
-        $itemImages = $product->itemimage->groupBy('color_slug'); 
+        $itemImages = $product->itemimage->groupBy('color_slug');
         // dd($newsFeed);
         // dd($product->category->inventoryAttributes);
         // dd($product->inventory);
@@ -301,24 +301,24 @@ class ProductsController extends Controller
         $color              = Color::all();
         $categories         = Category::where('parent_id',0)->where('type','ecommerce')->get();
         $subCategories      = Category::where('parent_id','!=',0)->get();
-        $tag                = Tag::all(); 
+        $tag                = Tag::all();
         $selected_tags      = [];
         foreach($product->itemtag as $tags){
-          $selected_tags[$tags->id] = $tags; 
+          $selected_tags[$tags->id] = $tags;
         }
-        $shopProfile        = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        $shopProfile        = Shop::where('user_id',Auth::user()->id)->first();
         $productInventories = Inventory::where('product_id',$product->id)->get();
         $porductMeta        = ItemMeta::where('product_id',$product->id)->get();
         //dd($porductMeta);
         $brand = Brand::all();
         //dd($brand);
-       
+
 
         return view ('merchant.product.edit',compact('brand','category','itemImages','categories','selected_tags','item','productInventories','size','color','subCategories','product','tag','shopProfile'));
     }
 
-    
-   
+
+
     /**
      * Update the specified resource in storage.
      *
@@ -326,17 +326,17 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug,Product $item){ 
-      $product        = Product::where('slug',$slug)->first(); 
-      $newsFeedUpdate = Newsfeed::where('product_id',$product->id)->first(); 
-      $product->item_meta()->delete(); 
+    public function update(Request $request, $slug,Product $item){
+      $product        = Product::where('slug',$slug)->first();
+      $newsFeedUpdate = Newsfeed::where('product_id',$product->id)->first();
+      $product->item_meta()->delete();
       $product->itemimage()->delete();
       $product->inventory()->delete();
-      $shop = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;
+      $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
       $feature = Baazar::base64Upload($request->images['main'][0],$slug,$shop->slug,'featured');
         $data = [
           'name'          => $request->name,
-          'bn_name'       => $request->bn_name, 
+          'bn_name'       => $request->bn_name,
           'image'         => $feature,
           'price'         => is_numeric($request->price)?$request->price:0,
           'model_no'      => $request->model_no,
@@ -351,23 +351,23 @@ class ProductsController extends Controller
           'category_id'   => $request->category_id,
           'category_slug' => $request->category,
           'brand_id'      => $request->brand_id,
-          'tag_slug'      => $this->tagSlug($request->tag_id), 
+          'tag_slug'      => $this->tagSlug($request->tag_id),
           'updated_at'    => now(),
         ];
 
         $product->update($data);
         $this->addInventory($request,$product->id,$shop->id,$product->slug);
 
-        if($request->attribute){ 
+        if($request->attribute){
           $this->addAttributes($request->attribute,$product->id);
         }
         if($request->images){
           $this->addImages($request->images,$product->id,$shop);
-        } 
+        }
         $newsFeed = [
           'title'      => $request->title,
           'image'      => Baazar::fileUpload($request,'image','old_image','/uploads/newsfeed_image'),
-          'news_desc'  => $request->news_desc,  
+          'news_desc'  => $request->news_desc,
           'updated_at' => now(),
         ];
         $newsFeedUpdate->update($newsFeed);
@@ -382,16 +382,16 @@ class ProductsController extends Controller
   }
 
 
-    public function productList(){ 
-        $items = Product::with('inventory')->where('type','ecommerce')->distinct()->get();  
-       
+    public function productList(){
+        $items = Product::with('inventory')->where('type','ecommerce')->distinct()->get();
+
      return view('merchant.product.product_list',compact('items'));
     }
 
     public function productTableList(){
       // $product = Product::all();
-      $ecom = Product::with('inventory')->where('type','ecommerce')->get(); 
-      $sme = Product::with('inventory')->where('type','sme')->get(); 
+      $ecom = Product::with('inventory')->where('type','ecommerce')->get();
+      $sme = Product::with('inventory')->where('type','sme')->get();
       return view('merchant.product.productTableList',compact('ecom','sme'));
     }
 
@@ -430,13 +430,13 @@ class ProductsController extends Controller
         $newsFeed->update([
         'status' => 'Reject',
         'rej_desc' => $request->rej_desc,
-      ]); 
-      
+      ]);
+
        $rejct_value = RejectValue::where('id', $data->id)->first();
 
         $rej_list = count($_POST['rej_name']);
-        
-        for($i = 0; $i<$rej_list; $i++){        
+
+        for($i = 0; $i<$rej_list; $i++){
                 $rejct_value=RejectValue::create([
                 'rej_name'      => $request->rej_name[$i],
                 'type'          => $request->type,
@@ -444,7 +444,7 @@ class ProductsController extends Controller
                 'user_id'       => $data->user_id,
             ]);
             // dd($data);
-        }      
+        }
 
       $name = $data['name'];
       $rej_desc = $data['rej_desc'];
@@ -494,9 +494,9 @@ class ProductsController extends Controller
 
     public function vendorshow($slug){
 
-    //  $product = Product::with('category')->where('user_id',Sentinel::getUser()->id)->first();
+    //  $product = Product::with('category')->where('user_id',Auth::user()->id)->first();
       $product = Product::with(['category','itemimage'])->where('slug',$slug)->first();
-      $shopProfile = Shop::where('user_id',Sentinel::getUser()->id)->first();
+      $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
       return view('merchant.product.vendorshow',compact('product','shopProfile'));
     }
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ShippingMethod;
 use App\Models\Courier;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 class ShippingMethodsController extends Controller
@@ -29,7 +29,7 @@ class ShippingMethodsController extends Controller
      */
     public function create()
     {
-      // 
+      //
     }
 
     /**
@@ -48,7 +48,7 @@ class ShippingMethodsController extends Controller
             'desc' => $request->desc,
             'slug' => $slug,
             'courier_id' => $request->courier_id,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
         ShippingMethod::create($data);
@@ -64,7 +64,7 @@ class ShippingMethodsController extends Controller
      */
     public function show($id)
     {
-      //  
+      //
     }
 
     /**
@@ -94,7 +94,7 @@ class ShippingMethodsController extends Controller
           'fees' => $request->fees,
           'desc' => $request->desc,
           'courier_id' => $request->courier_id,
-          'user_id' => Sentinel::getUser()->id,
+          'user_id' => Auth::user()->id,
           'updated_at' => now(),
       ];
       $shippingmethod->update($data);

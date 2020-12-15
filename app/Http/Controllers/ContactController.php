@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Mail\ContactusMail;
-use Sentinel;
 use Baazar;
 use Session;
 
@@ -39,25 +38,25 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         $this->validateForm($request);
 
         $data = [
             'first_name'  => $request->first_name,
             'last_name'   => $request->last_name,
-            'phone'       => $request->phone, 
-            'sub'         => $request->sub,  
+            'phone'       => $request->phone,
+            'sub'         => $request->sub,
             'email'       => $request->email,
             'description' => $request->description,
             'created_at'  => now(),
-        ];   
+        ];
 
-        $comment = Contact::create($data); 
+        $comment = Contact::create($data);
 
         session()->flash('success','Your message sent successfully!');
 
         return redirect()->back();
-        // echo json_encode($comment);   
+        // echo json_encode($comment);
     }
 
     /**
@@ -91,7 +90,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-    //    
+    //
     }
 
     /**
@@ -106,22 +105,22 @@ class ContactController extends Controller
     }
 
     public function contactmailList(){
-        $mailList = Contact::all(); 
+        $mailList = Contact::all();
         return view('admin.contacts.messagelist',compact('mailList'));
     }
 
     public function replayMail(Request $request,$id){
-        
+
         $messageList = Contact::find($id);
         $messageList->update([
             'messages' => $request->messages,
             ]);
 
             $first_name = $messageList['first_name'];
-            $last_name = $messageList['last_name']; 
+            $last_name = $messageList['last_name'];
             $sub = $messageList['sub'];
 
-        \Mail::to($messageList)->send(new ContactusMail($messageList,$first_name,$last_name,$sub));  
+        \Mail::to($messageList)->send(new ContactusMail($messageList,$first_name,$last_name,$sub));
 
         session()->flash('success','Repley mail send successfully');
 
@@ -133,7 +132,7 @@ class ContactController extends Controller
             'first_name'  => 'required',
             'last_name'   => 'required',
             'email'       => 'required|email',
-            'phone'       => 'required', 
+            'phone'       => 'required',
             'sub'         => 'required',
             'description' => 'required',
         ]);

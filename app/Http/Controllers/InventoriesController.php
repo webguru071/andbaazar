@@ -10,7 +10,7 @@ use App\Models\ItemImage;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\Shop;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 use App\Models\InventoryAttributeOption;
@@ -41,8 +41,8 @@ class InventoriesController extends Controller {
 
     public function create(){
         // $inventory          = Inventory::all();
-        $item               = Product::where('user_id',Sentinel::getUser()->id)->where('type','ecommerce')->get();
-        // $shopProfile        = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        $item               = Product::where('user_id',Auth::user()->id)->where('type','ecommerce')->get();
+        // $shopProfile        = Shop::where('user_id',Auth::user()->id)->first();
         // $size               = Size::all();
         $color              = Color::all();
         // $inventoryAttriSize = InventoryAttributeOption::with('attribute')->where('inventory_attribute_id',1)->first();
@@ -73,11 +73,11 @@ class InventoriesController extends Controller {
 
     public function store(Inventory $inventory,Request $request){
         // dd($request->all());
-        $shopId = Shop::where('user_id',Sentinel::getUser()->id)->first();
+        $shopId = Shop::where('user_id',Auth::user()->id)->first();
         $product = Product::with('itemimage')->where('id',$request->product_id)->first();
         $this->validateForm($request);
         $slug = Baazar::getUniqueSlug($inventory, $product->name);
-        $shop = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;
+        $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
         $cID = Color::where('slug',$request->color_name)->first();
         if($shop){
             $data = [
@@ -93,12 +93,12 @@ class InventoriesController extends Controller {
                 'end_date'      => $request->end_date,
                 'type'          => 'ecommerce',
                 'shop_id'       => $shopId->id,
-                'user_id'       => Sentinel::getUser()->id,
+                'user_id'       => Auth::user()->id,
                 'created_at'    => now(),
             ];
-    
+
             $inventory = Inventory::create($data);
-            
+
             if($request->has('inventoryAttr')){
                 foreach($request->inventoryAttr as $iname => $ival){
                     $inventoryAtti = [
@@ -107,14 +107,14 @@ class InventoriesController extends Controller {
                         'inventory_id'=> $inventory->id,
                         'product_id'  => $inventory->product_id,
                     ];
-                    InventoryMeta::create($inventoryAtti);  
+                    InventoryMeta::create($inventoryAtti);
                 }
             }
-            
+
 
             if($request->images){
                 $this->addImages($request->images,$inventory->product_id,$shop);
-            } 
+            }
             Session::flash('success', 'Inventory Added Successfully!');
         }
         return redirect('merchant/e-commerce/inventories');
@@ -125,7 +125,7 @@ class InventoriesController extends Controller {
     }
 
     public function edit($slug){
-        $inventory          = Inventory::with(['item.itemimage','item.category.inventoryAttributes.options','color','invenMeta'])->where('slug',$slug)->where('type','ecommerce')->first(); 
+        $inventory          = Inventory::with(['item.itemimage','item.category.inventoryAttributes.options','color','invenMeta'])->where('slug',$slug)->where('type','ecommerce')->first();
         $itemImages         = $inventory->item->itemimage->where('product_id',$inventory->product_id)->where('color_id',$inventory->color_id)->groupBy('color_slug')->toArray();
         return view ('merchant.inventory.ecommerceInventroy.edit',compact('inventory','itemImages'));
     }
@@ -134,15 +134,15 @@ class InventoriesController extends Controller {
     public function update(Request $request,$slug){
         // dd($request->all());
         $inventory  = Inventory::where('slug',$slug)->first();
-         $shop = Merchant::where('user_id',Sentinel::getUser()->id)->first()->shop;
+         $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
         $this->validateForm($request);
-        $data = [  
+        $data = [
             'size_id'       => $request->size_id,
             'price'         => $request->price,
             'qty_stock'     => $request->qty_stock,
             'seller_sku'    => $request->seller_sku,
             'special_price' => $request->special_price,
-            'start_date'    => $request->start_date, 
+            'start_date'    => $request->start_date,
             'end_date'      => $request->end_date,
             'updated_at'    => now(),
         ];
@@ -151,8 +151,8 @@ class InventoriesController extends Controller {
             foreach($request->inventoryAttr as $iname => $ival){
                 $inventMeta = InventoryMeta::where('inventory_id',$inventory->id)->where('name', $iname)->first();
                 $inventMeta->update([
-                    'value'       => $ival,  
-                ]); 
+                    'value'       => $ival,
+                ]);
             }
         }
         if($request->images){
@@ -190,5 +190,5 @@ class InventoriesController extends Controller {
         $images = $inventory->get()->toArray();
         echo json_encode(['count' => $count,'images' => $images]);
 
-    } 
+    }
 }

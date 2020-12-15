@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Reject;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 class RejectListController extends Controller
@@ -42,7 +42,7 @@ class RejectListController extends Controller
           $data = [
               'rej_name'    => $request->rej_name,
               'type'        => $request->type,
-              'user_id'     => Sentinel::getUser()->id,
+              'user_id'     => Auth::user()->id,
               'created_at'  => now(),
           ];
           Reject::create($data);
@@ -57,7 +57,7 @@ class RejectListController extends Controller
           $data = [
               'rej_name'    => $request->rej_name,
               'type'        => $request->type,
-              'user_id'     => Sentinel::getUser()->id,
+              'user_id'     => Auth::user()->id,
               'created_at'  => now(),
           ];
          $reject = Reject::create($data);
@@ -100,8 +100,8 @@ class RejectListController extends Controller
     {
         $this->validateForm($request);
         $data = [
-            'rej_name' => $request->rej_name,              
-            'user_id'     => Sentinel::getUser()->id,
+            'rej_name' => $request->rej_name,
+            'user_id'     => Auth::user()->id,
             'updated'     => now(),
         ];
              $reject->update($data);
@@ -124,7 +124,7 @@ class RejectListController extends Controller
 
     private function validateForm($request){
         $validatedData = $request->validate([
-            'rej_name' => 'required',          
+            'rej_name' => 'required',
         ]);
  }
 }

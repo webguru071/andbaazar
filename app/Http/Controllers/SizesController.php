@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Size;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 
@@ -28,7 +28,7 @@ class SizesController extends Controller
      */
     public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -46,7 +46,7 @@ class SizesController extends Controller
             'item_size' => $request->item_size,
             'desc' => $request->desc,
             'slug' => $slug,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
 
@@ -63,7 +63,7 @@ class SizesController extends Controller
      */
     public function show($id)
     {
-        // 
+        //
     }
 
     /**
@@ -90,7 +90,7 @@ class SizesController extends Controller
             'name' => $request->name,
             'item_size' => $request->item_size,
             'desc' => $request->desc,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'updated_at' => now(),
         ];
 

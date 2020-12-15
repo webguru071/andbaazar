@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Attribute;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 use App\Models\Category;
@@ -98,16 +98,16 @@ class CatAttributeController extends Controller
     }
 
     public function attributeset(Request $request,Attribute $attribute)
-    {   
-        // // $this->validateForm($request);              
+    {
+        // // $this->validateForm($request);
         // $data = ([
         //     'label'            => $request->label,
         //     'suggestion'       => $request->suggestion,
         //     'type'             => $request->type,
         //     'required'         => $request->required,
-        //     // 'required'         => $request->required[0] ? 0: 1,  
-        //     'category_id'      => $request->category_id,                         
-        //     'user_id'          => Sentinel::getUser()->id,
+        //     // 'required'         => $request->required[0] ? 0: 1,
+        //     'category_id'      => $request->category_id,
+//             'user_id'          => Auth::user()->id,
         //     'created_at' => now(),
         //     ]);
         //     Attribute::create($data);
@@ -125,7 +125,7 @@ class CatAttributeController extends Controller
             'label'          => $request->label[$k],
             'required'       => $request->required[$k],
             'category_id'    => $request->category_id,
-            'user_id'        => Sentinel::getUser()->id,
+            'user_id'        => Auth::user()->id,
             'created_at' => now(),
         ]);
      }
@@ -138,7 +138,7 @@ class CatAttributeController extends Controller
     //     $approve              = new Approve();
     //     $approve->approver_id = $approver;
     //     $approve->save();
-    
+
     //     $document->sentToApprovers()->sync([$approve->id],false);
     // }
 }

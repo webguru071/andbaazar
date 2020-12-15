@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductTag;
 use Illuminate\Http\Request;
 use App\Models\Tag;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 class TagsController extends Controller
@@ -46,7 +46,7 @@ class TagsController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'slug' => $slug,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ]);
 
@@ -91,7 +91,7 @@ class TagsController extends Controller
           $data = [
               'name' => $request->name,
               'description' => $request->description,
-              'user_id' => Sentinel::getUser()->id,
+              'user_id' => Auth::user()->id,
               'created_at' => now(),
           ];
 

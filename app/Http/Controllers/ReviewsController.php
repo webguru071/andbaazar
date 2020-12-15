@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Review;
-use Sentinel;
 
 class ReviewsController extends Controller
 {
@@ -43,7 +42,7 @@ class ReviewsController extends Controller
            'review_msg' =>$request->review_msg,
            'buyer_id' =>$request->buyer_id,
            'item_id' =>$request->item_id,
-           'user_id' => Sentinel::getUser()->id,
+           'user_id' => Auth::user()->id,
             'created_at' => now(),
        ];
 

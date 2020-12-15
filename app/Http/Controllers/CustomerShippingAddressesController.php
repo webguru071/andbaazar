@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\CustomerShippingAddress;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 
@@ -17,7 +17,7 @@ class CustomerShippingAddressesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $buyerShippingAddress = CustomerShippingAddress::where('user_id',Sentinel::getUser()->id)->get();
+        $buyerShippingAddress = CustomerShippingAddress::where('user_id',Auth::user()->id)->get();
         return view('frontend.customer_shipping_addresses.index',compact('buyerShippingAddress'));
     }
 
@@ -33,7 +33,7 @@ class CustomerShippingAddressesController extends Controller
 
     public function store(Request $request,CustomerShippingAddress $shipping){
 
-        $customerId = Customer::where('user_id',Sentinel::getUser()->id)->first();
+        $customerId = Customer::where('user_id',Auth::user()->id)->first();
         $slug = Baazar::getUniqueSlug($shipping,$request->location);
         $this->validateForm($request);
             if( $customerId){
@@ -48,7 +48,7 @@ class CustomerShippingAddressesController extends Controller
                 'phone'             => $request->phone,
                 'fax'               => $request->fax,
                 'customer_id'       => $customerId->id,
-                'user_id'           => Sentinel::getUser()->id,
+                'user_id'           => Auth::user()->id,
                 'created_at'        => now(),
             ];
             CustomerShippingAddress::create($data);

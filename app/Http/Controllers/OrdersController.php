@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
@@ -56,7 +56,7 @@ class OrdersController extends Controller
             'buyer_shipping_address_id' =>$request->buyer_shipping_address_id,
             'buyer_card_id' =>$request->buyer_card_id,
             'shipping_method_id' =>$request->shipping_method_id,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
 

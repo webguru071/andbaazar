@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\CustomerCard;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 
@@ -18,7 +18,7 @@ class CustomerCardsController extends Controller
      */
     public function index()
     {
-        $card = CustomerCard::where('user_id',Sentinel::getUser()->id)->get();
+        $card = CustomerCard::where('user_id',Auth::user()->id)->get();
         return view('frontend.customer_cards.index',compact('card'));
     }
 
@@ -40,7 +40,7 @@ class CustomerCardsController extends Controller
      */
     public function store(Request $request,CustomerCard $card)
     {
-        $customerId = Customer::where('user_id',Sentinel::getUser()->id)->first();
+        $customerId = Customer::where('user_id',Auth::user()->id)->first();
         $slug = Baazar::getUniqueSlug($card,$request->card_holder_name);
         $this->validateForm($request);
         if($customerId){
@@ -51,7 +51,7 @@ class CustomerCardsController extends Controller
             'card_expire_date'  => $request->card_expire_date,
             'card_cvc'          => $request->card_cvc,
             'customer_id'       => $customerId->id,
-            'user_id'           => Sentinel::getUser()->id,
+            'user_id'           => Auth::user()->id,
             'created_at'        => now(),
             ];
 
@@ -104,7 +104,7 @@ class CustomerCardsController extends Controller
             'card_holder_name' => $request->card_holder_name,
             'card_expire_date' => $request->card_expire_date,
             'card_cvc' => $request->card_cvc,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'updated_at' => now(),
             ];
 

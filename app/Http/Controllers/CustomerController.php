@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use Session;
 use Reminder;
@@ -31,7 +31,7 @@ class CustomerController extends Controller{
 		    'password' 	=> $request->password,
 		    'type' 	    => 'customers',
 		];
-        $customer = Sentinel::registerAndActivate($data);
+        $customer = User::create($data);
         // dd($customer);
         event(new CustomerRegistration($customer));
         // echo 'done';
@@ -45,11 +45,7 @@ class CustomerController extends Controller{
 			'type'	    => 'customers',
 		];
 
-		// if($request->remember == 'on')
-		// 	$user = Sentinel::authenticateAndRemember($credentials);
-		// else
-			$user = Sentinel::authenticate($credentials);
-        // dd($user);
+        $user = Auth::attempt($credentials);
 		if($user)
 			return redirect('dashboard');
 		else
@@ -76,7 +72,7 @@ class CustomerController extends Controller{
             return redirect()->back()->with(['error'=> 'Email not exists']);
           }
 
-          $user = Sentinel::findById($user->id);
+          $user = User::find($user->id);
 
           $reminder = Reminder::exists($user) ? : Reminder::create($user);
 

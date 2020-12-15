@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Sentinel;
 use App\User;
 use Session;
 use Reminder;
@@ -14,7 +13,7 @@ class ForgotPassword extends Controller
 
 
     public function forgot(){
-       
+
       // Session::forget('merchant/reset_password/');
       // Session::flush();
         return view('auth.merchant.forgotpassword');
@@ -28,17 +27,17 @@ class ForgotPassword extends Controller
 
       if($user == null){
 
-        return redirect()->back()->with(['error'=> 'Email not exists']);    
+        return redirect()->back()->with(['error'=> 'Email not exists']);
       }
-       
-      $user = Sentinel::findById($user->id);
+
+      $user = User::find($user->id);
 
       $reminder = Reminder::exists($user) ? : Reminder::create($user);
 
       $this->sendEmail( $user);
       // Session::flush();
-      return redirect()->back()->with(['success'=> 'Reset code sent to your emai']);   
-       
+      return redirect()->back()->with(['success'=> 'Reset code sent to your emai']);
+
        }
 
        public function sendEmail($user){

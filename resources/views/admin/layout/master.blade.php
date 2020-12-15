@@ -20,7 +20,7 @@
 
     <!-- Font Awesome-->
     <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/fontawesome.css">
-    
+
     <!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> -->
     <!-- Flag icon-->
     <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/flag-icon.css">
@@ -72,7 +72,7 @@
             <img src="{{asset('preloader.gif')}}" alt="preloader" width="300">
         </div>
     </div>
-    
+
     {{-- <div class="loader_skeleton">
         <!--CSS Spinner-->
         <div class="spinner-wrapper">
@@ -84,7 +84,7 @@
     <div class="page-main-header">
         <div class="main-header-right row">
             <div class="main-header-left d-lg-none">
-                {{-- <a href="index.html"><img src="{{asset('frontend')}}/assets/images/icon/logo.png" 
+                {{-- <a href="index.html"><img src="{{asset('frontend')}}/assets/images/icon/logo.png"
                     class="img-fluid blur-up lazyload" alt="image"></a>--}}
                 <div class="logo-wrapper"><a href="index.html"><img class="blur-up lazyloaded" src="{{asset('frontend')}}/assets/images/dashboard/multikart-logo.png" alt="img"></a></div>
             </div>

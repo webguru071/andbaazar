@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Color;
-use Sentinel;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
 class ColorsController extends Controller
@@ -27,7 +27,7 @@ class ColorsController extends Controller
      */
     public function create()
     {
-          // 
+          //
     }
 
     /**
@@ -44,7 +44,7 @@ class ColorsController extends Controller
             'name' => $request->name,
             'slug' => $slug,
             'color_code' => $request->color_code,
-            'user_id' => Sentinel::getUser()->id,
+            'user_id' => Auth::user()->id,
             'created_at' => now(),
         ];
         Color::create($data);
@@ -60,7 +60,7 @@ class ColorsController extends Controller
      */
     public function show($id)
     {
-        // 
+        //
     }
 
     /**
@@ -86,8 +86,8 @@ class ColorsController extends Controller
       $this->validateForm($request);
       $data = [
           'name' => $request->name,
-          'color_code' => $request->color_code,      
-          'user_id' => Sentinel::getUser()->id,
+          'color_code' => $request->color_code,
+          'user_id' => Auth::user()->id,
           'created_at' => now(),
       ];
            $color->update($data);

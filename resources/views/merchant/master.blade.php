@@ -41,7 +41,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
 
-    
+
     <!-- <link rel="stylesheet" type="text/css" href="{{asset('/css/summernote.min.css')}}"> -->
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css" rel="stylesheet">
@@ -71,7 +71,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="header-contact">
-                           <h3 class="display-5 font-weight-bold">Wellcome To Vendor Panel</h3>
+                           <h3 class="display-5 font-weight-bold">Welcome To Vendor Panel</h3>
                         </div>
                     </div>
                     <div class="col-lg-6 text-right">
@@ -81,7 +81,7 @@
                             <li class="onhover-dropdown mobile-account"> <i class="fa fa-user" aria-hidden="true"></i>
                                 My Account
                                 <ul class="onhover-show-div">
-                                    @if( Sentinel::getUser())
+                                    @if( Auth::check())
                                     <li class=""><a href="{{ url('/dashboard') }}">My Dashboard</a></li>
                                     <li class=""><a href="{{ url('profile/') }}" data-lng="es">My Profile</a></li>
                                     <li class=""><a href="{{ url('profile/shipping') }}" data-lng="es">My Shippin Address</a></li>
@@ -111,7 +111,7 @@
 
     <!-- footer -->
     <footer class="footer-light">
-        
+
         <section class="section-b-space light-layout">
             <div class="container">
                 <div class="row">
@@ -148,7 +148,7 @@
         {{-- <div class="sub-footer">
             <div class="container">
                 <div class="row">
-                    
+
                 </div>
             </div>
         </div> --}}
@@ -185,7 +185,7 @@
     <!-- Bootstrap js-->
     <script src="{{asset('frontend')}}/assets/js/bootstrap.js"></script>
 
-    
+
 
     <!-- Bootstrap Notification js-->
     <script src="{{asset('frontend')}}/assets/js/bootstrap-notify.min.js"></script>
@@ -222,7 +222,7 @@
         });
         setTimeout(function(){
             $('body').removeAttr('style');
-        },3000); 
+        },3000);
     </script>
 
 </body>

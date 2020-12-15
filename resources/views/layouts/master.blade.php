@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +22,7 @@
     <!--Slick slider css-->
     <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/slick.css">
 
-    
+
     <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/slick-theme.css">
 
     <!-- Animate icon -->
@@ -42,8 +42,8 @@
 
 
    <link rel="stylesheet" type="text/css" href=" https://cdnjs.cloudflare.com/ajax/libs/css-loader/3.3.3/css-loader.css">
-    
-    
+
+
     <!-- <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/preloader.min.css> -->
 
     <link rel="stylesheet" type="text/css" href="{{asset('/')}}/css/custom.css">
@@ -82,7 +82,7 @@
                             <li class="onhover-dropdown mobile-account"> <i class="fa fa-user" aria-hidden="true"></i>
                                 My Account
                                 <ul class="onhover-show-div">
-                                    @if( Sentinel::getUser())
+                                    @if( Auth::check())
                                     <li class=""><a href="{{ url('/dashboard') }}">My Dashboard</a></li>
                                     <li class=""><a href="{{ url('profile/') }}" data-lng="es">My Profile</a></li>
                                     <li class=""><a href="{{ url('profile/shipping') }}" data-lng="es">My Shippin Address</a></li>
@@ -110,7 +110,7 @@
                                     <div class="bar-style">
                                     </div>
                                 </a>
-                              
+
                             </div>
                             <div class="brand-logo">
                                 <a href="{{url('/')}}"><img src="{{asset('frontend')}}/assets/images/icon/logo.png"
@@ -397,7 +397,7 @@
                         </div>
                         <div class="footer-contant">
                             <a href="{{url('/')}}"><img src="{{asset('frontend')}}/assets/images/icon/logo.png"
-                                class="img-fluid blur-up lazyload" alt=""></a>                       
+                                class="img-fluid blur-up lazyload" alt=""></a>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                                 ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
                             <div class="footer-social">
@@ -593,10 +593,10 @@
    <!-- <script src="{{asset('frontend')}}/assets/js/preloader.min.js"></script> -->
 
     <!-- Theme js-->
-    
+
 
     @include('elements.myjs')
-    <script>   
+    <script>
         function openSearch() {
             document.getElementById("search-overlay").style.display = "block";
         }

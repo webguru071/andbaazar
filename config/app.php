@@ -166,7 +166,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        
+
         /*
          * Package Service Providers...
          */
@@ -180,9 +180,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\BaazarServiceProvider::class,
-
-        //sentinel Auth
-        Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
+        
 //        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
 
@@ -238,14 +236,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Baazar' => App\Facades\BaazarFacad::class,
-        
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        
 
-        //Sentinel package;
-        'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
-        'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
-        'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 //        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
 
     ],
