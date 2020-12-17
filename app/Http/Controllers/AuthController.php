@@ -11,7 +11,7 @@ class AuthController extends Controller{
 
     public function userLogin(){
         if (Auth::check()){
-            switch (Auth::user()->user_type) {
+            switch (Auth::user()->type) {
                 case "admin":
                     return redirect('andbaazaradmin/dashboard');
                 case "merchant":
@@ -27,19 +27,16 @@ class AuthController extends Controller{
 
     public function userAuth(Request $request){
         $credentials = $request->only('email', 'password');
-
-        if($request->remember == 'on')
-            $user = Auth::attempt($credentials, true);
-        else
-            $user = Auth::attempt($credentials);
+        $user = Auth::attempt($credentials, $request->remember_me);
 
         if($user){
-            switch ($user->user_type) {
+            switch (Auth::user()->type) {
                 case "admin":
                     return redirect('andbaazaradmin/dashboard');
                 case "merchant":
                     return redirect('merchant/dashboard');
                 default:
+                    Auth::logout();
                     return redirect('/');
             }
         }
@@ -56,7 +53,6 @@ class AuthController extends Controller{
 	}
 
 	public function adminloginprocess(Request $request){
-		// dd($request->all());
 		$credentials = [
 			'email'		=> $request->login['email'],
 			'password'	=> $request->login['password'],
@@ -75,7 +71,7 @@ class AuthController extends Controller{
 	}
 
 	public function logout(){
-		Auth::logout(null, true);
+		Auth::logout();
 		return redirect('/');
 	}
 }
