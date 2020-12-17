@@ -86,7 +86,7 @@
                                         </div>
                                         <div class="form-terms">
                                             <div class="custom-control custom-checkbox mr-sm-2">
-                                                <input type="checkbox" class="custom-control-input" name="remember" id="customControlAutosizing">
+                                                <input type="checkbox" class="custom-control-input" name="remember_me" id="customControlAutosizing">
                                                 <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
                                                 <a href="#" class="btn btn-default forgot-pass">lost your password</a>
                                             </div>
