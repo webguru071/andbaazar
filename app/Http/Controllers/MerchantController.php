@@ -62,22 +62,41 @@ class MerchantController extends Controller{
     }
 
     public function sellOnAndbaazarPost(Request $request, Merchant $seller){
+        $request->merge(['phone' => str_replace('-','',$request->phone)]);
         $request->validate([
             'first_name' => 'required',
             'last_name'  => 'required',
-            'phone'      => 'required|unique:merchants,phone|unique:users,mobile',
+            'phone'      => 'required|unique:merchants,phone|unique:users,phone',
+            'email'      => 'nullable|unique:users,email',
+            'password'   => 'required|min:8'
         ]);
+
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name'  => $request->last_name,
+            'email'      => $request->email,
+            'phone'      => $request->phone,
+            'password' 	 => Hash::make($request->password),
+            'type'       => 'merchant',
+            'create_at'  => now(),
+        ]);
+
         $slug = Baazar::getUniqueSlug($seller,$request->first_name);
-        $token = Baazar::randString(24);
-        $verify_number = mt_rand(10000,99999);
-        $allData=$request->all();
-        $allData['slug']=$slug;
-        $allData['verification_token']=$verify_number;
-        $allData['remember_token']=$token;
-        $allData['reg_step']='otp-varification';
-        Merchant::create($allData);
-        session()->flash('success','Merchant profile registration 1st step complete successfully');
-        return redirect('merchant/otp-varification'.'?token='.$token);
+
+        $merchant = Merchant::create([
+            'first_name'            => $request->first_name,
+            'last_name'             => $request->last_name,
+            'email'                 => $request->email,
+            'phone'                 => $request->phone,
+            'slug'                  => $slug,
+            'verification_token'    => mt_rand(10000,99999),
+            'remember_token'        => Baazar::randString(24),
+            'reg_step'              => 'otp-varification',
+            'user_id'               => $user->id,
+            'create_at'             => now(),
+        ]);
+        flash('Please verify your number')->success()->important();
+        return redirect('merchant/otp-varification'.'?token='.$merchant->remember_token);
     }
 
     public function getToken(Request $request){
@@ -100,17 +119,23 @@ class MerchantController extends Controller{
     }
 
     public function postToken(Request $request){
-        $request->validate([
-            'verification_token'    => 'required|exists:merchants,verification_token|max:5'
-        ]);
-        $seller    = Merchant::where('remember_token',$request->token)->first();
-        $seller->update([
-            'verification_token' => 'varified',
-            'reg_step'           => 'personal-info',
-        ]);
+        $request->merge(['verification_token' => implode("",$request->digit)]);
+        $rules = array('verification_token' => 'required|exists:merchants,verification_token|max:5');
+        $inputs = array('verification_token' => $request->verification_token);
+        $validator = \Validator::make($inputs, $rules);
 
-        session()->flash('success','Verification Successfully!');
-        return redirect('merchant/personal-info'.'?token='.$request->token);
+        if($validator->fails()) {
+            flash('Invalid OPT')->error()->important();
+            return redirect()->back();
+        }else{
+            $seller = Merchant::where('remember_token',$request->token)->first();
+                $seller->update([
+                    'verification_token' => 'varified',
+                    'reg_step'           => 'shop-info',
+                ]);
+            flash('Verification Successfully!')->success()->important();
+            return redirect('merchant/shop-info'.'?token='.$request->token);
+        }
     }
 
     public function personalInfo(Request $request){

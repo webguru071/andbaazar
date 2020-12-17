@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->nullable();
+            $table->string('mobile')->nullable();
             $table->string('password')->nullable();
-
             $table->enum('type',['customers','merchant','admin'])->default('admin');
             $table->text('api_token')->nullable();
             $table->text('permissions')->nullable();
