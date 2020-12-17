@@ -15,6 +15,7 @@ use App\Models\Reject;
 use App\Models\RejectValue;
 use App\Mail\VendorProfileApprovalMail;
 use App\Mail\VendorProfileAcceptMail;
+use Illuminate\Support\Facades\Hash;
 use Session;
 use Baazar;
 class MerchantController extends Controller{
@@ -64,7 +65,7 @@ class MerchantController extends Controller{
         $request->validate([
             'first_name' => 'required',
             'last_name'  => 'required',
-            'phone'      => 'required|unique:merchants,phone',
+            'phone'      => 'required|unique:merchants,phone|unique:users,mobile',
         ]);
         $slug = Baazar::getUniqueSlug($seller,$request->first_name);
         $token = Baazar::randString(24);
@@ -134,7 +135,7 @@ class MerchantController extends Controller{
             'first_name' => $request->first_name,
             'last_name'  => $request->last_name,
             'email'      => $request->email,
-            'password' 	 => $request->password,
+            'password' 	 => Hash::make($request->password),
             'type'       => 'merchant',
             'create_at'  => now(),
             ]);
