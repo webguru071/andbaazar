@@ -21,7 +21,8 @@ class AuthController extends Controller{
             }
         }
         else{
-            return view('auth.login');
+            // return view('auth.login');
+            return view('auth.merchant.login');
         }
     }
 
@@ -42,7 +43,8 @@ class AuthController extends Controller{
         }
         else
             flash('Invalid username or password')->error();
-            return view('auth.login');
+            return redirect()->back();
+            // return view('auth.merchant.login');
     }
 
 	public function adminlogin(){

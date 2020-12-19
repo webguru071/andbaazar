@@ -15,6 +15,7 @@ use App\Models\Reject;
 use App\Models\RejectValue;
 use App\Mail\VendorProfileApprovalMail;
 use App\Mail\VendorProfileAcceptMail;
+use Illuminate\Support\Facades\Hash;
 use Session;
 use Baazar;
 class MerchantController extends Controller{
@@ -61,22 +62,41 @@ class MerchantController extends Controller{
     }
 
     public function sellOnAndbaazarPost(Request $request, Merchant $seller){
+        $request->merge(['phone' => str_replace('-','',$request->phone)]);
         $request->validate([
             'first_name' => 'required',
             'last_name'  => 'required',
-            'phone'      => 'required|unique:merchants,phone',
+            'phone'      => 'required|unique:merchants,phone|unique:users,phone|min:11|max:11',
+            'email'      => 'nullable|unique:users,email',
+            'password'   => 'required|min:8'
         ]);
+
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name'  => $request->last_name,
+            'email'      => $request->email,
+            'phone'      => $request->phone,
+            'password' 	 => Hash::make($request->password),
+            'type'       => 'merchant',
+            'create_at'  => now(),
+        ]);
+
         $slug = Baazar::getUniqueSlug($seller,$request->first_name);
-        $token = Baazar::randString(24);
-        $verify_number = mt_rand(10000,99999);
-        $allData=$request->all();
-        $allData['slug']=$slug;
-        $allData['verification_token']=$verify_number;
-        $allData['remember_token']=$token;
-        $allData['reg_step']='otp-varification';
-        Merchant::create($allData);
-        session()->flash('success','Merchant profile registration 1st step complete successfully');
-        return redirect('merchant/otp-varification'.'?token='.$token);
+
+        $merchant = Merchant::create([
+            'first_name'            => $request->first_name,
+            'last_name'             => $request->last_name,
+            'email'                 => $request->email,
+            'phone'                 => $request->phone,
+            'slug'                  => $slug,
+            'verification_token'    => mt_rand(10000,99999),
+            'remember_token'        => Baazar::randString(24),
+            'reg_step'              => 'otp-varification',
+            'user_id'               => $user->id,
+            'create_at'             => now(),
+        ]);
+        flash('Please verify your number')->success()->important();
+        return redirect('merchant/otp-varification'.'?token='.$merchant->remember_token);
     }
 
     public function getToken(Request $request){
@@ -94,22 +114,28 @@ class MerchantController extends Controller{
         $seller->update([
             'verification_token' => $verify_number,
         ]);
-        session()->flash('success','Verify toke re-send successfully!');
+        // session()->flash('success','Verify toke re-send successfully!');
         return redirect('merchant/otp-varification'.'?token='.$request->token);
     }
 
     public function postToken(Request $request){
-        $request->validate([
-            'verification_token'    => 'required|exists:merchants,verification_token|max:5'
-        ]);
-        $seller    = Merchant::where('remember_token',$request->token)->first();
-        $seller->update([
-            'verification_token' => 'varified',
-            'reg_step'           => 'personal-info',
-        ]);
+        $request->merge(['verification_token' => implode("",$request->digit)]);
+        $rules = array('verification_token' => 'required|exists:merchants,verification_token|max:5');
+        $inputs = array('verification_token' => $request->verification_token);
+        $validator = \Validator::make($inputs, $rules);
 
-        session()->flash('success','Verification Successfully!');
-        return redirect('merchant/personal-info'.'?token='.$request->token);
+        if($validator->fails()) {
+            flash('Invalid OPT')->error()->important();
+            return redirect()->back();
+        }else{
+            $seller = Merchant::where('remember_token',$request->token)->first();
+                $seller->update([
+                    'verification_token' => 'varified',
+                    'reg_step'           => 'shop-info',
+                ]);
+            flash('Please add you shop info')->success()->important();
+            return redirect('merchant/shop-info'.'?token='.$request->token);
+        }
     }
 
     public function personalInfo(Request $request){
@@ -134,7 +160,7 @@ class MerchantController extends Controller{
             'first_name' => $request->first_name,
             'last_name'  => $request->last_name,
             'email'      => $request->email,
-            'password' 	 => $request->password,
+            'password' 	 => Hash::make($request->password),
             'type'       => 'merchant',
             'create_at'  => now(),
             ]);
@@ -216,9 +242,8 @@ class MerchantController extends Controller{
         ];
 
         Shop::create($shope);
-        session()->flash('success','Shop registration Successfully!');
+        flash('Please Select your business area')->success()->important();
         return redirect('merchant/business-info'.'?token='.$request->token);
-        return redirect('merchant/login');
     }
 
     public function businessRegistration(Request $request){
@@ -226,9 +251,22 @@ class MerchantController extends Controller{
         if(!$seller){
             return redirect('/');
         }
-        return view('auth.merchant.business-info');
+        $token = $request->token;
+        return view('auth.merchant.business-info',compact('token'));
     }
 
+    public function businessRegistrationStore(Request $request){
+        if(!$request->business_types){
+            flash('invalide business type')->error()->important();
+            return redirect()->back();
+        }
+        $merchant = Merchant::where('remember_token',$request->token)->first();
+        $user = User::find($merchant->user_id);
+        $user->business_types = json_encode($request->business_types);
+        $user->save();
+        flash('Registration success please login')->success()->important();
+        return redirect('/login');
+    }
     public function termsCondtion(){
         return view('frontend.merchant-termsCondition');
     }

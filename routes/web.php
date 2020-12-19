@@ -18,6 +18,7 @@ route::get('check',function(){
 Route::get('/', 'MerchantController@sellOnAndbaazar');
 Route::get('/login', 'AuthController@userLogin');
 Route::post('/user-auth', 'AuthController@userAuth');
+Route::get('logout','AuthController@logout');
 // include('frontend.php');
 include('merchant.php');
 include('agent.php');

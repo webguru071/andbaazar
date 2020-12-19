@@ -36,7 +36,7 @@ class User extends Authenticatable
 {
   use HasApiTokens;
     protected $fillable = [
-        'first_name','last_name','type','email', 'password','api_token'
+        'first_name','last_name','type','email','mobile','password','api_token','login_area','business_types'
     ];
     protected $loginNames = ['email','type'];
 
