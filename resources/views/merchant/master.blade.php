@@ -37,7 +37,7 @@
     <!-- Theme css -->
     <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/color1.css" media="screen" id="color">
 
-    <link rel="stylesheet" type="text/css" href="{{asset('/')}}/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
 
@@ -63,38 +63,49 @@
             <img src="{{asset('preloader.gif')}}" alt="preloader" width="300">
         </div>
     </div>
+
     <!-- header start -->
     <header>
         <div class="mobile-fix-option"></div>
-        <div class="top-header py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="header-contact">
-                           <h3 class="display-5 font-weight-bold">Welcome To Vendor Panel</h3>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="main-menu">
+                        <div class="menu-left">
+                            <div class="brand-logo"><a href="index.html"><img src="/frontend/assets/images/icon/logo.png" class="img-fluid blur-up lazyload" alt=""></a></div>
                         </div>
-                    </div>
-                    <div class="col-lg-6 text-right">
-                        <ul class="header-dropdown">
-                            <li class="mobile-wishlist"><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                            </li>
-                            <li class="onhover-dropdown mobile-account"> <i class="fa fa-user" aria-hidden="true"></i>
-                                My Account
-                                <ul class="onhover-show-div">
-                                    @if( Auth::check())
-                                    <li class=""><a href="{{ url('/dashboard') }}">My Dashboard</a></li>
-                                    <li class=""><a href="{{ url('profile/') }}" data-lng="es">My Profile</a></li>
-                                    <li class=""><a href="{{ url('profile/shipping') }}" data-lng="es">My Shippin Address</a></li>
-                                    <li class=""><a href="{{ url('profile/billing') }}" data-lng="es">My Billing Address</a></li>
-                                    <li class=""><a href="{{ url('profile/card') }}" data-lng="es">My Card</a></li>
-                                    <li><a href="{{url('logout')}}" data-lng="es">Logout</a></li>
-                                    @else
-                                    <li><a href="{{url('login')}}" data-lng="en">SIGN IN</a></li>
-                                    <li><a href="{{url('register')}}" data-lng="en">SIGN UP</a></li>
-                                    @endif
-                                </ul>
-                            </li>
-                        </ul>
+                        <div class="menu-right pull-right">
+                            <div>
+                                <div class="icon-nav">
+                                    <ul>
+                                        <li class="onhover-div mobile-setting">
+                                            <div>
+{{--                                                <img src="../assets/images/icon/setting.png"--}}
+{{--                                                      class="img-fluid blur-up lazyload" alt=""> <i--}}
+{{--                                                    class="ti-settings"></i>--}}
+                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                                My Account
+                                            </div>
+                                            <div class="show-div setting">
+                                                <ul>
+                                                    @if( Auth::check())
+                                                        <li class=""><a href="{{ url('/dashboard') }}">My Dashboard</a></li>
+                                                        <li class=""><a href="{{ url('profile/') }}" data-lng="es">My Profile</a></li>
+                                                        <li class=""><a href="{{ url('profile/shipping') }}" data-lng="es">My Shipping Address</a></li>
+                                                        <li class=""><a href="{{ url('profile/billing') }}" data-lng="es">My Billing Address</a></li>
+                                                        <li class=""><a href="{{ url('profile/card') }}" data-lng="es">My Card</a></li>
+                                                        <li><a href="{{url('logout')}}" data-lng="es">Logout</a></li>
+                                                    @else
+                                                        <li><a href="{{url('login')}}" data-lng="en">SIGN IN</a></li>
+                                                        <li><a href="{{url('register')}}" data-lng="en">SIGN UP</a></li>
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,16 +114,108 @@
     <!-- header end -->
 
 
+    <!-- breadcrumb start -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="page-title">
+                        <h2>vendor dashboard</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">vendor dashboard</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb End -->
+
+
 
 
   @yield('content')
-
-
-
-    <!-- footer -->
+    <!-- footer start -->
     <footer class="footer-light">
-
         <section class="section-b-space light-layout">
+            <div class="container">
+                <div class="row footer-theme partition-f">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="footer-title footer-mobile-title">
+                            <h4>about</h4>
+                        </div>
+                        <div class="footer-contant">
+                            <div class="footer-logo"><img src="/frontend/assets/images/icon/logo.png" alt=""></div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                                ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+                            <div class="footer-social">
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col offset-xl-1">
+                        <div class="sub-title">
+                            <div class="footer-title">
+                                <h4>my account</h4>
+                            </div>
+                            <div class="footer-contant">
+                                <ul>
+                                    <li><a href="#">mens</a></li>
+                                    <li><a href="#">womens</a></li>
+                                    <li><a href="#">clothing</a></li>
+                                    <li><a href="#">accessories</a></li>
+                                    <li><a href="#">featured</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="sub-title">
+                            <div class="footer-title">
+                                <h4>why we choose</h4>
+                            </div>
+                            <div class="footer-contant">
+                                <ul>
+                                    <li><a href="#">shipping & return</a></li>
+                                    <li><a href="#">secure shopping</a></li>
+                                    <li><a href="#">gallary</a></li>
+                                    <li><a href="#">affiliates</a></li>
+                                    <li><a href="#">contacts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="sub-title">
+                            <div class="footer-title">
+                                <h4>store information</h4>
+                            </div>
+                            <div class="footer-contant">
+                                <ul class="contact-list">
+                                    <li><i class="fa fa-map-marker"></i>Multikart Demo Store, Demo store India 345-659
+                                    </li>
+                                    <li><i class="fa fa-phone"></i>Call Us: 123-456-7898</li>
+                                    <li><i class="fa fa-envelope-o"></i>Email Us: Support@Fiot.com</li>
+                                    <li><i class="fa fa-fax"></i>Fax: 123456</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="sub-footer">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6 col-md-6 col-sm-12">
@@ -121,37 +224,20 @@
                                 pixelstrap</p>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-md-6 col-sm-12 text-right" style="letter-spacing: 5px">
+                    <div class="col-xl-6 col-md-6 col-sm-12">
                         <div class="payment-card-bottom">
                             <ul>
-                                <li>
-                                    <a href="#"><img src="{{asset('frontend')}}/assets/images/icon/visa.png" alt=""></a>
-                                </li>
-                                <li>
-                                    <a href="#"><img src="{{asset('frontend')}}/assets/images/icon/mastercard.png" alt=""></a>
-                                </li>
-                                <li>
-                                    <a href="#"><img src="{{asset('frontend')}}/assets/images/icon/paypal.png" alt=""></a>
-                                </li>
-                                <li>
-                                    <a href="#"><img src="{{asset('frontend')}}/assets/images/icon/american-express.png" alt=""></a>
-                                </li>
-                                <li>
-                                    <a href="#"><img src="{{asset('frontend')}}/assets/images/icon/discover.png" alt=""></a>
-                                </li>
+                                <li><a href="#"><img src="/frontend/assets/images/icon/visa.png" alt=""></a></li>
+                                <li><a href="#"><img src="/frontend/assets/images/icon/mastercard.png" alt=""></a></li>
+                                <li><a href="#"><img src="/frontend/assets/images/icon/paypal.png" alt=""></a></li>
+                                <li><a href="#"><img src="/frontend/assets/images/icon/american-express.png" alt=""></a></li>
+                                <li><a href="#"><img src="/frontend/assets/images/icon/discover.png" alt=""></a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        {{-- <div class="sub-footer">
-            <div class="container">
-                <div class="row">
-
-                </div>
-            </div>
-        </div> --}}
+        </div>
     </footer>
     <!-- footer end -->
 

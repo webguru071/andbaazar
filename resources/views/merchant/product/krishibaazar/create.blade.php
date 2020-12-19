@@ -14,7 +14,7 @@
 
 
     .select2-selection {
-    height: 34px !important; 
+    height: 34px !important;
     font-size: 13px;
     font-family: 'Open Sans', sans-serif;
     border-radius: 0 !important;
@@ -62,7 +62,7 @@
     }
 
     .select2-results__options li {
-    display: block; 
+    display: block;
     }
 
     .select2-selection__rendered {
@@ -95,7 +95,7 @@
     }
 
     .select2-results__option[aria-selected="true"] {
-    background-color: #eee !important; 
+    background-color: #eee !important;
     }
 
     .select2-search__field {
@@ -107,10 +107,10 @@
     }
 
     .select2-selection__placeholder {
-    color: #c4c4c4 !important; 
+    color: #c4c4c4 !important;
     }
     .select2-selection {
-    height: 34px !important; 
+    height: 34px !important;
     font-size: 13px;
     font-family: 'Open Sans', sans-serif;
     border-radius: 0 !important;
@@ -158,7 +158,7 @@
 }
 
 .select2-results__options li {
-  display: block; 
+  display: block;
 }
 
 .select2-selection__rendered {
@@ -191,7 +191,7 @@
 }
 
 .select2-results__option[aria-selected="true"] {
-  background-color: #eee !important; 
+  background-color: #eee !important;
 }
 
 .select2-search__field {
@@ -203,7 +203,7 @@
 }
 
 .select2-selection__placeholder {
-  color: #c4c4c4 !important; 
+  color: #c4c4c4 !important;
 }
     /* select2  End*/
 
@@ -221,8 +221,8 @@
             margin: 2px;
         }
         .cat-level ul li:hover,.active{
-            background: #ddd;
-            border-left: 2px solid red !important;
+            /*background: #ddd;*/
+            /*border-left: 2px solid red !important;*/
         }
         .cat-level{
             border: 1px solid #ddd;
@@ -297,11 +297,11 @@
         .custom{
           width: 108px;
           height:50px;
-        } 
+        }
         .multepale-select{
             padding-bottom: 100px!important;
-        } 
-        
+        }
+
 </style>
 
 @endpush
@@ -314,114 +314,115 @@
             @include('layouts.inc.sidebar.vendor-sidebar',[$active ='krishi'])
             <div class="col-md-9">
                 <h3>Add Krishi Product</h3>
-                 <div class="card mb-4">
-                    <h5 class="card-header">Krishi information</h5>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                            <form action="{{route('krishiproductstore')}}" method="POST"  class="form" id="validateForm" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="name">Product Name <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" />
-                                            <span class="text-danger" id="message_name"></span>
-                                            @if ($errors->has('name'))
-                                            <span class="text-danger">{{ $errors->first('name') }}</span>
-                                            @endif
-                                        </div>
-                                    </div> 
-                                    <input type="hidden" name="email" value="{{ $krishiId->email }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('name') }}</span>
-                                    <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('name') }}" id="category" placeholder="Category">
-                                    <span class="text-danger" id="message_category"></span>
-                                    <input type="hidden" name="category_id" id="category_id">
-                                    <div class="position-absolute foo p-3" id="catarea" style="display: none">
-                                        <div class="categories search-area d-flex scroll border">
-                                            <div class="col-md-3 cat-level p-2 level-1">
-                                                <input type="text" class="form-control" onkeyup="categorySearch(1,this)" placeholder="search">
-                                                <ul class="cat-levels" id="">
-                                                    @foreach ($categories as $row)
-                                                    <li onclick="getNextLevel({{$row->id}},1,this)" value="{{ $row->id }}">{{$row->name}} <span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
-                                                    @endforeach
-                                                </ul>
+                <form action="{{route('krishiproductstore')}}" method="POST"  class="form" id="validateForm" enctype="multipart/form-data">
+                    @csrf
+                     <div class="card mb-4">
+                        <h5 class="card-header">Krishi information</h5>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="name">Product Name <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" />
+                                                <span class="text-danger" id="message_name"></span>
+                                                @if ($errors->has('name'))
+                                                <span class="text-danger">{{ $errors->first('name') }}</span>
+                                                @endif
                                             </div>
                                         </div>
-                                        <div class="cat-footer p-2">
-                                            <p>Current Selection : <span class="currentSelection font-weight-bold"></span></p>
-                                            <span class="btn btn-sm btn-info m-1 readonly" id="confirm" data-category="" >Confirm</span>
-                                            <span class="btn btn-sm btn-warning m-1" id="close">Close</span>
-                                            <span class="btn btn-sm btn-danger m-1" id="clear">Clear</span>
+                                        <input type="hidden" name="email" value="{{ $krishiId->email }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('name') }}</span>
+                                        <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('name') }}" id="category" placeholder="Category">
+                                        <span class="text-danger" id="message_category"></span>
+                                        <input type="hidden" name="category_id" id="category_id">
+                                        <div class="position-absolute foo p-3" id="catarea" style="display: none">
+                                            <div class="categories search-area d-flex scroll border">
+                                                <div class="col-md-3 cat-level p-2 level-1">
+                                                    <input type="text" class="form-control" onkeyup="categorySearch(1,this)" placeholder="search">
+                                                    <ul class="cat-levels" id="">
+                                                        @foreach ($categories as $row)
+                                                        <li onclick="getNextLevel({{$row->id}},1,this)" value="{{ $row->id }}">{{$row->name}} <span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="cat-footer p-2">
+                                                <p>Current Selection : <span class="currentSelection font-weight-bold"></span></p>
+                                                <span class="btn btn-sm btn-info m-1 readonly" id="confirm" data-category="" >Confirm</span>
+                                                <span class="btn btn-sm btn-warning m-1" id="close">Close</span>
+                                                <span class="btn btn-sm btn-danger m-1" id="clear">Clear</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div> 
-                                <div class="form-group">
-                                    <label for="color_id" class="col-xl-3 col-md-4"></label>
-                                    <div id="dropzone-main" class="img-upload-area" data-color="main"><label class="mt-3"><b>Images :</b><span class="text-danger" id="message_main_img"></span></label>
-                                        <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
-                                            <span class="dz-message color-main">
-                                                <h2>Drag & Drop Your Files</h2>
-                                            </span>
+                                    <div class="form-group">
+                                        <label for="color_id" class="col-xl-3 col-md-4"></label>
+                                        <div id="dropzone-main" class="img-upload-area" data-color="main"><label class="mt-3"><b>Images :</b><span class="text-danger" id="message_main_img"></span></label>
+                                            <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
+                                                <span class="dz-message color-main">
+                                                    <h2>Drag & Drop Your Files</h2>
+                                                </span>
+                                            </div>
+                                            <small>Remember Your featured file will be the first one.</small><br>
                                         </div>
-                                        <small>Remember Your featured file will be the first one.</small><br>
+                                        <div class="inputs"></div>
                                     </div>
-                                    <div class="inputs"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group margin">
-                                            <label for="date">Product add Date<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('date') }}</span>
-                                            <input type="text"  class="form-control inputfield  @error('date') border-danger @enderror datepickerPreviousOnly" required name="date" value="{{ old('date') }}"   id="" placeholder="YYYY/MM/DD" autocomplete="off">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group margin">
+                                                <label for="date">Product add Date<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('date') }}</span>
+                                                <input type="text"  class="form-control inputfield  @error('date') border-danger @enderror datepickerPreviousOnly" required name="date" value="{{ old('date') }}"   id="" placeholder="YYYY/MM/DD" autocomplete="off">
+                                            </div>
                                         </div>
-                                    </div> 
-                                    <div class="col-md-6">
-                                        <div class="form-group margin">
-                                            <label class="video_url">Video Url</label>
-                                            <input type="url" class="form-control" name="video_url" id="video_url" />
-                                            @if ($errors->has('video_url'))
-                                            <span class="text-danger">{{ $errors->first('video_url') }}</span>
-                                            @endif
-                                        </div> 
+                                        <div class="col-md-6">
+                                            <div class="form-group margin">
+                                                <label class="video_url">Video Url</label>
+                                                <input type="url" class="form-control" name="video_url" id="video_url" />
+                                                @if ($errors->has('video_url'))
+                                                <span class="text-danger">{{ $errors->first('video_url') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="description" class="">Description<span class="text-danger"> *</span></label>
-                                    <textarea class="form-control summernote" id="description" name="description"></textarea>
-                                    <span class="text-danger" id="message_description"></span>
-                                    @if ($errors->has('description'))
-                                    <span class="text-danger">{{ $errors->first('description') }}</span>
-                                    @endif
-                                </div>                                                                                 
-                                                                                                                 
+                                    <div class="form-group">
+                                        <label for="description" class="">Description<span class="text-danger"> *</span></label>
+                                        <textarea class="form-control summernote" id="description" name="description"></textarea>
+                                        <span class="text-danger" id="message_description"></span>
+                                        @if ($errors->has('description'))
+                                        <span class="text-danger">{{ $errors->first('description') }}</span>
+                                        @endif
+                                    </div>
 
-                                <div class="form-unit form-divided">
-                                    <label for="emp-id" class="form-input-label pr-5">Frequency:</label><br>
-                                    <select class="js-example-basic-multiple" name="frequency[]" multiple="multiple">
-                                        <option value="sunday">Sunday</option>
-                                        <option value="monday">Monday</option>
-                                        <option value="tuesday">Tuesday</option>
-                                        <option value="wednessday">Wednessday</option>
-                                        <option value="thursday">Thursday</option>
-                                        <option value="friday">Friday</option>
-                                        <option value="saturday">Saturday</option>
-                                        <option value="everyday">Everyday</option>
-                                        <option value="weekly">Weekly</option>
-                                        <option value="fortnightly">Fortnightly</option>
-                                        <option value="monthly">Monthly</option>      
-                                    </select>                                
-                                  </div>                               
+
+                                    <div class="form-unit form-divided">
+                                        <label for="emp-id" class="form-input-label pr-5">Frequency:</label><br>
+                                        <select class="js-example-basic-multiple" name="frequency[]" multiple="multiple">
+                                            <option value="sunday">Sunday</option>
+                                            <option value="monday">Monday</option>
+                                            <option value="tuesday">Tuesday</option>
+                                            <option value="wednessday">Wednessday</option>
+                                            <option value="thursday">Thursday</option>
+                                            <option value="friday">Friday</option>
+                                            <option value="saturday">Saturday</option>
+                                            <option value="everyday">Everyday</option>
+                                            <option value="weekly">Weekly</option>
+                                            <option value="fortnightly">Fortnightly</option>
+                                            <option value="monthly">Monthly</option>
+                                        </select>
+                                      </div>
+                                </div>
                             </div>
                         </div>
-                    </div>                    
-                </div>
-                <button class="btn btn-success custom float-right ml-2 w-5"  type="submit">Save</button> 
-            </form> 
-           </div>          
-        </div>          
-    </div>  
+                    </div>
+                    <button class="btn btn-success custom float-right ml-2 w-5"  type="submit">Save</button>
+                </form>
+           </div>
+        </div>
+    </div>
 </section>
 @endsection
 @push('js')
@@ -494,7 +495,7 @@
                 getBrands(id);
             }
         }
-       
+
         function setActive(level,e){
             var current = '';
             for(var j = level+1; j<10 ; j++){
@@ -618,7 +619,7 @@
                         swal("Maximum size reached", {icon: "warning",buttons: false,timer: 2000});
                         this.removeFile(file);
                     }
-                });              
+                });
 
                 // Send file starts
                 self.on("sending", function(file) {
@@ -664,7 +665,7 @@
     <script>
 
     $(document).ready(function() {
-    
+
     $(".js-example-basic-multiple").select2({
         placeholder: "Select Frequency"
     }).on('change', function(e) {
