@@ -66,7 +66,7 @@ class MerchantController extends Controller{
         $request->validate([
             'first_name' => 'required',
             'last_name'  => 'required',
-            'phone'      => 'required|unique:merchants,phone|unique:users,phone',
+            'phone'      => 'required|unique:merchants,phone|unique:users,phone|min:11|max:11',
             'email'      => 'nullable|unique:users,email',
             'password'   => 'required|min:8'
         ]);
@@ -114,7 +114,7 @@ class MerchantController extends Controller{
         $seller->update([
             'verification_token' => $verify_number,
         ]);
-        session()->flash('success','Verify toke re-send successfully!');
+        // session()->flash('success','Verify toke re-send successfully!');
         return redirect('merchant/otp-varification'.'?token='.$request->token);
     }
 
@@ -133,7 +133,7 @@ class MerchantController extends Controller{
                     'verification_token' => 'varified',
                     'reg_step'           => 'shop-info',
                 ]);
-            flash('Verification Successfully!')->success()->important();
+            flash('Please add you shop info')->success()->important();
             return redirect('merchant/shop-info'.'?token='.$request->token);
         }
     }
@@ -242,9 +242,8 @@ class MerchantController extends Controller{
         ];
 
         Shop::create($shope);
-        session()->flash('success','Shop registration Successfully!');
+        flash('Please Select your business area')->success()->important();
         return redirect('merchant/business-info'.'?token='.$request->token);
-        return redirect('merchant/login');
     }
 
     public function businessRegistration(Request $request){
@@ -252,9 +251,22 @@ class MerchantController extends Controller{
         if(!$seller){
             return redirect('/');
         }
-        return view('auth.merchant.business-info');
+        $token = $request->token;
+        return view('auth.merchant.business-info',compact('token'));
     }
 
+    public function businessRegistrationStore(Request $request){
+        if(!$request->business_types){
+            flash('invalide business type')->error()->important();
+            return redirect()->back();
+        }
+        $merchant = Merchant::where('remember_token',$request->token)->first();
+        $user = User::find($merchant->user_id);
+        $user->business_types = json_encode($request->business_types);
+        $user->save();
+        flash('Registration success please login')->success()->important();
+        return redirect('/login');
+    }
     public function termsCondtion(){
         return view('frontend.merchant-termsCondition');
     }

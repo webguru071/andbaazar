@@ -14,7 +14,7 @@ Route::group(['prefix' => 'merchant'],function () {
     Route::get('shop-info','MerchantController@shopRegistration');
     Route::post('shop-info','MerchantController@shopRegistrationStore')->name('sellerShopeRegistration');
     Route::get('business-info','MerchantController@businessRegistration');
-    Route::post('business-info','MerchantController@businessRegistrationStore')->name('businessShopeRegistration');
+    Route::post('business-info','MerchantController@businessRegistrationStore')->name('businessShopRegistration');
     Route::get('terms-condition','MerchantController@termsCondtion');
     //Login
     Route::get('login','MerchantController@merchantlogin');

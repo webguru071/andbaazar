@@ -27,9 +27,9 @@
                             <a class="nav-link" id="contact-top-tab" data-toggle="tab" href="#top-contact" role="tab" aria-controls="top-contact" aria-selected="false"><span class="icon-unlock mr-2"></span>Shop Register</a> 
                         </li>
                     </ul>
-                    @if (\Session::has('error'))
-                        <div class="alert alert-danger">
-                                <p class="text-muted font-weight-bold">{!! \Session::get('error') !!}</p>
+                    @if(session('flash_notification'))
+                        <div class="flash-message">
+                            @include('flash::message')
                         </div>
                     @endif                      
                     <form class="form-horizontal auth-form" action="{{ route('sellerShopeRegistration') }}" method="post" enctype="multipart/form-data" id="validateForm">
