@@ -17,19 +17,19 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('email')->nullable();
-            $table->string('mobile')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('phone')->nullable();
             $table->string('password')->nullable();
             $table->enum('type',['customers','merchant','admin'])->default('admin');
-            $table->enum('login_area',['krishibaazar','ecommerce','auction','sme'])->default('krishibaazar');
+            $table->enum('login_area',['krishibazar','ecommerce','auction','sme'])->nullable();
             $table->string('business_types')->nullable();
             $table->text('api_token')->nullable();
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
+            $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
             $table->engine = 'InnoDB';
-            $table->unique('email');
         });
     }
 

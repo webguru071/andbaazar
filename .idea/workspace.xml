@@ -2,12 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/jasny-bootstrap/css/jasny-bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/jasny-bootstrap/css/jasny-bootstrap.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/jasny-bootstrap/css/jasny-bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/jasny-bootstrap/js/jasny-bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/jasny-bootstrap/js/jasny-bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/vendor_profile/nid_image/demo.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/auth/business-info.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/auth/profile.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/auth/select-service.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/error/404.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/error/404.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MerchantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MerchantController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_021916_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_021917_create_products_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_091828_create_krishi_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_091828_create_krishi_products_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/inc/sidebar/vendor-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/inc/sidebar/vendor-sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/merchant/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/master.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +169,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/auth" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -167,8 +181,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\xampp\htdocs\andbaazar\public\assets\images" />
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\auth" />
+      <recent name="E:\xampp\htdocs\andbaazar\public" />
+      <recent name="E:\xampp\htdocs\andbaazar\public\uploads\vendor_profile\nid_image" />
+      <recent name="E:\xampp\htdocs\andbaazar\public\assets\images" />
       <recent name="E:\xampp\htdocs\andbaazar" />
     </key>
   </component>
@@ -190,7 +206,7 @@
       <workItem from="1607927133652" duration="10108000" />
       <workItem from="1608005073384" duration="21569000" />
       <workItem from="1608178046955" duration="14383000" />
-      <workItem from="1608351333591" duration="5256000" />
+      <workItem from="1608351333591" duration="24050000" />
     </task>
     <servers />
   </component>

@@ -90,7 +90,7 @@
                                                 <ul>
                                                     @if( Auth::check())
                                                         <li class=""><a href="{{ url('/dashboard') }}">My Dashboard</a></li>
-                                                        <li class=""><a href="{{ url('profile/') }}" data-lng="es">My Profile</a></li>
+                                                        <li class=""><a href="/profile" data-lng="es">My Profile</a></li>
                                                         <li class=""><a href="{{ url('profile/shipping') }}" data-lng="es">My Shipping Address</a></li>
                                                         <li class=""><a href="{{ url('profile/billing') }}" data-lng="es">My Billing Address</a></li>
                                                         <li class=""><a href="{{ url('profile/card') }}" data-lng="es">My Card</a></li>

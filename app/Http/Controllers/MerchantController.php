@@ -262,7 +262,7 @@ class MerchantController extends Controller{
         }
         $merchant = Merchant::where('remember_token',$request->token)->first();
         $user = User::find($merchant->user_id);
-        $user->business_types = json_encode($request->business_types);
+        $user->business_types = $request->business_types;
         $user->save();
         flash('Registration success please login')->success()->important();
         return redirect('/login');

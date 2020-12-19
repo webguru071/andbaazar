@@ -127,4 +127,5 @@ class User extends Authenticatable
       public function news(){
         return $this->hasOne(Newsfeed::class,'newsfeed_id');
       }
+      protected $casts = ['business_types'=>'array'];
     }

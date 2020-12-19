@@ -64,7 +64,7 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="top-profile-tab" data-toggle="tab" href="#top-profile" role="tab" aria-controls="top-profile" aria-selected="true"><span class="icon-user mr-2"></span>Login</a>
+                                    <a class="nav-link active" id="top-profile-tab" data-toggle="tab" href="#top-profile" role="tab" aria-controls="top-profile" aria-selected="true"><span class="icon-settings mr-2"></span>Select service</a>
                                 </li>
                                 <!-- <li class="nav-item">
                                     <a class="nav-link" id="contact-top-tab" data-toggle="tab" href="#top-contact" role="tab" aria-controls="top-contact" aria-selected="false"><span class="icon-unlock mr-2"></span>Register</a>
@@ -76,25 +76,18 @@
                                         @include('flash::message')
                                     </div>
 
-                                    <form class="form-horizontal auth-form" method="post" action="{{ action('AuthController@userAuth') }}">
+                                    <form class="form-horizontal auth-form" method="post" action="{{ action('AuthController@setDefaultService') }}">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="userName">Email or Phone No :</label>
-                                            <input required name="userName" type="text" class="form-control" placeholder="xxxxx@xxx.xxx / xxxxxxxxxx" id="userName" autocomplete="off">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">Password :</label>
-                                            <input required="" name="password" type="password" class="form-control" placeholder="Password" id="password" autocomplete="off">
-                                        </div>
-                                        <div class="form-terms">
-                                            <div class="custom-control custom-checkbox mr-sm-2">
-                                                <input type="checkbox" class="custom-control-input" name="remember_me" id="customControlAutosizing">
-                                                <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
-                                                <a href="#" class="btn btn-default forgot-pass">lost your password</a>
-                                            </div>
+                                            <select class="form-control" id="userService" name="selected_service" required>
+                                                <option value="">-- Select your service --</option>
+                                                @foreach($userServices as $userService)
+                                                    <option value="{{ $userService }}">{{ ucfirst($userService) }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-button">
-                                            <button class="btn btn-primary" type="submit">Login</button>
+                                            <button class="btn btn-primary" type="submit">Move Next</button>
                                         </div>
                                     </form>
                                 </div>
