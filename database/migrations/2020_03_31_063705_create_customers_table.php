@@ -16,7 +16,7 @@ class CreateCustomersTable extends Migration
       //Schema::dropIfExists('customers');
       Schema::create('customers', function (Blueprint $table) {
            $table->bigIncrements('id');
-           $table->unsignedBigInteger('user_id');
+          $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
            $table->string('first_name')->nullable();
            $table->string('last_name')->nullable();
            $table->string('phone')->nullable();
@@ -31,8 +31,6 @@ class CreateCustomersTable extends Migration
            $table->boolean('active')->default(1)->change();
            $table->softDeletes();
            $table->timestamps();
-
-           $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
        });
     }
 

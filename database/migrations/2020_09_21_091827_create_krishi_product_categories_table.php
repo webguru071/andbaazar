@@ -14,18 +14,14 @@ class CreateKrishiProductCategoriesTable extends Migration
     public function up()
     {
         Schema::create('krishi_product_categories', function (Blueprint $table) {
-            $table->bigIncrements('id');  
+            $table->bigIncrements('id');
             $table->integer('name');
             $table->string('parent_slug')->default(0);
             $table->string('parent_id')->default(0);
-            $table->string('slug')->nullable();        
-            $table->text('description'); 
-
+            $table->string('slug')->nullable();
+            $table->text('description');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
-            $table->unsignedBigInteger('user_id'); 
-            
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-
             $table->timestamps();
         });
     }

@@ -23,19 +23,14 @@ class CreateAuctionproductsTable extends Migration
             $table->string('slug')->nullable();
             $table->boolean('sold')->default(0)->change();
             $table->string('qty');
-            $table->string('unit'); 
+            $table->string('unit');
             $table->enum('status',['Active','Reject','Pending'])->default('Pending');
             $table->text('category_slug')->nullable();
-            $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('merchant_id');
-            $table->unsignedBigInteger('shop_id');
-            $table->unsignedBigInteger('user_id')->nullable(); 
+            $table->foreignId('category_id')->constrained('categories')->references('id')->onDelete('cascade');
+            $table->foreignId('merchant_id')->constrained('merchants')->references('id')->onDelete('cascade');
+            $table->foreignId('shop_id')->constrained('shops')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->references('id')->onDelete('cascade');
             $table->timestamps();
-            
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

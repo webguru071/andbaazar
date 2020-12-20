@@ -26,7 +26,7 @@ class CreateMerchantsTable extends Migration
             $table->string('nid')->nullable();
             $table->string('nid_img')->nullable();
             $table->string('trad_img')->nullable();
-            $table->text('description')->nullable();        
+            $table->text('description')->nullable();
             $table->date('last_visited_at')->nullable();
             $table->string('last_visited_from')->nullable();
             $table->string('verification_token')->nullable();
@@ -34,11 +34,9 @@ class CreateMerchantsTable extends Migration
             $table->enum('status',['Active','Inactive','Reject'])->default('Inactive');
             $table->enum('reg_step',['otp-varification','personal-info','shop-info','complete'])->default('otp-varification');
             // $table->boolean('active')->default(1)->change();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

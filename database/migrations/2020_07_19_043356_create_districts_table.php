@@ -15,7 +15,7 @@ class CreateDistrictsTable extends Migration
     {
         Schema::create('districts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('division_id');
+            $table->foreignId('division_id')->constrained('divisions')->references('id')->onDelete('cascade');
             $table->string('name');
             $table->string('bn_name')->nullable();
             $table->string('slug');
@@ -23,7 +23,6 @@ class CreateDistrictsTable extends Migration
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
             $table->timestamps();
-            $table->foreign('division_id')->references('id')->on('divisions')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

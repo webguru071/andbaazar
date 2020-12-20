@@ -29,21 +29,14 @@ class CreateOrdersTable extends Migration
             $table->dateTime('cancel_at');
             $table->enum('status',['Active','Voided'])->default('Active');
             $table->boolean('active')->default(1)->change();
-            $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('customer_billing_address_id');
-            $table->unsignedBigInteger('customer_shipping_address_id');
-            $table->unsignedBigInteger('customer_card_id');
-            $table->unsignedBigInteger('shipping_method_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('customer_id')->constrained('customers')->references('id')->onDelete('cascade');
+            $table->foreignId('customer_billing_address_id')->constrained('customer_billing_addresses')->references('id')->onDelete('cascade');
+            $table->foreignId('customer_shipping_address_id')->constrained('customer_shipping_addresses')->references('id')->onDelete('cascade');
+            $table->foreignId('customer_card_id')->constrained('customer_cards')->references('id')->onDelete('cascade');
+            $table->foreignId('shipping_method_id')->constrained('shipping_methods')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('customer_billing_address_id')->references('id')->on('customer_billing_addresses')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('customer_shipping_address_id')->references('id')->on('customer_shipping_addresses')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('customer_card_id')->references('id')->on('customer_cards')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('shipping_method_id')->references('id')->on('shipping_methods')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

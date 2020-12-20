@@ -21,7 +21,7 @@
                 <form class="form-horizontal auth-form px-3" action="{{ action('AuthController@updateBusinessInfo') }}" method="post" enctype="multipart/form-data" id="validateForm">
                     @csrf
                     <div class="custom-control custom-checkbox mr-sm-2">
-                        <input type="checkbox" name="business_types[]" value="ecommerc" class="custom-control-input" id="ecommerce">
+                        <input type="checkbox" name="business_types[]" value="ecommerce" class="custom-control-input" id="ecommerce">
                         <label class="custom-control-label d-flex justify-content-between" for="ecommerce" title="Ecommerce is bigest platform in the world">
                             <span>E-commerce</span>
                             <small><a href="#">see more</a></small>

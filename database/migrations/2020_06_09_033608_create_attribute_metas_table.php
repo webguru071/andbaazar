@@ -15,13 +15,9 @@ class CreateAttributeMetasTable extends Migration
     {
         Schema::create('attribute_metas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('values')->nullable();          
-            $table->unsignedBigInteger('attribute_id')->nullable();
+            $table->string('values')->nullable();
+            $table->foreignId('attribute_id')->nullable()->constrained('attributes')->references('id')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade')->onUpdate('cascade');
-
-            // $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

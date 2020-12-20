@@ -2,26 +2,78 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/jasny-bootstrap/css/jasny-bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/jasny-bootstrap/css/jasny-bootstrap.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/jasny-bootstrap/css/jasny-bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/jasny-bootstrap/js/jasny-bootstrap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/jasny-bootstrap/js/jasny-bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/vendor_profile/nid_image/demo.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/business-info.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/profile.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/select-service.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/merchant/partials/auction/left-sidebar.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/merchant/partials/ecommerce/left-sidebar.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/merchant/partials/krishibazar/left-sidebar.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/merchant/partials/sme/left-sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MerchantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MerchantController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Cart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_021916_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_021917_create_products_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_091828_create_krishi_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_091828_create_krishi_products_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_31_063705_create_customers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_31_063705_create_customers_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_31_221403_create_merchants_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_31_221403_create_merchants_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_011853_create_shops_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_011853_create_shops_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_014521_create_brands_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_014521_create_brands_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_015904_create_tags_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_015904_create_tags_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_020845_create_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_020845_create_categories_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_021914_create_colors_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_021914_create_colors_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_021915_create_sizes_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_021915_create_sizes_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_021917_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_021917_create_products_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_185147_create_product_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_185147_create_product_categories_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_192114_create_product_tags_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_192114_create_product_tags_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_202034_create_inventories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_202034_create_inventories_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_204149_create_payment_methods_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_204149_create_payment_methods_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_210155_create_auctionproducts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_210155_create_auctionproducts_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_210156_create_item_images_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_210156_create_item_images_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_211721_create_promotion_heads_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_211721_create_promotion_heads_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_212531_create_promotions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_212531_create_promotions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_214310_create_promotion_plans_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_214310_create_promotion_plans_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_225438_create_customer_billing_addresses_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_225438_create_customer_billing_addresses_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_012659_create_customer_cards_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_012659_create_customer_cards_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_023647_create_customer_shipping_addresses_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_023647_create_customer_shipping_addresses_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_183550_create_couriers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_183550_create_couriers_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_190800_create_shipping_methods_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_190800_create_shipping_methods_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_192740_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_192740_create_orders_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_200348_create_promotion_uses_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_200348_create_promotion_uses_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_202014_create_reviews_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_202014_create_reviews_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_203920_create_carts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_203920_create_carts_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_205819_create_order_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_205819_create_order_products_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_215120_create_buyer_payments_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_215120_create_buyer_payments_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_220316_create_currencies_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_220316_create_currencies_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_05_11_045935_create_childrens_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_05_11_045935_create_childrens_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_06_09_033518_create_attributes_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_06_09_033518_create_attributes_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_06_09_033608_create_attribute_metas_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_06_09_033608_create_attribute_metas_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_06_17_040457_create_inventory_attribute_options_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_06_17_040457_create_inventory_attribute_options_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_06_17_040719_create_inventory_attribute_category_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_06_17_040719_create_inventory_attribute_category_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_06_18_040307_create_inventory_metas_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_06_18_040307_create_inventory_metas_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_06_27_052015_create_item_metas_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_06_27_052015_create_item_metas_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_19_043356_create_districts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_19_043356_create_districts_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_19_043426_create_upazilas_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_19_043426_create_upazilas_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_19_043456_create_unions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_19_043456_create_unions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_19_043524_create_municipals_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_19_043524_create_municipals_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_19_044734_create_villages_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_19_044734_create_villages_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_19_055251_create_agents_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_19_055251_create_agents_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_19_061806_create_municipal_wards_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_19_061806_create_municipal_wards_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_23_042121_create_brand_category.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_23_042121_create_brand_category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_29_181314_create_rejects_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_29_181314_create_rejects_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_29_194845_create_reject_values_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_29_194845_create_reject_values_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_05_042140_create_newsfeeds_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_05_042140_create_newsfeeds_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_20_035300_create_auctions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_20_035300_create_auctions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_20_041310_create_auctionbids_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_20_041310_create_auctionbids_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_20_044913_create_auctionorderitems_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_20_044913_create_auctionorderitems_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_20_050316_create_commentauctions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_20_050316_create_commentauctions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_091827_create_krishi_product_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_091827_create_krishi_product_categories_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_092308_create_krishi_order_items_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_092308_create_krishi_order_items_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_092447_create_krishi_reviews_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_092447_create_krishi_reviews_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_092521_create_krishi_comments_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_092521_create_krishi_comments_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_092639_create_krishi_product_frequencies_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_092639_create_krishi_product_frequencies_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/business-info.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/business-info.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/inc/sidebar/buyer-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/inc/sidebar/buyer-sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/inc/sidebar/vendor-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/inc/sidebar/vendor-sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/merchant/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/master.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/merchant.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/merchant.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +221,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/auth" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/merchant/partials/sme" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -181,11 +233,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\xampp\htdocs\andbaazar\resources\views\merchant\partials\sme" />
+      <recent name="E:\xampp\htdocs\andbaazar\resources\views\merchant\partials\krishibazar" />
+      <recent name="E:\xampp\htdocs\andbaazar\resources\views\merchant\partials\auction" />
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\auth" />
       <recent name="E:\xampp\htdocs\andbaazar\public" />
-      <recent name="E:\xampp\htdocs\andbaazar\public\uploads\vendor_profile\nid_image" />
-      <recent name="E:\xampp\htdocs\andbaazar\public\assets\images" />
-      <recent name="E:\xampp\htdocs\andbaazar" />
     </key>
   </component>
   <component name="RunManager">
@@ -206,7 +258,8 @@
       <workItem from="1607927133652" duration="10108000" />
       <workItem from="1608005073384" duration="21569000" />
       <workItem from="1608178046955" duration="14383000" />
-      <workItem from="1608351333591" duration="24050000" />
+      <workItem from="1608351333591" duration="24162000" />
+      <workItem from="1608438271060" duration="21794000" />
     </task>
     <servers />
   </component>

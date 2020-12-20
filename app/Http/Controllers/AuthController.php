@@ -22,6 +22,11 @@ class AuthController extends Controller{
     }
 
     public function userAuth(Request $request){
+        $request->validate([
+            'userName' => 'required',
+            'password'   => 'required'
+        ]);
+
         $credentials = [];
 
         if(is_numeric($request->userName)){
@@ -88,7 +93,8 @@ class AuthController extends Controller{
         elseif (count($userServices)<=1){
             $user->login_area= $userServices[0];
             $user->save();
-            $this->redirectAuthUser();
+            $redirectURL=$this->redirectAuthUser();
+            return redirect($redirectURL);
         }
         else{
             return view('auth.select-service',compact('userServices'));
@@ -99,19 +105,24 @@ class AuthController extends Controller{
         $user= Auth::user();
         $user->login_area=$request->selected_service;
         $user->save();
-        $this->redirectAuthUser();
+        session(['default_service' => $request->selected_service]);
+        $redirectURL=$this->redirectAuthUser();
+        return redirect($redirectURL);
     }
 
     public function redirectAuthUser(){
+        $redirectUrl='/';
         switch (Auth::user()->type) {
             case "admin":
-                return redirect('andbaazaradmin/dashboard');
+                $redirectUrl = '/andbaazaradmin/dashboard';
+                break;
             case "merchant":
-                return redirect('merchant/dashboard');
+                $redirectUrl = '/merchant/dashboard';
+                break;
             default:
                 Auth::logout();
-                return redirect('/');
         }
+        return $redirectUrl;
     }
 
     public function selectBusinessInfo(){

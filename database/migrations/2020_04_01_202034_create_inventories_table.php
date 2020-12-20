@@ -15,9 +15,9 @@ class CreateInventoriesTable extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('product_id');
+            $table->foreignId('product_id')->constrained('products')->references('id')->onDelete('cascade');
             $table->string('slug')->nullable();
-            $table->unsignedBigInteger('color_id')->nullable();
+            $table->foreignId('color_id')->nullable()->constrained('colors')->references('id')->onDelete('cascade');
             $table->string('color_name')->nullable();
             $table->integer('qty_stock');
             $table->decimal('price',8,2)->default(0);
@@ -26,19 +26,13 @@ class CreateInventoriesTable extends Migration
             $table->date('end_date')->nullable();
             $table->string('seller_sku')->nullable();
             $table->integer('sort')->nullable();
-            $table->unsignedBigInteger('shop_id')->nullable();
+            $table->foreignId('shop_id')->nullable()->constrained('shops')->references('id')->onDelete('cascade');
             $table->string('available_on')->nullable();
             $table->enum('type',['ecommerce','sme']);
             $table->boolean('active')->default(1)->change();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

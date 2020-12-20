@@ -16,8 +16,7 @@ class CreateInventoryAttributeOptionsTable extends Migration
         Schema::create('inventory_attribute_options', function (Blueprint $table) {
             $table->id();
             $table->string('option')->nullable();
-            $table->unsignedBigInteger('inventory_attribute_id')->nullable();
-            $table->foreign('inventory_attribute_id')->references('id')->on('inventory_attributes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('inventory_attribute_id')->nullable()->constrained('inventory_attributes')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }

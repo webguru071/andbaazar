@@ -23,7 +23,7 @@ class CreateCustomerShippingAddressesTable extends Migration
             $table->integer('zip_code');
             $table->string('location')->nullable();
             $table->boolean('default')->default(1)->change();
-            $table->unsignedBigInteger('customer_id');
+            $table->foreignId('customer_id')->constrained('customers')->references('id')->onDelete('cascade');
             // $table->string('slug')->nullable();
             // $table->string('country')->nullable();
             // $table->string('state')->nullable();
@@ -32,8 +32,7 @@ class CreateCustomerShippingAddressesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

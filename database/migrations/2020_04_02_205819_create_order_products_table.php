@@ -19,22 +19,14 @@ class CreateOrderProductsTable extends Migration
             $table->decimal('rate',8,2)->default(0);
             $table->decimal('amount',8,2)->default(0);
             $table->boolean('active')->default(1)->change();
-            $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('shop_id');
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('inventory_id');
-            // $table->unsignedBigInteger('color_id');
-            // $table->unsignedBigInteger('size_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('order_id')->constrained('orders')->references('id')->onDelete('cascade');
+            $table->foreignId('shop_id')->constrained('shops')->references('id')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->references('id')->onDelete('cascade');
+            $table->foreignId('inventory_id')->constrained('inventories')->references('id')->onDelete('cascade');
+            $table->foreignId('color_id')->constrained('colors')->references('id')->onDelete('cascade');
+            $table->foreignId('size_id')->constrained('sizes')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

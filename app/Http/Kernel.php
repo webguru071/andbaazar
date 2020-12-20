@@ -57,6 +57,7 @@ class Kernel extends HttpKernel
         'isMerchantActive' => \App\Http\Middleware\IsMerchantActive::class,
         'customer' => \App\Http\Middleware\CustomerAccess::class,
         'admin' => \App\Http\Middleware\AdminAccess::class,
+        'defaultService' => \App\Http\Middleware\defaultService::class,
         // 'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

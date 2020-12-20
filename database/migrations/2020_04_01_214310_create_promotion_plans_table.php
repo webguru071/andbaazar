@@ -21,13 +21,10 @@ class CreatePromotionPlansTable extends Migration
             $table->string('slug')->nullable();
             $table->enum('is_free_shipping',['Yes','No'])->default('No');
             $table->boolean('active')->default(1)->change();
-            $table->unsignedBigInteger('promotion_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('promotion_id')->constrained('promotions')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('promotion_id')->references('id')->on('promotions')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

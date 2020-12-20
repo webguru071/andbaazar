@@ -15,22 +15,17 @@ class CreateAuctionorderitemsTable extends Migration
     {
         Schema::create('auctionorderitems', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('shop_id');
-            $table->unsignedBigInteger('auctionproduct_id');
+            $table->foreignId('order_id')->constrained('orders')->references('id')->onDelete('cascade');
+            $table->foreignId('shop_id')->constrained('shops')->references('id')->onDelete('cascade');
+            $table->foreignId('auctionproduct_id')->constrained('auctionproducts')->references('id')->onDelete('cascade');
             $table->integer('qty');
             $table->integer('unit');
             $table->integer('rate');
             $table->integer('amount');
             $table->boolean('active')->default(1)->change();
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
-            $table->unsignedBigInteger('user_id');
             $table->timestamps();
-
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('auctionproduct_id')->references('id')->on('auctionproducts')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

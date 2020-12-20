@@ -18,19 +18,16 @@ class CreateAuctionsTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('start_rate');
-            $table->unsignedBigInteger('auctionproduct_id');
+            $table->foreignId('auctionproduct_id')->constrained('auctionproducts')->references('id')->onDelete('cascade');
             $table->integer('winning_customer_id');
             $table->string('winning_rate');
             $table->enum('status',['running','complete','upcoming'])->default('running');
             $table->text('winning_customer_comment')->nullable();
             $table->text('seller_comment')->nullable();
             $table->integer('number_of_bids')->default(0);
-            $table->unsignedBigInteger('order_id')->nullable();
-            $table->unsignedBigInteger('user_id');
-            $table->timestamps(); 
-            
-            $table->foreign('auctionproduct_id')->references('id')->on('auctionproducts')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('order_id')->constrained('orders')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

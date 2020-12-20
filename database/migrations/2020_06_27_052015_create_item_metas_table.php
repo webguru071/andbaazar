@@ -17,11 +17,9 @@ class CreateItemMetasTable extends Migration
             $table->bigIncrements('id');
             $table->string('attr_label');
             $table->string('attr_value')->nullable();
-            $table->unsignedBigInteger('attribute_id');
-            $table->unsignedBigInteger('product_id');
+            $table->foreignId('attribute_id')->constrained('attributes')->references('id')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->references('id')->onDelete('cascade');
             $table->timestamps();
-            $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

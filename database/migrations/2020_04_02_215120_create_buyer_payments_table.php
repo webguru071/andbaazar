@@ -20,15 +20,11 @@ class CreateBuyerPaymentsTable extends Migration
             $table->string('payer_info');
             $table->decimal('amount',8,2);
             $table->boolean('active')->default(1)->change();
-            $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('payment_method_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('order_id')->constrained('orders')->references('id')->onDelete('cascade');
+            $table->foreignId('payment_method_id')->constrained('payment_methods')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('payment_method_id')->references('id')->on('payment_methods')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

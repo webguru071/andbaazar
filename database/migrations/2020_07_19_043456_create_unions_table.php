@@ -15,7 +15,7 @@ class CreateUnionsTable extends Migration
     {
         Schema::create('unions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('upazila_id');
+            $table->foreignId('upazila_id')->constrained('upazilas')->references('id')->onDelete('cascade');
             $table->string('name');
             $table->string('bn_name')->nullable();
             $table->string('slug')->unique();
@@ -23,7 +23,6 @@ class CreateUnionsTable extends Migration
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
             $table->timestamps();
-            $table->foreign('upazila_id')->references('id')->on('upazilas')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

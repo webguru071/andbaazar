@@ -19,11 +19,9 @@ class CreateTagsTable extends Migration
             $table->text('description')->nullable();
             $table->string('slug')->nullable();
             $table->boolean('active')->default(1)->change();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

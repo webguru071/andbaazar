@@ -35,14 +35,10 @@ class CreateShopsTable extends Migration
             $table->text('bdesc')->nullable();
             $table->unsignedInteger('timezone_id')->nullable();
             $table->boolean('active')->default(1)->change();
-            $table->unsignedBigInteger('merchant_id');
-            //$table->unsignedBigInteger('timezone_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('merchant_id')->constrained('merchants')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

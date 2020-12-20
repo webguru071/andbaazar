@@ -17,9 +17,8 @@ class CreateRejectsTable extends Migration
             $table->bigIncrements('id');
             $table->string('rej_name');
             $table->enum('type',['product','profile','feed','auction','krishi'])->default('profile');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -72,7 +72,7 @@
                 <div class="col-sm-12">
                     <div class="main-menu">
                         <div class="menu-left">
-                            <div class="brand-logo"><a href="index.html"><img src="/frontend/assets/images/icon/logo.png" class="img-fluid blur-up lazyload" alt=""></a></div>
+                            <div class="brand-logo"><a href="/"><img src="/frontend/assets/images/icon/logo.png" class="img-fluid blur-up lazyload" alt=""></a></div>
                         </div>
                         <div class="menu-right pull-right">
                             <div>
@@ -88,17 +88,8 @@
                                             </div>
                                             <div class="show-div setting">
                                                 <ul>
-                                                    @if( Auth::check())
-                                                        <li class=""><a href="{{ url('/dashboard') }}">My Dashboard</a></li>
-                                                        <li class=""><a href="/profile" data-lng="es">My Profile</a></li>
-                                                        <li class=""><a href="{{ url('profile/shipping') }}" data-lng="es">My Shipping Address</a></li>
-                                                        <li class=""><a href="{{ url('profile/billing') }}" data-lng="es">My Billing Address</a></li>
-                                                        <li class=""><a href="{{ url('profile/card') }}" data-lng="es">My Card</a></li>
-                                                        <li><a href="{{url('logout')}}" data-lng="es">Logout</a></li>
-                                                    @else
-                                                        <li><a href="{{url('login')}}" data-lng="en">SIGN IN</a></li>
-                                                        <li><a href="{{url('register')}}" data-lng="en">SIGN UP</a></li>
-                                                    @endif
+                                                    <li class=""><a href="/profile" data-lng="es">My Profile</a></li>
+                                                    <li><a href="{{url('logout')}}" data-lng="es">Logout</a></li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -126,7 +117,7 @@
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="theme-breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">vendor dashboard</li>
                         </ol>
                     </nav>

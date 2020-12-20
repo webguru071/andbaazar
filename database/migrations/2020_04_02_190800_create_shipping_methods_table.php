@@ -20,13 +20,10 @@ class CreateShippingMethodsTable extends Migration
             $table->text('desc');
             $table->string('slug')->nullable();
             $table->boolean('active')->default(1)->change();
-            $table->unsignedBigInteger('courier_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('courier_id')->constrained('couriers')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('courier_id')->references('id')->on('couriers')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -14,20 +14,15 @@ class CreateKrishiReviewsTable extends Migration
     public function up()
     {
         Schema::create('krishi_reviews', function (Blueprint $table) {
-            $table->bigIncrements('id'); 
+            $table->bigIncrements('id');
             $table->text('review_msg');
             $table->string('stars');
             $table->text('reply_message');
             $table->string('image')->nullable();
-
             $table->softDeletes();
-            $table->unsignedBigInteger('user_id');                  
-            $table->unsignedBigInteger('customer_id'); 
-            $table->unsignedBigInteger('product_id');  
-                     
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');          
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');           
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');         
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customers')->references('id')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }

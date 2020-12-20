@@ -15,14 +15,11 @@ class CreateCommentauctionsTable extends Migration
     {
         Schema::create('commentauctions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('auctionproduct_id');
+            $table->foreignId('auctionproduct_id')->constrained('auctionproducts')->references('id')->onDelete('cascade');
             $table->integer('parent_id')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->text('comments');
             $table->timestamps();
-
-            $table->foreign('auctionproduct_id')->references('id')->on('auctionproducts')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

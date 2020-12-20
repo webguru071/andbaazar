@@ -14,15 +14,11 @@ class CreateKrishiProductFrequenciesTable extends Migration
     public function up()
     {
         Schema::create('krishi_product_frequencies', function (Blueprint $table) {
-            $table->bigIncrements('id');                     
+            $table->bigIncrements('id');
             $table->string('day');
-
-            $table->softDeletes();                            
-            $table->unsignedBigInteger('product_id'); 
-            $table->unsignedBigInteger('user_id'); 
-
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');           
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');         
+            $table->softDeletes();
+            $table->foreignId('product_id')->constrained('products')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }

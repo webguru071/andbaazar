@@ -15,12 +15,11 @@ class CreateMunicipalWardsTable extends Migration
     {
         Schema::create('municipal_wards', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('municipal_id');
+            $table->foreignId('municipal_id')->constrained('municipals')->references('id')->onDelete('cascade');
             $table->string('name');
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
             $table->timestamps();
-            $table->foreign('municipal_id')->references('id')->on('municipals')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

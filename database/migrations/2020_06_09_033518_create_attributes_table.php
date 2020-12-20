@@ -20,9 +20,8 @@ class CreateAttributesTable extends Migration
             $table->enum('type',['multi-select','select','text','checkbox','radio','number'])->nullable();
             $table->integer('required')->nullable();
             $table->integer('search_sidebar')->default(0);
-            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreignId('category_id')->nullable()->constrained('categories')->references('id')->onDelete('cascade');
             $table->timestamps();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade'); 
         });
     }
 

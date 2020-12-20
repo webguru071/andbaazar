@@ -41,11 +41,9 @@ class CreateAgentsTable extends Migration
             $table->string('verification_token')->nullable();
             $table->string('remember_token')->nullable();
             $table->enum('status',['Active','Inactive','Reject'])->default('Inactive');
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

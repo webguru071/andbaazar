@@ -15,7 +15,7 @@ class CreateVillagesTable extends Migration
     {
         Schema::create('villages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('union_id');
+            $table->foreignId('union_id')->constrained('unions')->references('id')->onDelete('cascade');
             $table->string('name')->nullable();
             $table->text('bn_name')->nullable();
             $table->string('slug')->nullable();
@@ -23,7 +23,6 @@ class CreateVillagesTable extends Migration
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
             $table->timestamps();
-            $table->foreign('union_id')->references('id')->on('unions')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

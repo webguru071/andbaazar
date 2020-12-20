@@ -84,7 +84,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password :</label>
-                                            <input required="" name="password" type="password" class="form-control" placeholder="Password" id="password" autocomplete="off">
+                                            <input required name="password" type="password" class="form-control" placeholder="Password" id="password" autocomplete="off">
                                         </div>
                                         <div class="form-terms">
                                             <div class="custom-control custom-checkbox mr-sm-2">

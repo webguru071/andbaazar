@@ -15,10 +15,8 @@ class CreateInventoryAttributeCategoryTable extends Migration
     {
         Schema::create('inventory_attribute_category', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->unsignedBigInteger('inventory_attribute_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('inventory_attribute_id')->references('id')->on('inventory_attributes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('category_id')->constrained('categories')->references('id')->onDelete('cascade');
+            $table->foreignId('inventory_attribute_id')->constrained('inventory_attributes')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }

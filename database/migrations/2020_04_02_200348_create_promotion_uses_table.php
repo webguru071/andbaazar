@@ -19,17 +19,12 @@ class CreatePromotionUsesTable extends Migration
             $table->decimal('amount',8,2)->default(0);
             $table->text('description');
             $table->boolean('active')->default(1)->change();
-            $table->unsignedBigInteger('buyer_id');
-            $table->unsignedBigInteger('promotion_id');
-            $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('buyer_id')->constrained('customers')->references('id')->onDelete('cascade');
+            $table->foreignId('promotion_id')->constrained('promotions')->references('id')->onDelete('cascade');
+            $table->foreignId('order_id')->constrained('orders')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('buyer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('promotion_id')->references('id')->on('promotions')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

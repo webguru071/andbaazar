@@ -15,16 +15,12 @@ class CreateProductTagsTable extends Migration
     {
         Schema::create('product_tags', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('tag_id')->nullable();
-            $table->unsignedBigInteger('product_id')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('tag_id')->nullable()->constrained('tags')->references('id')->onDelete('cascade');
+            $table->foreignId('product_id')->nullable()->constrained('products')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->boolean('active')->default(1)->change();
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

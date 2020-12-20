@@ -15,10 +15,8 @@ class CreateBrandCategory extends Migration
     {
         Schema::create('brand_category', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('brand_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('category_id')->constrained('categories')->references('id')->onDelete('cascade');
+            $table->foreignId('brand_id')->constrained('brands')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@ class CreateKrishiOrderItemsTable extends Migration
     public function up()
     {
         Schema::create('krishi_order_items', function (Blueprint $table) {
-            $table->bigIncrements('id');                     
+            $table->bigIncrements('id');
             $table->integer('qty');
             $table->string('unit')->nullable();
             $table->string('rate')->nullable();
@@ -22,17 +22,11 @@ class CreateKrishiOrderItemsTable extends Migration
             $table->boolean('active')->default(1)->change();
             $table->string('available_from');
             $table->string('frequency_support');
-   
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
+            $table->foreignId('order_id')->constrained('orders')->references('id')->onDelete('cascade');
+            $table->foreignId('shop_id')->constrained('shops')->references('id')->onDelete('cascade');
+            $table->foreignId('krishi_product_id')->constrained('krishi_products')->references('id')->onDelete('cascade');
             $table->softDeletes();
-            $table->unsignedBigInteger('user_id');                  
-            $table->unsignedBigInteger('order_id'); 
-            $table->unsignedBigInteger('shop_id');  
-            $table->unsignedBigInteger('krishi_product_id');    
-        
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade'); 
-            $table->foreign('krishi_product_id')->references('id')->on('krishi_products')->onDelete('cascade')->onUpdate('cascade');           
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

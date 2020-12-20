@@ -15,9 +15,9 @@ class CreateItemImagesTable extends Migration
     {
         Schema::create('item_images', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('product_id')->nullable();
+            $table->foreignId('product_id')->constrained('products')->references('id')->onDelete('cascade');
             $table->string('color_slug')->default('main');
-            $table->integer('color_id')->default(0);
+            $table->foreignId('color_id')->default(0)->constrained('colors')->references('id')->onDelete('cascade');
             $table->integer('sort')->nullable();
             $table->text('org_img')->nullable();
             $table->text('list_img')->nullable();
@@ -30,10 +30,10 @@ class CreateItemImagesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('auctionproduct_id')->references('id')->on('auctionproducts')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            // $table->foreign('auctionproduct_id')->references('id')->on('auctionproducts')->onDelete('cascade');
+            // $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

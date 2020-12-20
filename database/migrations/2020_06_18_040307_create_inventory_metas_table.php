@@ -17,13 +17,11 @@ class CreateInventoryMetasTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('value')->nullable();
-            $table->unsignedBigInteger('inventory_id');
-            $table->unsignedBigInteger('product_id');
+            $table->foreignId('inventory_id')->constrained('inventories')->references('id')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->references('id')->onDelete('cascade');
             // $table->unsignedBigInteger('inventory_attribute_id');
 
-            $table->foreign('inventory_id')->references('id')->on('inventories')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('inventory_attribute_id')->references('id')->on('inventory_attributes')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('inventory_attribute_id')->references('id')->on('inventory_attributes')->onDelete('cascade');
 
             $table->timestamps();
         });

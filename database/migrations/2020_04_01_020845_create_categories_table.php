@@ -27,11 +27,9 @@ class CreateCategoriesTable extends Migration
             $table->enum('type',['ecommerce','sme','krishi'])->default('ecommerce');
             $table->integer('active')->default(1);
             $table->integer('is_last')->default(0);
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

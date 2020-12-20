@@ -16,20 +16,15 @@ class CreateAuctionbidsTable extends Migration
         Schema::create('auctionbids', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('date');
-            $table->unsignedBigInteger('auction_id');
-            $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('auctionproduct_id');
+            $table->foreignId('auction_id')->constrained('auctions')->references('id')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customers')->references('id')->onDelete('cascade');
+            $table->foreignId('auctionproduct_id')->constrained('auctionproducts')->references('id')->onDelete('cascade');
             $table->string('rate');
             $table->text('message')->nullable();
             $table->boolean('autobid')->default(0)->change();
             $table->integer('autobid_increases')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('auction_id')->references('id')->on('auctions')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('auctionproduct_id')->references('id')->on('auctionproducts')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

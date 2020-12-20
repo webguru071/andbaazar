@@ -26,13 +26,10 @@ class CreatePromotionsTable extends Migration
             $table->string('multiple_use')->nullable();
             $table->string('priority')->nullable();
             $table->boolean('active')->default(1)->change();
-            $table->unsignedBigInteger('promotion_head_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('promotion_head_id')->constrained('promotion_heads')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('promotion_head_id')->references('id')->on('promotion_heads')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

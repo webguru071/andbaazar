@@ -13,14 +13,12 @@ class CreateBrandsTable extends Migration
      */
     public function up()
     {
-        Schema::create('brands', function (Blueprint $table) {         
+        Schema::create('brands', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');          
+            $table->string('name');
             $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
-
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
