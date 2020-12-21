@@ -1,13 +1,13 @@
 
-@extends('merchant.master') 
-@section('content') 
+@extends('merchant.master')
+@section('content')
 @push('css')
  <style>
      .modal {
   text-align: center;
 }
 
-@media screen and (min-width: 768px) { 
+@media screen and (min-width: 768px) {
   .modal:before {
     display: inline-block;
     vertical-align: middle;
@@ -38,21 +38,21 @@
                 <form action="" method="get">
                 <div class="filter-area d-flex">
 
-                    
+
                     <div class="form-group mr-1">
-                        <input type="text" name="keyword" class="form-control" placeholder="Search Here..." value="{{$filter['keyword']}}" />                     
+                        <input type="text" name="keyword" class="form-control" placeholder="Search Here..." value="{{$filter['keyword']}}" />
                     </div>
                     <div class="form-group mr-1">
                         <div class="input-group">
                             <span class="input-group-addon bg-primary p-2 font-weight-bold text-white">Category</span>
                             <select name="category" class="form-control" id="category">
                             <option value="">All Category</option>
-                            @foreach($categories as $cat)                               
+                            @foreach($categories as $cat)
                                 <option value="{{ $cat->category->slug }}" {{$filter['category'] == $cat->category->slug ? 'selected':''}}>  {{$cat->category->name}}</option>
                             @endforeach
                             </select>
-                        </div>                    
-                    </div>                   
+                        </div>
+                    </div>
                     <div class="form-group mr-2">
                         <div class="input-group">
                             <span class="input-group-addon bg-primary p-2 font-weight-bold text-white">Status</span>
@@ -73,14 +73,12 @@
                 <table class="table-responsive-md table mb-0 table-striped mt-2">
                     <thead>
                         <tr>
-                            {{--
-                            <th scope="col">image</th>
-                            --}}
+                            <th scope="col">Image</th>
                             <th scope="col" class="text-left">Product name</th>
                             <th scope="col" class="text-left">Category</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Video</th>
-                            <th scope="col">Date</th>
+                            <th scope="col">Available From</th>
+                            <th scope="col">Available To</th>
+                            <th scope="col">On Stock</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -88,14 +86,12 @@
                     <tbody>
                         @forelse($product as $row)
                         <tr>
-                            {{--
-                            <th scope="row"><img src="{{asset($row->image)}}" height="50" width="50" class="blur-up lazyloaded" /></th>
-                            --}}
+                            <th scope="row" class="text-center"><img src="{{asset($row->thumbnail_image)}}" style="height: 35px" class="blur-up lazyloaded img-fluid" /></th>
                             <td class="text-left">{{$row->name}}</td>
-                            <td class="text-left">{{$row->category_slug}}</td>
-                            <td>{!!$row->description!!}</td>
-                            <td>{{$row->video_url}}</td>
-                            <td>{{$row->date}}</td>                         
+                            <td class="text-left">{{$row->category['name']}}</td>
+                            <td>{{ $row->available_from }}</td>
+                            <td>{{ $row->available_to }}</td>
+                            <td>{{ $row->available_stock . ' ' .$row->productUnit['symbol'] }}</td>
                             <td>
                                 @if($row->status == 'Pending')
                                 <label class="badge badge-pill badge-primary p-2">Pending</label>
@@ -155,12 +151,12 @@
                 <div class ="mt-2">
                 {{$product->links()}}
                 </div>
-               
+
             </div>
-            
+
         </div>
     </div>
 </section>
-@endsection 
+@endsection
 
 

@@ -53,7 +53,7 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant','default
 
 
     // E-commerce Products Are Start//
-    Route::group(['prefix' => 'e-commerce'],function(){
+    Route::group(['prefix' => 'e-commerce', 'middleware' => ['isEcommerceService']],function(){
         Route::Post('products/get-brand/','ProductsController@getBrand');
         Route::get('products/subCategoryChild/{id}','ProductsController@subCategoryChild');
         Route::post('products/approvement/{slug}','ProductsController@approvement');
@@ -76,7 +76,7 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant','default
         Route::resource('inventories','InventoriesController');
     });
     // Sme Products Are Start//
-    Route::group(['prefix' => 'sme'],function(){
+    Route::group(['prefix' => 'sme','middleware' => ['isSmeService']],function(){
         Route::get('products','SmeProductController@index')->middleware('isMerchantActive');
         Route::get('products/new','SmeProductController@create')->middleware('isMerchantActive');
         Route::post('products/new','SmeProductController@store')->name('smeproduct.store')->middleware('isMerchantActive');;
@@ -97,7 +97,7 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant','default
 
     // Auction Product Start //
 
-     Route::group(['prefix' => 'auction'],function(){
+     Route::group(['prefix' => 'auction','middleware' => ['isAuctionService']],function(){
         Route::get('category/{type}','AuctionproductController@categoryid');
         Route::get('products/new','AuctionproductController@create');
         Route::post('products/new','AuctionproductController@store')->name('auctionstore');
@@ -114,7 +114,7 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant','default
     // Auction Product End //
 
     //    Krishi Baazar Start   //
-      Route::group(['prefix' => 'krishi'],function(){
+      Route::group(['prefix' => 'krishi','middleware' => ['isKrishiService']],function(){
         // Route::resource('category','KrishiProductCategoryController');
         Route::get('products/new','KrishiProductController@create');
         Route::post('products/new','KrishiProductController@store')->name('krishiproductstore');

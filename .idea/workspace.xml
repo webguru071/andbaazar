@@ -2,20 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/images/demo-product.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/Baazar.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/Baazar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/KrishiProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/KrishiProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ShopsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ShopsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/KrishiCategory.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/KrishiCategory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/KrishiProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/KrishiProduct.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ProductUnit.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ProductUnit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_091827_create_krishi_product_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_091827_create_krishi_product_categories_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_091828_create_krishi_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_091828_create_krishi_products_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/shops/logos/shop-6.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/shops/logos/shop-6.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/frontend/assets/images/icon/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontend/assets/images/icon/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/frontend/assets/images/icon/logo_new.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/ecommerc.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/ecommerce.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/merchant/partials/auction/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/partials/auction/left-sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/merchant/partials/ecommerce/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/partials/ecommerce/left-sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/merchant/partials/krishibazar/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/partials/krishibazar/left-sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/merchant/partials/sme/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/partials/sme/left-sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/merchant.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/merchant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +203,7 @@
       <workItem from="1608178046955" duration="14383000" />
       <workItem from="1608351333591" duration="24162000" />
       <workItem from="1608438271060" duration="22394000" />
-      <workItem from="1608524158268" duration="13753000" />
+      <workItem from="1608524158268" duration="25247000" />
     </task>
     <servers />
   </component>

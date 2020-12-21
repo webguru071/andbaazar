@@ -14,16 +14,18 @@ class KrishiProduct extends Model
     protected $fillable = [
             'name',
             'slug',
-            'image',
-            'email',
-            'status',
+            'thumbnail_image',
             'description',
             'video_url',
-            'date',
+            'available_from',
+            'available_to',
+            'frequency_support',
+            'available_stock',
+            'allow_custom_offer',
             'frequency',
-            'category_slug',
+            'return_policy',
+            'product_unit_id',
             'category_id',
-            'merchant_id',
             'shop_id',
             'user_id',
     ];
@@ -39,7 +41,7 @@ class KrishiProduct extends Model
         return $this->belongsTo(User::class,'user_id');
     }
     public function category(){
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(KrishiCategory::class,'category_id');
     }
     public function merchant(){
         return $this->belongsTo(Merchant::class,'merchant_id');
@@ -49,7 +51,10 @@ class KrishiProduct extends Model
     }
     public function itemimage(){
         return $this->hasMany(ItemImage::class,'product_id');
-      }
+    }
+    public function productUnit(){
+        return $this->belongsTo(ProductUnit::class,'product_unit_id');
+    }
     public static function getSubcategoryChild($subCatId){
         return DB::table('krishi_product_categories')
             ->select('id','name','is_last','slug')

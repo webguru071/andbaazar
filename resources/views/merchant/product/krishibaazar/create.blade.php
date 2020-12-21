@@ -354,7 +354,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="name">Product Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" />
+                                                <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" placeholder="Tomato"/>
                                                 <span class="text-danger" id="message_name"></span>
                                                 @if ($errors->has('name'))
                                                 <span class="text-danger">{{ $errors->first('name') }}</span>
@@ -364,7 +364,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('name') }}</span>
-                                        <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('name') }}" id="category" placeholder="Category">
+                                        <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('name') }}" id="category" placeholder="Select Category">
                                         <span class="text-danger" id="message_category"></span>
                                         <input type="hidden" name="category_id" id="category_id">
                                         <div class="position-absolute foo p-3" id="catarea" style="display: none">
@@ -397,6 +397,7 @@
                                             <input id="img-upload" accept="image/*"  class ="d-none" type="file" name="picture"/>
                                             <div id="loader" class=""></div>
                                         </div>
+                                        <input type="hidden" name="thumbnail_image" id="thumbnail_image">
                                     </div>
 
                                     <div class="form-group">
@@ -413,8 +414,8 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group margin">
-                                                <label for="date">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('date') }}</span>
-                                                <input type="text"  class="form-control inputfield  @error('date') border-danger @enderror datepickerPreviousOnly" required name="date" value="{{ old('date') }}"   id="" placeholder="YYYY/MM/DD" autocomplete="off">
+                                                <label for="available_from">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('available_from') }}</span>
+                                                <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerPreviousOnly" required name="available_from" value="{{ old('available_from') }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -827,26 +828,12 @@
                 }).then(function(resp) {
                 $('#image-modal').modal('hide');
                 $("#result").attr("src", resp);
-                //   console.log(resp);
-                var _token = "{{csrf_token()}}";
-                $.ajax({
-                    url: "{{route('profile-image-crop')}}",
-                    type: "POST",
-                    dataType:"json",
-                    data: {"picture":resp,_token:_token,'profile':4},
-                    beforeSend:function(){
-                        $('#loader').addClass('loader');
-                        $('#output').addClass('opacity5');
-                    },
-                    success: function (data) {
-                        $('#output').attr('src',resp);
-                        $('#img-sidebar').attr('src',resp);
-                        // console.log(data);
-                        $('#loader').removeClass('loader');
-                        $('#output').removeClass('opacity5');
-                        $('#img-sidebar').removeClass('opacity5');
-                    }
-                });
+                $('#thumbnail_image').val(resp);
+                $('#output').attr('src',resp);
+                $('#img-sidebar').attr('src',resp);
+                $('#loader').removeClass('loader');
+                $('#output').removeClass('opacity5');
+                $('#img-sidebar').removeClass('opacity5');
 
             });
         });

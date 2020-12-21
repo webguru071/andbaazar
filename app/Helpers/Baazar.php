@@ -151,7 +151,7 @@ class Baazar
         }
     }
 
-    public function base64Uploadkrishi($image_file,$name,$color){
+    public function base64Uploadkrishi($image_file,$name){
         $t = substr($image_file,0,11);
         if($t == 'data:image/'){
             list($type, $image_file) = explode(';', $image_file);
@@ -159,7 +159,7 @@ class Baazar
             if($this->is_base64($image_file)){
                 $image_file = base64_decode($image_file);
                 $image_name= $name.rand().'.png';
-                $db_img = 'uploads/krishi/'.$name.'-'.$color.'-'.$image_name;
+                $db_img = 'uploads/krishi/'.$name.'-'.date('ymdhmi').'-'.$image_name;
                 $path = public_path($db_img);
                 file_put_contents($path, $image_file);
                 return $db_img;

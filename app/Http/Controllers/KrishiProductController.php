@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\KrishiCategory;
 use App\Models\KrishiProduct;
+use App\Models\KrishiProductItemImage;
 use App\Models\ProductUnit;
+use App\Models\Shop;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Merchant;
 use App\Models\ItemImage;
@@ -81,24 +84,15 @@ class KrishiProductController extends Controller
     }
 
     public function addImages($images, $itemId){
-        foreach($images as $color => $image){
-            foreach($image as $img){
-              $cID = Color::where('slug',$color)->first();
-              $i = 0;
-              $image = [
-
-                'product_id' => $itemId,
-                'color_slug' => $color,
-                'color_id'   => $cID ? $cID->id : 0,
-                'sort'       => ++$i,
-                'type'       => 'Krishi',
-                'org_img'    => Baazar::base64Uploadauction($img,'orgimg',$color),
-              ];
-              // dd($image);
-              ItemImage::create($image);
-            }
-           }
+        foreach($images as $index=>$img){
+          $image = [
+            'product_id' => $itemId,
+            'sort'       => (int)$index+1,
+            'org_img'    => Baazar::base64Uploadkrishi($img,'orgimg'),
+          ];
+          KrishiProductItemImage::create($image);
         }
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -108,34 +102,26 @@ class KrishiProductController extends Controller
      */
     public function store(Request $request,KrishiProduct $krishiProduct)
     {
-        // dd($request->all());
-        $merchantId =  Merchant::where('user_id',Auth::user()->id)->first();
-        $shop       = Merchant::where('user_id',Auth::user()->id)->first()->shop;
-        $slug       = Baazar::getUniqueSlug($krishiProduct,$request->name);
-        $feature    = Baazar::base64Uploadkrishi($request->images['main'][0],$slug,'featured');
-        $data = [
-            'name'          => $request->name,
-            'slug'          => $slug,
-            'image'         => $feature,
-            'description'   => $request->description,
-            'frequency'   => $request->frequency,
-            'video_url'     => $request->video_url,
-            'category_id'   => $request->category_id,
-            'shop_id'       => $shop->id,
-            'user_id'       => Auth::user()->id,
-            'created_at'    => now(),
+        $shop_id = Merchant::where('user_id',Auth::id())->first()->id;
+        $slug = Baazar::getUniqueSlug($krishiProduct,$request->name);
+        $thumbnail_image    = Baazar::base64Uploadkrishi($request->thumbnail_image,$slug,'featured');
+        $allData=$request->all();
+        $allData['slug']=$slug;
+        $allData['thumbnail_image']=$thumbnail_image;
+        $allData['available_to']=Carbon::create($request->available_from)->addDays($request->available_for)->format('Y-m-d');
+        $allData['frequency_support']=(count($request->frequency)>0) ? 1 : 0;
+        $allData['user_id']=Auth::id();
+        $allData['shop_id']=$shop_id;
 
-        ];
-
-        $krishiProduct = KrishiProduct::create($data);
+        $krishiProduct = KrishiProduct::create($allData);
 
         if($request->images){
-            $this->addImages($request->images,$krishiProduct->id);
-          }
+            $this->addImages($request->images['main'],$krishiProduct->id);
+        }
 
         Session::flash('success', 'Krishi Product Added Successfully!');
 
-          return back();
+        return redirect()->action('KrishiProductController@index');
 
     }
 
@@ -229,8 +215,7 @@ class KrishiProductController extends Controller
     public function edit($slug)
     {
         $krishiproduct = KrishiProduct::where('slug',$slug)->first();
-        $frequencyname = json_decode($krishiproduct->frequency);
-        // dd($frequencyname);
+        $frequencyname = $krishiproduct->frequency;
         $itemImages    = $krishiproduct->itemimage->groupBy('color_slug');
         $categories = Category::where('parent_id',0)->where('type','krishi')->get();
 

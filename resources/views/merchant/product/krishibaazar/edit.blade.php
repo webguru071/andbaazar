@@ -13,7 +13,7 @@
     /* select2 */
 
     .select2-selection {
-  height: 34px !important; 
+  height: 34px !important;
   font-size: 13px;
   font-family: 'Open Sans', sans-serif;
   border-radius: 0 !important;
@@ -61,7 +61,7 @@
 }
 
 .select2-results__options li {
-  display: block; 
+  display: block;
 }
 
 .select2-selection__rendered {
@@ -94,7 +94,7 @@
 }
 
 .select2-results__option[aria-selected="true"] {
-  background-color: #eee !important; 
+  background-color: #eee !important;
 }
 
 .select2-search__field {
@@ -106,7 +106,7 @@
 }
 
 .select2-selection__placeholder {
-  color: #c4c4c4 !important; 
+  color: #c4c4c4 !important;
 }
     /* select2  End*/
     #catarea{
@@ -187,8 +187,6 @@
         input[type=text],input[type=number],select,.input-group-text,.h-40{
             height: 40px !important;
         }
-
-        }
         .rowRemove{
             line-height: 26px;
         }
@@ -198,10 +196,10 @@
         .custom{
           width: 108px;
           height:50px;
-        } 
+        }
         .multepale-select{
             padding-bottom: 100px!important;
-        } 
+        }
 </style>
 
 @endpush
@@ -232,7 +230,7 @@
                                             <span class="text-danger">{{ $errors->first('name') }}</span>
                                             @endif
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('category_slug') }}</span>
@@ -276,7 +274,7 @@
                                             <label for="date">Product add Date<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('date') }}</span>
                                             <input type="text"  class="form-control inputfield  @error('date') border-danger @enderror datepickerPreviousOnly" required name="date" value="{{ old('date',$krishiproduct->date) }}"   id="" placeholder="YYYY/MM/DD" autocomplete="off">
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group margin">
                                             <label class="video_url">Video Url</label>
@@ -284,7 +282,7 @@
                                             @if ($errors->has('video_url'))
                                             <span class="text-danger">{{ $errors->first('video_url') }}</span>
                                             @endif
-                                        </div> 
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -294,11 +292,11 @@
                                     @if ($errors->has('description'))
                                     <span class="text-danger">{{ $errors->first('description') }}</span>
                                     @endif
-                                </div> 
+                                </div>
                                 {{-- {{dd($frequencyname)}} --}}
                                 <div class="form-unit form-divided">
                                     <label for="frequency" class="form-input-label pr-5">Frequency:</label><br>
-                                    <select class="js-example-basic-multiple" name="frequency[]" multiple="multiple">   
+                                    <select class="js-example-basic-multiple" name="frequency[]" multiple="multiple">
                                         <option value="sunday" {{in_array('sunday',$frequencyname) ? 'selected' : ''}}>Sunday</option>
                                         <option value="monday" {{in_array('monday',$frequencyname) ? 'selected' : ''}}>Monday</option>
                                         <option value="tuesday" {{in_array('tuesday',$frequencyname) ? 'selected' : ''}}>Tuesday</option>
@@ -309,19 +307,19 @@
                                         <option value="everyday" {{in_array('everyday',$frequencyname) ? 'selected' : ''}}>Everyday</option>
                                         <option value="weekly" {{in_array('weekly',$frequencyname) ? 'selected' : ''}}>Weekly</option>
                                         <option value="fortnightly" {{in_array('fortnightly',$frequencyname) ? 'selected' : ''}}>Fortnightly</option>
-                                        <option value="monthly" {{in_array('monthly',$frequencyname) ? 'selected' : ''}}>Monthly</option>      
-                                    </select> 
-                                  </div>  
+                                        <option value="monthly" {{in_array('monthly',$frequencyname) ? 'selected' : ''}}>Monthly</option>
+                                    </select>
+                                  </div>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
-                <button class="btn btn-success custom float-right ml-2 w-5"  type="submit">Update</button> 
-            </form> 
-            </div>          
-        </div>   
-                 
-    </div>  
+                <button class="btn btn-success custom float-right ml-2 w-5"  type="submit">Update</button>
+            </form>
+            </div>
+        </div>
+
+    </div>
 </section>
 @endsection
 @push('js')
@@ -388,7 +386,7 @@
                 getBrands(id);
             }
         }
-       
+
         function setActive(level,e){
             var current = '';
             for(var j = level+1; j<10 ; j++){
@@ -428,7 +426,7 @@
                 }
             });
 
-        }; 
+        };
 
         $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
@@ -441,7 +439,7 @@
     <script>
         $(document).ready(function() {
      $('.summernote').summernote({
-           height: 300,
+           height: 150,
       });
    });
     </script>
@@ -526,7 +524,7 @@
 
         Dropzone.autoDiscover = false;
 
-        
+
         //function
         function setup(id,color,mockFile='') {
             let options = {
@@ -640,7 +638,7 @@
         };
 
         $(document).ready(function() {
-    
+
     $(".js-example-basic-multiple").select2({
         placeholder: "Select Frequency"
     }).on('change', function(e) {
