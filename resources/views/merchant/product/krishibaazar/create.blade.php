@@ -287,7 +287,6 @@
             height: 40px !important;
         }
 
-        }
         .rowRemove{
             line-height: 26px;
         }
@@ -301,6 +300,35 @@
         .multepale-select{
             padding-bottom: 100px!important;
         }
+
+
+        /* Thumbnail Image Upload*/
+    .imagestyle{
+        width: 200px;
+        height: 200px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #ccc;
+        border-bottom: 0px;
+        padding: 10px;
+    }
+
+    #file-upload{
+        display: none;
+    }
+    #file-upload1{
+        display: none;
+    }
+    .uploadbtn{
+        width: 200px;background: #ddd;text-align: center;
+    }
+    .custom-file-upload {
+        /* border: 1px solid #ccc; */
+        display: inline-block;
+        padding: 9px 40px;
+        cursor: pointer;
+        border-top: 0px;
+    }
 
 </style>
 
@@ -333,7 +361,6 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <input type="hidden" name="email" value="{{ $krishiId->email }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('name') }}</span>
@@ -359,9 +386,21 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="form-group">
-                                        <label for="color_id" class="col-xl-3 col-md-4"></label>
-                                        <div id="dropzone-main" class="img-upload-area" data-color="main"><label class="mt-3"><b>Images :</b><span class="text-danger" id="message_main_img"></span></label>
+                                        <label for="picture">Thumbnail Image</label>
+                                        <div class="mt-0">
+                                            <img id="output"  class="imagestyle" src="{{ asset('/images/demo-product.jpg') }}" />
+                                        </div>
+                                        <div class="uploadbtn">
+                                            <label for="img-upload" class="custom-file-upload image-upload"><i aria-hidden="true"></i> Upload Here</label>
+                                            <input id="img-upload" accept="image/*"  class ="d-none" type="file" name="picture"/>
+                                            <div id="loader" class=""></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div id="dropzone-main" class="img-upload-area" data-color="main"><label>Product Images <span class="text-danger" id="message_main_img"></span></label>
                                             <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
                                                 <span class="dz-message color-main">
                                                     <h2>Drag & Drop Your Files</h2>
@@ -374,19 +413,57 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group margin">
-                                                <label for="date">Product add Date<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('date') }}</span>
+                                                <label for="date">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('date') }}</span>
                                                 <input type="text"  class="form-control inputfield  @error('date') border-danger @enderror datepickerPreviousOnly" required name="date" value="{{ old('date') }}"   id="" placeholder="YYYY/MM/DD" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group margin">
-                                                <label class="video_url">Video Url</label>
-                                                <input type="url" class="form-control" name="video_url" id="video_url" />
-                                                @if ($errors->has('video_url'))
-                                                <span class="text-danger">{{ $errors->first('video_url') }}</span>
+                                                <label class="available_for">Available For (Days)</label>
+                                                <input type="number" class="form-control" name="available_for" id="available_for" placeholder="30" />
+                                                @if ($errors->has('available_for'))
+                                                    <span class="text-danger">{{ $errors->first('available_for') }}</span>
                                                 @endif
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group margin">
+                                                <label for="productUnit">Product Unit<span class="text-danger"> *</span></label>
+                                                <select class="form-control" id="productUnit" name="product_unit_id" required>
+                                                    <option value="">-- Select Unit --</option>
+                                                    @foreach($productUnits as $productUnit)
+                                                        <option value="{{ $productUnit->id }}">{{ $productUnit->name .' (' .$productUnit->symbol .')' }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group margin">
+                                                <label class="availableStock">Available Stock (Quantity)<span class="text-danger"> *</span></label>
+                                                <input type="number" class="form-control" name="available_stock" id="availableStock" placeholder="400" required/>
+                                                @if ($errors->has('available_stock'))
+                                                    <span class="text-danger">{{ $errors->first('available_stock') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group margin">
+                                                <label class="allowCustomOffer">Allow Custom Offer<span class="text-danger"> *</span></label>
+                                                <select class="form-control" id="allowCustomOffer" name="allow_custom_offer" required>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                                @if ($errors->has('allow_custom_offer'))
+                                                    <span class="text-danger">{{ $errors->first('allow_custom_offer') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="videoUrl" class="">Youtube Video URL (optional)</label>
+                                        <textarea class="form-control" rows="2" id="videoUrl" name="video_url" placeholder="Paste your link here ..."></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="description" class="">Description<span class="text-danger"> *</span></label>
@@ -396,10 +473,8 @@
                                         <span class="text-danger">{{ $errors->first('description') }}</span>
                                         @endif
                                     </div>
-
-
-                                    <div class="form-unit form-divided">
-                                        <label for="emp-id" class="form-input-label pr-5">Frequency:</label><br>
+                                    <div class="form-group form-unit form-divided">
+                                        <label for="emp-id" class="form-input-label pr-5">Frequency</label><br>
                                         <select class="js-example-basic-multiple" name="frequency[]" multiple="multiple">
                                             <option value="sunday">Sunday</option>
                                             <option value="monday">Monday</option>
@@ -414,6 +489,10 @@
                                             <option value="monthly">Monthly</option>
                                         </select>
                                       </div>
+                                    <div class="form-group">
+                                        <label for="returnPolicy" class="">Return Policy (if any)</label>
+                                        <textarea class="form-control" rows="3" id="returnPolicy" name="return_policy" placeholder="Your custom return policy ..."></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -424,7 +503,43 @@
         </div>
     </div>
 </section>
+
+{{--    Start Image Croping Modal --}}
+<div class="modal" id="image-modal" tabindex="-1" role="dialog" aria-labelledby="shop-logo-modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Before upload resize your picture.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="main-cropper"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary p-2" id="upload-image">Crop & Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{--    End Image Croping Modal --}}
 @endsection
+@push('css')
+    <link rel="stylesheet" href="https://foliotek.github.io/Croppie/croppie.css">
+    <style>
+        input[type="file"] {
+            display: none;
+        }
+        #mainNav {
+            height: 70px;
+        }
+        #mainNav .navbar-brand img, .footer-widget.footer-about a > img {
+            height: 34px;
+        }
+    </style>
+@endpush
 @push('js')
 <script src="{{ asset('js/jquery-ui.js') }}"></script>
 {{-- <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script> --}}
@@ -438,6 +553,8 @@
 
 {{-- <script src="{{ asset('material') }}/js/select2.min.js"></script> --}}
 
+<script src="https://foliotek.github.io/Croppie/croppie.js"></script>
+
     <script>
         $('#category').click(function(){
             $('#catarea').toggle();
@@ -447,13 +564,14 @@
         });
 
         function getNextLevel(val,level,e){
-            $('#confirm').addClass('readonly');
-            $('#confirm').attr('onclick','ConfirmCategory(0,this)');
+            setConfirm(val,level,e);
+            // $('#confirm').addClass('readonly');
+            // $('#confirm').attr('onclick','ConfirmCategory('+val+',this)');
             var nextLevel = level+1;
             var li ='';
             $.ajax({
                 type:"get",
-                url:"{{ url('/merchant/e-commerce/products/subCategoryChild/{id}') }}",
+                url:"{{ url('/merchant/krishi/products/subCategoryChild/{id}') }}",
                 data:{ 'subCatId': val },
                 success:function(data){
                         li += `<div class="col-md-3 cat-level p-2 level-${nextLevel}">
@@ -490,9 +608,9 @@
                 $('#category_id').val(id);
                 $('#category').val($('.currentSelection').text());
                 $('#catarea').hide();
-                getCategoryAttr(id);
-                getInventoryAttr(id);
-                getBrands(id);
+                // getCategoryAttr(id);
+                // getInventoryAttr(id);/
+                // getBrands(id);
             }
         }
 
@@ -543,7 +661,7 @@
     <script>
         $(document).ready(function() {
      $('.summernote').summernote({
-           height: 300,
+           height: 150,
       });
    });
     </script>
@@ -676,6 +794,64 @@
     });
     });
     </script>
+
+
+{{--    Start Product Thumbnail Image Croping  --}}
+    <script>
+        function readFileLogo(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#main-cropper").croppie("bind", {
+                        url: e.target.result
+                    });
+                    $('#image-modal').modal('show');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#img-upload").on("change", function() {
+            readFileLogo(this);
+        });
+        var basic = $("#main-cropper").croppie({
+            viewport: { width: 250, height: 250 },
+            boundary: { width: 300, height: 300 },
+            showZoomer: true,
+            enableExif: true
+        });
+        $("#upload-image").click(function() {
+            $("#main-cropper")
+                .croppie("result", {
+                    type: "canvas",
+                    size: "viewport",
+                }).then(function(resp) {
+                $('#image-modal').modal('hide');
+                $("#result").attr("src", resp);
+                //   console.log(resp);
+                var _token = "{{csrf_token()}}";
+                $.ajax({
+                    url: "{{route('profile-image-crop')}}",
+                    type: "POST",
+                    dataType:"json",
+                    data: {"picture":resp,_token:_token,'profile':4},
+                    beforeSend:function(){
+                        $('#loader').addClass('loader');
+                        $('#output').addClass('opacity5');
+                    },
+                    success: function (data) {
+                        $('#output').attr('src',resp);
+                        $('#img-sidebar').attr('src',resp);
+                        // console.log(data);
+                        $('#loader').removeClass('loader');
+                        $('#output').removeClass('opacity5');
+                        $('#img-sidebar').removeClass('opacity5');
+                    }
+                });
+
+            });
+        });
+    </script>
+{{--    End Product Thumbnail Image Croping  --}}
 @endpush
 
 

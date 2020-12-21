@@ -11,6 +11,7 @@ use App\Models\Inventory;
 use App\Models\Merchant;
 use Baazar;
 use Session;
+use Illuminate\Support\Facades\Auth;
 
 class ShopsController extends Controller
 {

@@ -18,7 +18,6 @@ class CreateKrishiProductsTable extends Migration
             $table->string('name');
             $table->string('slug')->nullable();
             $table->string('thumbnail_image')->nullable();
-            $table->text('product_images')->nullable();
             $table->text('description');
             $table->string('video_url')->nullable();
             $table->string('available_from')->nullable();

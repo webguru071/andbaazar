@@ -111,21 +111,22 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant','default
         // Route::post('add','AuctionproductController@store');
     });
 
-   // Auction Product End //
+    // Auction Product End //
 
-  //    Krishi Baazar Start   //
-  Route::group(['prefix' => 'krishi'],function(){
-    // Route::resource('category','KrishiProductCategoryController');
-    Route::get('products/new','KrishiProductController@create');
-    Route::post('products/new','KrishiProductController@store')->name('krishiproductstore');
-    Route::get('proudcts/update/{slug}/krishiupdate','KrishiProductController@edit');
-    Route::put('products/updat/{slug}','KrishiProductController@update');
-    Route::post('products/approvement/{slug}','KrishiProductController@approvemetnt');
-    Route::put('products/rejected/{slug}','KrishiProductController@rejected');
-    Route::resource('products','KrishiProductController');
+    //    Krishi Baazar Start   //
+      Route::group(['prefix' => 'krishi'],function(){
+        // Route::resource('category','KrishiProductCategoryController');
+        Route::get('products/new','KrishiProductController@create');
+        Route::post('products/new','KrishiProductController@store')->name('krishiproductstore');
+        Route::get('proudcts/update/{slug}/krishiupdate','KrishiProductController@edit');
+        Route::put('products/updat/{slug}','KrishiProductController@update');
+        Route::post('products/approvement/{slug}','KrishiProductController@approvemetnt');
+        Route::put('products/rejected/{slug}','KrishiProductController@rejected');
+        Route::resource('products','KrishiProductController');
+        Route::get('products/subCategoryChild/{id}','KrishiProductController@subCategoryChild');
 
-  });
- //    Krishi Baazar End    //
+      });
+      //    Krishi Baazar End    //
 
 
 

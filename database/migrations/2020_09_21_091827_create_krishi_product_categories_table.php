@@ -15,9 +15,9 @@ class CreateKrishiProductCategoriesTable extends Migration
     {
         Schema::create('krishi_product_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('name');
+            $table->string('name');
             $table->string('parent_slug')->default(0);
-            $table->string('parent_id')->default(0);
+            $table->integer('parent_id')->default(0);
             $table->string('slug')->nullable();
             $table->text('description');
             $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');

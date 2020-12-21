@@ -7,25 +7,28 @@ use App\User;
 use App\Models\Category;
 use App\Models\Merchant;
 use App\Models\Shop;
+use Illuminate\Support\Facades\DB;
 
 class KrishiProduct extends Model
 {
     protected $fillable = [
             'name',
-            'slug', 
+            'slug',
             'image',
-            'email', 
+            'email',
             'status',
-            'description', 
-            'video_url',  
-            'date',  
-            'frequency',     
-            'category_slug', 
-            'category_id', 
-            'merchant_id', 
-            'shop_id', 
-            'user_id',    
+            'description',
+            'video_url',
+            'date',
+            'frequency',
+            'category_slug',
+            'category_id',
+            'merchant_id',
+            'shop_id',
+            'user_id',
     ];
+
+    protected $casts =['frequency'=>'array'];
 
     public function getRouteKeyName()
     {
@@ -47,4 +50,10 @@ class KrishiProduct extends Model
     public function itemimage(){
         return $this->hasMany(ItemImage::class,'product_id');
       }
+    public static function getSubcategoryChild($subCatId){
+        return DB::table('krishi_product_categories')
+            ->select('id','name','is_last','slug')
+            ->where('parent_id','=',$subCatId)
+            ->get();
+    }
 }

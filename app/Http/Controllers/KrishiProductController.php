@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KrishiCategory;
 use App\Models\KrishiProduct;
+use App\Models\ProductUnit;
 use Illuminate\Http\Request;
 use App\Models\Merchant;
 use App\Models\ItemImage;
@@ -26,17 +28,14 @@ class KrishiProductController extends Controller
      */
     public function index(Request $request)
     {
-
-        $product      = KrishiProduct::where('shop_id',Baazar::shop()->id)->where('type','krishi');
-
-
+        $product      = KrishiProduct::where('shop_id',Baazar::shop()->id);
       $filter = [
         'category'  => '',
         'status'  => '',
         'keyword'  => '',
       ];
 
-      $findCat = KrishiProduct::where('shop_id',Baazar::shop()->id)->where('type','krishi');
+      $findCat = KrishiProduct::where('shop_id',Baazar::shop()->id);
       $categories = $findCat->select('category_id')->with('category')->distinct()->get();
 
       //Category Filter
@@ -66,7 +65,6 @@ class KrishiProductController extends Controller
       $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
       return view ('merchant.product.krishibaazar.index',compact('product','categories','filter'));
 
-
     }
 
     /**
@@ -77,8 +75,9 @@ class KrishiProductController extends Controller
     public function create()
     {
         $krishiId = Merchant::where('user_id',Auth::user()->id)->first();
-        $categories = Category::where('parent_id',0)->where('type','krishi')->get();
-        return view('merchant.product.krishibaazar.create',compact('krishiId','categories'));
+        $categories = KrishiCategory::where('parent_id',0)->get();
+        $productUnits = ProductUnit::all();
+        return view('merchant.product.krishibaazar.create',compact('krishiId','categories','productUnits'));
     }
 
     public function addImages($images, $itemId){
@@ -118,21 +117,15 @@ class KrishiProductController extends Controller
             'name'          => $request->name,
             'slug'          => $slug,
             'image'         => $feature,
-            'email'         => $request->email,
             'description'   => $request->description,
+            'frequency'   => $request->frequency,
             'video_url'     => $request->video_url,
-            'date'          => $request->date,
-            'category_slug' => $request->category,
             'category_id'   => $request->category_id,
-            'merchant_id'   => $merchantId->id,
             'shop_id'       => $shop->id,
             'user_id'       => Auth::user()->id,
             'created_at'    => now(),
 
         ];
-        // $frequency = $data['frequency'];
-
-        $data['frequency'] = json_encode($request->frequency);
 
         $krishiProduct = KrishiProduct::create($data);
 
@@ -299,5 +292,10 @@ class KrishiProductController extends Controller
         Session::flash('error', 'Krishi Product Deleted Successfully!');
 
         return redirect('merchant/krishi/products');
+    }
+
+    public function subCategoryChild(Request $request){
+        $subCatId = $request->subCatId;
+        return KrishiProduct::getSubcategoryChild($subCatId);
     }
 }
