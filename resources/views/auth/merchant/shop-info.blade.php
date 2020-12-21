@@ -137,7 +137,7 @@
                 $('#district').html(response);
             }
         });
-        initMap(lat,lng,10);
+        // initMap(lat,lng,10);
         $('#upazila').html('<option value="" selected disabled>Select Upazila</option>');
         $('#union').html('<option value="" selected disabled>Select Union</option>');
         $('#village').html('<option value="" selected disabled>Select Village</option>');
@@ -162,7 +162,7 @@
                 $('#municipal').html(response.municipal);
             }
         });
-        initMap(lat,lng,10);
+        // initMap(lat,lng,10);
         $('#union').html('<option value="" selected disabled>Select Union</option>');
         $('#village').html('<option value="" selected disabled>Select Village</option>');
         $('#ward').html('<option value="" selected disabled>Select ward</option>');
