@@ -14513,7 +14513,7 @@ body.dark {
     display: none; } }
 
 @media (min-width: 578px) {
-  .main-menu .menu-right .icon-nav .mobile-search i, .main-menu .menu-right .icon-nav .mobile-cart i, .main-menu .menu-right .icon-nav .mobile-setting i {
+  .main-menu .menu-right .icon-nav .mobile-search i, .main-menu .menu-right .icon-nav .mobile-cart i {
     display: none; }
   .main-menu .menu-right .icon-nav .mobile-search .close-circle i, .main-menu .menu-right .icon-nav .mobile-cart .close-circle i, .main-menu .menu-right .icon-nav .mobile-setting .close-circle i {
     display: block; }

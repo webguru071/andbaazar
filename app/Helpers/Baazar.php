@@ -166,8 +166,8 @@ class Baazar
             }
         }else{
             // dd($image_file);
-            $path = explode('/public/',$image_file);
-            return $path[1];
+            $path = explode('/uploads/',$image_file);
+            return 'uploads/'.$path[1];
         }
     }
 

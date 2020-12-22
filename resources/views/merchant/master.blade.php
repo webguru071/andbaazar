@@ -83,8 +83,9 @@
 {{--                                                <img src="../assets/images/icon/setting.png"--}}
 {{--                                                      class="img-fluid blur-up lazyload" alt=""> <i--}}
 {{--                                                    class="ti-settings"></i>--}}
-                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                                <i class="fa fa-user mr-1" aria-hidden="true"></i>
                                                 My Account
+                                                <i class="fa fa-angle-down font-bold ml-1"></i>
                                             </div>
                                             <div class="show-div setting">
                                                 <ul>

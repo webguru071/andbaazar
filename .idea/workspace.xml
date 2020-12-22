@@ -5,18 +5,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Helpers/Baazar.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/Baazar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/KrishiProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/KrishiProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/KrishiProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/KrishiProduct.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/frontend/assets/images/icon/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontend/assets/images/icon/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/frontend/assets/images/icon/logo_new.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/ecommerc.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/ecommerce.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/merchant/partials/auction/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/partials/auction/left-sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/merchant/partials/ecommerce/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/partials/ecommerce/left-sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/merchant/partials/krishibazar/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/partials/krishibazar/left-sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/merchant/partials/sme/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/partials/sme/left-sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/frontend/assets/css/color1.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontend/assets/css/color1.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/merchant/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/master.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +195,8 @@
       <workItem from="1608178046955" duration="14383000" />
       <workItem from="1608351333591" duration="24162000" />
       <workItem from="1608438271060" duration="22394000" />
-      <workItem from="1608524158268" duration="25247000" />
+      <workItem from="1608524158268" duration="25839000" />
+      <workItem from="1608610350652" duration="11365000" />
     </task>
     <servers />
   </component>
