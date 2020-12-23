@@ -32,7 +32,7 @@
                             @include('flash::message')
                         </div>
                     @endif                      
-                    <form class="form-horizontal auth-form" action="{{ route('sellerShopeRegistration') }}" method="post" enctype="multipart/form-data" id="validateForm">
+                    <form class="form-horizontal auth-form form" action="{{ route('sellerShopeRegistration') }}" method="post" enctype="multipart/form-data" >
                         @csrf
                         <input type="hidden" name="token" value="{{ $seller->remember_token }}">
                         <div class="form-group">
@@ -48,17 +48,16 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-12">
-                            <div class="row">
-                                <select name="district" class="form-control col-md-8 px-10 @error('district') border-danger @enderror" id="district"  required autocomplete="off" style="height: 45px;">
-                                    <option value="" selected disabled>Select District</option>
-                                </select>
-
-                                <select name="type" class="form-control col-md-4 px-10 @error('type') border-danger @enderror" id="type"  required autocomplete="off" style="height: 45px;">
-                                    <option value="Residential" selected>Residential</option>
-                                    <option value="Municipal">Municipal</option>
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            <select name="district" class="form-control px-10 @error('district') border-danger @enderror" id="district"  required autocomplete="off" style="height: 45px;">
+                                <option value="" selected disabled>Select District</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select name="type" class="form-control px-10 @error('type') border-danger @enderror" id="type"  required autocomplete="off" style="height: 45px;">
+                                <option value="Residential" selected>Residential</option>
+                                <option value="Municipal">Municipal</option>
+                            </select>
                         </div>
 
                         <div class="upazila">
@@ -93,7 +92,7 @@
                         </div>
                         <div class="form-group col-md-12">
                             <div class="row">
-                                <input id="searchTextField" type="text" size="50" placeholder="Enter a location" class="form-control col-md-8 px-10"/>
+                                <input id="searchTextField" name="address" required type="text" size="50" placeholder="Enter a location" class="form-control col-md-8 px-10"/>
                                 <input type="button" onclick="getLocation();" class="form-control col-md-4 px-10" value="Find my location"/>
                             </div>
                         </div>

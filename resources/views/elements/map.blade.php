@@ -3,7 +3,7 @@
 <script>
     var marker;
     var geocoder;
-    function initMap(l=23.811273,g=90.404240,z=5) {
+    function initMap(l={{ isset($lat) ? $lat : 23.811273}},g={{ isset($lng) ? $lng : 90.404240 }},z=15) {
         var latlng = new google.maps.LatLng(l,g);
         geocoder = new google.maps.Geocoder();
         geoFormatedAddress(latlng);

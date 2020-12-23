@@ -162,55 +162,55 @@ class CategoriesTableSeeder extends Seeder
    //    \Baazar::insertRecordsSme($textile_weaving_factories);
    //    echo  'Pottery Done....';
 
-   // // Krishi Product Category // 
-   //  \Baazar::insertRecordsKrishi($betel);
-   //  echo  'Betel Done....';
+   // Krishi Product Category // 
+    \Baazar::insertRecordsKrishi($betel);
+    echo  'Betel Done....';
 
 
-   //  \Baazar::insertRecordsKrishi($dal);
-   //  echo  'Dal Done....';
+    \Baazar::insertRecordsKrishi($dal);
+    echo  'Dal Done....';
 
-   //  \Baazar::insertRecordsKrishi($egg);
-   //  echo  'Egg Done....';
+    \Baazar::insertRecordsKrishi($egg);
+    echo  'Egg Done....';
 
-   //  \Baazar::insertRecordsKrishi($fertilizer);
-   //  echo  'Fertilizer Done....';
+    \Baazar::insertRecordsKrishi($fertilizer);
+    echo  'Fertilizer Done....';
 
-   //  \Baazar::insertRecordsKrishi($fibre);
-   //  echo  'Fibre Done....';
+    \Baazar::insertRecordsKrishi($fibre);
+    echo  'Fibre Done....';
 
-   //  \Baazar::insertRecordsKrishi($fish);
-   //  echo  'Fish Done....';
+    \Baazar::insertRecordsKrishi($fish);
+    echo  'Fish Done....';
 
-   //  \Baazar::insertRecordsKrishi($food_grains);
-   //  echo  'Food Grains Done....';
+    \Baazar::insertRecordsKrishi($food_grains);
+    echo  'Food Grains Done....';
 
-   //  \Baazar::insertRecordsKrishi($fruit);
-   //  echo  'Fruit Done....';
+    \Baazar::insertRecordsKrishi($fruit);
+    echo  'Fruit Done....';
 
-   //  \Baazar::insertRecordsKrishi($leather);
-   //  echo  'Leather Done....';
+    \Baazar::insertRecordsKrishi($leather);
+    echo  'Leather Done....';
 
-   //  \Baazar::insertRecordsKrishi($meat);
-   //  echo  'Meat Done....';
+    \Baazar::insertRecordsKrishi($meat);
+    echo  'Meat Done....';
 
-   //  \Baazar::insertRecordsKrishi($milk);
-   //  echo  'Milk Done....';
+    \Baazar::insertRecordsKrishi($milk);
+    echo  'Milk Done....';
 
-   //  \Baazar::insertRecordsKrishi($oil);
-   //  echo  'Oil Done....';
+    \Baazar::insertRecordsKrishi($oil);
+    echo  'Oil Done....';
 
-   //  \Baazar::insertRecordsKrishi($spices);
-   //  echo  'Spices Done....';
+    \Baazar::insertRecordsKrishi($spices);
+    echo  'Spices Done....';
 
-   //  \Baazar::insertRecordsKrishi($tobacco);
-   //  echo  'Tobacco Done....';
+    \Baazar::insertRecordsKrishi($tobacco);
+    echo  'Tobacco Done....';
 
-   //  \Baazar::insertRecordsKrishi($vegetable);
-   //  echo  'Vegetables Done....';
+    \Baazar::insertRecordsKrishi($vegetable);
+    echo  'Vegetables Done....';
 
-   //  \Baazar::insertRecordsKrishi($others);
-   //  echo  'Others Done....';
+    \Baazar::insertRecordsKrishi($others);
+    echo  'Others Done....';
 
   // Krishi Product Category End //
 

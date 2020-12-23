@@ -36,6 +36,14 @@ class CreateShopsTable extends Migration
             $table->unsignedInteger('timezone_id')->nullable();
             $table->boolean('active')->default(1)->change();
             $table->foreignId('merchant_id')->constrained('merchants')->references('id')->onDelete('cascade');
+            $table->foreignId('division_id')->constrained('divisions')->references('id')->onDelete('cascade');
+            $table->foreignId('district_id')->constrained('districts')->references('id')->onDelete('cascade');
+            $table->enum('address_type',['Residential','Municipal']);
+            $table->integer('municipal_id')->nullable();
+            $table->integer('municipal_ward_id')->nullable();
+            $table->integer('upazila_id')->nullable();
+            $table->integer('union_id')->nullable();
+            $table->integer('village_id')->nullable();
             $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

@@ -70,7 +70,7 @@ class MerchantController extends Controller{
             'email'      => 'nullable|unique:users,email',
             'password'   => 'required|min:8'
         ]);
-
+        // dd($request->all());
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name'  => $request->last_name,
@@ -80,7 +80,6 @@ class MerchantController extends Controller{
             'type'       => 'merchant',
             'create_at'  => now(),
         ]);
-
         $slug = Baazar::getUniqueSlug($seller,$request->first_name);
 
         $merchant = Merchant::create([
@@ -209,39 +208,46 @@ class MerchantController extends Controller{
     public function shopRegistrationStore(Request $request,Shop $shop){
         // dd($request->all());
         $request->validate([
-            'name'       => 'required',
-            // 'slogan'     => 'required',
-            // 'phone'      => 'required',
-            // 'address'    => 'required',
-            // 'zip'        => 'numeric|required',
-            // 'email'      => 'required|unique:shops,email',
+            'name'          => 'required',
+            'division'      => 'required',
+            'district'      => 'required',
+            'type'          => 'required',
+            'address'       => 'required',
         ]);
         $sellerId = Merchant::where('remember_token',$request->token)->first();
+        if(!$sellerId){return redirect('/');}
 
-        if(!$sellerId){
-            return redirect('/');
-        }
+        $sellerId->update(['reg_step' => 'complete']);
 
-        $sellerId->update([
-            'reg_step'         => 'complete',
-        ]);
         $slug = Baazar::getUniqueSlug($shop,$request->name);
-        $shope = [
+        $shop = [
             'name'      => $request->name,
             'slug'      => $slug,
-            'phone'     => $request->phone,
-            'email'     => $request->email,
-            'web'       => $request->web,
             'lat'       => $request->lat,
+            'division_id'=> (int)$request->division,
+            'district_id'=> (int)$request->district,
             'lng'       => $request->lng,
             'address'   => $request->address,
-            'zip'       => $request->zip,
             'merchant_id' => $sellerId->id,
             'user_id'   => $sellerId->user_id,
             'create_at' => now(),
         ];
+        if($request->type == 'Residential'){
+            $shop = array_merge($shop,[
+                    'address_type'  => 'Residential',
+                    'upazila_id'    => (int)$request->upazila,
+                    'union_id'      => (int)$request->union,
+                    'village_id'    => (int)$request->village,
+                ]);
+        }else{
+           $shop =  array_merge($shop,[
+                'address_type'      => 'Municipal',
+                'municipal_id'      => (int)$request->municipal,
+                'municipal_ward_id' => (int)$request->ward,
+                ]);
+        }
 
-        Shop::create($shope);
+        Shop::create($shop);
         flash('Please Select your business area')->success()->important();
         return redirect('merchant/business-info'.'?token='.$request->token);
     }

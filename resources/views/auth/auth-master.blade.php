@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
 
      <!-- Custom css-->
-    <link rel="stylesheet" type="text/css" href="{{asset('/')}}/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('/')}}css/custom.css">
 
     @stack('css')
 </head>

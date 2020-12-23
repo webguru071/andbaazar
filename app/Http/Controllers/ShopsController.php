@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Inventory;
 use App\Models\Merchant;
+use App\Models\Geo\Division;
 use Baazar;
 use Session;
 use Illuminate\Support\Facades\Auth;
@@ -203,8 +204,8 @@ class ShopsController extends Controller
     public function edit($id)
     {
         $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
-        $shop = Shop::all();
-        return view('merchant.shops.edit',compact('shopProfile','shop'));
+        $divisions = Division::all();
+        return view('merchant.shops.edit',compact('shopProfile','divisions'));
     }
 
     /**
@@ -216,29 +217,45 @@ class ShopsController extends Controller
      */
     public function update(Request $request)
     {
-        $shop = Shop::where('user_id',Auth::user()->id)->first();
+        // dd($request->all());
+        $shopModel = Shop::where('user_id',Auth::user()->id)->first();
         //dd($shop);
+        $shop = [
+            'name'              => $request->name,
+            'slogan'            => $request->slogan,
+            'phone'             => $request->phone,
+            'address'           => $request->address,
+            'email'             => $request->email,
+            'web'               => $request->web,
+            'lat'               => $request->lat,
+            'lng'               => $request->lng,
+            'facebook'          => $request->facebook,
+            'instagram'         => $request->instagram,
+            'twitter'           => $request->twitter,
+            'youtube'           => $request->youtube,
+            'description'       => $request->description,
+            'bdesc'             => $request->bdesc,
+            'updated_at'        => now(),
+        ];
+        if($request->type == 'Residential'){
+            $shop = array_merge($shop,[
+                    'address_type'  => 'Residential',
+                    'upazila_id'    => (int)$request->upazila,
+                    'union_id'      => (int)$request->union,
+                    'village_id'    => (int)$request->village,
+                ]);
+        }else{
+           $shop =  array_merge($shop,[
+                'address_type'      => 'Municipal',
+                'municipal_id'      => (int)$request->municipal,
+                'municipal_ward_id' => (int)$request->ward,
+                ]);
+        }
+        // dd($shop);
+
         $this->validateForm($request);
 
-            $shop->update([
-                'name'              => $request->name,
-                'slogan'            => $request->slogan,
-                'phone'             => $request->phone,
-                // 'logo'              => Baazar::fileUpload($request,'logo','old_image','/uploads/shops/logos'),
-                // 'google_location'   => $request->google_location,
-                // 'banner'            => Baazar::fileUpload($request,'logo','old_image','/uploads/shop_banner'),
-                'email'             => $request->email,
-                'web'               => $request->web,
-                'lat'               => $request->lat,
-                'lng'               => $request->lng,
-                'facebook'          => $request->facebook,
-                'instagram'         => $request->instagram,
-                'twitter'           => $request->twitter,
-                'youtube'           => $request->youtube,
-                'description'       => $request->description,
-                'bdesc'             => $request->bdesc,
-                'updated_at'        => now(),
-            ]);
+            $shopModel->update($shop);
 
 
         session()->flash('success','your shop profile updated');
@@ -259,9 +276,9 @@ class ShopsController extends Controller
     private function validateForm($request){
         $validatedData = $request->validate([
             'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email',
-            'slogan' => 'required',
+            // 'phone' => 'required',
+            // 'email' => 'required|email',
+            // 'slogan' => 'required',
         ]);
     }
 }
