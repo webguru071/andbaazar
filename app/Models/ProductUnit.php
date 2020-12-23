@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductUnit extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'name',
         'symbol',
         'bn_name',
         'description'
     ];
-    use SoftDeletes;
 }

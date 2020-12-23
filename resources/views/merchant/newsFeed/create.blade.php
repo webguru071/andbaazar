@@ -45,7 +45,7 @@
                                     <div class="col-md-4 text-left">
                                         <label for="image">News Feed Image</label>
                                         <div class="mt-0"> 
-                                            <img id="output" class="imagestyle" src="{{ asset('/uploads/newsfeed_image/newsfeed-4.png') }}"/> 
+                                            <img id="output" class="imagestyle" src="{{ asset('/no-img.jpg') }}"/> 
                                         </div>
                                         <div class="uploadbtn">
                                             <label for="file-upload" class="custom-file-upload">Upload Here</label>

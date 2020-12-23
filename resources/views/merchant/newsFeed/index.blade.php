@@ -94,13 +94,15 @@
                                                 <div class="form-group">
                                                     <label for="validationCustom01" class="mb-1">Description :</label>
                                                     <div>
-                                                        @php $i  = 0; @endphp
-                                                        @foreach($row->rejectvalue as $reason)
-                                                        <ol>
-                                                            <span class="text-danger">{{ ++$i }} .</span>
-                                                            <li><b class="text-danger">{{$reason->rej_name." "}}</b></li>
-                                                        </ol>
-                                                        @endforeach
+                                                        @if($row->rejectvalue)
+                                                            @php $i  = 0; @endphp
+                                                            @foreach($row->rejectvalue as $reason)
+                                                            <ol>
+                                                                <span class="text-danger">{{ ++$i }} .</span>
+                                                                <li><b class="text-danger">{{$reason->rej_name." "}}</b></li>
+                                                            </ol>
+                                                            @endforeach
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

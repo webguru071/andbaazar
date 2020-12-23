@@ -2,205 +2,59 @@
 @extends('merchant.master')
 @section('content')
 @push('css')
-<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> --}}
-{{-- <link href="{{ asset('material') }}/css/select2.min.css" rel="stylesheet" /> --}}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
-
-
+<link rel="stylesheet" href="https://foliotek.github.io/Croppie/croppie.css">
 <style>
-    /* select2 */
-
-    .select2-selection {
-  height: 34px !important;
-  font-size: 13px;
-  font-family: 'Open Sans', sans-serif;
-  border-radius: 0 !important;
-  border: solid 1px #c4c4c4 !important;
-  padding-left: 4px;
-  padding-top:7px;
-}
-
-.select2-selection--multiple {
-  height: 70px !important;
-  width: 975px !important;
-  overflow: hidden;
-}
-
-.select2-selection__choice {
-  height: 40px;
-  line-height: 40px;
-  padding-right: 16px !important;
-  padding-left: 16px !important;
-  background-color: #CAF1FF !important;
-  color: #333 !important;
-  border: none !important;
-  border-radius: 3px !important;
-}
-
-.select2-selection__choice__remove {
-  float: right;
-  margin-right: 0;
-  margin-left: 2px;
-}
-.select2-search--inline .select2-search__field {
-  line-height: 40px;
-  color: #333;
-  width: 100%!important;
-}
-
-.select2-container:hover,
-.select2-container:focus,
-.select2-container:active,
-.select2-selection:hover,
-.select2-selection:focus,
-.select2-selection:active {
-  outline-color: transparent;
-  outline-style: none;
-}
-
-.select2-results__options li {
-  display: block;
-}
-
-.select2-selection__rendered {
-  transform: translateY(2px);
-}
-
-.select2-selection__arrow {
-  display: none;
-}
-
-.select2-results__option--highlighted {
-  background-color: #CAF1FF !important;
-  color: #333 !important;
-}
-
-.select2-dropdown {
-  border-radius: 0 !important;
-  box-shadow: 0px 3px 6px 0 rgba(0,0,0,0.15) !important;
-  border: none !important;
-  margin-top: 4px !important;
-  width: 366px !important;
-}
-
-.select2-results__option {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 13px;
-  line-height: 24px !important;
-  vertical-align: middle !important;
-  padding-left: 8px !important;
-}
-
-.select2-results__option[aria-selected="true"] {
-  background-color: #eee !important;
-}
-
-.select2-search__field {
-  font-family: 'Open Sans', sans-serif;
-  color: #333;
-  font-size: 13px;
-  padding-left: 8px !important;
-  border-color: #c4c4c4 !important;
-}
-
-.select2-selection__placeholder {
-  color: #c4c4c4 !important;
-}
-    /* select2  End*/
+    input[type="file"] {
+        display: none;
+    }
+    #mainNav {
+        height: 70px;
+    }
+    #mainNav .navbar-brand img, .footer-widget.footer-about a > img {
+        height: 34px;
+    }
     #catarea{
-            background: #fff;
-            border: 1px solid #ddd;
-            width: 97%;
-        }
-        .cat-level ul li {
-            display: inherit;
-            padding: 5px;
-            cursor: pointer;
-            border-left: 2px solid #fff;
-            margin: 2px;
-        }
-        .cat-level ul li:hover,.active{
-            background: #ddd;
-            border-left: 2px solid red !important;
-        }
-        .cat-level{
-            border: 1px solid #ddd;
-        }
-        .cat-levels{
-            height: 250px;
-            overflow-y: scroll;
-        }
-        .cat-level input[type=text]{
-            height: 40px;
-        }
-        .foo {
-            position: absolute;
-            background-color: white;
-            width: 5em;
-            z-index: 100;
-        }
-        .scroll {
-            overflow-x: auto;
-        }
-        .readonly {
-            opacity: .5;
-            cursor: not-allowed !important;
-        }
-
-       /* Iamge */
-       .h-100{
-            height: 100px !important;
-            margin: 4px;
-        }
-        .drop-area{
-            display: flex;
-            padding: 10px;
-            background: #fdfbfb;
-            cursor: pointer;
-            border: 2px dashed #ddd !important
-        }
-        .drop-single{
-            border: 1px solid #ddd;
-            padding: 5px;
-            margin: 5px;
-            background: #fff;
-            cursor: move;
-        }
-        .dz-message{
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .dz-message h2{
-            color: #b7b0b0;
-            font-weight: 1000;
-            font-size: 24px;
-        }
-        .collpanel{
-            /* width: 672px; */
-            width:100%;
-            height: 250px;
-        }
-        input[type=text],input[type=number],select,.input-group-text,.h-40{
-            height: 40px !important;
-        }
-        .rowRemove{
-            line-height: 26px;
-        }
-        .ui-sortable-placeholder { height: 125px; width: 125px; border: 1px dashed; line-height: 1.2em; }
-
-        /* button */
-        .custom{
-          width: 108px;
-          height:50px;
-        }
-        .multepale-select{
-            padding-bottom: 100px!important;
-        }
-
+        background: #fff;
+        border: 1px solid #ddd;
+        width: 97%;
+    }
+    .cat-level ul li {
+        display: inherit;
+        padding: 5px;
+        cursor: pointer;
+        border-left: 2px solid #fff;
+        margin: 2px;
+    }
+    .cat-level ul li:hover,.active{
+        /*background: #ddd;*/
+        /*border-left: 2px solid red !important;*/
+    }
+    .cat-level{
+        border: 1px solid #ddd;
+    }
+    .cat-levels{
+        height: 250px;
+        overflow-y: scroll;
+    }
+    .cat-level input[type=text]{
+        height: 40px;
+    }
+    .foo {
+        position: absolute;
+        background-color: white;
+        width: 5em;
+        z-index: 100;
+    }
+    .scroll {
+        overflow-x: auto;
+    }
+    .readonly {
+        opacity: .5;
+        cursor: not-allowed !important;
+    }     
+    input[type=text],input[type=number],select,.input-group-text,.h-40{
+        height: 40px !important;
+    }
     /* Thumbnail Image Upload*/
     .imagestyle{
         width: 200px;
@@ -211,7 +65,6 @@
         border-bottom: 0px;
         padding: 10px;
     }
-
     #file-upload{
         display: none;
     }
@@ -222,17 +75,15 @@
         width: 200px;background: #ddd;text-align: center;
     }
     .custom-file-upload {
-        /* border: 1px solid #ccc; */
         display: inline-block;
         padding: 9px 40px;
         cursor: pointer;
         border-top: 0px;
     }
 </style>
-
 @endpush
 @include('elements.alert')
-
+@include('elements.dropzone',['oldImages' => $itemImages])
 
 <section class="dashboard-section section-b-space">
     <div class="container">
@@ -311,7 +162,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group margin">
                                                 <label for="available_from">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('available_from') }}</span>
-                                                <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerPreviousOnly" required name="available_from" value="{{ $krishiproduct->available_from }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
+                                                <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerNexDayOnly" required name="available_from" value="{{ $krishiproduct->available_from }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -331,7 +182,7 @@
                                                 <select class="form-control" id="productUnit" name="product_unit_id" required>
                                                     <option value="">-- Select Unit --</option>
                                                     @foreach($productUnits as $productUnit)
-                                                        <option value="{{ $productUnit->id }}" {{ ($krishiproduct->product_unit_id == $productUnit->id) ? 'selected' : '' }}>{{ $productUnit->name .' (' .$productUnit->symbol .')' }}</option>
+                                                        <option value="{{ $productUnit->id }}" {{ ($krishiproduct->product_unit_id == $productUnit->id) ? 'selected' : '' }}>{{ $productUnit->bn_name .' (' .$productUnit->description .')' }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -370,23 +221,22 @@
                                             <span class="text-danger">{{ $errors->first('description') }}</span>
                                         @endif
                                     </div>
-                                    {{-- {{dd($frequencyname)}} --}}
-                                    <div class="form-group form-unit form-divided">
-                                        <label for="frequency" class="form-input-label pr-5">Frequency:</label><br>
-                                        <select class="js-example-basic-multiple" name="frequency[]" multiple="multiple">
-                                            <option value="sunday" {{in_array('sunday',$frequencyname) ? 'selected' : ''}}>Sunday</option>
-                                            <option value="monday" {{in_array('monday',$frequencyname) ? 'selected' : ''}}>Monday</option>
-                                            <option value="tuesday" {{in_array('tuesday',$frequencyname) ? 'selected' : ''}}>Tuesday</option>
-                                            <option value="wednessday" {{in_array('wednessday',$frequencyname) ? 'selected' : ''}}>Wednessday</option>
-                                            <option value="thursday" {{in_array('thursday',$frequencyname) ? 'selected' : ''}}>Thursday</option>
-                                            <option value="friday" {{in_array('friday',$frequencyname) ? 'selected' : ''}}>Friday</option>
-                                            <option value="saturday" {{in_array('saturday',$frequencyname) ? 'selected' : ''}}>Saturday</option>
-                                            <option value="everyday" {{in_array('everyday',$frequencyname) ? 'selected' : ''}}>Everyday</option>
-                                            <option value="weekly" {{in_array('weekly',$frequencyname) ? 'selected' : ''}}>Weekly</option>
-                                            <option value="fortnightly" {{in_array('fortnightly',$frequencyname) ? 'selected' : ''}}>Fortnightly</option>
-                                            <option value="monthly" {{in_array('monthly',$frequencyname) ? 'selected' : ''}}>Monthly</option>
-                                        </select>
-                                      </div>
+                                    <div class="form-group">
+                                        <label class="form-input-label pr-5">Frequency :</label><br>
+                                        <div class="ml-3" style="max-height: 200px; overflow-y: scroll;">
+                                        <label for="sunday"><input type="checkbox" {{in_array('sunday',$frequencyname) ? 'checked' : ''}} id="sunday" name="frequency[]" value="sunday"> &nbsp; Sunday </label> <br/>
+                                        <label for="monday"><input type="checkbox" {{in_array('monday',$frequencyname) ? 'checked' : ''}} id="monday" name="frequency[]" value="monday"> &nbsp; Monday </label> <br/>
+                                        <label for="tuesday"><input type="checkbox" {{in_array('tuesday',$frequencyname) ? 'checked' : ''}} id="tuesday" name="frequency[]" value="tuesday"> &nbsp; Tuesday </label><br/>
+                                        <label for="wednessday"><input type="checkbox" {{in_array('wednessday',$frequencyname) ? 'checked' : ''}} id="wednessday" name="frequency[]" value="wednessday"> &nbsp; Wednessday </label><br/>
+                                        <label for="thursday"><input type="checkbox" {{in_array('thursday',$frequencyname) ? 'checked' : ''}} id="thursday" name="frequency[]" value="thursday"> &nbsp; Thursday </label><br/>
+                                        <label for="friday"><input type="checkbox" {{in_array('friday',$frequencyname) ? 'checked' : ''}} id="friday" name="frequency[]" value="friday"> &nbsp; Friday </label><br/>
+                                        <label for="saturday"><input type="checkbox" {{in_array('saturday',$frequencyname) ? 'checked' : ''}} id="saturday" name="frequency[]" value="saturday"> &nbsp; Saturday </label><br/>
+                                        <label for="everyday"><input type="checkbox" {{in_array('everyday',$frequencyname) ? 'checked' : ''}} id="everyday" name="frequency[]" value="everyday"> &nbsp; Everyday </label><br/>
+                                        <label for="weekly"><input type="checkbox" {{in_array('weekly',$frequencyname) ? 'checked' : ''}} id="weekly" name="frequency[]" value="weekly"> &nbsp; Weekly </label><br/>
+                                        <label for="fortnightly"><input type="checkbox" {{in_array('fortnightly',$frequencyname) ? 'checked' : ''}} id="fortnightly" name="frequency[]" value="fortnightly"> &nbsp; Fortnightly </label><br/>
+                                        <label for="monthly"><input type="checkbox" {{in_array('monthly',$frequencyname) ? 'checked' : ''}} id="monthly" name="frequency[]" value="monthly"> &nbsp; Monthly </label>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label for="returnPolicy" class="">Return Policy (if any)</label>
                                         <textarea class="form-control" rows="3" id="returnPolicy" name="return_policy" placeholder="Your custom return policy ...">{{ $krishiproduct->return_policy }}</textarea>
@@ -425,396 +275,174 @@
 </div>
 {{--    End Image Croping Modal --}}
 @endsection
-@push('css')
-    <link rel="stylesheet" href="https://foliotek.github.io/Croppie/croppie.css">
-    <style>
-        input[type="file"] {
-            display: none;
-        }
-        #mainNav {
-            height: 70px;
-        }
-        #mainNav .navbar-brand img, .footer-widget.footer-about a > img {
-            height: 34px;
-        }
-    </style>
-@endpush
 @push('js')
-<script src="{{ asset('js/jquery-ui.js') }}"></script>
-{{-- <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script> --}}
-<script src="{{ asset('js/dropzone.js') }}"></script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> --}}
-{{-- <script src="{{ asset('material') }}/js/select2.min.js"></script> --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
 <script src="https://foliotek.github.io/Croppie/croppie.js"></script>
-    <script>
-         $('#category').click(function(){
-            $('#catarea').toggle();
+<script>
+    //summernote
+    $(document).ready(function() {
+        $('.summernote').summernote({
+            height: 150,
         });
-        $('#close').click(function(){
-            $('#catarea').hide();
-        });
+    });
+    //category
+    $('#category').click(function(){
+        $('#catarea').toggle();
+    });
+    $('#close').click(function(){
+        $('#catarea').hide();
+    });
 
-         function getNextLevel(val,level,e){
-             setConfirm(val,level,e);
-             // $('#confirm').addClass('readonly');
-             // $('#confirm').attr('onclick','ConfirmCategory('+val+',this)');
-             var nextLevel = level+1;
-             var li ='';
-             $.ajax({
-                 type:"get",
-                 url:"{{ url('/merchant/krishi/products/subCategoryChild/{id}') }}",
-                 data:{ 'subCatId': val },
-                 success:function(data){
-                     li += `<div class="col-md-3 cat-level p-2 level-${nextLevel}">
-                                    <input type="text" onkeyup="categorySearch(${nextLevel},this)" class="form-control" placeholder="search">
-                                    <ul class="cat-levels sub">`;
-                     for( var i=0; i<data.length; i++ ){
-                         if(data[i].is_last == 1){
-                             li += `<li onclick="setConfirm(${data[i].id},${nextLevel},this)">${data[i].name}</li>`;
-                         }else{
-                             li += `<li onclick="getNextLevel(${data[i].id},${nextLevel},this)">${data[i].name}<span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>`;
-                         }
-                     }
-                     li +=`</ul>
-                                </div>`;
-
-                     setActive(level,e);
-                     $('.categories').append(li);
-                     var far = $('.categories' ).width();
-                     $('.categories').animate({scrollLeft:far},800);
-                 }
-             })
-         };
-
-        function setConfirm(id,level,e){
-            setActive(level,e);
-            $('#confirm').attr('onclick','ConfirmCategory('+id+',this)');
-            $('#confirm').removeClass('readonly');
-        }
-
-        function ConfirmCategory(id,e){
-            if(id <= 0){
-                alert('please select a category properly');
-            }else{
-                $('#category_id').val(id);
-                $('#category').val($('.currentSelection').text());
-                $('#catarea').hide();
-                // getCategoryAttr(id);
-                // getInventoryAttr(id);
-                // getBrands(id);
-            }
-        }
-
-        function setActive(level,e){
-            var current = '';
-            for(var j = level+1; j<10 ; j++){
-                $('.level-'+j).remove();
-            }
-
-            $('.col-md-3.cat-level.p-2.level-'+level+' ul li').each(function(){
-                $(this).removeClass('active');
-            })
-
-            $(e).addClass('active');
-            $('.col-md-3.cat-level.p-2 ul li.active').each(function(){
-                current += $(this).text()+'/';
-            })
-            $('.currentSelection').html(current);
-
-        }
-
-        $('#clear').on('click',function(){
-            for(var j = 2; j<10 ; j++){
-                $('.level-'+j).remove();
-            }
-        });
-
-
-        //search
-        function categorySearch(level,e){
-
-            var value = $(e).val();
-            var patt = new RegExp(value, "i");
-
-            $('.col-md-3.cat-level.p-2.level-'+level).find('li').each(function() {
-                if($(this).text().search(patt) >= 0){
-                    $(this).show();
-                }else{
-                    $(this).hide();
-                }
-            });
-
-        };
-
-        $(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
-});
-// $('.js-example-basic-single').select2();
-
-    </script>
-
-    {{-- Summer Note --}}
-    <script>
-        $(document).ready(function() {
-     $('.summernote').summernote({
-           height: 150,
-      });
-   });
-    </script>
-  {{-- Image --}}
-    <script>
-        //Rendering Main images into Dropzone
-        $( "#sortable-main" ).sortable({
-            placeholder: "ui-state-highlight",
-            revert: true,
-        });
-        $("#sortable-main").disableSelection();
-        // setup("my-awesome-dropzone-main",'main');
-        var mockFile = [];
-        @foreach($itemImages as $img)
-            mockFiles = {
-                name:'img-'+'product-image',
-                size:{{$img->id}},
-                dataURL: "{{asset('/')}}"+"{{$img->org_img}}"
-            }
-            mockFile.push(mockFiles);
-        @endforeach
-        setup("my-awesome-dropzone-main",'main',mockFile);
-
-        //Rendering Other images into Dropzone
-{{--        @foreach($itemImages as $color=>$imges)--}}
-{{--        mockFile = [];--}}
-
-{{--        @foreach($imges as $img)--}}
-{{--            mockFiles = {--}}
-{{--                name:'img-'+'{{$img->color_slug}}',--}}
-{{--                size:{{$img->id}},--}}
-{{--                dataURL: "{{asset('/')}}"+"{{$img->org_img}}"--}}
-{{--            }--}}
-{{--            mockFile.push(mockFiles);--}}
-{{--        @endforeach--}}
-{{--        @if($color != 'main')--}}
-{{--            appendDrops('{{$color}}',mockFile);--}}
-{{--            mockFile = [];--}}
-{{--        @endif--}}
-{{--        @endforeach--}}
-
-        //Drug & Drop script start
-        $( "#sortable-red").sortable({
-            placeholder: "ui-state-highlight",
-            revert: true,
-        });
-
-        //dropzone scripts
-        $('#selectColor').change(function(){
-            var flag = 0;
-            var color = $(this).val();
-            $('.img-upload-area').each(function(){
-                if(color == $(this).data('color')){
-                    flag = 1;
-                }
-            });
-            if(flag == 0){
-                appendDrops(color);
-            }else{
-                swal("The selected color already been exits", {icon: "warning",buttons: false,timer: 2000});
-            }
-        });
-        function appendDrops(color,mockFile=''){
-            $('.drops').append(
-                    `<div id="dropzone-${color}" class="img-upload-area" data-color="${color}"><label class="mt-3">Color Family: <b>${color}</b></label>
-                    <span class="btn btn-sm text-danger" onclick="removeColorItem('${color}')"><i class="fa fa-trash"></i></span>
-                    <div class="border m-0 collpanel drop-area row my-awesome-dropzone${color}" id="sortable-${color}">
-                        <span class="dz-message color-${color}">
-                            <h2>Drag & Drop Your Files</h2>
-                        </span>
-                    </div>
-                    <small>Remember Your featured file will be the first one.</small><br></div>`
-                );
-                $( "#sortable-"+color ).sortable({
-                    placeholder: "ui-state-highlight",
-                    revert: true,
-                });
-                $("#sortable-"+color ).disableSelection();
-                setup("my-awesome-dropzone"+color,color,mockFile);
-                inventoryRows(color);
-        }
-
-        Dropzone.autoDiscover = false;
-
-
-        //function
-        function setup(id,color,mockFile='') {
-            let options = {
-                autoProcessQueue: false,
-                url : '/',
-                thumbnailHeight: 200,
-                thumbnailWidth: 300,
-                maxFilesize: 100,
-                maxFiles: 5,
-                dictResponseError: "Server not Configured",
-                dictFileTooBig: "File too big. Must be less than ",
-                dictCancelUpload: "",
-                acceptedFiles: ".png,.jpg,.jpeg",
-                init: function() {
-
-                    var self = this;
-
-                    // self.on("addedfile", function(file) {
-                    //     $('.color-'+color).addClass('d-none');
-                    // });
-
-                    self.on("dragenter", function(event) {
-                        $('#sortable-'+color).css('background-color','#fff');
-                    });
-                    self.on("dragleave", function(event) {});
-
-                    self.on("thumbnail", function(file){
-                        // console.log(file);
-                        var i = 0;
-                        $('.color-'+color+'-element').each(function(){
-                            i = i+1;
-                        });
-                        if(i > 5){
-                            swal("Maximum Five file are allowed", {icon: "warning",buttons: false,timer: 2000});
-                            this.removeFile(file);
-                            $('#id'+file.size).remove();
-                        }
-
-                        if(file.size < 3000000){
-                            $('.inputs').append(`<input type="hidden" class="image-class-${color}" name="images[${color}][]" id="id${file.size}" value="${file.dataURL}">`);
-                        }else{
-                            swal("Maximum size reached", {icon: "warning",buttons: false,timer: 2000});
-                            this.removeFile(file);
-                        }
-                    });
-
-                    self.on("removedfile", function(file) {
-                        var i = 0;
-                        $('.color-'+color+'-element').each(function(){
-                            i = i+1;
-                        });
-                        if(i === 0){
-                            $('.color-'+color).removeClass('d-none');
-                        }
-                        $('#id'+file.size).remove();
-                    });
-
-                    // Send file starts
-                    self.on("sending", function(file) {
-                        // console.log("upload started", file);
-                    });
-
-                    self.on("complete", function(file, response) {
-                        if (file.name !== "442343.jpg") {
-                            //this.removeFile(file);
-                        }
-                    });
-
-                    self.on("maxFilesize", function(file, response) {
-                        swal("Maximum size reached", {icon: "warning",buttons: false,timer: 2000});
-                        this.removeFile(file);
-                    });
-
-                    self.on("maxfilesexceeded", function(file, response) {
-                        swal("Maximum file reached", {icon: "warning",buttons: false,timer: 2000});
-                        this.removeFile(file);
-                    });
-
-                    self.on("addedfile", function(file) {
-                        const pattern = /\d{6}(\.)(jpg|jpeg|png)/;
-                        if (!pattern.test(file.name)) {
-                            //   this.removeFile(file);
-                        }
-                    });
-
-
-                    // Create the mock file:
-                    // var mockFile = [
-                    //     { name: "Filename", size: 12345 , dataURL:"http://localhost/andbaazar/public/uploads/shops/logos/shop-4.png"},
-                    //     { name: "Filename", size: 12345 , dataURL:"http://localhost/andbaazar/public/uploads/shops/logos/shop-4.png"}
-                    // ];
-
-                    if(mockFile != ''){
-                        mockFile.forEach(mockFile=>{
-                            self.emit("addedfile", mockFile);
-                            self.emit("thumbnail", mockFile, mockFile.dataURL);
-                        });
+    function getNextLevel(val,level,e){
+        setConfirm(val,level,e);
+        // $('#confirm').addClass('readonly');
+        // $('#confirm').attr('onclick','ConfirmCategory('+val+',this)');
+        var nextLevel = level+1;
+        var li ='';
+        $.ajax({
+            type:"get",
+            url:"{{ url('/merchant/krishi/products/subCategoryChild/{id}') }}",
+            data:{ 'subCatId': val },
+            success:function(data){
+                    li += `<div class="col-md-3 cat-level p-2 level-${nextLevel}">
+                                <input type="text" onkeyup="categorySearch(${nextLevel},this)" class="form-control" placeholder="search">
+                                <ul class="cat-levels sub">`;
+                for( var i=0; i<data.length; i++ ){
+                    if(data[i].is_last == 1){
+                        li += `<li onclick="setConfirm(${data[i].id},${nextLevel},this)">${data[i].name}</li>`;
+                    }else{
+                        li += `<li onclick="getNextLevel(${data[i].id},${nextLevel},this)">${data[i].name}<span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>`;
                     }
+                }
+                    li +=`</ul>
+                            </div>`;
 
-                },
-
-                previewTemplate: `
-                <div class="drop-single color-${color}-element ui-state-default">
-                <a href="javascript:undefined;" data-dz-remove=""><i class="fa fa-trash-o"></i>&nbsp;<span>Remove</span></a>
-                <br/>
-                <span class="dz-upload" data-dz-uploadprogress></span>
-                <img class="h-100" data-dz-thumbnail/>
-                </div>`
-            };
-            var myDropzone = new Dropzone(`.${id}`, options);
-        };
-
-        $(document).ready(function() {
-
-    $(".js-example-basic-multiple").select2({
-        placeholder: "Select Frequency"
-    }).on('change', function(e) {
-        if($(this).val() && $(this).val().length) {
-                $(this).next('.select2-container')
-            .find('li.select2-search--inline input.select2-search__field').attr('placeholder', 'Select Frequency');
-        }
-    });
-    });
-    </script>
-
-    {{--    Start Product Thumbnail Image Croping  --}}
-    <script>
-        function readFileLogo(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $("#main-cropper").croppie("bind", {
-                        url: e.target.result
-                    });
-                    $('#image-modal').modal('show');
-                };
-                reader.readAsDataURL(input.files[0]);
+                setActive(level,e);
+                $('.categories').append(li);
+                var far = $('.categories' ).width();
+                $('.categories').animate({scrollLeft:far},800);
             }
+        })
+    };
+
+    function setConfirm(id,level,e){
+        setActive(level,e);
+        $('#confirm').attr('onclick','ConfirmCategory('+id+',this)');
+        $('#confirm').removeClass('readonly');
+    }
+
+    function ConfirmCategory(id,e){
+        if(id <= 0){
+            alert('please select a category properly');
+        }else{
+            $('#category_id').val(id);
+            $('#category').val($('.currentSelection').text());
+            $('#catarea').hide();
+            // getCategoryAttr(id);
+            // getInventoryAttr(id);/
+            // getBrands(id);
         }
-        $("#img-upload").on("change", function() {
-            readFileLogo(this);
-        });
-        var basic = $("#main-cropper").croppie({
-            viewport: { width: 250, height: 250 },
-            boundary: { width: 300, height: 300 },
-            showZoomer: true,
-            enableExif: true
-        });
-        $("#upload-image").click(function() {
-            $("#main-cropper")
-                .croppie("result", {
-                    type: "canvas",
-                    size: "viewport",
-                }).then(function(resp) {
-                $('#image-modal').modal('hide');
-                $("#result").attr("src", resp);
-                $('#thumbnail_image').val(resp);
-                $('#output').attr('src',resp);
-                $('#img-sidebar').attr('src',resp);
-                $('#loader').removeClass('loader');
-                $('#output').removeClass('opacity5');
-                $('#img-sidebar').removeClass('opacity5');
+    }
 
-            });
+    function setActive(level,e){
+        var current = '';
+        for(var j = level+1; j<10 ; j++){
+            $('.level-'+j).remove();
+        }
+
+        $('.col-md-3.cat-level.p-2.level-'+level+' ul li').each(function(){
+            $(this).removeClass('active');
+        })
+
+        $(e).addClass('active');
+        $('.col-md-3.cat-level.p-2 ul li.active').each(function(){
+            current += $(this).text()+'/';
+        })
+        $('.currentSelection').html(current);
+
+    }
+
+    $('#clear').on('click',function(){
+        for(var j = 2; j<10 ; j++){
+            $('.level-'+j).remove();
+        }
+    });
+
+
+    //search
+    function categorySearch(level,e){
+        var value = $(e).val();
+        var patt = new RegExp(value, "i");
+
+        $('.col-md-3.cat-level.p-2.level-'+level).find('li').each(function() {
+            if($(this).text().search(patt) >= 0){
+                $(this).show();
+            }else{
+                $(this).hide();
+            }
         });
-    </script>
-    {{--    End Product Thumbnail Image Croping  --}}
+
+    };
+    //image croping start (Start Product Thumbnail Image Croping)
+    function readFileLogo(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#main-cropper").croppie("bind", {
+                    url: e.target.result
+                });
+                $('#image-modal').modal('show');
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#img-upload").on("change", function() {
+        readFileLogo(this);
+    });
+    var basic = $("#main-cropper").croppie({
+        viewport: { width: 250, height: 250 },
+        boundary: { width: 300, height: 300 },
+        showZoomer: true,
+        enableExif: true
+    });
+    $("#upload-image").click(function() {
+        $("#main-cropper")
+            .croppie("result", {
+                type: "canvas",
+                size: "viewport",
+            }).then(function(resp) {
+            $('#image-modal').modal('hide');
+            $("#result").attr("src", resp);
+            $('#thumbnail_image').val(resp);
+            $('#output').attr('src',resp);
+            $('#img-sidebar').attr('src',resp);
+            $('#loader').removeClass('loader');
+            $('#output').removeClass('opacity5');
+            $('#img-sidebar').removeClass('opacity5');
+        });
+    });
+
+    //news feed options
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        outputs.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+    $('#check').click(function(){
+        var txt = $('textarea#description').val();
+        $('#newsDesctiption').summernote('code',txt); 
+    });
+    $(function() {
+        var checkbox = $("#check"); 
+        checkbox.change(function() {
+            if (checkbox.is(':checked')) { 
+                $('#title').prop('required', true); 
+            } else { 
+                $("#title").val("");
+                $('#title').prop('required', false); 
+            }
+        });
+    });
+
+
+</script>
 @endpush
-
-
-
-
-
-

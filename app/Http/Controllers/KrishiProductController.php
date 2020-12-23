@@ -13,6 +13,7 @@ use App\Models\Merchant;
 use App\Models\ItemImage;
 use App\Models\Category;
 use DB;
+use App\Models\Newsfeed;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
@@ -118,9 +119,21 @@ class KrishiProductController extends Controller
         if($request->images){
             $this->addImages($request->images['main'],$krishiProduct->id);
         }
+        if(isset($request->allow_to_feed)){
+            $newsfeed = new Newsfeed;
+            $slug = Baazar::getUniqueSlug($newsfeed,$request->feed_title);
+            $data = [
+                'title'      => $request->feed_title,
+                'slug'       => $slug,
+                'image'      => Baazar::fileUpload($request,'feed_image','','/uploads/newsfeed_image'),
+                'news_desc'  => $request->feed_desc,
+                'user_id'    => Auth::user()->id,
+                'created_at' => now(),
+            ];
+            Newsfeed::create($data);
+        }
 
         Session::flash('success', 'Krishi Product Added Successfully!');
-
         return redirect()->action('KrishiProductController@index');
 
     }

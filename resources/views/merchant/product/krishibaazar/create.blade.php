@@ -1,562 +1,335 @@
-
 @extends('merchant.master')
 @section('content')
-@push('css')
-<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> --}}
-{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> --}}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+    @push('css')
+        <link rel="stylesheet" href="https://foliotek.github.io/Croppie/croppie.css">
+        <style>
+            input[type="file"] {
+                display: none;
+            }
+            #mainNav {
+                height: 70px;
+            }
+            #mainNav .navbar-brand img, .footer-widget.footer-about a > img {
+                height: 34px;
+            }
+            #catarea{
+                background: #fff;
+                border: 1px solid #ddd;
+                width: 97%;
+            }
+            .cat-level ul li {
+                display: inherit;
+                padding: 5px;
+                cursor: pointer;
+                border-left: 2px solid #fff;
+                margin: 2px;
+            }
+            .cat-level ul li:hover,.active{
+                /*background: #ddd;*/
+                /*border-left: 2px solid red !important;*/
+            }
+            .cat-level{
+                border: 1px solid #ddd;
+            }
+            .cat-levels{
+                height: 250px;
+                overflow-y: scroll;
+            }
+            .cat-level input[type=text]{
+                height: 40px;
+            }
+            .foo {
+                position: absolute;
+                background-color: white;
+                width: 5em;
+                z-index: 100;
+            }
+            .scroll {
+                overflow-x: auto;
+            }
+            .readonly {
+                opacity: .5;
+                cursor: not-allowed !important;
+            }     
+            input[type=text],input[type=number],select,.input-group-text,.h-40{
+                height: 40px !important;
+            }
+            /* Thumbnail Image Upload*/
+            .imagestyle{
+                width: 200px;
+                height: 200px;
+                border-width: 1px;
+                border-style: solid;
+                border-color: #ccc;
+                border-bottom: 0px;
+                padding: 10px;
+            }
+            #file-upload{
+                display: none;
+            }
+            #file-upload1{
+                display: none;
+            }
+            .uploadbtn{
+                width: 200px;background: #ddd;text-align: center;
+            }
+            .custom-file-upload {
+                display: inline-block;
+                padding: 9px 40px;
+                cursor: pointer;
+                border-top: 0px;
+            }
+        </style>
+    @endpush
+    @include('elements.alert')
+    @include('elements.dropzone')
+    <section class="dashboard-section section-b-space">
+        <div class="container">
+            <div class="row">
+                @include('layouts.inc.sidebar.vendor-sidebar',[$active ='krishi'])
+                <div class="col-md-9">
+                    <h3>Add Krishi Product</h3>
+                    <form action="{{route('krishiproductstore')}}" method="POST"  class="form" id="validateForm" enctype="multipart/form-data">
+                        @csrf
+                        <div class="card mb-4">
+                            <h5 class="card-header">Krishi information</h5>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
 
-<style>
-
-    /* select2 */
-
-
-    .select2-selection {
-    height: 34px !important;
-    font-size: 13px;
-    font-family: 'Open Sans', sans-serif;
-    border-radius: 0 !important;
-    border: solid 1px #c4c4c4 !important;
-    padding-left: 4px;
-    padding-top:7px;
-    }
-
-    .select2-selection--multiple {
-    height: 70px !important;
-    width: 975px !important;
-    overflow: hidden;
-    }
-
-    .select2-selection__choice {
-    height: 40px;
-    line-height: 40px;
-    padding-right: 16px !important;
-    padding-left: 16px !important;
-    background-color: #CAF1FF !important;
-    color: #333 !important;
-    border: none !important;
-    border-radius: 3px !important;
-    }
-
-    .select2-selection__choice__remove {
-    float: right;
-    margin-right: 0;
-    margin-left: 2px;
-    }
-    .select2-search--inline .select2-search__field {
-    line-height: 40px;
-    color: #333;
-    width: 100%!important;
-    }
-
-    .select2-container:hover,
-    .select2-container:focus,
-    .select2-container:active,
-    .select2-selection:hover,
-    .select2-selection:focus,
-    .select2-selection:active {
-    outline-color: transparent;
-    outline-style: none;
-    }
-
-    .select2-results__options li {
-    display: block;
-    }
-
-    .select2-selection__rendered {
-    transform: translateY(2px);
-    }
-
-    .select2-selection__arrow {
-    display: none;
-    }
-
-    .select2-results__option--highlighted {
-    background-color: #CAF1FF !important;
-    color: #333 !important;
-    }
-
-    .select2-dropdown {
-    border-radius: 0 !important;
-    box-shadow: 0px 3px 6px 0 rgba(0,0,0,0.15) !important;
-    border: none !important;
-    margin-top: 4px !important;
-    width: 366px !important;
-    }
-
-    .select2-results__option {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
-    line-height: 24px !important;
-    vertical-align: middle !important;
-    padding-left: 8px !important;
-    }
-
-    .select2-results__option[aria-selected="true"] {
-    background-color: #eee !important;
-    }
-
-    .select2-search__field {
-    font-family: 'Open Sans', sans-serif;
-    color: #333;
-    font-size: 13px;
-    padding-left: 8px !important;
-    border-color: #c4c4c4 !important;
-    }
-
-    .select2-selection__placeholder {
-    color: #c4c4c4 !important;
-    }
-    .select2-selection {
-    height: 34px !important;
-    font-size: 13px;
-    font-family: 'Open Sans', sans-serif;
-    border-radius: 0 !important;
-    border: solid 1px #c4c4c4 !important;
-    padding-left: 4px;
-    padding-top:7px;
-}
-
-.select2-selection--multiple {
-  height: 70px !important;
-  width: 975px !important;
-  overflow: hidden;
-}
-
-.select2-selection__choice {
-  height: 40px;
-  line-height: 40px;
-  padding-right: 16px !important;
-  padding-left: 16px !important;
-  background-color: #CAF1FF !important;
-  color: #333 !important;
-  border: none !important;
-  border-radius: 3px !important;
-}
-
-.select2-selection__choice__remove {
-  float: right;
-  margin-right: 0;
-  margin-left: 2px;
-}
-.select2-search--inline .select2-search__field {
-  line-height: 40px;
-  color: #333;
-  width: 100%!important;
-}
-
-.select2-container:hover,
-.select2-container:focus,
-.select2-container:active,
-.select2-selection:hover,
-.select2-selection:focus,
-.select2-selection:active {
-  outline-color: transparent;
-  outline-style: none;
-}
-
-.select2-results__options li {
-  display: block;
-}
-
-.select2-selection__rendered {
-  transform: translateY(2px);
-}
-
-.select2-selection__arrow {
-  display: none;
-}
-
-.select2-results__option--highlighted {
-  background-color: #CAF1FF !important;
-  color: #333 !important;
-}
-
-.select2-dropdown {
-  border-radius: 0 !important;
-  box-shadow: 0px 3px 6px 0 rgba(0,0,0,0.15) !important;
-  border: none !important;
-  margin-top: 4px !important;
-  width: 366px !important;
-}
-
-.select2-results__option {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 13px;
-  line-height: 24px !important;
-  vertical-align: middle !important;
-  padding-left: 8px !important;
-}
-
-.select2-results__option[aria-selected="true"] {
-  background-color: #eee !important;
-}
-
-.select2-search__field {
-  font-family: 'Open Sans', sans-serif;
-  color: #333;
-  font-size: 13px;
-  padding-left: 8px !important;
-  border-color: #c4c4c4 !important;
-}
-
-.select2-selection__placeholder {
-  color: #c4c4c4 !important;
-}
-    /* select2  End*/
-
-
-    #catarea{
-            background: #fff;
-            border: 1px solid #ddd;
-            width: 97%;
-        }
-        .cat-level ul li {
-            display: inherit;
-            padding: 5px;
-            cursor: pointer;
-            border-left: 2px solid #fff;
-            margin: 2px;
-        }
-        .cat-level ul li:hover,.active{
-            /*background: #ddd;*/
-            /*border-left: 2px solid red !important;*/
-        }
-        .cat-level{
-            border: 1px solid #ddd;
-        }
-        .cat-levels{
-            height: 250px;
-            overflow-y: scroll;
-        }
-        .cat-level input[type=text]{
-            height: 40px;
-        }
-        .foo {
-            position: absolute;
-            background-color: white;
-            width: 5em;
-            z-index: 100;
-        }
-        .scroll {
-            overflow-x: auto;
-        }
-        .readonly {
-            opacity: .5;
-            cursor: not-allowed !important;
-        }
-
-       /* Iamge */
-       .h-100{
-            height: 100px !important;
-            margin: 4px;
-        }
-        .drop-area{
-            display: flex;
-            padding: 10px;
-            background: #fdfbfb;
-            cursor: pointer;
-            border: 2px dashed #ddd !important
-        }
-        .drop-single{
-            border: 1px solid #ddd;
-            padding: 5px;
-            margin: 5px;
-            background: #fff;
-            cursor: move;
-        }
-        .dz-message{
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .dz-message h2{
-            color: #b7b0b0;
-            font-weight: 1000;
-            font-size: 24px;
-        }
-        .collpanel{
-            /* width: 672px; */
-            width:100%;
-            height: 250px;
-        }
-        input[type=text],input[type=number],select,.input-group-text,.h-40{
-            height: 40px !important;
-        }
-
-        .rowRemove{
-            line-height: 26px;
-        }
-        .ui-sortable-placeholder { height: 125px; width: 125px; border: 1px dashed; line-height: 1.2em; }
-
-        /* button */
-        .custom{
-          width: 108px;
-          height:50px;
-        }
-        .multepale-select{
-            padding-bottom: 100px!important;
-        }
-
-
-        /* Thumbnail Image Upload*/
-    .imagestyle{
-        width: 200px;
-        height: 200px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: #ccc;
-        border-bottom: 0px;
-        padding: 10px;
-    }
-
-    #file-upload{
-        display: none;
-    }
-    #file-upload1{
-        display: none;
-    }
-    .uploadbtn{
-        width: 200px;background: #ddd;text-align: center;
-    }
-    .custom-file-upload {
-        /* border: 1px solid #ccc; */
-        display: inline-block;
-        padding: 9px 40px;
-        cursor: pointer;
-        border-top: 0px;
-    }
-
-</style>
-
-@endpush
-@include('elements.alert')
-
-
-<section class="dashboard-section section-b-space">
-    <div class="container">
-        <div class="row">
-            @include('layouts.inc.sidebar.vendor-sidebar',[$active ='krishi'])
-            <div class="col-md-9">
-                <h3>Add Krishi Product</h3>
-                <form action="{{route('krishiproductstore')}}" method="POST"  class="form" id="validateForm" enctype="multipart/form-data">
-                    @csrf
-                     <div class="card mb-4">
-                        <h5 class="card-header">Krishi information</h5>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-12">
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="name">Product Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" placeholder="Tomato"/>
-                                                <span class="text-danger" id="message_name"></span>
-                                                @if ($errors->has('name'))
-                                                <span class="text-danger">{{ $errors->first('name') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('name') }}</span>
-                                        <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('name') }}" id="category" placeholder="Select Category">
-                                        <span class="text-danger" id="message_category"></span>
-                                        <input type="hidden" name="category_id" id="category_id">
-                                        <div class="position-absolute foo p-3" id="catarea" style="display: none">
-                                            <div class="categories search-area d-flex scroll border">
-                                                <div class="col-md-3 cat-level p-2 level-1">
-                                                    <input type="text" class="form-control" onkeyup="categorySearch(1,this)" placeholder="search">
-                                                    <ul class="cat-levels" id="">
-                                                        @foreach ($categories as $row)
-                                                        <li onclick="getNextLevel({{$row->id}},1,this)" value="{{ $row->id }}">{{$row->name}} <span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
-                                                        @endforeach
-                                                    </ul>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="name">Product Name <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" placeholder="Tomato"/>
+                                                    <span class="text-danger" id="message_name"></span>
+                                                    @if ($errors->has('name'))
+                                                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
-                                            <div class="cat-footer p-2">
-                                                <p>Current Selection : <span class="currentSelection font-weight-bold"></span></p>
-                                                <span class="btn btn-sm btn-info m-1 readonly" id="confirm" data-category="" >Confirm</span>
-                                                <span class="btn btn-sm btn-warning m-1" id="close">Close</span>
-                                                <span class="btn btn-sm btn-danger m-1" id="clear">Clear</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('name') }}</span>
+                                            <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ old('name') }}" id="category" placeholder="Select Category">
+                                            <span class="text-danger" id="message_category"></span>
+                                            <input type="hidden" name="category_id" id="category_id">
+                                            <div class="position-absolute foo p-3" id="catarea" style="display: none">
+                                                <div class="categories search-area d-flex scroll border">
+                                                    <div class="col-md-3 cat-level p-2 level-1">
+                                                        <input type="text" class="form-control" onkeyup="categorySearch(1,this)" placeholder="search">
+                                                        <ul class="cat-levels" id="">
+                                                            @foreach ($categories as $row)
+                                                            <li onclick="getNextLevel({{$row->id}},1,this)" value="{{ $row->id }}">{{$row->name}} <span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="cat-footer p-2">
+                                                    <p>Current Selection : <span class="currentSelection font-weight-bold"></span></p>
+                                                    <span class="btn btn-sm btn-info m-1 readonly" id="confirm" data-category="" >Confirm</span>
+                                                    <span class="btn btn-sm btn-warning m-1" id="close">Close</span>
+                                                    <span class="btn btn-sm btn-danger m-1" id="clear">Clear</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="picture">Thumbnail Image</label>
-                                        <div class="mt-0">
-                                            <img id="output"  class="imagestyle" src="{{ asset('/images/demo-product.jpg') }}" />
+                                        <div class="form-group">
+                                            <label for="picture">Thumbnail Image</label>
+                                            <div class="mt-0">
+                                                <img id="output"  class="imagestyle" src="{{ asset('/images/demo-product.jpg') }}" />
+                                            </div>
+                                            <div class="uploadbtn">
+                                                <label for="img-upload" class="custom-file-upload image-upload"><i aria-hidden="true"></i> Upload Here</label>
+                                                <input id="img-upload" accept="image/*"  class ="d-none" type="file" name="picture"/>
+                                                <div id="loader" class=""></div>
+                                            </div>
+                                            <input type="hidden" name="thumbnail_image" id="thumbnail_image">
                                         </div>
-                                        <div class="uploadbtn">
-                                            <label for="img-upload" class="custom-file-upload image-upload"><i aria-hidden="true"></i> Upload Here</label>
-                                            <input id="img-upload" accept="image/*"  class ="d-none" type="file" name="picture"/>
-                                            <div id="loader" class=""></div>
-                                        </div>
-                                        <input type="hidden" name="thumbnail_image" id="thumbnail_image">
-                                    </div>
 
-                                    <div class="form-group">
-                                        <div id="dropzone-main" class="img-upload-area" data-color="main"><label>Product Images <span class="text-danger" id="message_main_img"></span></label>
-                                            <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
-                                                <span class="dz-message color-main">
-                                                    <h2>Drag & Drop Your Files</h2>
-                                                </span>
+                                        <div class="form-group">
+                                            <div id="dropzone-main" class="img-upload-area" data-color="main"><label>Product Images <span class="text-danger" id="message_main_img"></span></label>
+                                                <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
+                                                    <span class="dz-message color-main">
+                                                        <h2>Drag & Drop Your Files</h2>
+                                                    </span>
+                                                </div>
+                                                <small>Remember Your featured file will be the first one.</small><br>
                                             </div>
-                                            <small>Remember Your featured file will be the first one.</small><br>
+                                            <div class="inputs"></div>
                                         </div>
-                                        <div class="inputs"></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group margin">
-                                                <label for="available_from">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('available_from') }}</span>
-                                                <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerNexDayOnly" required name="available_from" value="{{ old('available_from') }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group margin">
+                                                    <label for="available_from">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('available_from') }}</span>
+                                                    <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerNexDayOnly" required name="available_from" value="{{ old('available_from') }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group margin">
-                                                <label class="available_for">Available For (Days)</label>
-                                                <input type="number" class="form-control" name="available_for" id="available_for" placeholder="30" />
-                                                @if ($errors->has('available_for'))
-                                                    <span class="text-danger">{{ $errors->first('available_for') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group margin">
-                                                <label for="productUnit">Product Unit<span class="text-danger"> *</span></label>
-                                                <select class="form-control" id="productUnit" name="product_unit_id" required>
-                                                    <option value="">-- Select Unit --</option>
-                                                    @foreach($productUnits as $productUnit)
-                                                        <option value="{{ $productUnit->id }}">{{ $productUnit->bn_name .' (' .$productUnit->description .')' }}</option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="col-md-6">
+                                                <div class="form-group margin">
+                                                    <label class="available_for">Available For (Days)</label>
+                                                    <input type="number" class="form-control" name="available_for" id="available_for" placeholder="30" />
+                                                    @if ($errors->has('available_for'))
+                                                        <span class="text-danger">{{ $errors->first('available_for') }}</span>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group margin">
-                                                <label class="availableStock">Available Stock (Quantity)<span class="text-danger"> *</span></label>
-                                                <input type="number" class="form-control" name="available_stock" id="availableStock" placeholder="400" required/>
-                                                @if ($errors->has('available_stock'))
-                                                    <span class="text-danger">{{ $errors->first('available_stock') }}</span>
-                                                @endif
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group margin">
+                                                    <label for="productUnit">Product Unit<span class="text-danger"> *</span></label>
+                                                    <select class="form-control" id="productUnit" name="product_unit_id" required>
+                                                        <option value="">-- Select Unit --</option>
+                                                        @foreach($productUnits as $productUnit)
+                                                            <option value="{{ $productUnit->id }}">{{ $productUnit->bn_name .' (' .$productUnit->description .')' }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group margin">
+                                                    <label class="availableStock">Available Stock (Quantity)<span class="text-danger"> *</span></label>
+                                                    <input type="number" class="form-control" name="available_stock" id="availableStock" placeholder="400" required/>
+                                                    @if ($errors->has('available_stock'))
+                                                        <span class="text-danger">{{ $errors->first('available_stock') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group margin">
+                                                    <label class="allowCustomOffer">Allow Custom Offer<span class="text-danger"> *</span></label>
+                                                    <select class="form-control" id="allowCustomOffer" name="allow_custom_offer" required>
+                                                        <option value="1">Yes</option>
+                                                        <option value="0">No</option>
+                                                    </select>
+                                                    @if ($errors->has('allow_custom_offer'))
+                                                        <span class="text-danger">{{ $errors->first('allow_custom_offer') }}</span>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group margin">
-                                                <label class="allowCustomOffer">Allow Custom Offer<span class="text-danger"> *</span></label>
-                                                <select class="form-control" id="allowCustomOffer" name="allow_custom_offer" required>
-                                                    <option value="1">Yes</option>
-                                                    <option value="0">No</option>
-                                                </select>
-                                                @if ($errors->has('allow_custom_offer'))
-                                                    <span class="text-danger">{{ $errors->first('allow_custom_offer') }}</span>
-                                                @endif
+                                        <div class="form-group">
+                                            <label for="videoUrl" class="">Youtube Video URL (optional)</label>
+                                            <textarea class="form-control" rows="2" id="videoUrl" name="video_url" placeholder="Paste your link here ..."></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description" class="">Description<span class="text-danger"> *</span></label>
+                                            <textarea class="form-control summernote" id="description" name="description"></textarea>
+                                            <span class="text-danger" id="message_description"></span>
+                                            @if ($errors->has('description'))
+                                            <span class="text-danger">{{ $errors->first('description') }}</span>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-input-label pr-5">Frequency :</label><br>
+                                            <div class="ml-3" style="max-height: 200px; overflow-y: scroll;">
+                                            <label for="sunday"><input type="checkbox" id="sunday" name="frequency[]" value="sunday"> &nbsp; Sunday </label> <br/>
+                                            <label for="monday"><input type="checkbox" id="monday" name="frequency[]" value="monday"> &nbsp; Monday </label> <br/>
+                                            <label for="tuesday"><input type="checkbox" id="tuesday" name="frequency[]" value="tuesday"> &nbsp; Tuesday </label><br/>
+                                            <label for="wednessday"><input type="checkbox" id="wednessday" name="frequency[]" value="wednessday"> &nbsp; Wednessday </label><br/>
+                                            <label for="thursday"><input type="checkbox" id="thursday" name="frequency[]" value="thursday"> &nbsp; Thursday </label><br/>
+                                            <label for="friday"><input type="checkbox" id="friday" name="frequency[]" value="friday"> &nbsp; Friday </label><br/>
+                                            <label for="saturday"><input type="checkbox" id="saturday" name="frequency[]" value="saturday"> &nbsp; Saturday </label><br/>
+                                            <label for="everyday"><input type="checkbox" id="everyday" name="frequency[]" value="everyday"> &nbsp; Everyday </label><br/>
+                                            <label for="weekly"><input type="checkbox" id="weekly" name="frequency[]" value="weekly"> &nbsp; Weekly </label><br/>
+                                            <label for="fortnightly"><input type="checkbox" id="fortnightly" name="frequency[]" value="fortnightly"> &nbsp; Fortnightly </label><br/>
+                                            <label for="monthly"><input type="checkbox" id="monthly" name="frequency[]" value="monthly"> &nbsp; Monthly </label>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="videoUrl" class="">Youtube Video URL (optional)</label>
-                                        <textarea class="form-control" rows="2" id="videoUrl" name="video_url" placeholder="Paste your link here ..."></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="description" class="">Description<span class="text-danger"> *</span></label>
-                                        <textarea class="form-control summernote" id="description" name="description"></textarea>
-                                        <span class="text-danger" id="message_description"></span>
-                                        @if ($errors->has('description'))
-                                        <span class="text-danger">{{ $errors->first('description') }}</span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group form-unit form-divided">
-                                        <label for="emp-id" class="form-input-label pr-5">Frequency</label><br>
-                                        <select class="js-example-basic-multiple" name="frequency[]" multiple="multiple">
-                                            <option value="sunday">Sunday</option>
-                                            <option value="monday">Monday</option>
-                                            <option value="tuesday">Tuesday</option>
-                                            <option value="wednessday">Wednessday</option>
-                                            <option value="thursday">Thursday</option>
-                                            <option value="friday">Friday</option>
-                                            <option value="saturday">Saturday</option>
-                                            <option value="everyday">Everyday</option>
-                                            <option value="weekly">Weekly</option>
-                                            <option value="fortnightly">Fortnightly</option>
-                                            <option value="monthly">Monthly</option>
-                                        </select>
-                                      </div>
-                                    <div class="form-group">
-                                        <label for="returnPolicy" class="">Return Policy (if any)</label>
-                                        <textarea class="form-control" rows="3" id="returnPolicy" name="return_policy" placeholder="Your custom return policy ..."></textarea>
+                                        <div class="form-group">
+                                            <label for="returnPolicy" class="">Return Policy (if any)</label>
+                                            <textarea class="form-control" rows="3" id="returnPolicy" name="return_policy" placeholder="Your custom return policy ..."></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <button class="btn btn-success custom float-right ml-2 w-5"  type="submit">Save</button>
-                </form>
-           </div>
+                        <div class="card mb-4">
+                            <h5 class="card-header">Product Publis on news feed (optional)</h5>
+                            <div class="card-body">
+                                <div class="contianer"> 
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label data-toggle="collapse" data-target="#collapseable" aria-expanded="false" aria-controls="collapseable">
+                                                Are you want to publish product on news feed ? <input type="checkbox" name="allow_to_feed" value="1" id="check">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div id="collapseable" aria-expanded="false" class="collapse">
+                                        <div class="well">
+                                            <div class="form-group row">
+                                                <div class="col-md-6 text-left">
+                                                    <label for="image">News feed Image</label> 
+                                                    <div class="mt-0">
+                                                        <img id="outputs"  class="imagestyle" src="{{ asset('/images/demo-product.jpg') }}" />
+                                                    </div>
+                                                    <div class="uploadbtn">
+                                                        <label for="file-upload" class="custom-file-upload">Upload Here</label>
+                                                        <input id="file-upload" type="file" name="feed_image" onchange="loadFile(event)"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="title" class="">Title <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" name="feed_title" id="title">
+                                                <span class="text-danger" id="message_title"></span>
+                                                @if ($errors->has('title'))
+                                                    <span class="text-danger">{{ $errors->first('title') }}</span>
+                                                @endif 
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="news_desc" class="">Description<span class="text-danger"> *</span></label>
+                                                <textarea class="form-control summernote"  id="newsDesctiption"  name="feed_desc"></textarea>
+                                                <span class="text-danger" id="message_news_desc"></span>
+                                                @if ($errors->has('news_desc'))
+                                                    <span class="text-danger">{{ $errors->first('news_desc') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success custom float-right ml-2 w-5"  type="submit">Save</button>
+                    </form>
+            </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-{{--    Start Image Croping Modal --}}
-<div class="modal" id="image-modal" tabindex="-1" role="dialog" aria-labelledby="shop-logo-modalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Before upload resize your picture.</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="main-cropper"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary p-2" id="upload-image">Crop & Save</button>
+    {{--    Start Image Croping Modal --}}
+    <div class="modal" id="image-modal" tabindex="-1" role="dialog" aria-labelledby="shop-logo-modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Before upload resize your picture.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="main-cropper"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary p-2" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary p-2" id="upload-image">Crop & Save</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-{{--    End Image Croping Modal --}}
+    {{--    End Image Croping Modal --}}
 @endsection
-@push('css')
-    <link rel="stylesheet" href="https://foliotek.github.io/Croppie/croppie.css">
-    <style>
-        input[type="file"] {
-            display: none;
-        }
-        #mainNav {
-            height: 70px;
-        }
-        #mainNav .navbar-brand img, .footer-widget.footer-about a > img {
-            height: 34px;
-        }
-    </style>
-@endpush
 @push('js')
-<script src="{{ asset('js/jquery-ui.js') }}"></script>
-{{-- <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script> --}}
-<script src="{{ asset('js/dropzone.js') }}"></script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> --}}
-
-
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script> --}}
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-
-{{-- <script src="{{ asset('material') }}/js/select2.min.js"></script> --}}
-
-<script src="https://foliotek.github.io/Croppie/croppie.js"></script>
-
+    <script src="https://foliotek.github.io/Croppie/croppie.js"></script>
     <script>
+        //summernote
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 150,
+            });
+        });
+        //category
         $('#category').click(function(){
             $('#catarea').toggle();
         });
@@ -642,7 +415,6 @@
 
         //search
         function categorySearch(level,e){
-
             var value = $(e).val();
             var patt = new RegExp(value, "i");
 
@@ -655,150 +427,7 @@
             });
 
         };
-
-    </script>
-
-    {{-- Summer Note --}}
-    <script>
-        $(document).ready(function() {
-     $('.summernote').summernote({
-           height: 150,
-      });
-   });
-    </script>
-  {{-- Image --}}
-    <script>
-          //Drug & Drop script start
-        $( "#sortable-red").sortable({
-            placeholder: "ui-state-highlight",
-            revert: true,
-        });
-
-        $('#selectColor').change(function(){
-            var flag = 0;
-            var color = $(this).val();
-            $('.img-upload-area').each(function(){
-                if(color == $(this).data('color')){
-                    flag = 1;
-                }
-            });
-            if(flag == 0){
-                $('.drops').append(
-                    `<div id="dropzone-${color}" class="img-upload-area" data-color="${color}"><label class="mt-3">Color Family: <b>${color}</b></label>
-                    <span class="btn btn-sm text-danger" onclick="removeColorItem('${color}')"><i class="fa fa-trash"></i></span>
-                    <div class="border m-0 collpanel drop-area row my-awesome-dropzone${color}" id="sortable-${color}">
-                        <span class="dz-message color-${color}">
-                            <h2>Drag & Drop Your Files</h2>
-                        </span>
-                    </div>
-                    <small>Remember Your featured file will be the first one.</small><br></div>`
-                );
-                $( "#sortable-"+color ).sortable({
-                    placeholder: "ui-state-highlight",
-                    revert: true,
-                });
-                $("#sortable-"+color ).disableSelection();
-                setup("my-awesome-dropzone"+color,color);
-                inventoryRows(color);
-            }else{
-                swal("The selected color already been exits", {icon: "warning",buttons: false,timer: 2000});
-            }
-        });
-
-        Dropzone.autoDiscover = false;
-
-        $( "#sortable-main" ).sortable({
-            placeholder: "ui-state-highlight",
-            revert: true,
-        });
-        $("#sortable-main").disableSelection();
-        setup("my-awesome-dropzone-main",'main');
-
-        //function
-        function setup(id,color) {
-            let options = {
-            autoProcessQueue: false,
-            url : '/',
-            thumbnailHeight: 200,
-            thumbnailWidth: 300,
-            maxFilesize: 100,
-            maxFiles: 5,
-            dictResponseError: "Server not Configured",
-            dictFileTooBig: "File too big. Must be less than ",
-            dictCancelUpload: "",
-            acceptedFiles: ".png,.jpg,.jpeg",
-            init: function() {
-                var self = this;
-                self.on("dragleave", function(event) {});
-
-                self.on("thumbnail", function(file){
-                    if(file.size < 3000000){
-                        $('.inputs').append(`<input type="hidden" class="image-class-${color}" name="images[${color}][]" id="id${file.size}" value="${file.dataURL}">`);
-                    }else{
-                        swal("Maximum size reached", {icon: "warning",buttons: false,timer: 2000});
-                        this.removeFile(file);
-                    }
-                });
-
-                // Send file starts
-                self.on("sending", function(file) {
-                    // console.log("upload started", file);
-                });
-
-                self.on("complete", function(file, response) {
-                    if (file.name !== "442343.jpg") {
-                        //this.removeFile(file);
-                    }
-                });
-
-                self.on("maxFilesize", function(file, response) {
-                    swal("Maximum size reached", {icon: "warning",buttons: false,timer: 2000});
-                    this.removeFile(file);
-                });
-
-                self.on("maxfilesexceeded", function(file, response) {
-                    swal("Maximum file reached", {icon: "warning",buttons: false,timer: 2000});
-                    this.removeFile(file);
-                });
-
-                self.on("addedfile", function(file) {
-                    const pattern = /\d{6}(\.)(jpg|jpeg|png)/;
-                    if (!pattern.test(file.name)) {
-                    //   this.removeFile(file);
-                    }
-                });
-            },
-
-            previewTemplate: `
-                <div class="drop-single ui-state-default">
-                <a href="javascript:undefined;" data-dz-remove=""><i class="fa fa-trash-o"></i>&nbsp;<span>Remove</span></a>
-                <br/>
-                <span class="dz-upload" data-dz-uploadprogress></span>
-                <img class="h-100" data-dz-thumbnail/>
-                </div>`
-            };
-            var myDropzone = new Dropzone(`.${id}`, options);
-        }
-    </script>
-{{-- Select2 --}}
-    <script>
-
-    $(document).ready(function() {
-
-    $(".js-example-basic-multiple").select2({
-        placeholder: "Select Frequency"
-    }).on('change', function(e) {
-        if($(this).val() && $(this).val().length) {
-                $(this).next('.select2-container')
-            .find('li.select2-search--inline input.select2-search__field').attr('placeholder', 'Select Frequency');
-        }
-    });
-    });
-    </script>
-
-
-{{--    Start Product Thumbnail Image Croping  --}}
-    <script>
+        //image croping start (Start Product Thumbnail Image Croping)
         function readFileLogo(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -834,11 +463,33 @@
                 $('#loader').removeClass('loader');
                 $('#output').removeClass('opacity5');
                 $('#img-sidebar').removeClass('opacity5');
-
             });
         });
+
+        //news feed options
+        var loadFile = function(event) {
+            var output = document.getElementById('output');
+            outputs.src = URL.createObjectURL(event.target.files[0]);
+        };
+
+        $('#check').click(function(){
+            var txt = $('textarea#description').val();
+            $('#newsDesctiption').summernote('code',txt); 
+        });
+        $(function() {
+            var checkbox = $("#check"); 
+            checkbox.change(function() {
+                if (checkbox.is(':checked')) { 
+                    $('#title').prop('required', true); 
+                } else { 
+                    $("#title").val("");
+                    $('#title').prop('required', false); 
+                }
+            });
+        });
+
+
     </script>
-{{--    End Product Thumbnail Image Croping  --}}
 @endpush
 
 

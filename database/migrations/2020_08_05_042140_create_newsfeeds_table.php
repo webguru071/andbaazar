@@ -21,7 +21,6 @@ class CreateNewsfeedsTable extends Migration
             $table->text('news_desc')->nullable();
             $table->text('rej_desc')->nullable();
             $table->enum('status',['Reject','Active','Pending'])->default('Pending');
-            $table->foreignId('product_id')->constrained('products')->references('id')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
