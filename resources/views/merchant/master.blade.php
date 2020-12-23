@@ -89,6 +89,7 @@
                                             </div>
                                             <div class="show-div setting">
                                                 <ul>
+                                                    <li class=""><a href="/change-business-info" data-lng="es">Change Business</a></li>
                                                     <li class=""><a href="/profile" data-lng="es">My Profile</a></li>
                                                     <li><a href="{{url('logout')}}" data-lng="es">Logout</a></li>
                                                 </ul>

@@ -273,6 +273,8 @@ class MerchantController extends Controller{
         flash('Registration success please login')->success()->important();
         return redirect('/login');
     }
+
+
     public function termsCondtion(){
         return view('frontend.merchant-termsCondition');
     }

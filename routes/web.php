@@ -23,6 +23,8 @@ Route::get('/select-service','AuthController@selectDefaultService')->middleware(
 Route::post('/select-service','AuthController@setDefaultService')->middleware('auth');
 Route::get('/business-info','AuthController@selectBusinessInfo')->middleware('auth');
 Route::post('/business-info','AuthController@updateBusinessInfo')->middleware('auth');
+Route::get('/change-business-info','UserController@changeBusinessInfo')->middleware('auth');
+Route::post('/change-business-info','UserController@updateBusinessInfo')->middleware('auth');
 Route::get('/logout','AuthController@logout');
 // include('frontend.php');
 include('merchant.php');
