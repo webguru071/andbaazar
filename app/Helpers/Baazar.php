@@ -37,6 +37,7 @@ use App\Models\Tag;
 use App\Models\Attribute;
 use App\Models\AttributeMeta;
 use App\Models\Auctionproduct;
+use App\Models\KrishiCategory;
 use Session;
 
 class Baazar
@@ -244,28 +245,28 @@ class Baazar
 
    // Krishi category insert //
 
-        public function insertRecordsKrishi($data, $parent_id = 0,$parent_slug = 0) {
-            //    dd($data);
-                foreach($data as $row) {
-                    // $slug = Str::slug($row['0']);
-                    $category = New Category;
-                    $slug = $this->getUniqueSlug($category,$row['0']);
-                    $data = [
-                        'name'          => $row['0'],
-                        'slug'          => $slug,
-                        'parent_slug'   => $parent_slug,
-                        'parent_id'     => $parent_id,
-                        'type'          => 'krishi',
-                        'percentage'    => 2,
-                        'user_id'       => 1,
-                        'is_last'       => isset($row["child"]) ? 0 : 1,
-                    ];
-                    $cat = Category::create($data);
-                    if (isset($row["child"])){
-                        $this->insertRecordsKrishi($row["child"], $cat->id,$slug);
-                    }
+    public function insertRecordsKrishi($data, $parent_id = 0,$parent_slug = 0) {
+        //    dd($data);
+            foreach($data as $row) {
+                // $slug = Str::slug($row['0']);
+                $category = New KrishiCategory;
+                $slug = $this->getUniqueSlug($category,$row['0']);
+                $data = [
+                    'name'          => $row['0'],
+                    'slug'          => $slug,
+                    'parent_slug'   => $parent_slug,
+                    'parent_id'     => $parent_id,
+                    // 'type'          => 'krishi',
+                    // 'percentage'    => 2,
+                    'user_id'       => 1,
+                    'is_last'       => isset($row["child"]) ? 0 : 1,
+                ];
+                $cat = KrishiCategory::create($data);
+                if (isset($row["child"])){
+                    $this->insertRecordsKrishi($row["child"], $cat->id,$slug);
                 }
             }
+        }
 
             // Krishi category insert  End//
 

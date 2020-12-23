@@ -19,7 +19,9 @@ class CreateKrishiProductCategoriesTable extends Migration
             $table->string('parent_slug')->default(0);
             $table->integer('parent_id')->default(0);
             $table->string('slug')->nullable();
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->integer('active')->default(1);
+            $table->integer('is_last')->default(0);
             $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

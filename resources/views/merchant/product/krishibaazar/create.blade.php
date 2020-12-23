@@ -415,7 +415,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group margin">
                                                 <label for="available_from">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('available_from') }}</span>
-                                                <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerPreviousOnly" required name="available_from" value="{{ old('available_from') }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
+                                                <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerNexDayOnly" required name="available_from" value="{{ old('available_from') }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -435,7 +435,7 @@
                                                 <select class="form-control" id="productUnit" name="product_unit_id" required>
                                                     <option value="">-- Select Unit --</option>
                                                     @foreach($productUnits as $productUnit)
-                                                        <option value="{{ $productUnit->id }}">{{ $productUnit->name .' (' .$productUnit->symbol .')' }}</option>
+                                                        <option value="{{ $productUnit->id }}">{{ $productUnit->bn_name .' (' .$productUnit->description .')' }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Helpers\Baazar;
-use App\Models\Union;
+use App\Models\Geo\Union;
 class geotableseeder extends Seeder
 {
     /**
