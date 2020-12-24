@@ -103,11 +103,11 @@
                             <div class="form-group">
                                 <label for="nid_image">Nid Card Image</label>
                                 <div class="mt-0">
-                                    <img id="output"  class="imagestyle" src="{{ !empty($sellerProfile->nid_img) ? $sellerProfile->nid_img : '/uploads/vendor_profile/nid_image/demo.jpeg' }}"/>
+                                    <img id="nid_output_1"  class="imagestyle" src="{{ !empty($sellerProfile->nid_img) ? $sellerProfile->nid_img : '/uploads/vendor_profile/nid_image/demo.jpeg' }}"/>
                                 </div>
                                 <div class="uploadbtn">
                                     <label for="file-upload" class="custom-file-upload">Upload Here</label>
-                                    <input id="file-upload" type="file" name="nid_img" class="form-control" value="{{ $sellerProfile->nid_img  }}">
+                                    <input id="file-upload" onchange="loadFile(event)" type="file" name="nid_img" class="form-control" value="{{ $sellerProfile->nid_img  }}">
                                     <input type="hidden" value="{{$sellerProfile->nid_img}}" name="old_nid_img">
                                 </div>
                                 @if(!empty($sellerProfile->nid_img))
@@ -117,11 +117,11 @@
                             <div class="form-group">
                                 <label for="picture">Tread Licence Image</label>
                                 <div class="mt-0">
-                                    <img id="output"  class="imagestyle" src="{{ !empty($sellerProfile->trad_img) ? $sellerProfile->trad_img : '/uploads/vendor_profile/trad_image/demo.png' }}"/>
+                                    <img id="nid_output_2"  class="imagestyle" src="{{ !empty($sellerProfile->trad_img) ? $sellerProfile->trad_img : '/uploads/vendor_profile/trad_image/demo.png' }}"/>
                                 </div>
                                 <div class="uploadbtn">
                                     <label for="file-upload1" class="custom-file-upload">Upload Here</label>
-                                    <input id="file-upload1" type="file" name="trad_img" class="form-control" value="{{ $sellerProfile->trad_img  }}">
+                                    <input id="file-upload1" onchange="loadFile1(event)" type="file" name="trad_img" class="form-control" value="{{ $sellerProfile->trad_img  }}">
                                     <input type="hidden" value="{{$sellerProfile->trad_img}}" name="old_trad_img">
                                 </div>
                                 @if(!empty($sellerProfile->trad_img))
@@ -205,6 +205,14 @@
 $("#img-upload").on("change", function() {
   readFileLogo(this);
 });
+var loadFile = function(event) {
+    //   var output = document.getElementById('output');
+      nid_output_1.src = URL.createObjectURL(event.target.files[0]);
+  };
+var loadFile1 = function(event) {
+    //   var output = document.getElementById('output');
+      nid_output_2.src = URL.createObjectURL(event.target.files[0]);
+  };
 var basic = $("#main-cropper").croppie({
     viewport: { width: 250, height: 250 },
     boundary: { width: 300, height: 300 },

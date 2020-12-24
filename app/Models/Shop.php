@@ -38,7 +38,7 @@ class Shop extends Model
     'address_type',
     'municipal_id',
     'municipal_ward_id',
-    'upazilla_id',
+    'upazila_id',
     'union_id',
     'village_id'
 ];

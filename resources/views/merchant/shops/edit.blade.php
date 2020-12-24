@@ -112,20 +112,20 @@
                                 <input type="text" class="form-control " @error('name') border-danger @enderror" required name="name" value="{{ old('name',$shopProfile->name) }}" id="name" placeholder="Shop Name">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="slogan" ">Shop slogan <span class="text-danger"> *</span></label>
+                                <label for="slogan">Shop slogan</label>
                                 <input type="text" class="form-control  @error('slogan') border-danger @enderror"  name="slogan" value="{{ old('slogan',$shopProfile->slogan) }}" id="slogan" placeholder="Shop slogan" />
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="phone" >Shop Phone <span class="text-danger"> *</span></label>
-                                <input type="text" class="form-control  @error('phone') border-danger @enderror"  name="phone" value="{{ old('phone',$shopProfile->phone) }}" id="phone" placeholder="Shop Phone" />
+                                <input type="text" class="form-control  @error('phone') border-danger @enderror" required  name="phone" value="{{ old('phone',$shopProfile->phone) }}" id="phone" placeholder="Shop Phone" />
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="email" >Shop Email <span class="text-danger"> *</span></label>
+                                <label for="email" >Shop Email</label>
                                 <input type="email" class="form-control  @error('email') border-danger @enderror" name="email" value="{{ old('email',$shopProfile->email) }}" id="email" placeholder="Shop Email" />
                             </div>
                             </div>
                             <div class="form-group ">
-                                <label for="url">Shop Web Address <span class="text-danger"> *</span></label>
+                                <label for="url">Shop Web Address</label>
                                 <input type="url" class="form-control col-md-12 @error('web') border-danger @enderror" name="web" value="{{ old('Web',$shopProfile->web) }}" id="url" placeholder="Shop website" />
                             </div>
 
@@ -145,19 +145,19 @@
                         <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label for="name" >Facebook <span class="text-danger"> *</span></label>
+                                <label for="name" >Facebook</label>
                                 <input type="url" class="form-control @error('facebook') border-danger @enderror" name="facebook" value="{{ old('Web',$shopProfile->facebook) }}" id="" placeholder="Own Profile ID " />
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="slogan">Twitter (Optional) <span class="text-danger"> *</span></label>
+                                <label for="slogan">Twitter (Optional)</label>
                                 <input type="url" class="form-control  @error('twitter') border-danger @enderror" name="twitter" value="{{ old('Web',$shopProfile->twitter) }}" id="" placeholder="Own Profile ID " />
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="slogan">Instagram (Optional) <span class="text-danger"> *</span></label>
+                                <label for="slogan">Instagram (Optional)</label>
                                 <input type="url" class="form-control  @error('instagram') border-danger @enderror" name="instagram" value="{{ old('Web',$shopProfile->instagram) }}" id="" placeholder="Own Profile ID " />
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="slogan" >Youtube (Optional) <span class="text-danger"> *</span></label>
+                                <label for="slogan" >Youtube (Optional)</label>
                                 <input type="url" class="form-control @error('youtube') border-danger @enderror" name="youtube" value="{{ old('Web',$shopProfile->youtube) }}" id="" placeholder="Own Profile ID " />
                             </div>
                         </div>
