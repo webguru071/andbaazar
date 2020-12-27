@@ -148,6 +148,7 @@ Route::group(['prefix' => 'merchant','middleware' => ['auth','merchant','default
         Route::put('update/{slug}','NewsfeedController@update');
         Route::post('approvement/{slug}','NewsfeedController@approvement');
         Route::put('reject/{slug}','NewsfeedController@reject');
+        Route::post('comment-replay-merchant','NewsfeedController@commentReply');
         Route::resource('news','NewsfeedController');
     });
 

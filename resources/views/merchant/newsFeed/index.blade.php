@@ -72,6 +72,11 @@
                                         </a>
                                     </li>
                                     <li>
+                                        <a href="{{ url('merchant/newsfeed/news/'.$row->slug)}}">
+                                            <button class="btn btn-sm btn-info"><i class="fa fa-eye"></i></button>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <form action="{{ url('merchant/newsfeed/news/'.$row->id) }}" method="post" style="margin-top: -2px;" id="deleteButton{{$row->id}}">
                                             @csrf 
                                             @method('delete')

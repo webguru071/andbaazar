@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Newsfeed;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\NewsFeedComment;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -72,9 +73,12 @@ class NewsfeedController extends Controller
      * @param  \App\Newsfeed  $newsfeed
      * @return \Illuminate\Http\Response
      */
-    public function show(Newsfeed $newsfeed)
+    public function show(Newsfeed $newsfeed,$slug)
     {
-        //
+        // dd($slug);
+        $feed = $newsfeed->where('slug',$slug)->first();
+        $comments = $feed->onlyParentComments()->get();
+        return view('merchant.newsfeed.details',compact('feed','comments'));
     }
 
     /**
@@ -86,7 +90,6 @@ class NewsfeedController extends Controller
     public function edit($slug)
     {
         $newsFeed = Newsfeed::where('slug',$slug)->first();
-
         return view('merchant.newsFeed.edit',compact('newsFeed'));
     }
 
@@ -184,5 +187,21 @@ class NewsfeedController extends Controller
             'title'     => 'required',
             'news_desc' => 'required'
         ]);
+    }
+
+    public function commentReply(Request $request){
+        $request->validate([
+            'comments_message'  => 'required',
+            'parent_id'         => 'required',
+            'feed_id'           => 'required',
+        ]);
+        NewsFeedComment::create([
+            'news_feed_id'  => $request->feed_id,
+            'user_id'       => Auth::user()->id,
+            'parent_id'     => $request->parent_id,
+            'comments'      => $request->comments_message
+        ]);
+        Session::flash('success','Comment posted successfully');
+        return redirect()->back();
     }
 }
