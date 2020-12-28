@@ -36,9 +36,9 @@ class Order extends Model
      return $this->belongsTo(ShippingMethod::class,'shipping_method_id');
    }
 
-    public function tag(){
-      return $this->belongsTo(Tag::class,'tag_id');
-    }
+    // public function tag(){
+    //   return $this->belongsTo(Tag::class,'tag_id');
+    // }
     public function buyerpayment(){
       return $this->hasMany(BuyerPayment::class,'order_id');
     }

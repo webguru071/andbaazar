@@ -42,6 +42,7 @@
             <table class="table-responsive-md table mb-0 table-striped mt-2">
                 <thead>
                     <tr>  
+                        <th scope="col" class="text-left">Image</th>
                         <th scope="col" class="text-left">Title</th>
                         <th scope="col">Description</th>  
                         <th scope="col">Status</th>
@@ -51,6 +52,7 @@
                 <tbody>
                     @forelse($newsFeed as $row)
                         <tr>  
+                            <th scope="row" class="text-center"><img src="{{asset($row->image)}}" style="height: 35px" class="blur-up lazyloaded img-fluid" /></th>
                             <td class="text-left">{{$row->title}}</td>
                             <td>{!!\Illuminate\Support\Str::limit($row->news_desc,20)!!}</td> 
                             <td>
@@ -67,6 +69,11 @@
                                     <li>
                                         <a href="{{ url('merchant/newsfeed/update/'.$row->slug.'/newsfeedupdate') }}">
                                             <button class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('merchant/newsfeed/news/'.$row->slug)}}">
+                                            <button class="btn btn-sm btn-info"><i class="fa fa-eye"></i></button>
                                         </a>
                                     </li>
                                     <li>
