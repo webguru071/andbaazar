@@ -1,201 +1,271 @@
-@extends('admin.layout.master')
+@extends('merchant.master')
 @section('content')
+@push('css')
+ <style>
+     .modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+  width: 1000px;
+}
+
+.title {
+    font-size: 14px;
+    font-weight:bold;
+}
+.komen {
+    font-size:17px;
+}
+.media{
+    margin: 20px 0;
+}
+.geser {
+    margin-left:55px;
+    margin-top:5px;
+}
+.media-body{
+    background: #f8f8f8;
+    margin-left: 5px;
+    border-radius: 11px;
+    padding: 8px;
+}
+.media-left img{
+    border-radius: 50%;
+}
+.child{
+    margin-left: 60px;
+}
+
+ </style>
 @include('elements.alert')
-<style>
-    .imagestyle{
-        width: 100px;
-        height: 100px;
-        border-width: 4px 4px 4px 4px;
-        border-style: solid;
-        border-color: #ccc;
-    }
-    .m-l-approve{
-        margin-left:100px; margin-top:-39px;
-    }
-    .m-l-reject{
-        margin-left:232px; margin-top:-39px;
-    }
-    .hm-gradient {
-    background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
-}
-.darken-grey-text {
-    color: #2E2E2E;
-}
-</style>
-@component('admin.layout.inc.breadcrumb')
-    @slot('pageTitle')
-        Krishi Product Detail
-    @endslot
-    @slot('page')
-        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-        <li class="breadcrumb-item active" aria-current="page">Auction Detail</li>
-    @endslot
-@endcomponent
 
 
-    <!-- Container-fluid starts-->
-    <div class="container-fluid">
-        <div class="card">
-            <div class="row product-page-main card-body">
-                <div class="col-xl-4">
-
-                    <div class="product-slider owl-carousel owl-theme" id="sync1">
-
-                        @foreach ($krishiproductImage as $row)
-                            <div class="item"><img id="image-rander" src="{{ !empty($row->org_img) ? asset($row->org_img) : asset('/uploads/auction/auction.png') }}" alt="" class="blur-up lazyloaded"></div>
-                        @endforeach
-                    </div>
-                    <div class="owl-carousel owl-theme" id="sync2">
-                        @foreach ($krishiproductImage as $row)
-                            <div class="item"><img id="image-loop" src="{{ !empty($row->org_img) ? asset($row->org_img) : asset('/uploads/auction/auction.png') }}" alt="" class="blur-up lazyloaded"></div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="product-page-details product-right mb-0">
-                        <h2>{{ucfirst($krishiproduct->name)}}</h2>
-                        <hr>
-                        <h6 class="product-title">product details</h6>
-                        <p>{!! $krishiproduct->description !!}</p>
-                        <h6 class="product-title mt-1">Product Category</h6>
-                        <p>{{$krishiproduct->category->name}}</p>
-                        <div class="mt-1">
-                         Video Url : {{$krishiproduct->video_url}}
+<section class="dashboard-section section-b-space">
+  <div class="container">
+      <div class="row">
+        @include('layouts.inc.sidebar.vendor-sidebar',[$active ='products'])
+        <div class="col-md-9">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="filter-main-btn mb-2"><span class="filter-btn"><i class="fa fa-filter" aria-hidden="true"></i> filter</span></div>
                         </div>
-                        <div class="mt-1">
-                         Date : {{$krishiproduct->date}}
-                        </div>
-                       <hr>
-                        
-                        <div class="m-t-15">
-                            <a class="btn btn-success" href="{{ URL::previous() }}">back</a>
-                            <!-- <a href="{{ url('andbaazaradmin/e-commerce/products') }}"  class="btn btn-success">Back</a> -->
-                            @if($krishiproduct->status == 'Active') 
-                            <label class="badge badge-pill badge-info p-3">Approved</label>
-                            @elseif($krishiproduct->status == 'Reject') 
-                            <label class="badge badge-pill badge-primary p-3">Rejected</label>
-                            <div class="form">
-                                <h6  class="product-title mt-3">Reject description</h6>
-                                <p>{{$krishiproduct->rej_desc }}</p>
-                            </div>
-                            @elseif($krishiproduct->status == 'Pending')
-                            <div class="m-l-approve">
-                            <form action="{{ url('merchant/krishi/products/approvement/'.$krishiproduct->slug) }}" method="post" style="margin-top:-2px" id="deleteButton({{ $krishiproduct->id }})">
-                                @csrf
-                                <button type="submit" class="btn btn-warning">Approve</button>
-                            </form>
-                            </div>
-                            <div>
-                                <div class="m-l-reject">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-original-title="test" data-target="#exampleModal">Reject</button>
-                                </div>
-                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title f-w-600 text-danger" id="exampleModalLabel">Select The Reason For Reject :</h5>
-                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{{ url('merchant/krishi/products/rejected/'.$krishiproduct->slug)}}" method="post" style="margin-top:-2px" id="deleteButton({{ $krishiproduct->id }})">
-                                                @csrf
-                                                @method('put')
-                                                <div class="form" id="again">
-                                                    <div class="card-body">
-                                                        <div class="form-check">
-                                                            @foreach($rejectlist as $row)
-                                                            <label class="form-check-label" for="check1">
-                                                                <input type="checkbox" class="form-check-input" id="checked" name="rej_name[]" value="{{$row->rej_name}}">{{$row->rej_name}}
-                                                            </label><br>
-                                                            <input type="hidden" name="type" class="form-control" value="krishi">
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                 </div>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Reject</button>
-                                                    </form> 
-                                                    </div>
-                                                </form>
-                                                <form id="rejectId" role="form" action="" class="form-material form" method="post">
-                                                    @csrf
-                                                    <div class="form-group mt-2">
-                                                        <label for="exampleInputPassword1 ">Others</label>
-                                                        <input type="text" class="form-control" id="rej_name" name="rej_name" placeholder=" if need add another reasoan ">
-                                                        <input type="hidden" name="type" class="form-control" value="krishi"> 
-                                                        <div class="form-group  float-right">
-                                                          <span id="saveReason" class="btn btn-success mt-2 float-right btn-sm">Add</span>
-                                                        </div>
-                                                    </div>
-                                                 </form>
-                                            </div>
-                                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100" src="http://themes.pixelstrap.com/multikart/assets/images/fashion/pro/001.jpg" alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="http://themes.pixelstrap.com/multikart/assets/images/fashion/pro/001.jpg" alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="http://themes.pixelstrap.com/multikart/assets/images/fashion/pro/001.jpg" alt="Third slide">
                                     </div>
                                 </div>
-                               
+                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
                             </div>
-                            @endif
                         </div>
-                </div>
-            </div>
+                        <div class="col-lg-6 rtl-text">
+                            <div class="product-right">
+                                <h2>Women Pink Shirt</h2>
+                                <h4><del>$459.00</del><span>55% off</span></h4>
+                                <h3>$32.96</h3>
+                                <div class="border-product">
+                                    <h6 class="product-title">product details</h6>
+                                    <p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
+                                        accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab
+                                        illo inventore veritatis et quasi architecto beatae vitae dicta sunt,
+                                        explicabo. Nemo enim ipsam voluptatem,</p>
+                                </div>
+                                <div class="border-product">
+                                    <h6 class="product-title">share it</h6>
+                                    <div class="product-icon">
+                                        <ul class="product-social">
+                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="border-product">
+                                    <h6 class="product-title">Time Reminder</h6>
+                                    <div class="timer">
+                                        <p id="demo"><span>25 <span class="padding-l">:</span> <span class="timer-cal">Days</span> </span><span>22 <span class="padding-l">:</span> <span class="timer-cal">Hrs</span> </span><span>13 <span class="padding-l">:</span> <span class="timer-cal">Min</span> </span><span>57 <span class="timer-cal">Sec</span></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-{{--                <div class="col-xl-2 text-center">--}}
-{{--                    <div class="product-page-details product-right mb-0 border m-t-40">--}}
-{{--                        <div class="profile-top">--}}
-{{--                            <div class="profile-image text-center">--}}
-{{--                                <img src="{{ asset('') }}/assets/images/logos/17.png" alt="" class="img-fluid">--}}
-{{--                            </div>--}}
-{{--                            <div class="profile-detail text-center">--}}
-{{--                                <h5>Fashion Store</h5>--}}
-{{--                                <h6>750 followers | 10 review</h6>--}}
-{{--                                <h6>mark.enderess@mail.com</h6>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-            </div>
+                <section class="tab-product m-0">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
+                                <li class="nav-item"><a class="nav-link active" id="top-home-tab" data-toggle="tab" href="#top-home" role="tab" aria-selected="true"><i class="icofont icofont-ui-home"></i>Description</a>
+                                    <div class="material-border"></div>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" id="profile-top-tab" data-toggle="tab" href="#top-profile" role="tab" aria-selected="false"><i class="icofont icofont-man-in-glasses"></i>Details</a>
+                                    <div class="material-border"></div>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-toggle="tab" href="#top-contact" role="tab" aria-selected="false"><i class="icofont icofont-contacts"></i>Video</a>
+                                    <div class="material-border"></div>
+                                </li>
+                            </ul>
+                            <div class="tab-content nav-material" id="top-tabContent">
+                                <div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                        industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                        since the 1500s, when an unknown printer took a galley of type and
+                                        scrambled it to make a type specimen book. It has survived not only five
+                                        centuries, but also the leap into electronic typesetting, remaining
+                                        essentially unchanged. It was popularised in the 1960s with the release
+                                        of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                        with desktop publishing software like Aldus PageMaker including versions
+                                        of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and
+                                        typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                        text ever since the 1500s, when an unknown printer took a galley of type
+                                        and scrambled it to make a type specimen book. It has survived not only
+                                        five centuries, but also the leap into electronic typesetting, remaining
+                                        essentially unchanged. It was popularised in the 1960s with the release
+                                        of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                        with desktop publishing software like Aldus PageMaker including versions
+                                        of Lorem Ipsum.</p>
+                                </div>
+                                <div class="tab-pane fade" id="top-profile" role="tabpanel" aria-labelledby="profile-top-tab">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                        industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                        since the 1500s, when an unknown printer took a galley of type and
+                                        scrambled it to make a type specimen book. It has survived not only five
+                                        centuries, but also the leap into electronic typesetting, remaining
+                                        essentially unchanged. It was popularised in the 1960s with the release
+                                        of Letraset sheets containing Lorem Ipsum passages, and more recently
+                                        with desktop publishing software like Aldus PageMaker including versions
+                                        of Lorem Ipsum.</p>
+                                </div>
+                                <div class="tab-pane fade" id="top-contact" role="tabpanel" aria-labelledby="contact-top-tab">
+                                    <div class="mt-3 text-center">
+                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/BUWzX78Ye_8" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            <hr>
+
+            {{-- @forelse ($comments as $parent_comment)
+                <div class="media">
+                    <div class="media-left">
+                    <img src="http://fakeimg.pl/50x50" class="media-object" style="width:40px">
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading title">{{$parent_comment->user->first_name}}</h4>
+                        <p>
+                            {!!$parent_comment->comments!!}
+                        </p>
+                        <button type="button" onclick="replayComment({{$parent_comment->id}})" class="btn btn-primary">Reply</button>
+                    </div>
+                </div>
+                 @foreach($parent_comment->getChilds($parent_comment->id)->get() as $child)
+                    <div class="media child">
+                        <div class="media-left">
+                        <img src="http://fakeimg.pl/50x50" class="media-object" style="width:40px">
+                        </div>
+                        <div class="media-body">
+                        <h4 class="media-heading title">{{$child->user->first_name}}</h4>
+                        <p>
+                            {!!$child->comments!!}
+                        </p>
+                        <button type="button" onclick="replayComment({{$parent_comment->id}})" class="btn btn-primary">Reply</button>
+                        </div>
+                    </div>
+                @endforeach
+                @empty
+                    <p>No comments</p>
+            @endforelse --}}
+            
         </div>
+      </div>
+  </div>
+
+  <!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  {{-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form action="{{url('merchant/newsfeed/comment-replay-merchant')}}" method="post">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Write your comment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="feed_id" id="" value="{{$feed->id}}">
+                    <input type="hidden" name="parent_id" id="rowId" value="">
+                    <textarea class="form-control summernote"  id="newsDesctiption"  name="comments_message"></textarea>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Post</button>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div> --}}
+
+</section>
 @endsection
+@push('js') 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.js"></script>
+<!-- <script src="{{ asset('') }}/js/select2.min.js"></script> --> 
+    <script>
+        function replayComment(row){
+            // $('#newsDesctiption').val('');
+            $('#rowId').val(row);
+            $('#exampleModalCenter').modal('show');
+        }
 
-@push('js')
- <script>
-     $(document).ready(function(){
-         $('.imagecolor').on('click',function(){
-            var imgcolor = $(this).data('color'); 
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 300,
+            });
+        });
 
-            $.ajax({
-                type:"GET",
-                url:"{{url('andbaazaradmin/color-image/{color_slug}')}}",
-                data:{'imgcolor':imgcolor},
-                success:function(data){ 
-                    $('img#image-rander').attr('src','{{asset("/")}}/'+data[0].org_img);
-                    $('img#image-loop').attr('src','{{asset("/")}}/'+data[1].org_img);  
-                }
-            }) 
-         })
-     });
-
-     $('#saveReason').click(function(e){ 
-    e.preventDefault();
-    const name = $('#rej_name').val(); 
-    if(name == '' ){
-        alert ('Required Filed Must be filled');
-    }else{
-        var formData = $("#rejectId").serialize(); 
-        $.ajax({
-            type: 'POST',
-            url:"{{ url('/andbaazaradmin/reject-name/') }}", 
-            data: formData,
-            dataType: "json",
-            success: function(response){
-                var name = $('#rej_name').val(''); 
-                if(response){
-                    $("#again").load(" #again");
-                } 
-            }
-        })
-    }
-});
- </script>
+</script>
 @endpush
+
+
+
+
