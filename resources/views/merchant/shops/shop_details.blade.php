@@ -174,7 +174,7 @@
                                                                 </div>
                                                                 <div class="product-page-per-view">
                                                                     <select  id="page_size">
-                                                                        <option value="24">24 Products Per Page</option></a>
+                                                                        <option value="24">24 Products Per Page</option>
                                                                         <option value="48">48 Products Per Page</option>
                                                                         <option value="96">96 Products Per Page</option>
                                                                     </select>
@@ -183,7 +183,7 @@
 
                                                                     <select id="category">
                                                                     <option value="Select">Search Category</option>
-                                                                       @foreach($category as $row)                                                                    
+                                                                       @foreach($category as $row)
                                                                          <option value="{{ $row->id }}">{{$row->name}}</option>
                                                                        @endforeach
                                                                     </select>
@@ -249,7 +249,7 @@
                                                                         <li class="page-item"><a class="page-link" href="#">2</a></li>
                                                                         <li class="page-item"><a class="page-link" href="#">3</a></li>
                                                                         <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true"><i class="fa fa-chevron-right" aria-hidden="true"></i></span> <span class="sr-only">Next</span></a></li>
-                                                                    </ul>                                                                 
+                                                                    </ul>
                                                                 </nav>
                                                             </div>
 
@@ -261,16 +261,16 @@
                                                         </div>
                                                     </div>
                                                 </div> -->
-                                                        
-                                            </div>                                         
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>                              
+                                </div>
                             </div>
                         </div>
-                    </div>   
+                    </div>
                 </section>
-                {{$items->links()}}  
+                {{$items->links()}}
             </div>
         </div>
     </div>
@@ -346,14 +346,14 @@
 
 $('#category').on('change',function(){
   var cat = $(this).val();
- 
+
   window.location.href = 'shop?page=1&cat=' + cat;
 });
 
 
 $('#page_size').on('change',function(){
   var page_size = $(this).val();
- 
+
   window.location.href = 'shop?page=1&page_size=' + page_size;
 });
 
@@ -390,7 +390,8 @@ var basic = $("#main-cropper").croppie({
     viewport: { width: 250, height: 250 },
     boundary: { width: 300, height: 300 },
     showZoomer: true,
-    enableExif: true
+    enableExif: true,
+    enableResize: true
 });
 
 
@@ -415,7 +416,9 @@ var basic = $("#main-cropper-banar").croppie({
     viewport: { width: 1370, height: 450 },
     boundary: { width: 1400, height: 500 },
     showZoomer: true,
-    enableExif: true
+    enableExif: true,
+    enableResize: true,
+    enableOrientation: true,
 });
 
 
