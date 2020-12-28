@@ -3,8 +3,6 @@
 
     <li class="nav-item"><a class="nav-link {{ (Request::is('merchant/krishi/products') || Request::is('merchant/krishi/products/*')) ? 'active' : ''}}" href="{{ url('merchant/krishi/products') }}">Products</a> </li>
 
-    <li class="nav-item"><a class="nav-link {{ (Request::is('merchant/krishi/inventories') || Request::is('merchant/krishi/inventories/*')) ? 'active' : ''}}" href="{{ url('merchant/krishi/inventories') }}">Inventories</a> </li>
-
     <li class="nav-item"><a class="nav-link" href="#orders">Orders</a> </li>
 
     <li class="nav-item"><a  class="nav-link {{ Request::is('profile') ? 'active' : ''}}" href="{{ url('profile') }}">Profile</a></li>

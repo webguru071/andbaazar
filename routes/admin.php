@@ -4,10 +4,11 @@
 
 Route::get('andbaazaradmin/login','AuthController@adminlogin');
 Route::post('andbaazaradmin/login','AuthController@adminloginprocess')->name('loginproces');
+Route::get('/andbaazaradmin-logout','AuthController@adminLogout');
 
 
 Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function (){
-// Route::prefix('andbaazaradmin')->group(function () {
+    // Route::prefix('andbaazaradmin')->group(function () {
     Route::get('dashboard','AdminHomeController@dashboard');
     Route::get('products/category-tree-view',['uses'=>'CategoriesController@manageCategory']);
     Route::get('categories/update/{id}/edit','CategoriesController@edit');
@@ -28,10 +29,10 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
     Route::resource('/promotionhead','PromotionHeadsController');
     Route::resource('/promotionplan','PromotionPlansController');
     Route::resource('/currency','CurrenciesController');
-    Route::resource('/courier','CouriersController'); 
+    Route::resource('/courier','CouriersController');
     //Route::get('/seller','SellersController@index');
     Route::post('/reject-name','RejectListController@other');
-    Route::resource('/reject','RejectListController'); 
+    Route::resource('/reject','RejectListController');
     Route::get('/merchant','MerchantController@index');
     Route::get('/newsfeed','NewsfeedController@feedlist');
     Route::get('/contact-us','ContactController@contactmailList');
@@ -49,57 +50,59 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
 
     Route::get('sme/products/','SmeProductController@smeproductList');
 
-   // SME Product list start //
+    // SME Product list start //
 
-   //Auctionproduct list start
+    //Auctionproduct list start
 
-   Route::get('auction/products/','AuctionproductController@auctionProductList');
+    Route::get('auction/products/','AuctionproductController@auctionProductList');
 
     Route::get('color-image/{color_slug}','ProductsController@colorWiseImage');
 
-   Route::resource('/shop','ShopsController');
+    Route::resource('/shop','ShopsController');
 
-   Route::get('category_setup','CategorySetupController@index');
-
-
-//    Krishi Product  Start //
-
-Route::get('krishi/products/','KrishiProductController@krishiProductList');
+    Route::get('category_setup','CategorySetupController@index');
 
 
-// Route::resource('products/krishi/category','KrishiCategoryController');
+    //    Krishi Product  Start //
+
+    Route::get('krishi/products/','KrishiProductController@krishiProductList');
 
 
-// Attribute import Start//
-
-Route::get('attribute-import', 'ExportImportController@importExportView');
-Route::post('attribute-import','ExportImportController@import')->name('attributestore');
-
-Route::get('export', 'ExportImportController@export')->name('export');
-
-// Attribute import End//
-
-// Inventory import Start//
-
-Route::get('inventory-import', 'InvExportImportController@importExportView');
-Route::post('inventory-import','InvExportImportController@import')->name('inventorystore');
-
-Route::get('inventory/export', 'InvExportImportController@export')->name('invexport');
-
-// Inventory import End//
-
-// Village import Start//
-
-Route::get('village-import', 'VillageExportImportController@importExportView');
-Route::post('village-import','VillageExportImportController@import')->name('villagestore');
-
-Route::get('village/export', 'VillageExportImportController@export')->name('villageexport');
-
-// Village import End//
+    // Route::resource('products/krishi/category','KrishiCategoryController');
 
 
+    // Attribute import Start//
 
- 
+    Route::get('attribute-import', 'ExportImportController@importExportView');
+    Route::post('attribute-import','ExportImportController@import')->name('attributestore');
+
+    Route::get('export', 'ExportImportController@export')->name('export');
+
+    // Attribute import End//
+
+    // Inventory import Start//
+
+    Route::get('inventory-import', 'InvExportImportController@importExportView');
+    Route::post('inventory-import','InvExportImportController@import')->name('inventorystore');
+
+    Route::get('inventory/export', 'InvExportImportController@export')->name('invexport');
+
+    // Inventory import End//
+
+    // Village import Start//
+
+    Route::get('village-import', 'VillageExportImportController@importExportView');
+    Route::post('village-import','VillageExportImportController@import')->name('villagestore');
+
+    Route::get('village/export', 'VillageExportImportController@export')->name('villageexport');
+
+    // Village import End//
+
+    Route::get('customers', 'Admin\CustomerController@index');
+
+
+
+
 });
 
 // Category import

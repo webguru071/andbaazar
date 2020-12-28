@@ -15,18 +15,16 @@ class CreateCustomerBillingAddressesTable extends Migration
     {
         Schema::create('customer_billing_addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('location')->nullable();
-            $table->string('slug')->nullable();
-            $table->text('address');
-            $table->string('country');
-            $table->string('state');
-            $table->string('city');
-            $table->string('zip_code');
-            $table->string('phone');
-            $table->string('fax')->nullable();
-            $table->boolean('active')->default(1)->change();
-            $table->foreignId('customer_id')->constrained('customers')->references('id')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
+            $table->string('addressLabel')->nullable();
+            $table->string('geoLocation')->nullable();
+            $table->string('full_name');
+            $table->string('phone_no');
+            $table->string('region');
+            $table->string('city');
+            $table->string('area');
+            $table->text('address');
+            $table->boolean('is_default')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

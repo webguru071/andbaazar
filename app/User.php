@@ -40,9 +40,13 @@ class User extends Authenticatable
     ];
     protected $loginNames = ['email','type'];
 
+    public function customerDetails(){
+        return $this->hasOne(Customer::class,'user_id','id');
+    }
+
     public function buyer(){
       return $this->hasMany(Customer::class,'user_id');
-   }
+    }
 
      public function buyercard(){
        return $this->hasMany(CustomerCard::class,'user_id');

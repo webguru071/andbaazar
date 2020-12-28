@@ -15,28 +15,23 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('order_number');
-            $table->string('invoice_number');
-            $table->string('tracking_number');
-            $table->decimal('subtotal',8,2)->default(0);
-            $table->decimal('discount',8,2)->default(0);
-            $table->decimal('shipping_cost',8,2)->default(0);
-            $table->decimal('grand_total',8,0)->default(0);
-            $table->text('admin_note');
-            $table->string('shipping_track');
-            $table->dateTime('confirm_at');
-            $table->dateTime('back_ordered_at');
-            $table->dateTime('cancel_at');
-            $table->enum('status',['Active','Voided'])->default('Active');
-            $table->boolean('active')->default(1)->change();
-            $table->foreignId('customer_id')->constrained('customers')->references('id')->onDelete('cascade');
-            $table->foreignId('customer_billing_address_id')->constrained('customer_billing_addresses')->references('id')->onDelete('cascade');
-            $table->foreignId('customer_shipping_address_id')->constrained('customer_shipping_addresses')->references('id')->onDelete('cascade');
-            $table->foreignId('customer_card_id')->constrained('customer_cards')->references('id')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('users')->references('id')->onDelete('cascade');
+            $table->string('order_number')->unique();
+            $table->foreignId('customer_billing_address_id')->constrained('customer_addresses')->references('id')->onDelete('cascade');
+            $table->foreignId('customer_shipping_address_id')->constrained('customer_addresses')->references('id')->onDelete('cascade');
             $table->foreignId('shipping_method_id')->constrained('shipping_methods')->references('id')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
-            $table->softDeletes();
+            $table->integer('subtotal')->default(0);
+            $table->integer('discount')->default(0);
+            $table->foreignId('coupon_id')->nullable()->constrained('coupon_codes')->references('id')->onDelete('cascade');
+            $table->integer('coupon_ discount')->default(0);
+            $table->integer('tax_amount')->default(0);
+            $table->integer('shipping_charge')->default(0);
+            $table->integer('grand_total')->default(0);
+            $table->string('order_type')->comment('krishi, ecommerce, auction, sme');
+            $table->foreignId('order_tracking_stage_id')->nullable()->constrained('order_tracking_stages')->references('id')->onDelete('cascade');
+            $table->tinyInteger('status')->default(0)->comment('0 pending, 1 approved, 3 rejected');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

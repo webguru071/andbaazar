@@ -31,7 +31,7 @@
                         <h5 class="card-header">Enter More Information</h5>
                         <div class="card-body ">
                             <div class="form-group">
-                                <select name="division" class="form-control px-10 @error('division') border-danger @enderror" id="division" onchange="getDistrict(this)"  required autocomplete="off" style="height: 45px;">                                         
+                                <select name="division" class="form-control px-10 @error('division') border-danger @enderror" id="division" onchange="getDistrict(this)"  required autocomplete="off" style="height: 45px;">
                                     <option value="">Division</option>
                                     @foreach ($divisions as $division)
                                         <option value="{{$division->id}}" data-lat="{{$division->lat}}" {{$shopProfile->division_id == $division->id ? 'selected' : ''}} data-lng="{{$division->lng}}">{{$division->bn_name}}</option>
@@ -46,14 +46,14 @@
                                             <option value="{{$item->id}}" {{$shopProfile->district_id == $item->id ? 'selected' : ''}}>{{$item->bn_name}}</option>
                                         @endforeach
                                     </select>
-    
+
                                     <select name="type" class="form-control col-md-4 px-10 @error('type') border-danger @enderror" id="type"  required autocomplete="off" style="height: 45px;">
                                         <option value="Residential" {{$shopProfile->address_type == 'Residential' ? 'selected' : ''}}>Residential</option>
                                         <option value="Municipal"  {{$shopProfile->address_type == 'Municipal' ? 'selected' : ''}}>Municipal</option>
                                     </select>
                                 </div>
                             </div>
-    
+
                             <div class="upazila" style="{{$shopProfile->address_type == 'Municipal' ? 'display:none' : ''}}">
                                 <div class="form-group">
                                     <select name="upazila" class="form-control px-10 @error('upazila') border-danger @enderror" id="upazila"  required autocomplete="off" style="height: 45px;">
@@ -80,7 +80,7 @@
                                     </select>
                                 </div>
                             </div>
-    
+
                             <div class="municipal" style="{{$shopProfile->address_type == 'Residential' ? 'display:none' : ''}}">
                                 <div class="form-group">
                                     <select name="municipal" class="form-control px-10 @error('municipal') border-danger @enderror" id="municipal"  required autocomplete="off" style="height: 45px;">
@@ -112,7 +112,7 @@
                                 <input type="text" class="form-control " @error('name') border-danger @enderror" required name="name" value="{{ old('name',$shopProfile->name) }}" id="name" placeholder="Shop Name">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="slogan" ">Shop slogan <span class="text-danger"> *</span></label>
+                                <label for="slogan">Shop slogan <span class="text-danger"> *</span></label>
                                 <input type="text" class="form-control  @error('slogan') border-danger @enderror"  name="slogan" value="{{ old('slogan',$shopProfile->slogan) }}" id="slogan" placeholder="Shop slogan" />
                             </div>
                             <div class="form-group col-md-6">
@@ -168,7 +168,8 @@
                     </div>
                 </form>
             </div>
-      </div>
+        </div>
+    </div>
 </section>
 @endsection
 
@@ -220,8 +221,8 @@ var marker;
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script type="text/javascript">
     $('#district').change(function(){
-        var district = $(this).find('option:selected'); 
-        var lat = district.data("lat"); 
+        var district = $(this).find('option:selected');
+        var lat = district.data("lat");
         var lng = district.data("lng");
         $.ajax({
             url : "{{route('get-upazila')}}",
@@ -243,8 +244,8 @@ var marker;
     });
 
     function getDistrict(e){
-        var division = $(e).find('option:selected'); 
-        var lat = division.data("lat"); 
+        var division = $(e).find('option:selected');
+        var lat = division.data("lat");
         var lng = division.data("lng");
         $.ajax({
             url : "{{route('get-district')}}",
@@ -268,8 +269,8 @@ var marker;
     };
 
     $('#upazila').change(function(){
-        // var upazila = $(this).find('option:selected'); 
-        // var lat = upazila.data("lat"); 
+        // var upazila = $(this).find('option:selected');
+        // var lat = upazila.data("lat");
         // var lng = upazila.data("lng");
         $.ajax({
             url : "{{route('get-union')}}",
@@ -289,8 +290,8 @@ var marker;
     });
 
     $('#municipal').change(function(){
-        // var upazila = $(this).find('option:selected'); 
-        // var lat = upazila.data("lat"); 
+        // var upazila = $(this).find('option:selected');
+        // var lat = upazila.data("lat");
         // var lng = upazila.data("lng");
         $.ajax({
             url : "{{route('get-ward')}}",
@@ -309,8 +310,8 @@ var marker;
     });
 
     $('#union').change(function(){
-        // var upazila = $(this).find('option:selected'); 
-        // var lat = upazila.data("lat"); 
+        // var upazila = $(this).find('option:selected');
+        // var lat = upazila.data("lat");
         // var lng = upazila.data("lng");
         $.ajax({
             url : "{{route('get-village')}}",

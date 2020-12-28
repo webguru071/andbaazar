@@ -86,6 +86,12 @@ class AuthController extends Controller{
 		return redirect('/login');
 	}
 
+	public function adminLogout(){
+        Auth::logout();
+        Session::flush();
+        return redirect('/andbaazaradmin/login');
+    }
+
     public function selectDefaultService(){
         $user= Auth::user();
         $userServices = $user->business_types;

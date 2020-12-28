@@ -62,7 +62,7 @@
         }
     }
     function SetLatLngValue() { //set input field for lat & lng
-        geoFormatedAddress(marker.getPosition());        
+        geoFormatedAddress(marker.getPosition());
     }
     function geoFormatedAddress(position){
         geocoder.geocode({
