@@ -40,7 +40,6 @@ class CreateAgentsTable extends Migration
             $table->string('last_visited_from')->nullable();
             $table->string('verification_token')->nullable();
             $table->string('remember_token')->nullable();
-            $table->enum('status',['Active','Inactive','Reject'])->default('Inactive');
             $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

@@ -99,7 +99,7 @@ class MerchantController extends Controller{
     }
 
     public function getToken(Request $request){
-        $seller = Merchant::where('remember_token',$request->token)->first();
+        $seller = Merchant::where('remember_token',$request->token)->firstOrFail();
         if($seller->reg_step != 'otp-varification'){
             return redirect('merchant/'.$seller->reg_step.'?token='.$request->token);
         }
@@ -108,7 +108,7 @@ class MerchantController extends Controller{
     }
 
     public function updateToken(Request $request){
-        $seller    = Merchant::where('remember_token',$request->token)->first();
+        $seller    = Merchant::where('remember_token',$request->token)->firstOrFail();
         $verify_number = mt_rand(10000,99999);
         $seller->update([
             'verification_token' => $verify_number,
@@ -339,11 +339,11 @@ class MerchantController extends Controller{
     {
         $rejectlist = Reject::where('type','profile')->get();
 
-        $activesellers = Merchant::with('shop')->where('status','Active')->orderBy('id', 'DESC')->get();
+        $activesellers = Merchant::with('shop')->orderBy('id', 'DESC')->get();
 
-        $requestSellers = Merchant::with('shop')->where('status','Inactive')->orderBy('id','DESC')->get();
+        $requestSellers = Merchant::with('shop')->orderBy('id','DESC')->get();
 
-        $rejectSellers = Merchant::with('shop')->where('status','Reject')->orderBy('id','DESC')->get();
+        $rejectSellers = Merchant::with('shop')->orderBy('id','DESC')->get();
 
         // dd($requestSellers->shop->name);
 

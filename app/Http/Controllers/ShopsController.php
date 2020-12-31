@@ -23,7 +23,7 @@ class ShopsController extends Controller
      */
     public function index()
     {
-        $shop = Shop::all();
+        $shop = Shop::with('seller')->get();
         $seller = Merchant::all();
         return view('admin.shop_list.index',compact('shop','seller'));
     }

@@ -28,7 +28,6 @@ class CreateCustomersTable extends Migration
            $table->string('last_visited_from')->nullable();
            $table->string('verification_token')->nullable();
            $table->string('remember_token')->nullable();
-           $table->boolean('active')->default(1)->change();
            $table->softDeletes();
            $table->timestamps();
        });

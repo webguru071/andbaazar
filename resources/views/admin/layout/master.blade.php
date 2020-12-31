@@ -23,6 +23,9 @@
     <!-- Datatables css-->
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/datatables.css">
 
+    <!-- Datepicker css-->
+    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/date-picker.css">
+
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap.css">
 
@@ -163,10 +166,15 @@
 <script src="/frontend/assets/js/chart/chartjs/chart.min.js"></script>
 
 <!--peity chart js-->
-<script src="{{asset('frontend')}}/assets/js/chart/peity-chart/peity.jquery.js"></script>
+<script src="/frontend/assets/js/chart/peity-chart/peity.jquery.js"></script>
 
 <!--sparkline chart js-->
-<script src="{{asset('frontend')}}/assets/js/chart/sparkline/sparkline.js"></script>
+<script src="/frontend/assets/js/chart/sparkline/sparkline.js"></script>
+
+<!--Datepicker jquery-->
+<script src="/frontend/assets/js/datepicker/datepicker.js"></script>
+<script src="/frontend/assets/js/datepicker/datepicker.en.js"></script>
+<script src="/frontend/assets/js/datepicker/datepicker.custom.js"></script>
 
 <!--Customizer admin-->
 {{--<script src="/frontend/assets/js/admin-customizer.js"></script>--}}

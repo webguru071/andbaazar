@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\OrderTrackingStage;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class OrderTrackingStageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers=User::with('customerDetails')->where('type','customers')->get();
-        return view('admin.customer.index',compact('customers'));
+        $order_satges=OrderTrackingStage::all();
+        return view('admin.order_tracking_stage.index',compact('order_satges'));
     }
 
     /**
@@ -26,7 +26,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.order_tracking_stage.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -59,7 +59,8 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order_stage=OrderTrackingStage::findOrFail($id);
+        return view('admin.order_tracking_stage.edit',compact('order_stage'));
     }
 
     /**
@@ -71,7 +72,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order_stage=OrderTrackingStage::findOrFail($id);
     }
 
     /**
@@ -82,6 +83,6 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        OrderTrackingStage::deleting($id);
     }
 }

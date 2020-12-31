@@ -17,8 +17,8 @@ class CreateOrderTrackingStagesTable extends Migration
             $table->id();
             $table->string('stage_name');
             $table->tinyInteger('order')->unique();
-            $table->tinyInteger('status')->default(1)->comment('1 is for active, 0 is for inactive');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
