@@ -25,7 +25,7 @@ class Newsfeed extends Model
     public function comments(){
         return $this->hasMany(NewsFeedComment::class,'news_feed_id');
     }
-    public function onlyParentComments() {
+    public function onlyParentComments(){
         return $this->comments()->where('parent_id',0);
     }
 }

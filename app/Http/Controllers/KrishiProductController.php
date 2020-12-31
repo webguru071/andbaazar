@@ -144,12 +144,12 @@ class KrishiProductController extends Controller
      * @param  \App\KrishiProduct  $krishiProduct
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-       $krishiproduct = KrishiProduct::find($id);
-       $krishiproductImage = ItemImage::where('color_slug','main')->where('product_id',$krishiproduct->id)->where('type','krishi')->limit(5)->get();
-       $rejectlist = Reject::where('type','krishi')->get();
-
+       $krishiproduct = KrishiProduct::where('slug',$slug)->with('itemimage')->first();
+    //    $krishiproductImage = ItemImage::where('color_slug','main')->where('product_id',$krishiproduct->id)->where('type','krishi')->limit(5)->get();
+    //    $rejectlist = Reject::where('type','krishi')->get();
+        dd($krishiproduct);
        return view('merchant.product.krishibaazar.show',compact('krishiproduct','krishiproductImage','rejectlist'));
     }
 
