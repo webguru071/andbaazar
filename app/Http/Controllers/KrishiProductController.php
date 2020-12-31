@@ -14,6 +14,7 @@ use App\Models\ItemImage;
 use App\Models\Category;
 use DB;
 use App\Models\Newsfeed;
+use App\Models\KrishiReviews;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
@@ -146,11 +147,12 @@ class KrishiProductController extends Controller
      */
     public function show($slug)
     {
-       $krishiproduct = KrishiProduct::where('slug',$slug)->with('itemimage')->first();
+       $krishiproduct = KrishiProduct::where('slug',$slug)->with('itemimage','reviews')->first();
+       $reviews = $krishiproduct->onlyParentReviews()->get();
     //    $krishiproductImage = ItemImage::where('color_slug','main')->where('product_id',$krishiproduct->id)->where('type','krishi')->limit(5)->get();
-    //    $rejectlist = Reject::where('type','krishi')->get();
-        dd($krishiproduct);
-       return view('merchant.product.krishibaazar.show',compact('krishiproduct','krishiproductImage','rejectlist'));
+       $rejectlist = Reject::where('type','krishi')->get();
+        // dd($reviews);
+       return view('merchant.product.krishibaazar.show',compact('krishiproduct','reviews','rejectlist'));
     }
 
     /**
@@ -306,5 +308,38 @@ class KrishiProductController extends Controller
     public function subCategoryChild(Request $request){
         $subCatId = $request->subCatId;
         return KrishiProduct::getSubcategoryChild($subCatId);
+    }
+
+    public function replayReview(Request $request){
+        $request->validate([
+            'review_msg'  => 'required',
+            'krishi_product_id'  => 'required',
+        ]);
+        $images = $request->images;
+        if($images){
+            if(count($images) > 5){
+                array_splice($images,5);
+            }
+        }
+        $paths = [];
+        if($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $name = $file->getClientOriginalName();
+                $file->move(public_path() . '/uploads/krishi/reviews/', $name);
+                $paths[] = '/uploads/krishi/reviews/'.$name;
+            }
+        }
+        KrishiReviews::create([
+            // 'stars'             => '',
+            'review_msg'        => $request->review_msg,
+            'parent_id'         => $request->parent_id,
+            'images'            => json_encode($paths),
+            'krishi_product_id' => $request->krishi_product_id,
+            'user_id'           => Auth::user()->id,
+        ]);
+        
+        Session::flash('success','Comment posted successfully');
+        return redirect()->back();
+
     }
 }

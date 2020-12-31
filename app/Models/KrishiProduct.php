@@ -7,6 +7,7 @@ use App\User;
 use App\Models\Category;
 use App\Models\Merchant;
 use App\Models\Shop;
+use App\Models\KrishiReviews;
 use Illuminate\Support\Facades\DB;
 
 class KrishiProduct extends Model
@@ -52,6 +53,13 @@ class KrishiProduct extends Model
     public function itemimage(){
         return $this->hasMany(KrishiProductItemImage::class,'product_id');
     }
+    public function reviews(){
+        return $this->hasMany(KrishiReviews::class,'krishi_product_id');
+    }
+    public function onlyParentReviews(){
+        return $this->reviews()->where('parent_id',0);
+    }
+
     public function productUnit(){
         return $this->belongsTo(ProductUnit::class,'product_unit_id');
     }

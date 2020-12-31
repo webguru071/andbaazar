@@ -48,8 +48,13 @@
 .child{
     margin-left: 60px;
 }
+.checked {
+  color: orange;
+}
 
  </style>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+ 
 @include('elements.alert')
 
 
@@ -68,15 +73,15 @@
                         <div class="col-lg-6">
                             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img class="d-block w-100" src="http://themes.pixelstrap.com/multikart/assets/images/fashion/pro/001.jpg" alt="First slide">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="http://themes.pixelstrap.com/multikart/assets/images/fashion/pro/001.jpg" alt="Second slide">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="http://themes.pixelstrap.com/multikart/assets/images/fashion/pro/001.jpg" alt="Third slide">
-                                    </div>
+                                    @php $i = 0 @endphp
+                                    @foreach ($krishiproduct->itemimage as $item)
+                                        {{-- {{dd($item)}} --}}
+                                        <div class="carousel-item {{$i == 0 ? 'active': ''}}">
+                                            <img class="d-block w-100" src="{{url($item->org_img)}}" alt="First slide">
+                                        </div>
+                                        @php $i++ @endphp
+                                    @endforeach
+                                    
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -90,15 +95,13 @@
                         </div>
                         <div class="col-lg-6 rtl-text">
                             <div class="product-right">
-                                <h2>Women Pink Shirt</h2>
-                                <h4><del>$459.00</del><span>55% off</span></h4>
+                                <h2>{{$krishiproduct->name}}</h2>
+                                {{-- <h4><del>${{$krishiproduct->price}}</del><span>55% off</span></h4> --}}
+                                <h4><del>$590</del><span>55% off</span></h4>
                                 <h3>$32.96</h3>
                                 <div class="border-product">
                                     <h6 class="product-title">product details</h6>
-                                    <p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
-                                        accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab
-                                        illo inventore veritatis et quasi architecto beatae vitae dicta sunt,
-                                        explicabo. Nemo enim ipsam voluptatem,</p>
+                                    <p>{{Baazar::short_text(strip_tags($krishiproduct->description),100)}}</p>
                                 </div>
                                 <div class="border-product">
                                     <h6 class="product-title">share it</h6>
@@ -130,43 +133,13 @@
                                 <li class="nav-item"><a class="nav-link active" id="top-home-tab" data-toggle="tab" href="#top-home" role="tab" aria-selected="true"><i class="icofont icofont-ui-home"></i>Description</a>
                                     <div class="material-border"></div>
                                 </li>
-                                <li class="nav-item"><a class="nav-link" id="profile-top-tab" data-toggle="tab" href="#top-profile" role="tab" aria-selected="false"><i class="icofont icofont-man-in-glasses"></i>Details</a>
-                                    <div class="material-border"></div>
-                                </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-toggle="tab" href="#top-contact" role="tab" aria-selected="false"><i class="icofont icofont-contacts"></i>Video</a>
                                     <div class="material-border"></div>
                                 </li>
                             </ul>
                             <div class="tab-content nav-material" id="top-tabContent">
                                 <div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                        industry. Lorem Ipsum has been the industry's standard dummy text ever
-                                        since the 1500s, when an unknown printer took a galley of type and
-                                        scrambled it to make a type specimen book. It has survived not only five
-                                        centuries, but also the leap into electronic typesetting, remaining
-                                        essentially unchanged. It was popularised in the 1960s with the release
-                                        of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                        with desktop publishing software like Aldus PageMaker including versions
-                                        of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and
-                                        typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                                        text ever since the 1500s, when an unknown printer took a galley of type
-                                        and scrambled it to make a type specimen book. It has survived not only
-                                        five centuries, but also the leap into electronic typesetting, remaining
-                                        essentially unchanged. It was popularised in the 1960s with the release
-                                        of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                        with desktop publishing software like Aldus PageMaker including versions
-                                        of Lorem Ipsum.</p>
-                                </div>
-                                <div class="tab-pane fade" id="top-profile" role="tabpanel" aria-labelledby="profile-top-tab">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                        industry. Lorem Ipsum has been the industry's standard dummy text ever
-                                        since the 1500s, when an unknown printer took a galley of type and
-                                        scrambled it to make a type specimen book. It has survived not only five
-                                        centuries, but also the leap into electronic typesetting, remaining
-                                        essentially unchanged. It was popularised in the 1960s with the release
-                                        of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                        with desktop publishing software like Aldus PageMaker including versions
-                                        of Lorem Ipsum.</p>
+                                    <p>{!!$krishiproduct->description!!}</p>
                                 </div>
                                 <div class="tab-pane fade" id="top-contact" role="tabpanel" aria-labelledby="contact-top-tab">
                                     <div class="mt-3 text-center">
@@ -180,16 +153,27 @@
 
             <hr>
 
-            {{-- @forelse ($comments as $parent_comment)
+            @forelse ($reviews as $parent_comment)
                 <div class="media">
                     <div class="media-left">
                     <img src="http://fakeimg.pl/50x50" class="media-object" style="width:40px">
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading title">{{$parent_comment->user->first_name}}</h4>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <br class="mb-3">
                         <p>
-                            {!!$parent_comment->comments!!}
+                            {!!$parent_comment->review_msg!!}
                         </p>
+                        <ul class="mb-4">
+                            @foreach (json_decode($parent_comment->images) as $item)
+                                <li><a data-fancybox="gallery" href="{{url($item)}}"><img height="100" src="{{url($item)}}"></a></li>
+                            @endforeach
+                        </ul>
                         <button type="button" onclick="replayComment({{$parent_comment->id}})" class="btn btn-primary">Reply</button>
                     </div>
                 </div>
@@ -201,15 +185,20 @@
                         <div class="media-body">
                         <h4 class="media-heading title">{{$child->user->first_name}}</h4>
                         <p>
-                            {!!$child->comments!!}
+                            {!!$child->review_msg!!}
                         </p>
+                        <ul class="mb-4">
+                            @foreach (json_decode($child->images) as $item)
+                                <li><a data-fancybox="gallery" href="{{url($item)}}"><img height="100" src="{{url($item)}}"></a></li>
+                            @endforeach
+                        </ul>
                         <button type="button" onclick="replayComment({{$parent_comment->id}})" class="btn btn-primary">Reply</button>
                         </div>
                     </div>
                 @endforeach
                 @empty
                     <p>No comments</p>
-            @endforelse --}}
+            @endforelse
             
         </div>
       </div>
@@ -219,21 +208,22 @@
 
   
   <!-- Modal -->
-  {{-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <form action="{{url('merchant/newsfeed/comment-replay-merchant')}}" method="post">
+        <form action="{{url('merchant/krishi/products/review-replay-merchant')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Write your comment</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Write your comment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" name="feed_id" id="" value="{{$feed->id}}">
+                    <input type="hidden" name="krishi_product_id" id="" value="{{$krishiproduct->id}}">
                     <input type="hidden" name="parent_id" id="rowId" value="">
-                    <textarea class="form-control summernote"  id="newsDesctiption"  name="comments_message"></textarea>
+                    <textarea class="form-control summernote"  id="newsDesctiption"  name="review_msg"></textarea>
+                    <input type="file" name="images[]" multiple>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -242,13 +232,14 @@
             </div>
         </form>
     </div>
-  </div> --}}
+  </div>
 
 </section>
 @endsection
 @push('js') 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 <!-- <script src="{{ asset('') }}/js/select2.min.js"></script> --> 
     <script>
         function replayComment(row){
