@@ -31,8 +31,8 @@
                     <div class="card-header">
                         <h5> Customer List</h5>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-borderd" id="dataTableNoPagingDesc">
+                    <div class="card-body table-responsive">
+                        <table class="table table-borderd" id="showInDataTable">
                             <thead>
                             <tr>
                                 <th>Image</th>

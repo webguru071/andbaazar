@@ -15,7 +15,8 @@ class CreateCouponCodesTable extends Migration
     {
         Schema::create('coupon_codes', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
+            $table->string('title');
+            $table->string('code')->unique();
             $table->string('valid_from');
             $table->string('valid_to');
             $table->integer('max_using_limit')->nullable();
@@ -27,6 +28,7 @@ class CreateCouponCodesTable extends Migration
             $table->integer('max_discount_amount')->nullable();
             $table->tinyInteger('status')->default(1)->comment('1 for active, 0 for inactive');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

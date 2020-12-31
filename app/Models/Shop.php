@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Shop;
 use App\Models\Merchant;
 use App\Models\OrderItem;
 use App\Models\Auctionproduct;
@@ -49,10 +48,10 @@ class Shop extends Model
     }
 
   public function user(){
-   return $this->belongsTo(User::class,'user_id');
-    }
+    return $this->belongsTo(User::class,'user_id');
+  }
   public function seller(){
-    return $this->belongsTo(Merchant::class,'merchant_id');
+    return $this->belongsTo(Merchant::class,'user_id','user_id');
   }
   public function cart(){
     return $this->hasMany(Cart::class,'shop_id');

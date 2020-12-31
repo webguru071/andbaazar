@@ -14,7 +14,7 @@ use App\User;
 
 class Customer extends Model
 {
-     protected $fillable = ['first_name','last_name','phone','picture','dob','gender','description','last_visited_at','last_visited_from','verification_token','remember_token','active','user_id'];
+     protected $fillable = ['first_name','last_name','phone','picture','dob','gender','description','last_visited_at','last_visited_from','verification_token','remember_token','user_id'];
 
    public function user(){
     return $this->belongsTo(User::class,'user_id');

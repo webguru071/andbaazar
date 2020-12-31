@@ -17,7 +17,7 @@
   @endslot
   @slot('page')
       <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-      <li class="breadcrumb-item active" aria-current="page">Payment Method</li>
+      <li class="breadcrumb-item active" aria-current="page">Order Tracking</li>
   @endslot
 @endcomponent
 
@@ -26,7 +26,7 @@
             <div class="col-sm-7">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Payment Method</h5>
+                        <h5>Order Tracking Stages</h5>
                     </div>
                     <div class="card-body">
                         <table class="table table-borderd" id="dataTableNoPagingDesc">

@@ -26,7 +26,6 @@ class Merchant extends Model
       'verification_token',
       'remember_token',
       'reg_step',
-      'status',
       'rej_desc',
       'user_id'
     ];

@@ -5,13 +5,13 @@
     <div class="col-md-5 p-0 card-left"></div>
     <div class="col-md-7 p-0 card-right p">
         <div class="text-right">
-            <span class=""> {{  $seller->verification_token }}</span> 
+            <span class=""> {{  $seller->verification_token }}</span>
         </div>
         <div class="card tab2-card pt-5 pb-5">
             <div class="card-body">
                 <ul class="nav nav-tabs nav-material" id="top-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link" id="contact-top-tab" data-toggle="tab" href="#top-contact" role="tab" aria-controls="top-contact" aria-selected="false"><span class="icon-unlock mr-2"></span>Verify Token</a> 
+                        <a class="nav-link" id="contact-top-tab" data-toggle="tab" href="#top-contact" role="tab" aria-controls="top-contact" aria-selected="false"><span class="icon-unlock mr-2"></span>Verify Token</a>
                     </li>
                 </ul>
 
@@ -32,18 +32,18 @@
                     <input type="text" id="digit-5" name="digit[]" data-next="digit-6" data-previous="digit-4" />
 
                     <div class="form-button mt-4 pt-4 text-right">
-                        <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Verify</button> 
-                    </div> 
+                        <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Verify</button>
+                    </div>
                 </form>
-                <span class="btn disabled" id="Resend" type="submit"> <i class="fa fa-refresh"></i> Resend <span class="c"></span></span> 
+                <span class="btn disabled" id="Resend" type="submit"> <i class="fa fa-refresh"></i> Resend <span class="c"></span></span>
             </div>
             <form action="{{ route('updateToken') }}" method="post" id="resendform" style="d-none">
-                @csrf 
+                @csrf
                 <input type="hidden" name="token" value={{$seller->remember_token}}>
-            </form> 
+            </form>
         </div>
     </div>
-</div> 
+</div>
 
 @endsection
 <style>
@@ -81,16 +81,16 @@
             $(this).attr('maxlength', 1);
             $(this).on('keyup', function(e) {
                 var parent = $($(this).parent());
-                
+
                 if(e.keyCode === 8 || e.keyCode === 37) {
                     var prev = parent.find('input#' + $(this).data('previous'));
-                    
+
                     if(prev.length) {
                         $(prev).select();
                     }
                 } else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
                     var next = parent.find('input#' + $(this).data('next'));
-                    
+
                     if(next.length) {
                         $(next).select();
                     } else {

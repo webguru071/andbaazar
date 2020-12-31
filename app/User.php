@@ -30,11 +30,12 @@ use App\Models\Tag;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Newsfeed;
-use Laravel\Passport\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable
 {
-  use HasApiTokens;
+    use HasApiTokens,Notifiable;
     protected $fillable = [
         'first_name','last_name','type','email','phone','password','api_token','login_area','business_types'
     ];
@@ -42,6 +43,14 @@ class User extends Authenticatable
 
     public function customerDetails(){
         return $this->hasOne(Customer::class,'user_id','id');
+    }
+
+    public function merchantDetails(){
+        return $this->hasOne(Merchant::class,'user_id','id');
+    }
+
+    public function agentDetails(){
+        return $this->hasOne(Agent::class,'user_id','id');
     }
 
     public function buyer(){

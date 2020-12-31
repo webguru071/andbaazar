@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->text('api_token')->nullable();
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
+            $table->tinyInteger('status')->default(0)->comment('0 for pending, 1 for active, 2 for rejected');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

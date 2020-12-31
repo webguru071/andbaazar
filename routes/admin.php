@@ -28,12 +28,29 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
     Route::resource('promotion','PromotionsController');
     Route::resource('/promotionhead','PromotionHeadsController');
     Route::resource('/promotionplan','PromotionPlansController');
+    Route::resource('/coupon-codes','Admin\CouponCodeController');
     Route::resource('/currency','CurrenciesController');
     Route::resource('/courier','CouriersController');
     //Route::get('/seller','SellersController@index');
     Route::post('/reject-name','RejectListController@other');
     Route::resource('/reject','RejectListController');
-    Route::get('/merchant','MerchantController@index');
+
+    //    For Merchants
+    //    ============================
+    Route::get('/merchants','Admin\MerchantController@active_merchants');
+    Route::get('/merchants/active','Admin\MerchantController@active_merchants');
+    Route::get('/merchants/pending','Admin\MerchantController@pending_merchants');
+    Route::get('/merchants/rejected','Admin\MerchantController@rejected_merchants');
+    //    =============================
+
+    //    For Agents
+    //    ==============================
+    Route::get('/agents','Admin\AgentController@active_agents');
+    Route::get('/agents/active','Admin\AgentController@active_agents');
+    Route::get('/agents/pending','Admin\AgentController@pending_agents');
+    Route::get('/agents/rejected','Admin\AgentController@rejected_agents');
+    //    ==============================
+
     Route::get('/newsfeed','NewsfeedController@feedlist');
     Route::get('/contact-us','ContactController@contactmailList');
     Route::put('/contact-us/{id}','ContactController@replayMail');
@@ -73,7 +90,7 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
 
     // Attribute import Start//
 
-    Route::get('attribute-import', 'ExportImportController@importExportView');
+    Route::get('import-attribute', 'ExportImportController@importExportView');
     Route::post('attribute-import','ExportImportController@import')->name('attributestore');
 
     Route::get('export', 'ExportImportController@export')->name('export');
@@ -82,7 +99,7 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
 
     // Inventory import Start//
 
-    Route::get('inventory-import', 'InvExportImportController@importExportView');
+    Route::get('import-inventory', 'InvExportImportController@importExportView');
     Route::post('inventory-import','InvExportImportController@import')->name('inventorystore');
 
     Route::get('inventory/export', 'InvExportImportController@export')->name('invexport');
@@ -91,7 +108,7 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
 
     // Village import Start//
 
-    Route::get('village-import', 'VillageExportImportController@importExportView');
+    Route::get('import-village', 'VillageExportImportController@importExportView');
     Route::post('village-import','VillageExportImportController@import')->name('villagestore');
 
     Route::get('village/export', 'VillageExportImportController@export')->name('villageexport');
@@ -99,9 +116,6 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
     // Village import End//
 
     Route::get('customers', 'Admin\CustomerController@index');
-
-
-
 
 });
 

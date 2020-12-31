@@ -15,107 +15,107 @@
 
                     <li><a class="sidebar-header {{ request()->is('andbaazaradmin/customers') ? 'active' : '' }}"  href="{{ action('Admin\CustomerController@index') }}"><i data-feather="users"></i><span>Customers</span></a> </li>
 
-                    <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="user"></i> <span>Merchants</span><i class="fa fa-angle-right pull-right"></i></a>
+                    <li class="{{ request()->is('andbaazaradmin/merchants*') ? 'active' : '' }}"><a class="sidebar-header {{ request()->is('andbaazaradmin/merchants*') ? 'active' : '' }}" href="#"><i data-feather="user"></i> <span>Merchants</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Active Merchants</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Pending Merchants</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Rejected Merchants</a></li>
+                            <li class="{{ (request()->is('andbaazaradmin/merchants') || request()->is('andbaazaradmin/merchants/active')) ? 'active' : '' }}"><a href="{{ action('Admin\MerchantController@active_merchants') }}" class="{{ (request()->is('andbaazaradmin/merchants') || request()->is('andbaazaradmin/merchants/active')) ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Active Merchants</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/merchants/pending') ? 'active' : '' }}"><a href="{{ action('Admin\MerchantController@pending_merchants') }}" class="{{ request()->is('andbaazaradmin/merchants/pending') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Pending Merchants</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/merchants/rejected') ? 'active' : '' }}"><a href="{{ action('Admin\MerchantController@rejected_merchants') }}" class="{{ request()->is('andbaazaradmin/merchants/rejected') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Rejected Merchants</span></a></li>
                         </ul>
                     </li>
 
-                    <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="user-plus"></i> <span>Agents</span><i class="fa fa-angle-right pull-right"></i></a>
+                    <li class="{{ request()->is('andbaazaradmin/agents*') ? 'active' : '' }}"><a class="sidebar-header {{ request()->is('andbaazaradmin/agents*') ? 'active' : '' }}" href="#"><i data-feather="user-plus"></i> <span>Agents</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Active Agents</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Pending Agents</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Rejected Agents</a></li>
+                            <li class="{{ (request()->is('andbaazaradmin/agents') || request()->is('andbaazaradmin/agents/active')) ? 'active' : '' }}"><a href="{{ action('Admin\AgentController@active_agents') }}" class="{{ (request()->is('andbaazaradmin/agents') || request()->is('andbaazaradmin/agents/active'))  ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Active Agents</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/agents/pending') ? 'active' : '' }}"><a href="{{ action('Admin\AgentController@pending_agents') }}" class="{{ request()->is('andbaazaradmin/agents/pending') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Pending Agents</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/agents/rejected') ? 'active' : '' }}"><a href="{{ action('Admin\AgentController@rejected_agents') }}" class="{{ request()->is('andbaazaradmin/agents/rejected') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Rejected Agents</span></a></li>
                         </ul>
                     </li>
 
                     <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="shopping-bag"></i> <span>Shops</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Krishi</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Ecommerce</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Auction</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> SME</a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Krishi</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Ecommerce</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Auction</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>SME</span></a></li>
                         </ul>
                     </li>
 
                     <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="package"></i> <span>Krishi Products</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Active Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Pending Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Rejected Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Category</a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Active Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Pending Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Rejected Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Category</span></a></li>
                         </ul>
                     </li>
 
                     <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="shopping-cart"></i> <span>Ecommerce Products</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Active Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Pending Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Rejected Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Category</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> circle</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Colors</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Size</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Brands</a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Active Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Pending Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Rejected Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Category</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>circle</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Colors</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Size</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Brands</span></a></li>
                         </ul>
                     </li>
 
                     <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="package"></i> <span>Auction Products</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Active Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Pending Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Rejected Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Category</a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Active Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Pending Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Rejected Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Category</span></a></li>
                         </ul>
                     </li>
 
                     <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="package"></i> <span>SME Products</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Active Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Pending Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Rejected Products</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Category</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Tags</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Colors</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Size</a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Active Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Pending Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Rejected Products</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Category</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Tags</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Colors</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Size</span></a></li>
                         </ul>
                     </li>
 
-                    <li><a class="sidebar-header {{ request()->is('andbaazaradmin/promotion') ? 'active' : '' }}"  href="#"><i data-feather="credit-card"></i><span>Payment Methods</span></a> </li>
+                    <li><a class="sidebar-header {{ request()->is('andbaazaradmin/paymentmethod') ? 'active' : '' }}"  href="{{ url('andbaazaradmin/paymentmethod') }}"><i data-feather="credit-card"></i><span>Payment Methods</span></a> </li>
 
                     <li><a class="sidebar-header {{ request()->is('andbaazaradmin/promotion') ? 'active' : '' }}"  href="#"><i data-feather="truck"></i><span>Order Tracking Stages</span></a> </li>
 
-                    <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="gift"></i> <span>Promotion</span><i class="fa fa-angle-right pull-right"></i></a>
+                    <li class="{{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}"><a class="sidebar-header {{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}" href="#"><i data-feather="gift"></i> <span>Promotion</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Promotion Plan</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Coupons</a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Promotion Plan</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Coupons</span></a></li>
                         </ul>
                     </li>
 
                     <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="tv"></i> <span>News Feeds</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Active News</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Pending News</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Rejected News</a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Active News</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Pending News</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Rejected News</span></a></li>
                         </ul>
                     </li>
 
                     <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="settings"></i> <span>Setting</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Predefined Reject Reason</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Currency</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Shipping Methods</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Site Settings</a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Predefined Reject Reason</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Currency</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Shipping Methods</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Site Settings</span></a></li>
                         </ul>
                     </li>
 
-                    <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="database"></i> <span>Export/Import Data</span><i class="fa fa-angle-right pull-right"></i></a>
+                    <li class="{{ request()->is('andbaazaradmin/import-*') ? 'active' : '' }}"><a class="sidebar-header {{ request()->is('andbaazaradmin/import-*') ? 'active' : '' }}" href="#"><i data-feather="database"></i> <span>Export / Import Data</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Attribute</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Inventory</a></li>
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Village</a></li>
+                            <li class="{{ request()->is('andbaazaradmin/import-attribute') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/import-attribute')}}" class="{{ request()->is('andbaazaradmin/import-attribute') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Attribute</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/import-inventory') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/import-inventory')}}" class="{{ request()->is('andbaazaradmin/import-inventory') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Inventory</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/import-village') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/import-village')}}" class="{{ request()->is('andbaazaradmin/import-village') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Village</span></a></li>
                         </ul>
                     </li>
 
@@ -123,7 +123,7 @@
 
                     <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="sliders"></i> <span>CMS</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> Slider Images</a></li>
+                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Slider Images</span></a></li>
                         </ul>
                     </li>
 
