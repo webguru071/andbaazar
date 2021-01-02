@@ -51,7 +51,6 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-//        'ApiAuth' => \App\Http\Middleware\ApiAuth::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'merchant' => \App\Http\Middleware\MerchantAccess::class,
         'isMerchantActive' => \App\Http\Middleware\IsMerchantActive::class,
