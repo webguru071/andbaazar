@@ -2,56 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/agent/active_agents.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/agent/pending_agents.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/agent/rejected_agents.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/coupon_code/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/coupon_code/edit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/coupon_code/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/merchant/active_merchants.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/merchant/pending_merchants.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/merchant/rejected_merchants.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/order_tracking_stage/edit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/order_tracking_stage/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/andbaazar.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/andbaazar.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CustomerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MerchantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MerchantController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ShopsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ShopsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/agentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AgentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/CouponCode.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/CustomerAddress.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/OrderTrackingStage.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/PaymentTransaction.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Customer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Merchant.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Merchant.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Shop.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Shop.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.rnd" beforeDir="false" afterPath="$PROJECT_DIR$/.rnd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_31_063705_create_customers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_31_063705_create_customers_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_31_221403_create_merchants_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_31_221403_create_merchants_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_01_210157_create_coupon_codes_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_01_210157_create_coupon_codes_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_190801_create_order_tracking_stages_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_190801_create_order_tracking_stages_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_19_055251_create_agents_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_19_055251_create_agents_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/CustomersTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/CustomersTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/MerchantsTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/MerchantsTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/UserTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/UserTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/categoryBackup.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/frontend/assets/images/dashboard/favicon.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontend/assets/images/dashboard/favicon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/frontend/assets/js/datatables/custom-basic.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontend/assets/js/datatables/custom-basic.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/frontend/assets/js/datepicker/datepicker.en.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontend/assets/js/datepicker/datepicker.en.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/customer/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/customer/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/coupon_code/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/coupon_code/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/coupon_code/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/coupon_code/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/coupon_code/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/coupon_code/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/left-sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/master.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/payment_methods/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payment_methods/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/shop_list/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/shop_list/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/merchant/otp-varification.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/merchant/otp-varification.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/order_tracking_stage/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/order_tracking_stage/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/order_tracking_stage/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/order_tracking_stage/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/payment_methods/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payment_methods/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/elements/myjs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/elements/myjs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +179,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Projects/Multikart Template/Multikart_html" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../andBazarAdmin" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -263,7 +233,9 @@
       <workItem from="1609129357362" duration="15845000" />
       <workItem from="1609233375736" duration="8116000" />
       <workItem from="1609307374905" duration="16166000" />
-      <workItem from="1609388522343" duration="7601000" />
+      <workItem from="1609388522343" duration="21958000" />
+      <workItem from="1609561823296" duration="1124000" />
+      <workItem from="1609575306754" duration="10435000" />
     </task>
     <servers />
   </component>

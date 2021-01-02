@@ -2,31 +2,31 @@
 
 
 @section('content')
-@push('css')
-<style>
-    .fa{
-        padding:4px;
-      font-size:16px;
-    }
-</style>
-@endpush
-@include('elements.alert')
-@component('admin.layout.inc.breadcrumb')
-  @slot('pageTitle')
-      Payment Method
-  @endslot
-  @slot('page')
-      <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-      <li class="breadcrumb-item active" aria-current="page">Order Tracking</li>
-  @endslot
-@endcomponent
+    @push('css')
+        <style>
+            .fa{
+                padding:4px;
+                font-size:16px;
+            }
+        </style>
+    @endpush
+    @include('elements.alert')
+    @component('admin.layout.inc.breadcrumb')
+        @slot('pageTitle')
+            Order Tracking Stage
+        @endslot
+        @slot('page')
+            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+            <li class="breadcrumb-item active" aria-current="page">Payment Method</li>
+        @endslot
+    @endcomponent
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-7">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Order Tracking Stages</h5>
+                        <h5>Payment Method</h5>
                     </div>
                     <div class="card-body">
                         <table class="table table-borderd" id="dataTableNoPagingDesc">
@@ -68,7 +68,7 @@
                                                     <div class="form">
                                                         <div class="form-group">
                                                             <label for="validationCustom01" class="mb-1">Name :</label>
-                                                        <input type="text"  name="name" value="{{old('name',$row->name)}}" required class="form-control @error('name') border-danger @enderror">
+                                                            <input type="text"  name="name" value="{{old('name',$row->name)}}" required class="form-control @error('name') border-danger @enderror">
                                                             <span class="text-danger">{{ $errors->first('name') }}</span>
                                                         </div>
                                                         <div class="form-group mb-0">
@@ -118,6 +118,6 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 @endsection
 

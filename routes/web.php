@@ -16,7 +16,7 @@ route::get('check',function(){
     return response()->json(['amer'=>'ki','ta'=>'jani na']);
 });
 Route::get('/', 'MerchantController@sellOnAndbaazar');
-Route::get('/login', 'AuthController@userLogin');
+Route::get('/login', 'AuthController@userLogin')->name('login');
 Route::post('/user-auth', 'AuthController@userAuth');
 Route::get('/profile','AuthController@userProfile')->middleware('auth');
 Route::get('/select-service','AuthController@selectDefaultService')->middleware('auth');

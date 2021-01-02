@@ -10,7 +10,7 @@
                     <div class="col-lg-6">
                         <div class="page-header-left">
                             <h3>Edit Payment Method
-                                <small>AndBaazar Admin panel</small>
+                                <small>ucfirst(env('APP_NAME')) }} Admin panel</small>
                             </h3>
                         </div>
                     </div>
