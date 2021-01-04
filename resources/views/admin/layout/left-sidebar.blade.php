@@ -85,7 +85,7 @@
 
                     <li><a class="sidebar-header {{ request()->is('andbaazaradmin/paymentmethod') ? 'active' : '' }}"  href="{{ url('andbaazaradmin/paymentmethod') }}"><i data-feather="credit-card"></i><span>Payment Methods</span></a> </li>
 
-                    <li><a class="sidebar-header {{ request()->is('andbaazaradmin/promotion') ? 'active' : '' }}"  href="#"><i data-feather="truck"></i><span>Order Tracking Stages</span></a> </li>
+                    <li><a class="sidebar-header {{ request()->is('andbaazaradmin/order-tracking-stages') ? 'active' : '' }}"  href="{{ url('andbaazaradmin/order-tracking-stages') }}"><i data-feather="truck"></i><span>Order Tracking Stages</span></a> </li>
 
                     <li class="{{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}"><a class="sidebar-header {{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}" href="#"><i data-feather="gift"></i> <span>Promotion</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">

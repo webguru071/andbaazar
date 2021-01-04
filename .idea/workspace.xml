@@ -2,26 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/cms/slider_image/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/cms/slider_image/edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/cms/slider_image/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/andbaazar.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/andbaazar.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.rnd" beforeDir="false" afterPath="$PROJECT_DIR$/.rnd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/coupon_code/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/coupon_code/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/coupon_code/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/coupon_code/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/coupon_code/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/coupon_code/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/OrderTrackingStageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/OrderTrackingStageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/OrderTrackingStage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/OrderTrackingStage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_04_02_190801_create_order_tracking_stages_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_04_02_190801_create_order_tracking_stages_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/left-sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/master.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/order_tracking_stage/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/order_tracking_stage/edit.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/order_tracking_stage/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/order_tracking_stage/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/payment_methods/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payment_methods/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/elements/myjs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/elements/myjs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/payment_methods/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/payment_methods/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,6 +166,7 @@
       <path value="$PROJECT_DIR$/vendor/nyholm/psr7" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-zendframework-bridge" />
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-diactoros" />
+      <path value="$PROJECT_DIR$/vendor/intervention/image" />
     </include_path>
   </component>
   <component name="ProjectId" id="1ldNWlN8hdMnp4agswKnxBqfuUF" />
@@ -179,7 +178,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../andBazarAdmin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -191,11 +190,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin\cms\slider_image" />
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin\order_tracking_stage" />
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin" />
       <recent name="E:\xampp\htdocs\andbaazar\public\frontend\assets\images\dashboard" />
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\auth\merchant" />
-      <recent name="E:\xampp\htdocs\andbaazar\public\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\user" />
@@ -235,7 +234,11 @@
       <workItem from="1609307374905" duration="16166000" />
       <workItem from="1609388522343" duration="21958000" />
       <workItem from="1609561823296" duration="1124000" />
-      <workItem from="1609575306754" duration="10823000" />
+      <workItem from="1609575306754" duration="12760000" />
+      <workItem from="1609646711113" duration="606000" />
+      <workItem from="1609654831587" duration="40000" />
+      <workItem from="1609654876769" duration="16521000" />
+      <workItem from="1609735106988" duration="17653000" />
     </task>
     <servers />
   </component>
@@ -253,5 +256,16 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/resources/views/admin/cms/slider_image/create.blade.php</url>
+          <line>71</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

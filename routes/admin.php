@@ -51,6 +51,17 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
     Route::get('/agents/rejected','Admin\AgentController@rejected_agents');
     //    ==============================
 
+    //    For Order Tracking Stage
+    //    ==============================
+    Route::post('/update-tracking-stages-order','Admin\OrderTrackingStageController@updateTrackingStageOrder');
+    Route::resource('/order-tracking-stages','Admin\OrderTrackingStageController');
+    //    ==============================
+
+    //    For CMS
+    //    ==============================
+    Route::resource('/cms/sliders','Admin\KrishiBazarSliderController');
+    //    ==============================
+
     Route::get('/newsfeed','NewsfeedController@feedlist');
     Route::get('/contact-us','ContactController@contactmailList');
     Route::put('/contact-us/{id}','ContactController@replayMail');

@@ -50,7 +50,7 @@
                                         <form action="{{ url('/andbaazaradmin/paymentmethod/'.$row->slug) }}" method="post" id="deleteButton{{$row->id}}" style="display: inline">
                                             @csrf
                                             @method('delete')
-                                            <button class="btn btn-primary btn-xs" type="submit" onclick="sweetalertDelete({{$row->id}})"><i class="fa fa-trash-o"></i></button>
+                                            <button class="btn btn-primary btn-xs" type="submit" onclick="makeDeleteRequest(event,{{$row->id}})"><i class="fa fa-trash-o"></i></button>
                                         </form>
                                     </td>
                                 </tr>

@@ -32,6 +32,9 @@
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/bootstrap.css">
 
+    {{--    Jquery UI--}}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/admin.css">
 
@@ -149,6 +152,8 @@
 
 <!-- latest jquery-->
 <script src="/frontend/assets/js/jquery-3.3.1.min.js"></script>
+{{-- Jquery UI --}}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- Bootstrap js-->
 <script src="/frontend/assets/js/popper.min.js"></script>

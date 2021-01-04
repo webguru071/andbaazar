@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderTrackingStage extends Model
 {
     use SoftDeletes;
+    protected $fillable=['stage_name','details','status', 'order'];
 }

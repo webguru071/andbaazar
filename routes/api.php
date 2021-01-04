@@ -40,4 +40,19 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
         Route::get('/logout','UserController@logout');
         Route::get('/profile','UserController@profile');
     });
+    Route::group(['prefix'=>'krishibazar'],function (){
+        Route::group(['prefix'=>'site-info'],function (){
+            //   For Website Info
+            Route::get('/product-categories','SiteInfoController@productCategories');
+            Route::get('/slider-list','SiteInfoController@sliderList');
+            Route::get('/rising-star-shops','SiteInfoController@risingStarShops');
+            Route::get('/flash-deal-products','SiteInfoController@flashDealProducts');
+            Route::get('/best-seller-products','SiteInfoController@bestSellerProducts');
+            Route::get('/popular-categories','SiteInfoController@popularCategories');
+            Route::get('/new-arrival-products','SiteInfoController@newArrivalProducts');
+            Route::get('/upcoming-products','SiteInfoController@upcomingProducts');
+            Route::get('/top-rated-products','SiteInfoController@topRatedProducts');
+        });
+
+    });
 });
