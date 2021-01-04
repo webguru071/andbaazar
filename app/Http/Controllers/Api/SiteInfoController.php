@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\KrishiProductCategoryCollection;
 use App\Http\Resources\KrishiProductCollection;
 use App\Models\KrishiBazarSlider;
+use App\Models\KrishiCategory;
 use App\Models\KrishiProduct;
+use App\Models\Shop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SiteInfoController extends Controller
 {
@@ -21,7 +25,14 @@ class SiteInfoController extends Controller
     }
 
     public function risingStarShops(){
-
+        $popularProducts = KrishiProduct::select('shop_id', DB::raw('SUM(total_unit_sold) as total_sold'))
+            ->where('status','Active')
+            ->groupBy('shop_id')
+            ->orderBy('total_sold','desc')
+            ->take(10)->get()
+            ->pluck('shop_id')->all();
+        $risingStarShops = Shop::whereIn('id',$popularProducts)->get();
+        return new KrishiProductCategoryCollection($risingStarShops);
     }
 
     public function flashDealProducts(){
@@ -29,11 +40,22 @@ class SiteInfoController extends Controller
     }
 
     public function bestSellerProducts(){
-
+        $bestSellerProducts= KrishiProduct::select('*', DB::raw('SUM(total_unit_sold) as total_sold'))
+            ->where([['status','Active'],['available_stock','>',0]])
+            ->orderBy('total_sold','desc')
+            ->take(10)->get();
+        return new KrishiProductCollection($bestSellerProducts);
     }
 
     public function popularCategories(){
-
+        $popularProducts = KrishiProduct::select('category_id', DB::raw('SUM(total_unit_sold) as total_sold'))
+            ->where([['status','Active'],['available_stock','>',0]])
+            ->groupBy('category_id')
+            ->orderBy('total_sold','desc')
+            ->take(10)->get()
+            ->pluck('category_id')->all();
+        $popularCategories = KrishiCategory::whereIn('id',$popularProducts)->where([['active',1],['parent_id',0]])->get();
+        return new KrishiProductCategoryCollection($popularCategories);
     }
 
     public function newArrivalProducts(){
