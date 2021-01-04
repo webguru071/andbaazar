@@ -72,7 +72,7 @@ class SmeInventoryController extends Controller {
 
     public function store(Inventory $inventory,Request $request){
         // dd($request->all());
-        $shopId = Shop::where('user_id',Auth::user()->id)->first();
+        $shopId = Shop::where('user_id',Auth::user()->id)->where('type',Auth::user()->login_area)->first();
         $product = Product::with('itemimage')->where('id',$request->product_id)->first();
         $this->validateForm($request);
         $slug = Baazar::getUniqueSlug($inventory, $product->name);

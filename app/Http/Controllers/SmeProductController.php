@@ -80,7 +80,7 @@ class SmeProductController extends Controller
         $childCategory = Category::where('parent_id','!=',0)->get();
         $tag = Tag::all();
         $sellerId = Merchant::where('user_id',Auth::user()->id)->first();
-        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
+        $shopProfile = Shop::where('user_id',Auth::user()->id)->where('type',Auth::user()->login_area)->first();
         return view ('merchant.product.smeProduct.create',compact('category','categories','item','size','color','subCategories','tag','sellerId','shopProfile','childCategory'));
     }
 
@@ -229,7 +229,7 @@ class SmeProductController extends Controller
       $product      = Product::with('itemimage')->where('slug',$product->slug)->where('type','sme')->first();
       $productImage = ItemImage::where('color_slug','main')->where('product_id',$product->id)->limit(5)->get();
       //dd($productImage);
-      $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
+      $shopProfile = Shop::where('user_id',Auth::user()->id)->where('type',Auth::user()->login_area)->first();
       $productCapasize = InventoryMeta::where('product_id',$product->id)->get();
       $imageColor  = ItemImage::select('color_slug')->where('color_slug','!=','main')->where('product_id',$product->id)->distinct()->get();
       $rejectlist = Reject::where('type','product')->get();
@@ -263,7 +263,7 @@ class SmeProductController extends Controller
       foreach($product->itemtag as $tags){
         $selected_tags[$tags->id] = $tags;
       }
-      $shopProfile        = Shop::where('user_id',Auth::user()->id)->first();
+      $shopProfile        = Shop::where('user_id',Auth::user()->id)->where('type',Auth::user()->login_area)->first();
       $productInventories = Inventory::where('product_id',$product->id)->get();
       $porductMeta        = ItemMeta::where('product_id',$product->id)->get();
       //dd($porductMeta);

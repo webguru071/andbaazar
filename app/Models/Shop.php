@@ -39,7 +39,10 @@ class Shop extends Model
     'municipal_ward_id',
     'upazila_id',
     'union_id',
-    'village_id'
+    'village_id',
+    'agent_id',
+    'type',
+    'status'
 ];
 
   public function getRouteKeyName()
@@ -50,8 +53,8 @@ class Shop extends Model
   public function user(){
     return $this->belongsTo(User::class,'user_id');
   }
-  public function seller(){
-    return $this->belongsTo(Merchant::class,'user_id','user_id');
+  public function merchant(){
+    return $this->belongsTo(Merchant::class,'merchant_id');
   }
   public function cart(){
     return $this->hasMany(Cart::class,'shop_id');

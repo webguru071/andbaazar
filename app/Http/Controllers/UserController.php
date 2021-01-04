@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function changeBusinessInfo(){
-        $businessTypes=Auth::user()->business_types;
-        return view('user.change-business-info',compact('businessTypes'));
+        $userServices = Auth::user()->business_types;
+        return view('auth.select-service',compact('userServices'));
+        // $businessTypes=Auth::user()->business_types;
+        // return view('user.change-business-info',compact('businessTypes'));
     }
 
     public function updateBusinessInfo(Request $request){

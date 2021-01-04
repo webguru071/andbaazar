@@ -13,6 +13,7 @@ use App\Models\CustomerShippingAddress;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Agent;
 use App\Models\Courier;
 use App\Models\Currency;
 use App\Models\Inventory;
@@ -38,6 +39,13 @@ use App\Models\Attribute;
 use App\Models\AttributeMeta;
 use App\Models\Auctionproduct;
 use App\Models\KrishiCategory;
+use App\Models\Geo\Union;
+use App\Models\Geo\Village;
+use App\Models\Geo\Upazila;
+use App\Models\Geo\District;
+use App\Models\Geo\Division;
+use App\Models\Geo\MunicipalWard;
+use App\Models\Geo\Municipal;
 use Session;
 
 class Baazar
@@ -98,7 +106,7 @@ class Baazar
     }
 
     public function shop(){
-        $shop = Shop::where('user_id',Auth::user()->id)->first();
+        $shop = Shop::where('user_id',Auth::user()->id)->where('type',Auth::user()->login_area)->first();
         if(!$shop){return "No Shop Registred";}
         return $shop;
     }
@@ -336,5 +344,31 @@ class Baazar
     }
     public function apiError($msg){
         return response()->json(['data' => '','error' => true,'msg' => $msg]);
+    }
+
+    public function findAgentTree($id,$arr,$level){
+        $agent = Agent::where($arr[key($arr)],$id)->where('agentship_plan',$level[0])->first();
+        if($agent){
+            return $agent;
+        }
+        if(count($arr) > 1){
+            array_shift($arr);
+            array_shift($level);
+        }
+        $union = DB::table(key($arr))->where('id',$id)->first();
+        $nextId = $arr[key($arr)];
+        $nextId = $union->$nextId;
+        return $this->findAgentTree($nextId,$arr,$level);
+    }
+
+    public function findAgent($type,$village_or_ward_id){
+        if($type === 'Residential'){ //Municipal
+            $leaf = [0=>'village_id','villages'=>'union_id','unions'=>'upazila_id','upazilas'=>'district_id','districts'=>'division_id'];
+            $level = ['village_level','union_level','upazila_level','district_level','division_level'];
+            return $this->findAgentTree($village_or_ward_id,$leaf,$level);
+        }
+        $leaf = [0=>'municipal_ward_id','municipal_wards'=>'municipal_id','municipals'=>'district_id','districts'=>'division_id'];
+        $level = ['municipal_ward_level','municipal_level','district_level','division_level'];
+        return $this->findAgentTree($village_or_ward_id,$leaf,$level);
     }
 }

@@ -49,7 +49,7 @@ class InventoriesController extends Controller {
         // $inventoryAttriCapa = InventoryAttributeOption::with('attribute')->where('inventory_attribute_id',2)->first();
         // $productAttriSize   = InventoryAttributeOption::where('inventory_attribute_id',1)->get();
         // $productAttriCapa   = InventoryAttributeOption::where('inventory_attribute_id',2)->get();
-        return view ('merchant.inventory.ecommerceInventroy.create',compact('inventory','item','size','color','shopProfile','productAttriSize','productAttriCapa','inventoryAttriSize','inventoryAttriCapa'));
+        return view ('merchant.inventory.ecommerceInventroy.create',compact('inventory','item','size','color','productAttriSize','productAttriCapa','inventoryAttriSize','inventoryAttriCapa'));
     }
 
     public function addImages($images, $itemId,$shop){
@@ -73,7 +73,7 @@ class InventoriesController extends Controller {
 
     public function store(Inventory $inventory,Request $request){
         // dd($request->all());
-        $shopId = Shop::where('user_id',Auth::user()->id)->first();
+        $shopId = Shop::where('user_id',Auth::user()->id)->where('type',Auth::user()->login_area)->first();
         $product = Product::with('itemimage')->where('id',$request->product_id)->first();
         $this->validateForm($request);
         $slug = Baazar::getUniqueSlug($inventory, $product->name);

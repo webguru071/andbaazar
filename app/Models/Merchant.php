@@ -39,7 +39,7 @@ class Merchant extends Model
        return $this->belongsTo(User::class,'user_id');
      }
      public function shop(){
-       return $this->hasOne(Shop::class,'merchant_id');
+       return $this->hasMany(Shop::class,'merchant_id');
      }
 
      public function rejectvalue(){

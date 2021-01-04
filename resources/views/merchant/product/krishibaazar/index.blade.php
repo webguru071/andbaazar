@@ -148,7 +148,7 @@
                             </div>
                            @empty
                             <tr>
-                                <td colspan="7">No Product found</td>
+                                <td colspan="8">No Product found</td>
                             </tr>
                             @endforelse
                         </div>

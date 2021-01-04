@@ -137,7 +137,7 @@ class ShopsController extends Controller
         $category = Category::where('parent_id',0)->get();
 
         $sellerProfile = Merchant::where('user_id',Auth::user()->id)->first();
-        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
+        $shopProfile = Shop::where('user_id',Auth::user()->id)->where('type',Auth::user()->login_area)->first();
 
 
         // dd($request->all());
@@ -203,7 +203,7 @@ class ShopsController extends Controller
      */
     public function edit($id)
     {
-        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
+        $shopProfile = Shop::where('user_id',Auth::user()->id)->where('type',Auth::user()->login_area)->first();
         $divisions = Division::all();
         return view('merchant.shops.edit',compact('shopProfile','divisions'));
     }
@@ -218,7 +218,7 @@ class ShopsController extends Controller
     public function update(Request $request)
     {
         // dd($request->all());
-        $shopModel = Shop::where('user_id',Auth::user()->id)->first();
+        $shopModel = Shop::where('user_id',Auth::user()->id)->where('type',Auth::user()->login_area)->first();
         //dd($shop);
         $shop = [
             'name'              => $request->name,
@@ -238,26 +238,27 @@ class ShopsController extends Controller
             'updated_at'        => now(),
         ];
         if($request->type == 'Residential'){
+            $agent = Baazar::findAgent($request->type,(int)$request->village);
             $shop = array_merge($shop,[
                     'address_type'  => 'Residential',
                     'upazila_id'    => (int)$request->upazila,
                     'union_id'      => (int)$request->union,
                     'village_id'    => (int)$request->village,
+                    'agent_id'      => $agent->id
                 ]);
         }else{
+            $agent = Baazar::findAgent($request->type,(int)$request->ward);
            $shop =  array_merge($shop,[
                 'address_type'      => 'Municipal',
                 'municipal_id'      => (int)$request->municipal,
                 'municipal_ward_id' => (int)$request->ward,
+                'agent_id'          => $agent->id
                 ]);
         }
         // dd($shop);
 
         $this->validateForm($request);
-
             $shopModel->update($shop);
-
-
         session()->flash('success','your shop profile updated');
         return redirect('merchant/shop');
     }
