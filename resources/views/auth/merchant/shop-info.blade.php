@@ -76,6 +76,9 @@
                                     <option value="" selected disabled>Select Village</option>
                                 </select>
                             </div>
+                            <div id="newVillage">
+                                
+                            </div>
                         </div>
 
                         <div class="municipal" style="display: none">
@@ -139,7 +142,7 @@
         // initMap(lat,lng,10);
         $('#upazila').html('<option value="" selected disabled>Select Upazila</option>');
         $('#union').html('<option value="" selected disabled>Select Union</option>');
-        $('#village').html('<option value="" selected disabled>Select Village</option>');
+        $('#village').html('<option value="" selected disabled>Select Village</option><option value="new">Add your village name</option>');
         $('#municipal').html('<option value="" selected disabled>Select Municipal</option>');
         $('#ward').html('<option value="" selected disabled>Select ward</option>');
     };
@@ -163,7 +166,7 @@
         });
         // initMap(lat,lng,10);
         $('#union').html('<option value="" selected disabled>Select Union</option>');
-        $('#village').html('<option value="" selected disabled>Select Village</option>');
+        $('#village').html('<option value="" selected disabled>Select Village</option><option value="new">Add your village name</option>');
         $('#ward').html('<option value="" selected disabled>Select ward</option>');
     });
 
@@ -185,7 +188,7 @@
                 $('#union').html(response);
             }
         });
-        $('#village').html('<option value="" selected disabled>Select Village</option>');
+        $('#village').html('<option value="" selected disabled>Select Village</option><option value="new">Add your village name</option>');
         // initMap(lat,lng,10);
     });
 
@@ -209,6 +212,14 @@
         // initMap(lat,lng,10);
     });
 
+    $('#village').change(function(){
+        console.log($(this).val());
+        if($(this).val() == 'new'){
+        $('#newVillage').html(`<div class="form-group"><input name="new_village" type="text" class="form-control" required placeholder="Type your village name"></div>`)
+        }else{
+            $('#newVillage').html(''); 
+        }
+    });
     $('#union').change(function(){
         // var upazila = $(this).find('option:selected'); 
         // var lat = upazila.data("lat"); 

@@ -35,6 +35,7 @@ class CreateShopsTable extends Migration
             $table->text('bdesc')->nullable();
             $table->unsignedInteger('timezone_id')->nullable();
             $table->boolean('active')->default(1)->change();
+            $table->foreignId('agent_id')->constrained('agents')->references('id')->onDelete('cascade');
             $table->foreignId('merchant_id')->constrained('merchants')->references('id')->onDelete('cascade');
             $table->foreignId('division_id')->constrained('divisions')->references('id')->onDelete('cascade');
             $table->foreignId('district_id')->constrained('districts')->references('id')->onDelete('cascade');
@@ -44,6 +45,8 @@ class CreateShopsTable extends Migration
             $table->integer('upazila_id')->nullable();
             $table->integer('union_id')->nullable();
             $table->integer('village_id')->nullable();
+            $table->enum('type',['krishibazar','ecommerce','auction','sme','none'])->default('none');
+            $table->enum('status',['Active','Inactive'])->default('Active');
             $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

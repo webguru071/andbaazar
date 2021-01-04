@@ -98,7 +98,21 @@
                                     <div class="col-sm-12">
 
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="picture">Thumbnail Image</label>
+                                                    <div class="mt-0">
+                                                        <img id="output"  class="imagestyle" src="{{ asset('/images/demo-product.jpg') }}" />
+                                                    </div>
+                                                    <div class="uploadbtn">
+                                                        <label for="img-upload" class="custom-file-upload image-upload"><i aria-hidden="true"></i> Upload Here</label>
+                                                        <input id="img-upload" accept="image/*"  class ="d-none" type="file" name="picture"/>
+                                                        <div id="loader" class=""></div>
+                                                    </div>
+                                                    <input type="hidden" name="thumbnail_image" id="thumbnail_image">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9">
                                                 <div class="form-group">
                                                     <label for="name">Product Name <span class="text-danger">*</span></label>
                                                     <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" placeholder="Tomato"/>
@@ -106,6 +120,48 @@
                                                     @if ($errors->has('name'))
                                                     <span class="text-danger">{{ $errors->first('name') }}</span>
                                                     @endif
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group margin col-md-4">
+                                                        <label for="available_from">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('available_from') }}</span>
+                                                        <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerNexDayOnly" required name="available_from" value="{{ old('available_from') }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
+                                                    </div>
+                                                    <div class="form-group margin col-md-4">
+                                                        <label class="available_for">Estimate Available For Days</label>
+                                                        <input type="number" class="form-control" name="available_for" id="available_for" placeholder="30" />
+                                                        @if ($errors->has('available_for'))
+                                                            <span class="text-danger">{{ $errors->first('available_for') }}</span>
+                                                        @endif
+                                                    </div>
+                                                        <div class="form-group margin col-md-4">
+                                                            <label class="availableStock">Available Stock (Quantity)<span class="text-danger"> *</span></label>
+                                                            <input type="number" class="form-control" name="available_stock" id="availableStock" placeholder="400" required/>
+                                                            @if ($errors->has('available_stock'))
+                                                                <span class="text-danger">{{ $errors->first('available_stock') }}</span>
+                                                            @endif
+                                                        </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group margin col-md-4">
+                                                        <label for="regular_price">Product Price <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('regular_price') }}</span>
+                                                        <input type="number"  class="form-control inputfield  @error('regular_price') border-danger @enderror " required name="regular_price" value="{{ old('regular_price') }}"   id="regular_price" placeholder="price" autocomplete="off">
+                                                    </div>
+                                                    <div class="form-group margin col-md-4">
+                                                        <label for="productUnit">Product Unit<span class="text-danger"> *</span></label>
+                                                        <select class="form-control" id="productUnit" name="product_unit_id" required>
+                                                            <option value="">-- Select Unit --</option>
+                                                            @foreach($productUnits as $productUnit)
+                                                                <option value="{{ $productUnit->id }}">{{ $productUnit->bn_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group margin col-md-4">
+                                                        <label for="productUnit">Whole Sale Support</label>
+                                                        <select class="form-control" id="productUnit" name="product_unit_id" required>
+                                                            <option value="">No</option>
+                                                            <option value="">Yes</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,18 +190,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="picture">Thumbnail Image</label>
-                                            <div class="mt-0">
-                                                <img id="output"  class="imagestyle" src="{{ asset('/images/demo-product.jpg') }}" />
-                                            </div>
-                                            <div class="uploadbtn">
-                                                <label for="img-upload" class="custom-file-upload image-upload"><i aria-hidden="true"></i> Upload Here</label>
-                                                <input id="img-upload" accept="image/*"  class ="d-none" type="file" name="picture"/>
-                                                <div id="loader" class=""></div>
-                                            </div>
-                                            <input type="hidden" name="thumbnail_image" id="thumbnail_image">
-                                        </div>
+                                        
 
                                         <div class="form-group">
                                             <div id="dropzone-main" class="img-upload-area" data-color="main"><label>Product Images <span class="text-danger" id="message_main_img"></span></label>
@@ -159,43 +204,8 @@
                                             <div class="inputs"></div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group margin">
-                                                    <label for="available_from">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('available_from') }}</span>
-                                                    <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerNexDayOnly" required name="available_from" value="{{ old('available_from') }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group margin">
-                                                    <label class="available_for">Available For (Days)</label>
-                                                    <input type="number" class="form-control" name="available_for" id="available_for" placeholder="30" />
-                                                    @if ($errors->has('available_for'))
-                                                        <span class="text-danger">{{ $errors->first('available_for') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group margin">
-                                                    <label for="productUnit">Product Unit<span class="text-danger"> *</span></label>
-                                                    <select class="form-control" id="productUnit" name="product_unit_id" required>
-                                                        <option value="">-- Select Unit --</option>
-                                                        @foreach($productUnits as $productUnit)
-                                                            <option value="{{ $productUnit->id }}">{{ $productUnit->bn_name .' (' .$productUnit->description .')' }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group margin">
-                                                    <label class="availableStock">Available Stock (Quantity)<span class="text-danger"> *</span></label>
-                                                    <input type="number" class="form-control" name="available_stock" id="availableStock" placeholder="400" required/>
-                                                    @if ($errors->has('available_stock'))
-                                                        <span class="text-danger">{{ $errors->first('available_stock') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
+                                            
+                                            
                                             <div class="col-md-4">
                                                 <div class="form-group margin">
                                                     <label class="allowCustomOffer">Allow Custom Offer<span class="text-danger"> *</span></label>

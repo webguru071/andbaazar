@@ -61,9 +61,9 @@ class AjaxController extends Controller
 
     public function getVillage(Request $request){
         $unions = Union::with('village')->find($request->union);
-        $options = '<option value="" selected disabled>Select Village</option>';
+        $options = '<option value="" selected disabled>Select Village</option><option value="new">Add your village name</option>';
         foreach($unions->village as $row){
-            $options .= "<option value='{$row->id}'>{$row->bn_name}</option>";
+            $options .= "<option value='{$row->id}'>{$row->name}</option>";
         }
         if(empty($options)){
             $options .= '<option value="" selected disabled>Village not found</option>';

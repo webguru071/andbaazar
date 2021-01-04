@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Merchant;
 use App\Models\Geo\Division;
 use App\User;
+use App\Models\Geo\Village;
 use App\Events\SellerRegistration;
 use App\Models\Shop;
 use App\Models\Reject;
@@ -24,8 +25,8 @@ class MerchantController extends Controller{
         $reject_value = RejectValue::all();
         $seller = Merchant::with('rejectvalue')->where('user_id',Auth::user()->id)->first();
         //dd($sellerProfile);
-        $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
-       return view('vendor-deshboard',compact('seller','shopProfile','reject_value'));
+        // $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
+       return view('vendor-deshboard',compact('seller','reject_value'));
     }
 
     public function merchantlogin(){
@@ -207,6 +208,17 @@ class MerchantController extends Controller{
 
     public function shopRegistrationStore(Request $request,Shop $shop){
         // dd($request->all());
+        
+        if($request->new_village){
+            $vill = new Village;
+            $new_village = Village::create([
+                'name'      => $request->new_village,
+                'union_id'  => $request->union,
+                'slug'      => Baazar::getUniqueSlug($vill,$request->new_village)
+            ]);
+            $request->merge(['village' => $new_village->id]);
+        }
+        
         $request->validate([
             'name'          => 'required',
             'division'      => 'required',
@@ -221,32 +233,36 @@ class MerchantController extends Controller{
 
         $slug = Baazar::getUniqueSlug($shop,$request->name);
         $shop = [
-            'name'      => $request->name,
-            'slug'      => $slug,
-            'lat'       => $request->lat,
-            'division_id'=> (int)$request->division,
-            'district_id'=> (int)$request->district,
-            'lng'       => $request->lng,
-            'address'   => $request->address,
-            'merchant_id' => $sellerId->id,
-            'user_id'   => $sellerId->user_id,
-            'create_at' => now(),
+            'name'          => $request->name,
+            'slug'          => $slug,
+            'lat'           => $request->lat,
+            'division_id'   => (int)$request->division,
+            'district_id'   => (int)$request->district,
+            'lng'           => $request->lng,
+            'address'       => $request->address,
+            'merchant_id'   => $sellerId->id,
+            'user_id'       => $sellerId->user_id,
+            'create_at'     => now(),
+            'type'          => 'none'
         ];
         if($request->type == 'Residential'){
+            $agent = Baazar::findAgent($request->type,(int)$request->village);
             $shop = array_merge($shop,[
                     'address_type'  => 'Residential',
                     'upazila_id'    => (int)$request->upazila,
                     'union_id'      => (int)$request->union,
                     'village_id'    => (int)$request->village,
+                    'agent_id'      => $agent->id
                 ]);
         }else{
-           $shop =  array_merge($shop,[
-                'address_type'      => 'Municipal',
-                'municipal_id'      => (int)$request->municipal,
-                'municipal_ward_id' => (int)$request->ward,
+            $agent = Baazar::findAgent($request->type,(int)$request->ward);
+            $shop =  array_merge($shop,[
+                    'address_type'      => 'Municipal',
+                    'municipal_id'      => (int)$request->municipal,
+                    'municipal_ward_id' => (int)$request->ward,
+                    'agent_id'      => $agent->id
                 ]);
         }
-
         Shop::create($shop);
         flash('Please Select your business area')->success()->important();
         return redirect('merchant/business-info'.'?token='.$request->token);
@@ -254,6 +270,7 @@ class MerchantController extends Controller{
 
     public function businessRegistration(Request $request){
         $seller = Merchant::where('remember_token',$request->token)->first();
+        // dd($seller->shop[0]);
         if(!$seller){
             return redirect('/');
         }
@@ -266,7 +283,24 @@ class MerchantController extends Controller{
             flash('invalide business type')->error()->important();
             return redirect()->back();
         }
+
+        $types = $request->business_types;
+
         $merchant = Merchant::where('remember_token',$request->token)->first();
+        $shop = $merchant->shop[0];
+        $shop->type = $types[0];
+        $shop->slug = Baazar::getUniqueSlug($shop,$shop->name.'-'.$types[0]);
+        $shop->save();
+        array_shift($types);
+        foreach($types as $type){
+           $new = $shop->replicate();
+           $new->type = $type;
+           $new->slug =  Baazar::getUniqueSlug($new,$new->name.'-'.$type);
+           $new->save();
+        }
+
+        // dd($request->business_types);
+        // dd($merchant->shop);
         $user = User::find($merchant->user_id);
         $user->business_types = $request->business_types;
         $user->save();

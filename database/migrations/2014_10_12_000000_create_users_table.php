@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('phone')->nullable();
             $table->string('password')->nullable();
-            $table->enum('type',['customers','merchant','admin'])->default('admin');
+            $table->enum('type',['customers','merchant','admin','agent'])->default('admin');
 //            $table->enum('login_area',['krishibazar','ecommerce','auction','sme'])->nullable();
             $table->string('login_area')->nullable();
             $table->string('business_types')->nullable();
