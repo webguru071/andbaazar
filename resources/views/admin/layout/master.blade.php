@@ -17,6 +17,9 @@
     <!-- Font Awesome-->
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/fontawesome.css">
 
+    <!-- Ico-font-->
+    <link rel="stylesheet" type="text/css" href="/frontend/assets/css/icofont.css">
+
     <!-- Flag icon-->
     <link rel="stylesheet" type="text/css" href="/frontend/assets/css/flag-icon.css">
 
@@ -187,6 +190,8 @@
 
 <!--script admin-->
 <script src="/frontend/assets/js/admin-script.js"></script>
+
+@include('elements.myjs')
 
 @stack('js')
 

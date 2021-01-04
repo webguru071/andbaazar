@@ -51,7 +51,6 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'ApiAuth' => \App\Http\Middleware\ApiAuth::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'merchant' => \App\Http\Middleware\MerchantAccess::class,
         'isMerchantActive' => \App\Http\Middleware\IsMerchantActive::class,
@@ -71,5 +70,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'isActive' => \App\Http\Middleware\isActive::class,
     ];
 }

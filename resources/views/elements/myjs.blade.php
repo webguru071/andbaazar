@@ -1,6 +1,9 @@
 
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+{{--    For Sweet Aleart  --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
 <script>
     function newWindow(url) {
         window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=500,width=970,height=890");
@@ -50,30 +53,30 @@
 
 $(document).ready(function(){
   // toastr.success('The process has been saved.', 'Success');
-  $(".form").validate({
-    rules: {
-        field: {
-            required: true,
-            step: 10
-        },
-    }, highlight: function (element) {
-        $(element).closest('.form-group').addClass('has-danger');
-        // $(element).closest('.form-control').addClass('form-control-danger');
-    },
-    unhighlight: function (element) {
-        $(element).closest('.form-group').removeClass('has-danger');
-        // $(element).closest('.form-group').addClass('has-success');
-    },
-    errorElement: 'div',
-    errorClass: 'form-control-feedback',
-    errorPlacement: function (error, element) {
-        if (element.parent('.input-group').length) {
-            error.insertAfter(element.parent());
-        } else {
-            error.insertAfter(element);
-        }
-    }
-  });
+  // $(".form").validate({
+  //   rules: {
+  //       field: {
+  //           required: true,
+  //           step: 10
+  //       },
+  //   }, highlight: function (element) {
+  //       $(element).closest('.form-group').addClass('has-danger');
+  //       // $(element).closest('.form-control').addClass('form-control-danger');
+  //   },
+  //   unhighlight: function (element) {
+  //       $(element).closest('.form-group').removeClass('has-danger');
+  //       // $(element).closest('.form-group').addClass('has-success');
+  //   },
+  //   errorElement: 'div',
+  //   errorClass: 'form-control-feedback',
+  //   errorPlacement: function (error, element) {
+  //       if (element.parent('.input-group').length) {
+  //           error.insertAfter(element.parent());
+  //       } else {
+  //           error.insertAfter(element);
+  //       }
+  //   }
+  // });
 });
 
 $('.updateNotification').click(function(){
@@ -87,6 +90,29 @@ $('.updateNotification').click(function(){
       });
 });
 
+function makeDeleteRequest(event, id) {
+  event.preventDefault();
+  Swal.fire({
+      title: 'Are you sure?',
+      text: "You will not be able to recover!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+      if (result.value) {
+          Swal.fire(
+              'Deleted!',
+              'Delete action processed successfully.',
+              'success'
+          );
+          $("#deleteButton"+id).submit();
+      }
+  })
+}
+
+
 function sweetalertDelete(id) {
     event.preventDefault();
     swal({
@@ -98,7 +124,7 @@ function sweetalertDelete(id) {
     })
     .then((willDelete) => {
       if (willDelete) {
-        swal("Your action has beed done! :)", {
+        swal("Your action has been done! :)", {
           icon: "success",
           buttons: false,
           timer: 1000

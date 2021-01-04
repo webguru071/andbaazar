@@ -90,7 +90,7 @@
                     <li class="{{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}"><a class="sidebar-header {{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}" href="#"><i data-feather="gift"></i> <span>Promotion</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
                             <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Promotion Plan</span></a></li>
-                            <li class="{{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Coupons</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/coupon-codes') }}" class="{{ request()->is('andbaazaradmin/coupon-codes*') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Coupons</span></a></li>
                         </ul>
                     </li>
 
