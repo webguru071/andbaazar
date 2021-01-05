@@ -37,8 +37,6 @@
                 </div>
                 <form action="" method="get">
                 <div class="filter-area d-flex">
-
-
                     <div class="form-group mr-1">
                         <input type="text" name="keyword" class="form-control" placeholder="Search Here..." value="{{$filter['keyword']}}" />
                     </div>
@@ -157,9 +155,7 @@
                 <div class ="mt-2">
                 {{$product->links()}}
                 </div>
-
             </div>
-
         </div>
     </div>
 </section>
