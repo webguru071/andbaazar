@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Customer;
 use App\Models\CustomerBillingAddress;
 use App\Models\Tag;
 use App\Models\CustomerCard;
@@ -21,7 +20,7 @@ class Order extends Model
    }
 
     public function tag(){
-      return $this->belongsTo(Customer::class,'customer_id');
+      return $this->belongsTo(CustomerProfile::class,'customer_id');
     }
 
     public function buyerbilliadd(){
@@ -36,9 +35,6 @@ class Order extends Model
      return $this->belongsTo(ShippingMethod::class,'shipping_method_id');
    }
 
-    // public function tag(){
-    //   return $this->belongsTo(Tag::class,'tag_id');
-    // }
     public function buyerpayment(){
       return $this->hasMany(BuyerPayment::class,'order_id');
     }

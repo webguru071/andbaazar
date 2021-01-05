@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Models\CustomerProfile;
 use Illuminate\Http\Request;
 use App\Models\CustomerShippingAddress;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +33,7 @@ class CustomerShippingAddressesController extends Controller
 
     public function store(Request $request,CustomerShippingAddress $shipping){
 
-        $customerId = Customer::where('user_id',Auth::user()->id)->first();
+        $customerId = CustomerProfile::where('user_id',Auth::user()->id)->first();
         $slug = Baazar::getUniqueSlug($shipping,$request->location);
         $this->validateForm($request);
             if( $customerId){

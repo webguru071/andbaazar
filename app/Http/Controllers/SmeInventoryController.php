@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Merchant;
 use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\ItemImage;
@@ -17,6 +16,8 @@ use App\Models\InventoryMeta;
 use App\Models\InventoryAttribute;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Models\MerchantProfile;
+
 class SmeInventoryController extends Controller {
 
     public function index(Request $request){
@@ -76,7 +77,7 @@ class SmeInventoryController extends Controller {
         $product = Product::with('itemimage')->where('id',$request->product_id)->first();
         $this->validateForm($request);
         $slug = Baazar::getUniqueSlug($inventory, $product->name);
-        $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
+        $shop = MerchantProfile::where('user_id',Auth::user()->id)->first()->shop;
         $cID = Color::where('slug',$request->color_name)->first();
         if($shop){
             $data = [
@@ -134,7 +135,7 @@ class SmeInventoryController extends Controller {
     public function update(Request $request,$slug){
         // dd($request->all());
         $inventory  = Inventory::where('slug',$slug)->first();
-         $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
+         $shop = MerchantProfile::where('user_id',Auth::user()->id)->first()->shop;
         $this->validateForm($request);
         $data = [
             'size_id'       => $request->size_id,

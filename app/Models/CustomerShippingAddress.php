@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Customer;
 use App\User;
+
 class CustomerShippingAddress extends Model
 {
     use SoftDeletes;
@@ -18,6 +18,6 @@ class CustomerShippingAddress extends Model
 
      public function buyer()
         {
-            return $this->belongsTo(Customer::class, 'buyer_id');
+            return $this->belongsTo(CustomerProfile::class, 'buyer_id');
         }
 }

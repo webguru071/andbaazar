@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MerchantProfile;
 use Illuminate\Http\Request;
 use App\Mail\ProductApproveRequestMail;
 use App\Mail\productApproveMail;
@@ -10,7 +11,6 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Size;
 use App\Models\Color;
-use App\Models\Merchant;
 use App\Models\ProductCategory;
 use App\Models\ProductTag;
 use App\Models\Tag;
@@ -99,7 +99,7 @@ class ProductsController extends Controller
         $subCategories = Category::where('parent_id','!=',0)->get();
         $childCategory = Category::where('parent_id','!=',0)->get();
         $tag = Tag::all();
-        $sellerId = Merchant::where('user_id',Auth::user()->id)->first();
+        $sellerId = MerchantProfile::where('user_id',Auth::user()->id)->first();
         $shopProfile = Shop::where('user_id',Auth::user()->id)->where('type',Auth::user()->login_area)->first();
 
 
@@ -188,7 +188,7 @@ class ProductsController extends Controller
 
     public function store(Product $item, Request $request, Newsfeed $newsfeed){
       // dd($request->all());
-      $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
+      $shop = MerchantProfile::where('user_id',Auth::user()->id)->first()->shop;
       $newsslug = Baazar::getUniqueSlug($newsfeed,$request->title);
       if($shop){
         $slug = Baazar::getUniqueSlug($item,$request->name);
@@ -332,7 +332,7 @@ class ProductsController extends Controller
       $product->item_meta()->delete();
       $product->itemimage()->delete();
       $product->inventory()->delete();
-      $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
+      $shop = MerchantProfile::where('user_id',Auth::user()->id)->first()->shop;
       $feature = Baazar::base64Upload($request->images['main'][0],$slug,$shop->slug,'featured');
         $data = [
           'name'          => $request->name,

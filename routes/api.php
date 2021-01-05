@@ -34,7 +34,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
+    Route::post('/registration','UserController@registration');
     Route::post('/login','UserController@login');
+    Route::post('/forget-password','UserController@forgetPassword');
     Route::group(['middleware'=>['auth:api','isActive']],function (){
         //   For User Authentication
         Route::get('/logout','UserController@logout');

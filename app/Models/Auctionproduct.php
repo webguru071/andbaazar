@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Models\Category;
-use App\Models\Merchant;
 use App\Models\Shop;
 
 class Auctionproduct extends Model
@@ -24,10 +23,10 @@ class Auctionproduct extends Model
         return $this->belongsTo(Category::class,'category_id');
     }
     public function merchant(){
-        return $this->belongsTo(Merchant::class,'merchant_id');
+        return $this->belongsTo(MerchantProfile::class,'merchant_id');
     }
     public function shop(){
-        return $this->belongsTo(Merchant::class,'shop_id');
+        return $this->belongsTo(MerchantProfile::class,'shop_id');
     }
     public function itemimage(){
         return $this->hasMany(ItemImage::class,'product_id');

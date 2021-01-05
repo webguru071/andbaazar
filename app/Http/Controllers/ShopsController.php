@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MerchantProfile;
 use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\ItemImage;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Inventory;
-use App\Models\Merchant;
 use App\Models\Geo\Division;
 use Baazar;
 use Session;
@@ -24,7 +24,7 @@ class ShopsController extends Controller
     public function index()
     {
         $shop = Shop::with('seller')->get();
-        $seller = Merchant::all();
+        $seller = MerchantProfile::all();
         return view('admin.shop_list.index',compact('shop','seller'));
     }
 
@@ -136,7 +136,7 @@ class ShopsController extends Controller
 
         $category = Category::where('parent_id',0)->get();
 
-        $sellerProfile = Merchant::where('user_id',Auth::user()->id)->first();
+        $sellerProfile = MerchantProfile::where('user_id',Auth::user()->id)->first();
         $shopProfile = Shop::where('user_id',Auth::user()->id)->where('type',Auth::user()->login_area)->first();
 
 

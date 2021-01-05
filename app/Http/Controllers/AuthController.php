@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Merchant;
+use App\Models\MerchantProfile;
 use App\Models\Shop;
 use App\User;
 use Illuminate\Http\Request;
@@ -75,7 +75,7 @@ class AuthController extends Controller{
 
 	public function userProfile(){
         $userprofile = Auth::user();
-        $sellerProfile = Merchant::where('user_id',$userprofile->id)->first();
+        $sellerProfile = MerchantProfile::where('user_id',$userprofile->id)->first();
         $shopProfile = Shop::where('user_id',$userprofile->id)->first();
         return  view('auth.profile',compact('sellerProfile','userprofile','shopProfile'));
     }

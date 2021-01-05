@@ -2,7 +2,8 @@
 
 namespace App;
 
-use App\Models\Customer;
+use App\Models\AgentProfile;
+use App\Models\CustomerProfile;
 use App\Models\CustomerCard;
 use App\Models\BuyerPayment;
 use App\Models\CustomerShippingAddress;
@@ -11,6 +12,7 @@ use App\Models\Category;
 use App\Models\Color;
 use App\Models\Courier;
 use App\Models\Inventory;
+use App\Models\MerchantProfile;
 use App\Models\ProductCategory;
 use App\Models\ItemImage;
 use App\Models\ProductTag;
@@ -22,7 +24,6 @@ use App\Models\PromotionHead;
 use App\Models\PromotionPlan;
 use App\Models\PromotionUse;
 use App\Models\Review;
-use App\Models\Merchant;
 use App\Models\ShippingMethod;
 use App\Models\Shop;
 use App\Models\Size;
@@ -43,19 +44,19 @@ class User extends Authenticatable
     protected $loginNames = ['email','type'];
 
     public function customerDetails(){
-        return $this->hasOne(Customer::class,'user_id','id');
+        return $this->hasOne(CustomerProfile::class,'user_id','id');
     }
 
     public function merchantDetails(){
-        return $this->hasOne(Merchant::class,'user_id','id');
+        return $this->hasOne(MerchantProfile::class,'user_id','id');
     }
 
     public function agentDetails(){
-        return $this->hasOne(Agent::class,'user_id','id');
+        return $this->hasOne(AgentProfile::class,'user_id','id');
     }
 
     public function buyer(){
-      return $this->hasMany(Customer::class,'user_id');
+      return $this->hasMany(CustomerProfile::class,'user_id');
     }
 
      public function buyercard(){
@@ -121,7 +122,7 @@ class User extends Authenticatable
         return $this->hasMany(Review::class,'user_id');
       }
       public function seller(){
-        return $this->hasMany(Merchant::class,'user_id');
+        return $this->hasMany(MerchantProfile::class,'user_id');
       }
       public function shippingmethod(){
         return $this->hasMany(ShippingMethod::class,'user_id');

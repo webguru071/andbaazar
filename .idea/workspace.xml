@@ -3,9 +3,47 @@
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.rnd" beforeDir="false" afterPath="$PROJECT_DIR$/.rnd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Agent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/Baazar.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/Baazar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminHomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminHomeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/SiteInfoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/SiteInfoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_091827_create_krishi_product_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_091827_create_krishi_product_categories_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_091828_create_krishi_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_091828_create_krishi_products_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuctionproductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuctionproductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerBillingAddressesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerBillingAddressesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerCardsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerCardsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerShippingAddressesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerShippingAddressesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/InventoriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/InventoriesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/KrishiProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/KrishiProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MerchantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MerchantController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ShopsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ShopsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SmeInventoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SmeInventoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SmeProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SmeProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Listeners/InsertInformationIntoBuyer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Listeners/InsertInformationIntoBuyer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Agent.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Auctionproduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Auctionproduct.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Cart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Customer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/CustomerBillingAddress.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/CustomerBillingAddress.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/CustomerCard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/CustomerCard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/CustomerShippingAddress.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/CustomerShippingAddress.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/KrishiProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/KrishiProduct.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Merchant.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/PromotionUse.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/PromotionUse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/RejectValue.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/RejectValue.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Review.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Review.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Shop.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Shop.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_19_055251_create_agents_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_31_063705_create_customers_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_31_221403_create_merchants_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/left-sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +63,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -224,7 +270,8 @@
       <workItem from="1609646711113" duration="606000" />
       <workItem from="1609654831587" duration="40000" />
       <workItem from="1609654876769" duration="16521000" />
-      <workItem from="1609735106988" duration="22491000" />
+      <workItem from="1609735106988" duration="22697000" />
+      <workItem from="1609819049534" duration="21759000" />
     </task>
     <servers />
   </component>

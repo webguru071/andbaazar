@@ -18,9 +18,11 @@ class CreateUsersTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->unique()->nullable();
+            $table->string('email_verified_at')->nullable();
             $table->string('phone')->nullable();
+            $table->string('phone_no_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->enum('type',['customers','merchant','admin','agent'])->default('admin');
+            $table->enum('type',['customer','merchant','admin','agent'])->default('customer');
 //            $table->enum('login_area',['krishibazar','ecommerce','auction','sme'])->nullable();
             $table->string('login_area')->nullable();
             $table->string('business_types')->nullable();
@@ -28,6 +30,9 @@ class CreateUsersTable extends Migration
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->tinyInteger('status')->default(0)->comment('0 for pending, 1 for active, 2 for rejected');
+            $table->string('verification_token')->nullable();
+            $table->string('remember_token')->nullable();
+            $table->string('remember_token_expired_at')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

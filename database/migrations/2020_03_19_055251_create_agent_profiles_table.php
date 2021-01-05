@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAgentsTable extends Migration
+class CreateAgentProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateAgentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('agents', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
+        Schema::create('agent_profile', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->string('code')->nullable();
             $table->enum('agentship_plan',[
                 'division_level',
@@ -26,12 +26,10 @@ class CreateAgentsTable extends Migration
                 'municipal_level',
                 'municipal_ward_level',
             ])->nullable();
-            $table->string('phone')->nullable();
             $table->date('dob')->nullable();
             $table->enum('gender',['Male','Female','Other'])->default('Male');
             $table->string('slug')->nullable();
             $table->string('picture')->nullable();
-            $table->string('email')->nullable();
             $table->foreignId('division_id')->constrained('divisions')->references('id')->onDelete('cascade');
             $table->integer('district_id');
             $table->enum('address_type',['Residential','Municipal']);
@@ -48,10 +46,6 @@ class CreateAgentsTable extends Migration
             $table->text('rej_desc')->nullable();
             $table->date('last_visited_at')->nullable();
             $table->string('last_visited_from')->nullable();
-            $table->string('verification_token')->nullable();
-            $table->string('remember_token')->nullable();
-            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -63,6 +57,6 @@ class CreateAgentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('agents');
+        Schema::dropIfExists('agent_profile');
     }
 }

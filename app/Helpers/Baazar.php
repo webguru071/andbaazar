@@ -1,11 +1,11 @@
 <?php
 namespace App\Helpers;
 
+use App\Models\AgentProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use App\Models\Customer;
 use App\Models\CustomerBillingAddress;
 use App\Models\CustomerCard;
 use App\Models\BuyerPayment;
@@ -13,7 +13,6 @@ use App\Models\CustomerShippingAddress;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Color;
-use App\Models\Agent;
 use App\Models\Courier;
 use App\Models\Currency;
 use App\Models\Inventory;
@@ -30,7 +29,7 @@ use App\Models\PromotionHead;
 use App\Models\PromotionPlan;
 use App\Models\PromotionUse;
 use App\Models\Review;
-use App\Models\Merchant;
+use App\Models\MerchantProfile;
 use App\Models\ShippingMethod;
 use App\Models\Size;
 use App\Models\Shop;
@@ -111,7 +110,7 @@ class Baazar
         return $shop;
     }
     public function seller(){
-        $seller = Merchant::where('user_id',Auth::user()->id)->first();
+        $seller = MerchantProfile::where('user_id',Auth::user()->id)->first();
         if(!$seller){return 'No seller registred';}
         return $seller;
     }
@@ -347,7 +346,7 @@ class Baazar
     }
 
     public function findAgentTree($id,$arr,$level){
-        $agent = Agent::where($arr[key($arr)],$id)->where('agentship_plan',$level[0])->first();
+        $agent = AgentProfile::where($arr[key($arr)],$id)->where('agentship_plan',$level[0])->first();
         if($agent){
             return $agent;
         }

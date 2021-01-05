@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\KrishiProductCategoryCollection;
 use App\Http\Resources\KrishiProductCollection;
+use App\Http\Resources\ShopCollection;
 use App\Models\KrishiBazarSlider;
 use App\Models\KrishiCategory;
 use App\Models\KrishiProduct;
@@ -16,7 +17,8 @@ use Illuminate\Support\Facades\DB;
 class SiteInfoController extends Controller
 {
     public function productCategories(){
-
+        $productCategories = KrishiCategory::where([['active',1],['parent_id',0]])->get();
+        return new KrishiProductCategoryCollection($productCategories);
     }
 
     public function sliderList(){
@@ -25,14 +27,17 @@ class SiteInfoController extends Controller
     }
 
     public function risingStarShops(){
+        $now = Carbon::now()->format('Y-m-d');
+        $previous = Carbon::now()->subWeeks(8)->format('Y-m-d');
         $popularProducts = KrishiProduct::select('shop_id', DB::raw('SUM(total_unit_sold) as total_sold'))
             ->where('status','Active')
+            ->whereDate('available_from','>=', $previous)->whereDate('available_to','<=', $now)
             ->groupBy('shop_id')
             ->orderBy('total_sold','desc')
             ->take(10)->get()
             ->pluck('shop_id')->all();
         $risingStarShops = Shop::whereIn('id',$popularProducts)->get();
-        return new KrishiProductCategoryCollection($risingStarShops);
+        return new ShopCollection($risingStarShops);
     }
 
     public function flashDealProducts(){
@@ -60,7 +65,7 @@ class SiteInfoController extends Controller
 
     public function newArrivalProducts(){
         $now = Carbon::now()->format('Y-m-d');
-        $previous = Carbon::now()->subWeek()->format('Y-m-d');
+        $previous = Carbon::now()->subWeeks(4)->format('Y-m-d');
         $newArrivalProducts = KrishiProduct::where([['status','Active'],['available_stock','>',0]])->whereDate('available_from','>=', $previous)->whereDate('available_to','<=', $now)->orderBy('available_from')->take(10)->get();
         return new KrishiProductCollection($newArrivalProducts);
     }

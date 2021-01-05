@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Mail\VendorProfileRejectMail;
 use App\Mail\VendorProfilResubmitMail;
+use App\Models\MerchantProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Merchant;
 use App\Models\Geo\Division;
 use App\User;
 use App\Models\Geo\Village;
@@ -23,7 +23,7 @@ class MerchantController extends Controller{
 
     public function dashboard(){
         $reject_value = RejectValue::all();
-        $seller = Merchant::with('rejectvalue')->where('user_id',Auth::user()->id)->first();
+        $seller = MerchantProfile::with('rejectvalue')->where('user_id',Auth::user()->id)->first();
         //dd($sellerProfile);
         // $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
        return view('vendor-deshboard',compact('seller','reject_value'));
@@ -62,7 +62,7 @@ class MerchantController extends Controller{
         return view('merchant.sell-on-andbaazar');
     }
 
-    public function sellOnAndbaazarPost(Request $request, Merchant $seller){
+    public function sellOnAndbaazarPost(Request $request, MerchantProfile $seller){
         $request->merge(['phone' => str_replace('-','',$request->phone)]);
         $request->validate([
             'first_name' => 'required',
@@ -83,7 +83,7 @@ class MerchantController extends Controller{
         ]);
         $slug = Baazar::getUniqueSlug($seller,$request->first_name);
 
-        $merchant = Merchant::create([
+        $merchant = MerchantProfile::create([
             'first_name'            => $request->first_name,
             'last_name'             => $request->last_name,
             'email'                 => $request->email,
@@ -100,7 +100,7 @@ class MerchantController extends Controller{
     }
 
     public function getToken(Request $request){
-        $seller = Merchant::where('remember_token',$request->token)->firstOrFail();
+        $seller = MerchantProfile::where('remember_token',$request->token)->firstOrFail();
         if($seller->reg_step != 'otp-varification'){
             return redirect('merchant/'.$seller->reg_step.'?token='.$request->token);
         }
@@ -109,7 +109,7 @@ class MerchantController extends Controller{
     }
 
     public function updateToken(Request $request){
-        $seller    = Merchant::where('remember_token',$request->token)->firstOrFail();
+        $seller    = MerchantProfile::where('remember_token',$request->token)->firstOrFail();
         $verify_number = mt_rand(10000,99999);
         $seller->update([
             'verification_token' => $verify_number,
@@ -128,7 +128,7 @@ class MerchantController extends Controller{
             flash('Invalid OPT')->error()->important();
             return redirect()->back();
         }else{
-            $seller = Merchant::where('remember_token',$request->token)->first();
+            $seller = MerchantProfile::where([['verification_token',$request->verification_token],['remember_token',$request->token]])->first();
                 $seller->update([
                     'verification_token' => 'varified',
                     'reg_step'           => 'shop-info',
@@ -139,7 +139,7 @@ class MerchantController extends Controller{
     }
 
     public function personalInfo(Request $request){
-        $seller = Merchant::where('remember_token',$request->token)->first();
+        $seller = MerchantProfile::where('remember_token',$request->token)->first();
         if(!$seller){
             return redirect('/');
         }
@@ -166,7 +166,7 @@ class MerchantController extends Controller{
             ]);
 
 
-        $sellerId    = Merchant::where('remember_token',$request->token)->first();
+        $sellerId    = MerchantProfile::where('remember_token',$request->token)->first();
         if(!$sellerId){
             return redirect('/');
         }
@@ -194,7 +194,7 @@ class MerchantController extends Controller{
     }
 
     public function shopRegistration(Request $request){
-        $seller = Merchant::where('remember_token',$request->token)->first();
+        $seller = MerchantProfile::where('remember_token',$request->token)->first();
         if(!$seller){
             return redirect('/');
         }
@@ -208,7 +208,7 @@ class MerchantController extends Controller{
 
     public function shopRegistrationStore(Request $request,Shop $shop){
         // dd($request->all());
-        
+
         if($request->new_village){
             $vill = new Village;
             $new_village = Village::create([
@@ -218,7 +218,7 @@ class MerchantController extends Controller{
             ]);
             $request->merge(['village' => $new_village->id]);
         }
-        
+
         $request->validate([
             'name'          => 'required',
             'division'      => 'required',
@@ -226,7 +226,7 @@ class MerchantController extends Controller{
             'type'          => 'required',
             'address'       => 'required',
         ]);
-        $sellerId = Merchant::where('remember_token',$request->token)->first();
+        $sellerId = MerchantProfile::where('remember_token',$request->token)->first();
         if(!$sellerId){return redirect('/');}
 
         $sellerId->update(['reg_step' => 'complete']);
@@ -269,7 +269,7 @@ class MerchantController extends Controller{
     }
 
     public function businessRegistration(Request $request){
-        $seller = Merchant::where('remember_token',$request->token)->first();
+        $seller = MerchantProfile::where('remember_token',$request->token)->first();
         // dd($seller->shop[0]);
         if(!$seller){
             return redirect('/');
@@ -286,7 +286,7 @@ class MerchantController extends Controller{
 
         $types = $request->business_types;
 
-        $merchant = Merchant::where('remember_token',$request->token)->first();
+        $merchant = MerchantProfile::where('remember_token',$request->token)->first();
         $shop = $merchant->shop[0];
         $shop->type = $types[0];
         $shop->slug = Baazar::getUniqueSlug($shop,$shop->name.'-'.$types[0]);
@@ -373,11 +373,11 @@ class MerchantController extends Controller{
     {
         $rejectlist = Reject::where('type','profile')->get();
 
-        $activesellers = Merchant::with('shop')->orderBy('id', 'DESC')->get();
+        $activesellers = MerchantProfile::with('shop')->orderBy('id', 'DESC')->get();
 
-        $requestSellers = Merchant::with('shop')->orderBy('id','DESC')->get();
+        $requestSellers = MerchantProfile::with('shop')->orderBy('id','DESC')->get();
 
-        $rejectSellers = Merchant::with('shop')->orderBy('id','DESC')->get();
+        $rejectSellers = MerchantProfile::with('shop')->orderBy('id','DESC')->get();
 
         // dd($requestSellers->shop->name);
 
@@ -392,7 +392,7 @@ class MerchantController extends Controller{
     public function create()
     {
         $userprofile = Auth::user();
-        $sellerProfile = Merchant::where('user_id',Auth::user()->id)->first();
+        $sellerProfile = MerchantProfile::where('user_id',Auth::user()->id)->first();
         $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
         if(!empty($sellerProfile))
             return view('merchant.merchant.update',compact('sellerProfile','userprofile','shopProfile'));
@@ -406,11 +406,11 @@ class MerchantController extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Merchant $seller)
+    public function store(Request $request, MerchantProfile $seller)
     {
         //dd($request->all());
         $userprofile = Auth::user();
-        $sellerId    = Merchant::where('user_id',Auth::user()->id)->first();
+        $sellerId    = MerchantProfile::where('user_id',Auth::user()->id)->first();
         $this->validateForm($request);
         $slug = Baazar::getUniqueSlug($seller,$request->first_name);
         if($sellerId){
@@ -445,7 +445,7 @@ class MerchantController extends Controller{
             return back();
 
         }else{
-            $sellerId=Merchant::create([
+            $sellerId=MerchantProfile::create([
                 'first_name'        => $request->first_name,
                 'last_name'         => $request->last_name,
                 'slug'              => $slug,
@@ -484,7 +484,7 @@ class MerchantController extends Controller{
     }
 
     public function profileImageCrop(Request $request){
-        $profile   = Merchant::find($request->profile);
+        $profile   = MerchantProfile::find($request->profile);
         if($profile){
             $image_file = $request->picture;
             list($type, $image_file) = explode(';', $image_file);
@@ -511,7 +511,7 @@ class MerchantController extends Controller{
      */
     public function show($id)
     {
-        $seller = Merchant::find($id);
+        $seller = MerchantProfile::find($id);
 
         return view('merchant.merchant.show',compact('seller'));
     }
@@ -525,7 +525,7 @@ class MerchantController extends Controller{
     public function edit($slug)
     {
         $userprofile = Auth::user();
-        $seller = Merchant::where('slug',$slug)->first();
+        $seller = MerchantProfile::where('slug',$slug)->first();
         $shopProfile = Shop::where('user_id',Auth::user()->id)->first();
         return view('merchant.merchant.edit',compact('seller','userprofile','shopProfile',''));
     }
@@ -534,7 +534,7 @@ class MerchantController extends Controller{
     {
 
         $userprofile = Auth::user();
-        $sellerProfile = Merchant::where('slug',$slug)->first();
+        $sellerProfile = MerchantProfile::where('slug',$slug)->first();
         $this->validateForm($request);
 
         $data = [
@@ -576,7 +576,7 @@ class MerchantController extends Controller{
 
     public function approvement($id){
 
-        $data = Merchant::where('id',$id)->first();
+        $data = MerchantProfile::where('id',$id)->first();
 
 
         $data->update(['status' => 'Active']);
@@ -593,7 +593,7 @@ class MerchantController extends Controller{
     public function rejected(Request $request,$id){
  //dd($request->all());
 
-        $data = Merchant::where('id',$id)->first();
+        $data = MerchantProfile::where('id',$id)->first();
         // dd($data);
         $data->update([
             'status'   => 'Reject',
@@ -629,7 +629,7 @@ class MerchantController extends Controller{
     }
 
     public function profileDelete($id){
-        $merchantProfile = Merchant::find($id);
+        $merchantProfile = MerchantProfile::find($id);
         $merchantProfile->user()->delete();
         $merchantProfile->delete();
         $merchantProfile->rejectvalue()->delete();
@@ -641,7 +641,7 @@ class MerchantController extends Controller{
         // $request->validate([
         //     'yes'        => 'accepted'
         // ]);
-        $merchantProfile = Merchant::find($id);
+        $merchantProfile = MerchantProfile::find($id);
         $merchantProfile->update([
             'status' => 'Inactive',
         ]);

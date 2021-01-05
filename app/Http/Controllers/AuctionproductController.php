@@ -10,7 +10,7 @@ use App\Models\RejectValue;
 use App\Models\Category;
 use App\Models\Auctionproduct;
 use App\Models\ItemImage;
-use App\Models\Merchant;
+use App\Models\MerchantProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use DB;
@@ -82,7 +82,7 @@ class AuctionproductController extends Controller
     public function create()
     {
         $categories = Category::where('parent_id',0)->get();
-        $auctionerId = Merchant::where('user_id',Auth::user()->id)->first();
+        $auctionerId = MerchantProfile::where('user_id',Auth::user()->id)->first();
         return view('auction.product.create',compact('categories','auctionerId'));
     }
 
@@ -115,9 +115,9 @@ class AuctionproductController extends Controller
     public function store(Request $request,Auctionproduct $auctionproduct)
     {
         // dd($request->all());
-        $merchantId =  Merchant::where('user_id',Auth::user()->id)->first();
+        $merchantId =  MerchantProfile::where('user_id',Auth::user()->id)->first();
         $slug       = Baazar::getUniqueSlug($auctionproduct,$request->name);
-        $shop = Merchant::where('user_id',Auth::user()->id)->first()->shop;
+        $shop = MerchantProfile::where('user_id',Auth::user()->id)->first()->shop;
 
         $feature    = Baazar::base64Uploadauction($request->images['main'][0],$slug,'featured');
         // dd($feature);

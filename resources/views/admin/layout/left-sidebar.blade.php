@@ -121,9 +121,9 @@
 
                     <li><a class="sidebar-header {{ request()->is('andbaazaradmin/promotion') ? 'active' : '' }}"  href="{{ url('andbaazaradmin/promotion') }}"><i data-feather="message-square"></i><span>User Message</span></a> </li>
 
-                    <li class="{{ request()->is('andbaazaradmin/products/category*') ? 'active' : '' }}"><a class="sidebar-header" href="#"><i data-feather="sliders"></i> <span>CMS</span><i class="fa fa-angle-right pull-right"></i></a>
+                    <li class="{{ request()->is('andbaazaradmin/cms/*') ? 'active' : '' }}"><a class="sidebar-header {{ request()->is('andbaazaradmin/cms/*') ? 'active' : '' }}" href="#"><i data-feather="sliders"></i> <span>CMS</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li class="{{ request()->is('andbaazaradmin/products/tag/*') ? 'active' : '' }}"><a href="#" class="{{ request()->is('andbaazaradmin/products/tag') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Slider Images</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/cms/sliders') ? 'active' : '' }}"><a href="{{ url('andbaazaradmin/cms/sliders') }}" class="{{ request()->is('andbaazaradmin/cms/sliders') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Slider images</span></a></li>
                         </ul>
                     </li>
 

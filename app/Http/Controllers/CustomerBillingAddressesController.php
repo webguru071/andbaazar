@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CustomerBillingAddress;
-use App\Models\Customer;
+use App\Models\CustomerProfile;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use Baazar;
@@ -40,7 +40,7 @@ class CustomerBillingAddressesController extends Controller
      */
     public function store(Request $request,CustomerBillingAddress $billing)
     {
-        $customerId = Customer::where('user_id',Auth::user()->id)->first();
+        $customerId = CustomerProfile::where('user_id',Auth::user()->id)->first();
         //dd($buyerId);
         $slug = Baazar::getUniqueSlug($billing,$request->location);
         $this->validateForm($request);

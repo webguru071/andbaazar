@@ -9,7 +9,7 @@ use App\Models\ProductUnit;
 use App\Models\Shop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Models\Merchant;
+use App\Models\MerchantProfile;
 use App\Models\ItemImage;
 use App\Models\Category;
 use DB;
@@ -79,7 +79,7 @@ class KrishiProductController extends Controller
      */
     public function create()
     {
-        $krishiId = Merchant::where('user_id',Auth::user()->id)->first();
+        $krishiId = MerchantProfile::where('user_id',Auth::user()->id)->first();
         $categories = KrishiCategory::where('parent_id',0)->get();
         $productUnits = ProductUnit::all();
         return view('merchant.product.krishibaazar.create',compact('krishiId','categories','productUnits'));
@@ -104,7 +104,7 @@ class KrishiProductController extends Controller
      */
     public function store(Request $request,KrishiProduct $krishiProduct)
     {
-        $shop_id = Merchant::where('user_id',Auth::id())->first()->id;
+        $shop_id = MerchantProfile::where('user_id',Auth::id())->first()->id;
         $slug = Baazar::getUniqueSlug($krishiProduct,$request->name);
         $thumbnail_image    = Baazar::base64Uploadkrishi($request->thumbnail_image,$slug,'featured');
         $allData=$request->all();
@@ -337,7 +337,7 @@ class KrishiProductController extends Controller
             'krishi_product_id' => $request->krishi_product_id,
             'user_id'           => Auth::user()->id,
         ]);
-        
+
         Session::flash('success','Comment posted successfully');
         return redirect()->back();
 

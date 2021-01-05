@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Customer;
 use App\Models\Order;
 use App\User;
 class CustomerCard extends Model
@@ -17,7 +16,7 @@ class CustomerCard extends Model
    }
 
    public function buyer(){
-    return $this->belongsTo(Customer::class,'customer_id');
+    return $this->belongsTo(CustomerProfile::class,'customer_id');
     }
     public function order(){
       return $this->hasMany(Order::class,'customer_card_id');

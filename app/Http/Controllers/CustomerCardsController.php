@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Models\CustomerProfile;
 use Illuminate\Http\Request;
 use App\Models\CustomerCard;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +40,7 @@ class CustomerCardsController extends Controller
      */
     public function store(Request $request,CustomerCard $card)
     {
-        $customerId = Customer::where('user_id',Auth::user()->id)->first();
+        $customerId = CustomerProfile::where('user_id',Auth::user()->id)->first();
         $slug = Baazar::getUniqueSlug($card,$request->card_holder_name);
         $this->validateForm($request);
         if($customerId){
