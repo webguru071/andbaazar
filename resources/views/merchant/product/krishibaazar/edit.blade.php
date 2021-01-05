@@ -99,18 +99,128 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12">
+                                    
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="name">Product Name <span class="text-danger">*</span></label>
-                                                <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name',$krishiproduct->name) }}" id="name" />
-                                                <span class="text-danger" id="message_name"></span>
-                                                @if ($errors->has('name'))
-                                                <span class="text-danger">{{ $errors->first('name') }}</span>
-                                                @endif
+                                                <label for="picture">Thumbnail Image</label>
+                                                <div class="mt-0">
+                                                    <img id="output"  class="imagestyle" src="{{ asset('/images/demo-product.jpg') }}" />
+                                                </div>
+                                                <div class="uploadbtn">
+                                                    <label for="img-upload" class="custom-file-upload image-upload"><i aria-hidden="true"></i> Upload Here</label>
+                                                    <input id="img-upload" accept="image/*"  class ="d-none" type="file" name="picture"/>
+                                                    <div id="loader" class=""></div>
+                                                </div>
+                                                <input type="hidden" name="thumbnail_image" id="thumbnail_image"/>
                                             </div>
                                         </div>
+                                        <div class="col-md-9">
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="name">Product Name <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name',$krishiproduct->name) }}" id="name" />
+                                                    <span class="text-danger" id="message_name"></span>
+                                                    @if ($errors->has('name'))
+                                                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group margin col-md-3">
+                                                    <label for="price">Product Price <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('price') }}</span>
+                                                    <input type="number"  class="form-control inputfield  @error('price') border-danger @enderror " required name="price" value="{{ old('price',$krishiproduct->price) }}"   id="price" placeholder="price" autocomplete="off">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label for="productUnit">Product Unit<span class="text-danger"> *</span></label>
+                                                    <select class="form-control" id="productUnit" name="product_unit_id" required>
+                                                        <option value="">-- Select Unit --</option>
+                                                        @foreach($productUnits as $productUnit)
+                                                            <option value="{{ $productUnit->id }}" {{ ($krishiproduct->product_unit_id == $productUnit->id) ? 'selected' : '' }}>{{ $productUnit->bn_name .' (' .$productUnit->description .')' }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="form-group margin col-md-4">
+                                                    <label for="available_from">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('available_from') }}</span>
+                                                    <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerNexDayOnly" required name="available_from" value="{{ old('available_from',$krishiproduct->available_from) }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
+                                                </div>
+                                                <div class="form-group margin col-md-4">
+                                                    <label class="available_for">Estimate Available For Days</label>
+                                                    <input type="number" class="form-control" name="available_for" id="available_for" placeholder="30" value="{{ \Carbon\Carbon::parse($krishiproduct->available_from) ->diffInDays(\Carbon\Carbon::parse($krishiproduct->available_to)) }}" />
+                                                    @if ($errors->has('available_for'))
+                                                        <span class="text-danger">{{ $errors->first('available_for') }}</span>
+                                                    @endif
+                                                </div>
+
+                                                <div class="form-group margin col-md-4">
+                                                    <label class="availableStock">Available Stock (Quantity)<span class="text-danger"> *</span></label>
+                                                    <input type="number" class="form-control" name="available_stock" id="availableStock" placeholder="400" value="{{ $krishiproduct->available_stock }}" required/>
+                                                    @if ($errors->has('available_stock'))
+                                                        <span class="text-danger">{{ $errors->first('available_stock') }}</span>
+                                                    @endif
+                                                </div>
+
+                                                <div class="form-group margin col-md-4">
+                                                    <label for="allow_whole_sale">Whole Sale Support</label>
+                                                    <select class="form-control" id="allow_whole_sale" name="allow_wholesale" required>
+                                                        <option value="0" {{ ($krishiproduct->allow_wholesale == 1) ? 'selected' : '' }} >No</option>
+                                                        <option value="1" {{ ($krishiproduct->allow_wholesale == 1) ? 'selected' : '' }} >Yes</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group margin col-md-4">
+                                                    <label for="allow_flash_sale">Flash Sale Support</label>
+                                                    <select class="form-control" id="allow_flash_sale" name="allow_flash_sale" required>
+                                                        <option value="0" {{ ($krishiproduct->allow_flash_sale == 1) ? 'selected' : '' }}>No</option>
+                                                        <option value="1" {{ ($krishiproduct->allow_flash_sale == 1) ? 'selected' : '' }}>Yes</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group margin col-md-4">
+                                                    <label for="Frequency_allow">Frequency Support</label>
+                                                    <select class="form-control" id="Frequency_allow" name="Frequency_allow" required>
+                                                        <option value="0" {{ ($krishiproduct->frequency_support == 1) ? 'selected' : '' }}>No</option>
+                                                        <option value="1" {{ ($krishiproduct->frequency_support == 1) ? 'selected' : '' }}>Yes</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row whole_sale_setup" style="display: none">
+                                                <div class="form-group margin col-md-6">
+                                                    <label for="wholesale_price">Whole Sale Price <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('wholesale_price') }}</span>
+                                                    <input type="number"  class="form-control inputfield  @error('wholesale_price') border-danger @enderror " required name="wholesale_price" value="{{ old('wholesale_price') }}"   id="regular_price" placeholder="price" autocomplete="off">
+                                                </div>
+                                                <div class="form-group margin col-md-6">
+                                                    <label for="min_wholesale_quantity">Min whole sale Quantity<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('min_wholesale_quantity') }}</span>
+                                                    <input type="number"  class="form-control inputfield  @error('min_wholesale_quantity') border-danger @enderror " required name="min_wholesale_quantity" value="{{ old('min_wholesale_quantity') }}"   id="regular_price" placeholder="price" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="row allow_flash_setup" style="display: none">
+                                                <div class="form-group margin col-md-6">
+                                                    <label for="flash_sale_discount_rate">Flash sale discount percent <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('flash_sale_discount_rate') }}</span>
+                                                    <input type="number"  class="form-control inputfield  @error('flash_sale_discount_rate') border-danger @enderror " required name="flash_sale_discount_rate" value="{{ old('flash_sale_discount_rate') }}"   id="flash_sale_discount_rate" placeholder="price" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="Frequency_allow_setup" style="display: none">
+                                                <div class="form-group">
+                                                    <label class="form-input-label pr-5">Frequency :</label><br>
+                                                    <div class="ml-3" style="max-height: 200px; overflow-y: scroll;">
+                                                    <label for="sunday"><input type="checkbox" {{in_array('sunday',$frequencyname) ? 'checked' : ''}} id="sunday" name="frequency[]" value="sunday"> &nbsp; Sunday </label> <br/>
+                                                    <label for="monday"><input type="checkbox" {{in_array('monday',$frequencyname) ? 'checked' : ''}} id="monday" name="frequency[]" value="monday"> &nbsp; Monday </label> <br/>
+                                                    <label for="tuesday"><input type="checkbox" {{in_array('tuesday',$frequencyname) ? 'checked' : ''}} id="tuesday" name="frequency[]" value="tuesday"> &nbsp; Tuesday </label><br/>
+                                                    <label for="wednessday"><input type="checkbox" {{in_array('wednessday',$frequencyname) ? 'checked' : ''}} id="wednessday" name="frequency[]" value="wednessday"> &nbsp; Wednessday </label><br/>
+                                                    <label for="thursday"><input type="checkbox" {{in_array('thursday',$frequencyname) ? 'checked' : ''}} id="thursday" name="frequency[]" value="thursday"> &nbsp; Thursday </label><br/>
+                                                    <label for="friday"><input type="checkbox" {{in_array('friday',$frequencyname) ? 'checked' : ''}} id="friday" name="frequency[]" value="friday"> &nbsp; Friday </label><br/>
+                                                    <label for="saturday"><input type="checkbox" {{in_array('saturday',$frequencyname) ? 'checked' : ''}} id="saturday" name="frequency[]" value="saturday"> &nbsp; Saturday </label><br/>
+                                                    <label for="everyday"><input type="checkbox" {{in_array('everyday',$frequencyname) ? 'checked' : ''}} id="everyday" name="frequency[]" value="everyday"> &nbsp; Everyday </label><br/>
+                                                    <label for="weekly"><input type="checkbox" {{in_array('weekly',$frequencyname) ? 'checked' : ''}} id="weekly" name="frequency[]" value="weekly"> &nbsp; Weekly </label><br/>
+                                                    <label for="fortnightly"><input type="checkbox" {{in_array('fortnightly',$frequencyname) ? 'checked' : ''}} id="fortnightly" name="frequency[]" value="fortnightly"> &nbsp; Fortnightly </label><br/>
+                                                    <label for="monthly"><input type="checkbox" {{in_array('monthly',$frequencyname) ? 'checked' : ''}} id="monthly" name="frequency[]" value="monthly"> &nbsp; Monthly </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
+
+
+
                                     <div class="form-group">
                                         <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('category_slug') }}</span>
                                         <input type="text" readonly class="form-control @error('category') border-danger @enderror" required name="category" value="{{ $krishiproduct->category['name'] }}" id="category" placeholder="Category">
@@ -158,57 +268,6 @@
                                         </div>
                                         <div class="inputs"></div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group margin">
-                                                <label for="available_from">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('available_from') }}</span>
-                                                <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerNexDayOnly" required name="available_from" value="{{ $krishiproduct->available_from }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group margin">
-                                                <label class="available_for">Available For (Days)</label>
-                                                <input type="number" class="form-control" name="available_for" id="available_for" placeholder="30" value="{{ \Carbon\Carbon::parse($krishiproduct->available_from) ->diffInDays(\Carbon\Carbon::parse($krishiproduct->available_to)) }}" />
-                                                @if ($errors->has('available_for'))
-                                                    <span class="text-danger">{{ $errors->first('available_for') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group margin">
-                                                <label for="productUnit">Product Unit<span class="text-danger"> *</span></label>
-                                                <select class="form-control" id="productUnit" name="product_unit_id" required>
-                                                    <option value="">-- Select Unit --</option>
-                                                    @foreach($productUnits as $productUnit)
-                                                        <option value="{{ $productUnit->id }}" {{ ($krishiproduct->product_unit_id == $productUnit->id) ? 'selected' : '' }}>{{ $productUnit->bn_name .' (' .$productUnit->description .')' }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group margin">
-                                                <label class="availableStock">Available Stock (Quantity)<span class="text-danger"> *</span></label>
-                                                <input type="number" class="form-control" name="available_stock" id="availableStock" placeholder="400" value="{{ $krishiproduct->available_stock }}" required/>
-                                                @if ($errors->has('available_stock'))
-                                                    <span class="text-danger">{{ $errors->first('available_stock') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group margin">
-                                                <label class="allowCustomOffer">Allow Custom Offer<span class="text-danger"> *</span></label>
-                                                <select class="form-control" id="allowCustomOffer" name="allow_custom_offer" required>
-                                                    <option value="1" {{ ($krishiproduct->allow_custom_offer == 1) ? 'selected' : '' }}>Yes</option>
-                                                    <option value="0" {{ ($krishiproduct->allow_custom_offer == 0) ? 'selected' : '' }}>No</option>
-                                                </select>
-                                                @if ($errors->has('allow_custom_offer'))
-                                                    <span class="text-danger">{{ $errors->first('allow_custom_offer') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="form-group">
                                         <label for="videoUrl" class="">Youtube Video URL (optional)</label>
                                         <textarea class="form-control" rows="2" id="videoUrl" name="video_url" placeholder="Paste your link here ...">{{ $krishiproduct->video_url }}</textarea>
@@ -221,22 +280,7 @@
                                             <span class="text-danger">{{ $errors->first('description') }}</span>
                                         @endif
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-input-label pr-5">Frequency :</label><br>
-                                        <div class="ml-3" style="max-height: 200px; overflow-y: scroll;">
-                                        <label for="sunday"><input type="checkbox" {{in_array('sunday',$frequencyname) ? 'checked' : ''}} id="sunday" name="frequency[]" value="sunday"> &nbsp; Sunday </label> <br/>
-                                        <label for="monday"><input type="checkbox" {{in_array('monday',$frequencyname) ? 'checked' : ''}} id="monday" name="frequency[]" value="monday"> &nbsp; Monday </label> <br/>
-                                        <label for="tuesday"><input type="checkbox" {{in_array('tuesday',$frequencyname) ? 'checked' : ''}} id="tuesday" name="frequency[]" value="tuesday"> &nbsp; Tuesday </label><br/>
-                                        <label for="wednessday"><input type="checkbox" {{in_array('wednessday',$frequencyname) ? 'checked' : ''}} id="wednessday" name="frequency[]" value="wednessday"> &nbsp; Wednessday </label><br/>
-                                        <label for="thursday"><input type="checkbox" {{in_array('thursday',$frequencyname) ? 'checked' : ''}} id="thursday" name="frequency[]" value="thursday"> &nbsp; Thursday </label><br/>
-                                        <label for="friday"><input type="checkbox" {{in_array('friday',$frequencyname) ? 'checked' : ''}} id="friday" name="frequency[]" value="friday"> &nbsp; Friday </label><br/>
-                                        <label for="saturday"><input type="checkbox" {{in_array('saturday',$frequencyname) ? 'checked' : ''}} id="saturday" name="frequency[]" value="saturday"> &nbsp; Saturday </label><br/>
-                                        <label for="everyday"><input type="checkbox" {{in_array('everyday',$frequencyname) ? 'checked' : ''}} id="everyday" name="frequency[]" value="everyday"> &nbsp; Everyday </label><br/>
-                                        <label for="weekly"><input type="checkbox" {{in_array('weekly',$frequencyname) ? 'checked' : ''}} id="weekly" name="frequency[]" value="weekly"> &nbsp; Weekly </label><br/>
-                                        <label for="fortnightly"><input type="checkbox" {{in_array('fortnightly',$frequencyname) ? 'checked' : ''}} id="fortnightly" name="frequency[]" value="fortnightly"> &nbsp; Fortnightly </label><br/>
-                                        <label for="monthly"><input type="checkbox" {{in_array('monthly',$frequencyname) ? 'checked' : ''}} id="monthly" name="frequency[]" value="monthly"> &nbsp; Monthly </label>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <label for="returnPolicy" class="">Return Policy (if any)</label>
                                         <textarea class="form-control" rows="3" id="returnPolicy" name="return_policy" placeholder="Your custom return policy ...">{{ $krishiproduct->return_policy }}</textarea>

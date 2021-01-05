@@ -104,7 +104,7 @@ class KrishiProductController extends Controller
      */
     public function store(Request $request,KrishiProduct $krishiProduct)
     {
-        $shop_id = MerchantProfile::where('user_id',Auth::id())->first()->id;
+        $shop_id = Shop::where('user_id',Auth::id())->where('type',Auth::user()->login_area)->first()->id;
         $slug = Baazar::getUniqueSlug($krishiProduct,$request->name);
         $thumbnail_image    = Baazar::base64Uploadkrishi($request->thumbnail_image,$slug,'featured');
         $allData=$request->all();

@@ -83,12 +83,12 @@
 
                         <div class="municipal" style="display: none">
                             <div class="form-group">
-                                <select name="municipal" class="form-control px-10 @error('municipal') border-danger @enderror" id="municipal"  required autocomplete="off" style="height: 45px;">
+                                <select name="municipal" class="form-control px-10 @error('municipal') border-danger @enderror" id="municipal"   autocomplete="off" style="height: 45px;">
                                     <option value="" selected disabled>Select municipal</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select name="ward" class="form-control px-10 @error('ward') border-danger @enderror" id="ward"  required autocomplete="off" style="height: 45px;">
+                                <select name="ward" class="form-control px-10 @error('ward') border-danger @enderror" id="ward"   autocomplete="off" style="height: 45px;">
                                     <option value="" selected disabled>Select ward</option>
                                 </select>
                             </div>
@@ -244,9 +244,20 @@
         var type = $(this).val();
         // console.log(type);
         if(type == 'Municipal'){
+            $('#municipal').attr("required", true);
+            $('#ward').attr("required", true);
+            $('#upazila').removeAttr("required");
+            $('#union').removeAttr("required");
+            $('#village').removeAttr("required");
+
             $('.municipal').show();
             $('.upazila').hide();
         }else{
+            $('#municipal').removeAttr("required");
+            $('#ward').removeAttr("required");
+            $('#upazila').attr("required", true);
+            $('#union').attr("required", true);
+            $('#village').attr("required", true);
             $('.municipal').hide();
             $('.upazila').show();
         }

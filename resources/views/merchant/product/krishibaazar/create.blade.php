@@ -95,8 +95,7 @@
                             <h5 class="card-header">Krishi information</h5>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-sm-12">
-
+                                    <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -109,19 +108,33 @@
                                                         <input id="img-upload" accept="image/*"  class ="d-none" type="file" name="picture"/>
                                                         <div id="loader" class=""></div>
                                                     </div>
-                                                    <input type="hidden" name="thumbnail_image" id="thumbnail_image">
+                                                    <input type="hidden" name="thumbnail_image" id="thumbnail_image"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-9">
-                                                <div class="form-group">
-                                                    <label for="name">Product Name <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" placeholder="Tomato"/>
-                                                    <span class="text-danger" id="message_name"></span>
-                                                    @if ($errors->has('name'))
-                                                    <span class="text-danger">{{ $errors->first('name') }}</span>
-                                                    @endif
-                                                </div>
+                                                
                                                 <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="name">Product Name <span class="text-danger">*</span></label>
+                                                        <input class="form-control" type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" placeholder="Tomato"/>
+                                                        <span class="text-danger" id="message_name"></span>
+                                                        @if ($errors->has('name'))
+                                                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="form-group margin col-md-3">
+                                                        <label for="price">Product Price <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('price') }}</span>
+                                                        <input type="number"  class="form-control inputfield  @error('price') border-danger @enderror " required name="price" value="{{ old('price') }}"   id="price" placeholder="price" autocomplete="off">
+                                                    </div>
+                                                    <div class="form-group margin col-md-3">
+                                                        <label for="productUnit">Product Unit<span class="text-danger"> *</span></label>
+                                                        <select class="form-control" id="productUnit" name="product_unit_id" required>
+                                                            <option value="">-- Select Unit --</option>
+                                                            @foreach($productUnits as $productUnit)
+                                                                <option value="{{ $productUnit->id }}">{{ $productUnit->bn_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                     <div class="form-group margin col-md-4">
                                                         <label for="available_from">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('available_from') }}</span>
                                                         <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerNexDayOnly" required name="available_from" value="{{ old('available_from') }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
@@ -133,34 +146,68 @@
                                                             <span class="text-danger">{{ $errors->first('available_for') }}</span>
                                                         @endif
                                                     </div>
-                                                        <div class="form-group margin col-md-4">
-                                                            <label class="availableStock">Available Stock (Quantity)<span class="text-danger"> *</span></label>
-                                                            <input type="number" class="form-control" name="available_stock" id="availableStock" placeholder="400" required/>
-                                                            @if ($errors->has('available_stock'))
-                                                                <span class="text-danger">{{ $errors->first('available_stock') }}</span>
-                                                            @endif
-                                                        </div>
+                                                    <div class="form-group margin col-md-4">
+                                                        <label class="availableStock">Available Stock (Quantity)<span class="text-danger"> *</span></label>
+                                                        <input type="number" class="form-control" name="available_stock" id="availableStock" placeholder="400" required/>
+                                                        @if ($errors->has('available_stock'))
+                                                            <span class="text-danger">{{ $errors->first('available_stock') }}</span>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group margin col-md-4">
+                                                        <label for="allow_whole_sale">Whole Sale Support</label>
+                                                        <select class="form-control" id="allow_whole_sale" name="allow_wholesale" required>
+                                                            <option value="0">No</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group margin col-md-4">
+                                                        <label for="allow_flash_sale">Flash Sale Support</label>
+                                                        <select class="form-control" id="allow_flash_sale" name="allow_flash_sale" required>
+                                                            <option value="0">No</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group margin col-md-4">
+                                                        <label for="Frequency_allow">Frequency Support</label>
+                                                        <select class="form-control" id="Frequency_allow" name="Frequency_allow" required>
+                                                            <option value="0">No</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="form-group margin col-md-4">
-                                                        <label for="regular_price">Product Price <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('regular_price') }}</span>
-                                                        <input type="number"  class="form-control inputfield  @error('regular_price') border-danger @enderror " required name="regular_price" value="{{ old('regular_price') }}"   id="regular_price" placeholder="price" autocomplete="off">
+                                                <div class="row whole_sale_setup" style="display: none">
+                                                    <div class="form-group margin col-md-6">
+                                                        <label for="wholesale_price">Whole Sale Price <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('wholesale_price') }}</span>
+                                                        <input type="number"  class="form-control inputfield  @error('wholesale_price') border-danger @enderror " required name="wholesale_price" value="{{ old('wholesale_price') }}"   id="regular_price" placeholder="price" autocomplete="off">
                                                     </div>
-                                                    <div class="form-group margin col-md-4">
-                                                        <label for="productUnit">Product Unit<span class="text-danger"> *</span></label>
-                                                        <select class="form-control" id="productUnit" name="product_unit_id" required>
-                                                            <option value="">-- Select Unit --</option>
-                                                            @foreach($productUnits as $productUnit)
-                                                                <option value="{{ $productUnit->id }}">{{ $productUnit->bn_name }}</option>
-                                                            @endforeach
-                                                        </select>
+                                                    <div class="form-group margin col-md-6">
+                                                        <label for="min_wholesale_quantity">Min whole sale Quantity<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('min_wholesale_quantity') }}</span>
+                                                        <input type="number"  class="form-control inputfield  @error('min_wholesale_quantity') border-danger @enderror " required name="min_wholesale_quantity" value="{{ old('min_wholesale_quantity') }}"   id="regular_price" placeholder="price" autocomplete="off">
                                                     </div>
-                                                    <div class="form-group margin col-md-4">
-                                                        <label for="productUnit">Whole Sale Support</label>
-                                                        <select class="form-control" id="productUnit" name="product_unit_id" required>
-                                                            <option value="">No</option>
-                                                            <option value="">Yes</option>
-                                                        </select>
+                                                </div>
+                                                <div class="row allow_flash_setup" style="display: none">
+                                                    <div class="form-group margin col-md-6">
+                                                        <label for="flash_sale_discount_rate">Flash sale discount percent <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('flash_sale_discount_rate') }}</span>
+                                                        <input type="number"  class="form-control inputfield  @error('flash_sale_discount_rate') border-danger @enderror " required name="flash_sale_discount_rate" value="{{ old('flash_sale_discount_rate') }}"   id="flash_sale_discount_rate" placeholder="price" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="Frequency_allow_setup" style="display: none">
+                                                    <div class="form-group">
+                                                        <label class="form-input-label pr-5">Frequency :</label><br>
+                                                        <div class="ml-3" style="max-height: 200px; overflow-y: scroll;">
+                                                        <label for="sunday"><input type="checkbox" id="sunday" name="frequency[]" value="sunday"> &nbsp; Sunday </label> <br/>
+                                                        <label for="monday"><input type="checkbox" id="monday" name="frequency[]" value="monday"> &nbsp; Monday </label> <br/>
+                                                        <label for="tuesday"><input type="checkbox" id="tuesday" name="frequency[]" value="tuesday"> &nbsp; Tuesday </label><br/>
+                                                        <label for="wednessday"><input type="checkbox" id="wednessday" name="frequency[]" value="wednessday"> &nbsp; Wednessday </label><br/>
+                                                        <label for="thursday"><input type="checkbox" id="thursday" name="frequency[]" value="thursday"> &nbsp; Thursday </label><br/>
+                                                        <label for="friday"><input type="checkbox" id="friday" name="frequency[]" value="friday"> &nbsp; Friday </label><br/>
+                                                        <label for="saturday"><input type="checkbox" id="saturday" name="frequency[]" value="saturday"> &nbsp; Saturday </label><br/>
+                                                        <label for="everyday"><input type="checkbox" id="everyday" name="frequency[]" value="everyday"> &nbsp; Everyday </label><br/>
+                                                        <label for="weekly"><input type="checkbox" id="weekly" name="frequency[]" value="weekly"> &nbsp; Weekly </label><br/>
+                                                        <label for="fortnightly"><input type="checkbox" id="fortnightly" name="frequency[]" value="fortnightly"> &nbsp; Fortnightly </label><br/>
+                                                        <label for="monthly"><input type="checkbox" id="monthly" name="frequency[]" value="monthly"> &nbsp; Monthly </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -189,9 +236,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        
-
                                         <div class="form-group">
                                             <div id="dropzone-main" class="img-upload-area" data-color="main"><label>Product Images <span class="text-danger" id="message_main_img"></span></label>
                                                 <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
@@ -203,25 +247,9 @@
                                             </div>
                                             <div class="inputs"></div>
                                         </div>
-                                        <div class="row">
-                                            
-                                            
-                                            <div class="col-md-4">
-                                                <div class="form-group margin">
-                                                    <label class="allowCustomOffer">Allow Custom Offer<span class="text-danger"> *</span></label>
-                                                    <select class="form-control" id="allowCustomOffer" name="allow_custom_offer" required>
-                                                        <option value="1">Yes</option>
-                                                        <option value="0">No</option>
-                                                    </select>
-                                                    @if ($errors->has('allow_custom_offer'))
-                                                        <span class="text-danger">{{ $errors->first('allow_custom_offer') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="form-group">
                                             <label for="videoUrl" class="">Youtube Video URL (optional)</label>
-                                            <textarea class="form-control" rows="2" id="videoUrl" name="video_url" placeholder="Paste your link here ..."></textarea>
+                                            <input type="text" class="form-control" rows="2" id="videoUrl" name="video_url" placeholder="Paste your link here ..." />
                                         </div>
                                         <div class="form-group">
                                             <label for="description" class="">Description<span class="text-danger"> *</span></label>
@@ -231,22 +259,7 @@
                                             <span class="text-danger">{{ $errors->first('description') }}</span>
                                             @endif
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-input-label pr-5">Frequency :</label><br>
-                                            <div class="ml-3" style="max-height: 200px; overflow-y: scroll;">
-                                            <label for="sunday"><input type="checkbox" id="sunday" name="frequency[]" value="sunday"> &nbsp; Sunday </label> <br/>
-                                            <label for="monday"><input type="checkbox" id="monday" name="frequency[]" value="monday"> &nbsp; Monday </label> <br/>
-                                            <label for="tuesday"><input type="checkbox" id="tuesday" name="frequency[]" value="tuesday"> &nbsp; Tuesday </label><br/>
-                                            <label for="wednessday"><input type="checkbox" id="wednessday" name="frequency[]" value="wednessday"> &nbsp; Wednessday </label><br/>
-                                            <label for="thursday"><input type="checkbox" id="thursday" name="frequency[]" value="thursday"> &nbsp; Thursday </label><br/>
-                                            <label for="friday"><input type="checkbox" id="friday" name="frequency[]" value="friday"> &nbsp; Friday </label><br/>
-                                            <label for="saturday"><input type="checkbox" id="saturday" name="frequency[]" value="saturday"> &nbsp; Saturday </label><br/>
-                                            <label for="everyday"><input type="checkbox" id="everyday" name="frequency[]" value="everyday"> &nbsp; Everyday </label><br/>
-                                            <label for="weekly"><input type="checkbox" id="weekly" name="frequency[]" value="weekly"> &nbsp; Weekly </label><br/>
-                                            <label for="fortnightly"><input type="checkbox" id="fortnightly" name="frequency[]" value="fortnightly"> &nbsp; Fortnightly </label><br/>
-                                            <label for="monthly"><input type="checkbox" id="monthly" name="frequency[]" value="monthly"> &nbsp; Monthly </label>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="form-group">
                                             <label for="returnPolicy" class="">Return Policy (if any)</label>
                                             <textarea class="form-control" rows="3" id="returnPolicy" name="return_policy" placeholder="Your custom return policy ..."></textarea>
@@ -333,6 +346,16 @@
 @push('js')
     <script src="https://foliotek.github.io/Croppie/croppie.js"></script>
     <script>
+
+        $('#Frequency_allow').change(function(){
+            $('.Frequency_allow_setup').toggle("slow");
+        });
+        $('#allow_flash_sale').change(function(){
+            $('.allow_flash_setup').toggle("slow");
+        });
+        $('#allow_whole_sale').change(function(){
+            $('.whole_sale_setup').toggle("slow");
+        });
         //summernote
         $(document).ready(function() {
             $('.summernote').summernote({
