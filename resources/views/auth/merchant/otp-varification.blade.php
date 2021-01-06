@@ -23,7 +23,7 @@
 
                 <form action="{{ route('postToken') }}" method="post" class="digit-group text-center p-4" data-group-name="digits" data-autosubmit="false" autocomplete="off">
                     @csrf
-                    <input type="hidden" name="token" value={{ $seller->remember_token }}>
+                    <input type="hidden" name="token" value={{ $seller->verification_token }}>
                     <input type="text" id="digit-1" name="digit[]" data-next="digit-2" />
                     <input type="text" id="digit-2" name="digit[]" data-next="digit-3" data-previous="digit-1" />
                     {{-- <span class="splitter">&ndash;</span> --}}
@@ -39,7 +39,7 @@
             </div>
             <form action="{{ route('updateToken') }}" method="post" id="resendform" style="d-none">
                 @csrf
-                <input type="hidden" name="token" value={{$seller->remember_token}}>
+                <input type="hidden" name="token" value={{$seller->verification_token}}>
             </form>
         </div>
     </div>

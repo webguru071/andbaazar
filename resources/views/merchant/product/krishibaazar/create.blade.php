@@ -137,7 +137,7 @@
                                                     </div>
                                                     <div class="form-group margin col-md-4">
                                                         <label for="available_from">Product Available From<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('available_from') }}</span>
-                                                        <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerNexDayOnly" required name="available_from" value="{{ old('available_from') }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
+                                                        <input type="text"  class="form-control inputfield  @error('available_from') border-danger @enderror datepickerNexDayOnly" required name="available_from" value="{{ old('available_from',date('Y-m-d')) }}"   id="available_from" placeholder="YYYY/MM/DD" autocomplete="off">
                                                     </div>
                                                     <div class="form-group margin col-md-4">
                                                         <label class="available_for">Estimate Available For Days</label>
@@ -170,7 +170,7 @@
                                                     </div>
                                                     <div class="form-group margin col-md-4">
                                                         <label for="Frequency_allow">Frequency Support</label>
-                                                        <select class="form-control" id="Frequency_allow" name="Frequency_allow" required>
+                                                        <select class="form-control" id="frequency_allow" name="frequency_allow" required>
                                                             <option value="0">No</option>
                                                             <option value="1">Yes</option>
                                                         </select>
@@ -208,6 +208,10 @@
                                                         <label for="fortnightly"><input type="checkbox" id="fortnightly" name="frequency[]" value="fortnightly"> &nbsp; Fortnightly </label><br/>
                                                         <label for="monthly"><input type="checkbox" id="monthly" name="frequency[]" value="monthly"> &nbsp; Monthly </label>
                                                         </div>
+                                                    </div>
+                                                    <div class="form-group margin col-md-6">
+                                                        <label for="frequency_quantity">Frequency Stock Quantity <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('frequency_quantity') }}</span>
+                                                        <input type="number"  class="form-control inputfield  @error('frequency_quantity') border-danger @enderror " required name="frequency_quantity" value="{{ old('frequency_quantity') }}"   id="frequency_quantity" placeholder="Frequency Quantity" autocomplete="off">
                                                     </div>
                                                 </div>
                                             </div>
@@ -249,7 +253,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="videoUrl" class="">Youtube Video URL (optional)</label>
-                                            <input type="text" class="form-control" rows="2" id="videoUrl" name="video_url" placeholder="Paste your link here ..." />
+                                            <input type="text" class="form-control" rows="2" id="videoUrl" value="{{old('video_url')}}" name="video_url" placeholder="Paste your link here ..." />
                                         </div>
                                         <div class="form-group">
                                             <label for="description" class="">Description<span class="text-danger"> *</span></label>
@@ -347,7 +351,7 @@
     <script src="https://foliotek.github.io/Croppie/croppie.js"></script>
     <script>
 
-        $('#Frequency_allow').change(function(){
+        $('#frequency_allow').change(function(){
             $('.Frequency_allow_setup').toggle("slow");
         });
         $('#allow_flash_sale').change(function(){

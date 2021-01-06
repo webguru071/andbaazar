@@ -97,8 +97,30 @@
                             <div class="product-right">
                                 <h2>{{$krishiproduct->name}}</h2>
                                 {{-- <h4><del>${{$krishiproduct->price}}</del><span>55% off</span></h4> --}}
-                                <h4><del>$590</del><span>55% off</span></h4>
-                                <h3>$32.96</h3>
+                                <div class="d-flex justify-content-between" style="background: #f8f8f8">
+                                    <div class="p-2" style="background: #e6e6e6">
+                                        <h4>Regular Price</h4>
+                                        <h3>৳ {{$krishiproduct->price}}</h3>
+                                    </div>
+                                    @if($krishiproduct->allow_wholesale)
+                                        <div class="p-2">
+                                            <h4>Whole Sale Price</h4>
+                                            <h3>৳ {{$krishiproduct->price}}</h3>
+                                            <small>Minimum Order : {{$krishiproduct->min_wholesale_quantity}}/{{$krishiproduct->productUnit->bn_name}}</small>
+                                        </div>
+                                    @endif
+                                    @if($krishiproduct->allow_flash_sale)
+                                        <div class="p-2">
+                                            <h4>Flash Sale Price</h4>
+                                            <h4><del>৳ {{$krishiproduct->price}}</del><span>{{$krishiproduct->flash_sale_discount_rate}}% off</span></h4>
+                                            <h3>৳ {{number_format($krishiproduct->price - $krishiproduct->price * $krishiproduct->flash_sale_discount_rate /100,2)}}</h3>
+                                        </div>
+                                    @endif
+                                </div>
+                                {{-- <h4><del>$590</del><span>55% off</span></h4>
+                                <h3>$32.96</h3> --}}
+
+
                                 <div class="border-product">
                                     <h6 class="product-title">product details</h6>
                                     <p>{{Baazar::short_text(strip_tags($krishiproduct->description),100)}}</p>
@@ -115,13 +137,23 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="border-product">
+                                @if($krishiproduct->frequency_support)
+                                    <div class="border-product">
+                                        <h6 class="product-title">Frequency <sub>({{$krishiproduct->frequency_quantity}}/{{$krishiproduct->productUnit->bn_name}})</sub></h6>
+                                        <ul>
+                                            @foreach ($krishiproduct->frequency as $item)
+                                                <li class="badge bg-success text-white">{{ucfirst($item)}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                                {{-- <div class="border-product">
                                     <h6 class="product-title">Time Reminder</h6>
                                     <div class="timer">
                                         <p id="demo"><span>25 <span class="padding-l">:</span> <span class="timer-cal">Days</span> </span><span>22 <span class="padding-l">:</span> <span class="timer-cal">Hrs</span> </span><span>13 <span class="padding-l">:</span> <span class="timer-cal">Min</span> </span><span>57 <span class="timer-cal">Sec</span></span>
                                         </p>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -133,6 +165,9 @@
                                 <li class="nav-item"><a class="nav-link active" id="top-home-tab" data-toggle="tab" href="#top-home" role="tab" aria-selected="true"><i class="icofont icofont-ui-home"></i>Description</a>
                                     <div class="material-border"></div>
                                 </li>
+                                <li class="nav-item"><a class="nav-link" id="return-top-tab" data-toggle="tab" href="#top-return" role="tab" aria-selected="false"><i class="icofont icofont-contacts"></i>Return Policy</a>
+                                    <div class="material-border"></div>
+                                </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-toggle="tab" href="#top-contact" role="tab" aria-selected="false"><i class="icofont icofont-contacts"></i>Video</a>
                                     <div class="material-border"></div>
                                 </li>
@@ -140,6 +175,9 @@
                             <div class="tab-content nav-material" id="top-tabContent">
                                 <div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
                                     <p>{!!$krishiproduct->description!!}</p>
+                                </div>
+                                <div class="tab-pane fade" id="top-return" role="tabpanel" aria-labelledby="return-top-tab">
+                                    <p>{!!$krishiproduct->return_policy!!}</p>
                                 </div>
                                 <div class="tab-pane fade" id="top-contact" role="tabpanel" aria-labelledby="contact-top-tab">
                                     <div class="mt-3 text-center">

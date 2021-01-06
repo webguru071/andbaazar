@@ -111,7 +111,8 @@ class KrishiProductController extends Controller
         $allData['slug']=$slug;
         $allData['thumbnail_image']=$thumbnail_image;
         $allData['available_to']=Carbon::create($request->available_from)->addDays($request->available_for)->format('Y-m-d');
-        $allData['frequency_support']=(count($request->frequency)>0) ? 1 : 0;
+        $allData['frequency_support']=$request->frequency_allow;
+        $allData['frequency_quantity']=$request->frequency_quantity;
         $allData['user_id']=Auth::id();
         $allData['shop_id']=$shop_id;
 
@@ -234,10 +235,13 @@ class KrishiProductController extends Controller
             flash('Invaild product item')->error();
             return redirect()->action('KrishiProductController@index');
         }
-        $frequencyname = $krishiproduct->frequency;
-        $itemImages    = KrishiProductItemImage::where('product_id',$krishiproduct->id)->get();
-        $categories = KrishiCategory::where('parent_id',0)->get();
-        $productUnits = ProductUnit::all();
+        $frequencyname = [];
+        if($krishiproduct->frequency_support == 1){
+            $frequencyname = $krishiproduct->frequency;
+        }
+        $itemImages     = KrishiProductItemImage::where('product_id',$krishiproduct->id)->get();
+        $categories     = KrishiCategory::where('parent_id',0)->get();
+        $productUnits   = ProductUnit::all();
 
         return view('merchant.product.krishibaazar.edit',compact('krishiproduct','frequencyname','itemImages','categories','productUnits'));
     }
@@ -263,7 +267,8 @@ class KrishiProductController extends Controller
         $krishiProductDetails->video_url=$request->video_url;
         $krishiProductDetails->available_from=$request->available_from;
         $krishiProductDetails->available_to=Carbon::create($request->available_from)->addDays($request->available_for)->format('Y-m-d');
-        $krishiProductDetails->frequency_support=(count($request->frequency)>0) ? 1 : 0;
+        $krishiProductDetails->frequency_support=$request->frequency_allow;
+        $krishiProductDetails->frequency_quantity=$request->frequency_quantity;
         $krishiProductDetails->available_stock=$request->available_stock;
         $krishiProductDetails->allow_custom_offer=$request->allow_custom_offer;
         $krishiProductDetails->frequency=$request->frequency;

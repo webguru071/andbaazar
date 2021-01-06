@@ -61,7 +61,7 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="phone" class="">Phone number<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('phone') }}</span>
-                            <input type="number" class="form-control @error('phone') border-danger @enderror" required  name="phone" value="{{ old('phone', $sellerProfile->phone) }}" id="" placeholder="Phone Number">
+                            <input type="number" class="form-control @error('phone') border-danger @enderror" required  name="phone" value="{{ old('phone', $userprofile->phone) }}" id="" placeholder="Phone Number">
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="nid">National Identity Card (NID)<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('nid') }}</span>

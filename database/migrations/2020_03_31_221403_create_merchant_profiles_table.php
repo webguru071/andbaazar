@@ -26,7 +26,7 @@ class CreateMerchantProfilesTable extends Migration
             $table->text('description')->nullable();
             $table->date('last_visited_at')->nullable();
             $table->string('last_visited_from')->nullable();
-            $table->enum('reg_step',['otp-varification','personal-info','shop-info','complete'])->default('otp-varification');
+            $table->enum('reg_step',['otp-varification','personal-info','shop-info','business-info','complete'])->default('otp-varification');
             $table->timestamps();
         });
     }

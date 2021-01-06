@@ -118,84 +118,87 @@ class MerchantController extends Controller{
         $rules = array('phone_otp' => 'required|exists:users,phone_otp|max:5');
         $inputs = array('phone_otp' => $request->phone_otp);
         $validator = \Validator::make($inputs, $rules);
-
         if($validator->fails()) {
             flash('Invalid OPT')->error()->important();
             return redirect()->back();
         }else{
             $seller = User::where([['phone_otp',$request->phone_otp],['verification_token',$request->token]])->first();
                 $seller->update([
-                    'verification_token' => 'varified',
-                    'reg_step'           => 'shop-info',
+                    'phone_otp' => null,
+                    'phone_no_verified_at'  => now()
                 ]);
+                $mer = $seller->merchantDetails;
+                $mer->reg_step = 'shop-info';
+                $mer->save();
             flash('Please add you shop info')->success()->important();
             return redirect('merchant/shop-info'.'?token='.$request->token);
         }
     }
 
-    public function personalInfo(Request $request){
-        $seller = User::where('remember_token',$request->token)->first();
-        if(!$seller){
-            return redirect('/');
-        }
-        if($seller->reg_step != 'personal-info'){
-            return redirect('merchant/'.$seller->reg_step.'?token='.$request->token);
-        }
-        return view('auth.merchant.personal-info',compact('seller'));
-    }
+    // public function personalInfo(Request $request){
+    //     $seller = User::where('remember_token',$request->token)->first();
+    //     if(!$seller){
+    //         return redirect('/');
+    //     }
+    //     if($seller->reg_step != 'personal-info'){
+    //         return redirect('merchant/'.$seller->reg_step.'?token='.$request->token);
+    //     }
+    //     return view('auth.merchant.personal-info',compact('seller'));
+    // }
 
-    public function savePersonalInfo(Request $request){
-        $request->validate([
-            'password'      => 'required|confirmed',
-            'email'         => 'required|unique:merchants,email',
-            'agreed'        => 'accepted'
-        ]);
+    // public function savePersonalInfo(Request $request){
+    //     $request->validate([
+    //         'password'      => 'required|confirmed',
+    //         'email'         => 'required|unique:merchants,email',
+    //         'agreed'        => 'accepted'
+    //     ]);
 
-        $seller = User::create([
-            'first_name' => $request->first_name,
-            'last_name'  => $request->last_name,
-            'email'      => $request->email,
-            'password' 	 => Hash::make($request->password),
-            'type'       => 'merchant',
-            'create_at'  => now(),
-            ]);
+    //     $seller = User::create([
+    //         'first_name' => $request->first_name,
+    //         'last_name'  => $request->last_name,
+    //         'email'      => $request->email,
+    //         'password' 	 => Hash::make($request->password),
+    //         'type'       => 'merchant',
+    //         'create_at'  => now(),
+    //         ]);
 
 
-        $sellerId    = User::where('remember_token',$request->token)->first();
-        if(!$sellerId){
-            return redirect('/');
-        }
-        $sellerId->update([
-            'first_name'         => $sellerId->first_name,
-            'last_name'          => $sellerId->last_name,
-            'phone'              => $sellerId->phone,
-            'email'              => $request->email,
-            'dob'                => $request->dob,
-            'gender'             => $request->gender,
-            'description'        => $request->description,
-            'last_visited_at'    => now(),
-            'last_visited_from'  => $request->last_visited_from,
-            'verification_token' => $request->verification_token,
-            'reg_step'           => 'shop-info',
-            'status'             => 'Inactive',
-            'user_id'            =>  $seller->id,
-            'updated_at'         => now(),
-        ]);
+    //     $sellerId    = User::where('remember_token',$request->token)->first();
+    //     if(!$sellerId){
+    //         return redirect('/');
+    //     }
+    //     $sellerId->update([
+    //         'first_name'         => $sellerId->first_name,
+    //         'last_name'          => $sellerId->last_name,
+    //         'phone'              => $sellerId->phone,
+    //         'email'              => $request->email,
+    //         'dob'                => $request->dob,
+    //         'gender'             => $request->gender,
+    //         'description'        => $request->description,
+    //         'last_visited_at'    => now(),
+    //         'last_visited_from'  => $request->last_visited_from,
+    //         'verification_token' => $request->verification_token,
+    //         'reg_step'           => 'shop-info',
+    //         'status'             => 'Inactive',
+    //         'user_id'            =>  $seller->id,
+    //         'updated_at'         => now(),
+    //     ]);
 
-        // \Mail::to($sellerId)->send(new VendorProfileApprovalMail($sellerId));
+    //     // \Mail::to($sellerId)->send(new VendorProfileApprovalMail($sellerId));
 
-        session()->flash('success','Registration Successfully!');
-        return redirect('merchant/shop-info'.'?token='.$request->token);
-    }
+    //     session()->flash('success','Registration Successfully!');
+    //     return redirect('merchant/shop-info'.'?token='.$request->token);
+    // }
 
     public function shopRegistration(Request $request){
-        $seller = User::where('remember_token',$request->token)->first();
-        if(!$seller){
-            return redirect('/');
+        $seller = User::where('verification_token',$request->token)->firstOrFail();
+        if($seller->merchantDetails->reg_step != 'shop-info'){
+            return redirect('merchant/'.$seller->merchantDetails->reg_step.'?token='.$request->token);
         }
+
         $divisions = Division::all();
 
-        if($seller->reg_step != 'shop-info'){
+        if($seller->merchantDetails->reg_step != 'shop-info'){
             return redirect('merchant/'.$seller->reg_step.'?token='.$request->token);
         }
         return view('auth.merchant.shop-info',compact('seller','divisions'));
@@ -221,10 +224,8 @@ class MerchantController extends Controller{
             'type'          => 'required',
             'address'       => 'required',
         ]);
-        $sellerId = User::where('remember_token',$request->token)->first();
+        $sellerId = User::where('verification_token',$request->token)->first();
         if(!$sellerId){return redirect('/');}
-
-        $sellerId->update(['reg_step' => 'complete']);
 
         $slug = Baazar::getUniqueSlug($shop,$request->name);
         $shop = [
@@ -235,8 +236,8 @@ class MerchantController extends Controller{
             'district_id'   => (int)$request->district,
             'lng'           => $request->lng,
             'address'       => $request->address,
-            'merchant_id'   => $sellerId->id,
-            'user_id'       => $sellerId->user_id,
+            'merchant_id'   => $sellerId->merchantDetails->id,
+            'user_id'       => $sellerId->id,
             'create_at'     => now(),
             'type'          => 'none'
         ];
@@ -255,19 +256,20 @@ class MerchantController extends Controller{
                     'address_type'      => 'Municipal',
                     'municipal_id'      => (int)$request->municipal,
                     'municipal_ward_id' => (int)$request->ward,
-                    'agent_id'      => $agent->id
+                    'agent_id'          => $agent->id
                 ]);
         }
         Shop::create($shop);
+        $sellerId->merchantDetails->update(['reg_step' => 'business-info']);
         flash('Please Select your business area')->success()->important();
         return redirect('merchant/business-info'.'?token='.$request->token);
     }
 
     public function businessRegistration(Request $request){
-        $seller = User::where('remember_token',$request->token)->first();
+        $seller = User::where('verification_token',$request->token)->first();
         // dd($seller->shop[0]);
-        if(!$seller){
-            return redirect('/');
+        if($seller->merchantDetails->reg_step != 'business-info'){
+            return redirect('merchant/'.$seller->merchantDetails->reg_step.'?token='.$request->token);
         }
         $token = $request->token;
         return view('auth.merchant.business-info',compact('token'));
@@ -281,8 +283,8 @@ class MerchantController extends Controller{
 
         $types = $request->business_types;
 
-        $merchant = User::where('remember_token',$request->token)->first();
-        $shop = $merchant->shop[0];
+        $user = User::where('verification_token',$request->token)->first();
+        $shop = $user->shop[0];
         $shop->type = $types[0];
         $shop->slug = Baazar::getUniqueSlug($shop,$shop->name.'-'.$types[0]);
         $shop->save();
@@ -296,9 +298,11 @@ class MerchantController extends Controller{
 
         // dd($request->business_types);
         // dd($merchant->shop);
-        $user = User::find($merchant->user_id);
+        // $user = User::find($merchant->user_id);
         $user->business_types = $request->business_types;
+        $user->verification_token = null;
         $user->save();
+        $user->merchantDetails->update(['reg_step' => 'complete']);
         flash('Registration success please login')->success()->important();
         return redirect('/login');
     }

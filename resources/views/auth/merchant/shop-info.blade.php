@@ -34,7 +34,7 @@
                     @endif                      
                     <form class="form-horizontal auth-form form" action="{{ route('sellerShopeRegistration') }}" method="post" enctype="multipart/form-data" >
                         @csrf
-                        <input type="hidden" name="token" value="{{ $seller->remember_token }}">
+                        <input type="hidden" name="token" value="{{ $seller->verification_token }}">
                         <div class="form-group">
                             <input required="" name="name" value="{{ old('name') }}" type="text" class="form-control @error('name') border-danger @enderror" placeholder="Shop Name" id="exampleInputEmail12" autocomplete="off"> 
                             <span class="text-danger">{{ $errors->first('name') }}</span>

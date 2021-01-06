@@ -30,7 +30,7 @@ class CreateKrishiProductsTable extends Migration
             $table->integer('min_wholesale_quantity')->default(0);
             $table->boolean('allow_flash_sale')->default(1)->comment('1 for allowed, 0 for not allowed');
             $table->decimal('flash_sale_discount_rate',8,2)->default(0);
-            $table->boolean('allow_custom_offer')->default(1);
+            $table->boolean('allow_custom_offer')->default(0);
             $table->enum('status',['Active','Pending','Reject'])->default('Pending');
             $table->integer('total_views')->nullable();
             $table->text('frequency')->nullable();

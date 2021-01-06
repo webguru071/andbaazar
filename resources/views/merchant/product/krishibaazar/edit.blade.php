@@ -105,14 +105,14 @@
                                             <div class="form-group">
                                                 <label for="picture">Thumbnail Image</label>
                                                 <div class="mt-0">
-                                                    <img id="output"  class="imagestyle" src="{{ asset('/images/demo-product.jpg') }}" />
+                                                    <img id="output"  class="imagestyle" src="{{ (!is_null($krishiproduct->thumbnail_image)) ? asset($krishiproduct->thumbnail_image) : asset('/images/demo-product.jpg') }}" />
                                                 </div>
                                                 <div class="uploadbtn">
                                                     <label for="img-upload" class="custom-file-upload image-upload"><i aria-hidden="true"></i> Upload Here</label>
                                                     <input id="img-upload" accept="image/*"  class ="d-none" type="file" name="picture"/>
                                                     <div id="loader" class=""></div>
                                                 </div>
-                                                <input type="hidden" name="thumbnail_image" id="thumbnail_image"/>
+                                                <input type="hidden" name="thumbnail_image" id="thumbnail_image">
                                             </div>
                                         </div>
                                         <div class="col-md-9">
@@ -161,43 +161,43 @@
                                                 <div class="form-group margin col-md-4">
                                                     <label for="allow_whole_sale">Whole Sale Support</label>
                                                     <select class="form-control" id="allow_whole_sale" name="allow_wholesale" required>
-                                                        <option value="0" {{ ($krishiproduct->allow_wholesale == 1) ? 'selected' : '' }} >No</option>
+                                                        <option value="0" {{ ($krishiproduct->allow_wholesale == 0) ? 'selected' : '' }} >No</option>
                                                         <option value="1" {{ ($krishiproduct->allow_wholesale == 1) ? 'selected' : '' }} >Yes</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group margin col-md-4">
                                                     <label for="allow_flash_sale">Flash Sale Support</label>
                                                     <select class="form-control" id="allow_flash_sale" name="allow_flash_sale" required>
-                                                        <option value="0" {{ ($krishiproduct->allow_flash_sale == 1) ? 'selected' : '' }}>No</option>
+                                                        <option value="0" {{ ($krishiproduct->allow_flash_sale == 0) ? 'selected' : '' }}>No</option>
                                                         <option value="1" {{ ($krishiproduct->allow_flash_sale == 1) ? 'selected' : '' }}>Yes</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group margin col-md-4">
                                                     <label for="Frequency_allow">Frequency Support</label>
-                                                    <select class="form-control" id="Frequency_allow" name="Frequency_allow" required>
-                                                        <option value="0" {{ ($krishiproduct->frequency_support == 1) ? 'selected' : '' }}>No</option>
+                                                    <select class="form-control" id="frequency_allow" name="frequency_allow" required>
+                                                        <option value="0" {{ ($krishiproduct->frequency_support == 0) ? 'selected' : '' }}>No</option>
                                                         <option value="1" {{ ($krishiproduct->frequency_support == 1) ? 'selected' : '' }}>Yes</option>
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <div class="row whole_sale_setup" style="display: none">
+                                            <div class="row whole_sale_setup" style="display: {{($krishiproduct->allow_wholesale == 1) ? '' : 'none'}}">
                                                 <div class="form-group margin col-md-6">
                                                     <label for="wholesale_price">Whole Sale Price <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('wholesale_price') }}</span>
-                                                    <input type="number"  class="form-control inputfield  @error('wholesale_price') border-danger @enderror " required name="wholesale_price" value="{{ old('wholesale_price') }}"   id="regular_price" placeholder="price" autocomplete="off">
+                                                    <input type="number"  class="form-control inputfield  @error('wholesale_price') border-danger @enderror " required name="wholesale_price" value="{{ old('wholesale_price',$krishiproduct->wholesale_price) }}"   id="regular_price" placeholder="price" autocomplete="off">
                                                 </div>
                                                 <div class="form-group margin col-md-6">
                                                     <label for="min_wholesale_quantity">Min whole sale Quantity<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('min_wholesale_quantity') }}</span>
-                                                    <input type="number"  class="form-control inputfield  @error('min_wholesale_quantity') border-danger @enderror " required name="min_wholesale_quantity" value="{{ old('min_wholesale_quantity') }}"   id="regular_price" placeholder="price" autocomplete="off">
+                                                    <input type="number"  class="form-control inputfield  @error('min_wholesale_quantity') border-danger @enderror " required name="min_wholesale_quantity" value="{{ old('min_wholesale_quantity',$krishiproduct->min_wholesale_quantity) }}"   id="regular_price" placeholder="price" autocomplete="off">
                                                 </div>
                                             </div>
-                                            <div class="row allow_flash_setup" style="display: none">
+                                            <div class="row allow_flash_setup" style="display: {{($krishiproduct->allow_flash_sale == 1) ? '' : 'none'}}">
                                                 <div class="form-group margin col-md-6">
                                                     <label for="flash_sale_discount_rate">Flash sale discount percent <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('flash_sale_discount_rate') }}</span>
-                                                    <input type="number"  class="form-control inputfield  @error('flash_sale_discount_rate') border-danger @enderror " required name="flash_sale_discount_rate" value="{{ old('flash_sale_discount_rate') }}"   id="flash_sale_discount_rate" placeholder="price" autocomplete="off">
+                                                    <input type="number"  class="form-control inputfield  @error('flash_sale_discount_rate') border-danger @enderror " required name="flash_sale_discount_rate" value="{{ old('flash_sale_discount_rate',$krishiproduct->flash_sale_discount_rate) }}"   id="flash_sale_discount_rate" placeholder="price" autocomplete="off">
                                                 </div>
                                             </div>
-                                            <div class="Frequency_allow_setup" style="display: none">
+                                            <div class="Frequency_allow_setup" style="display: {{($krishiproduct->frequency_support == 1) ? '' : 'none'}}">
                                                 <div class="form-group">
                                                     <label class="form-input-label pr-5">Frequency :</label><br>
                                                     <div class="ml-3" style="max-height: 200px; overflow-y: scroll;">
@@ -214,12 +214,14 @@
                                                     <label for="monthly"><input type="checkbox" {{in_array('monthly',$frequencyname) ? 'checked' : ''}} id="monthly" name="frequency[]" value="monthly"> &nbsp; Monthly </label>
                                                     </div>
                                                 </div>
+                                                <div class="form-group margin col-md-6">
+                                                    <label for="frequency_quantity">Frequency Stock Quantity <span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('frequency_quantity') }}</span>
+                                                    <input type="number"  class="form-control inputfield  @error('frequency_quantity') border-danger @enderror " required name="frequency_quantity" value="{{ old('frequency_quantity',$krishiproduct->frequency_quantity) }}"   id="frequency_quantity" placeholder="Frequency Quantity" autocomplete="off">
+                                                </div>
                                             </div>
 
                                         </div>
                                     </div>
-
-
 
                                     <div class="form-group">
                                         <label for="name">Category Name<span class="text-danger"> *</span></label> <span class="text-danger">{{ $errors->first('category_slug') }}</span>
@@ -245,18 +247,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="picture">Thumbnail Image</label>
-                                        <div class="mt-0">
-                                            <img id="output"  class="imagestyle" src="{{ (!is_null($krishiproduct->thumbnail_image)) ? asset($krishiproduct->thumbnail_image) : asset('/images/demo-product.jpg') }}" />
-                                        </div>
-                                        <div class="uploadbtn">
-                                            <label for="img-upload" class="custom-file-upload image-upload"><i aria-hidden="true"></i> Upload Here</label>
-                                            <input id="img-upload" accept="image/*"  class ="d-none" type="file" name="picture"/>
-                                            <div id="loader" class=""></div>
-                                        </div>
-                                        <input type="hidden" name="thumbnail_image" id="thumbnail_image">
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <div id="dropzone-main" class="img-upload-area" data-color="main"><label>Product Images<span class="text-danger" id="message_main_img"></span></label>
                                             <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
@@ -270,7 +261,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="videoUrl" class="">Youtube Video URL (optional)</label>
-                                        <textarea class="form-control" rows="2" id="videoUrl" name="video_url" placeholder="Paste your link here ...">{{ $krishiproduct->video_url }}</textarea>
+                                        <input type="text" class="form-control" rows="2" id="videoUrl" value="{{old('video_url',$krishiproduct->video_url)}}" name="video_url" placeholder="Paste your link here ..." />
                                     </div>
                                     <div class="form-group">
                                         <label for="description" class="">Description<span class="text-danger"> *</span></label>
@@ -322,6 +313,16 @@
 @push('js')
 <script src="https://foliotek.github.io/Croppie/croppie.js"></script>
 <script>
+    $('#frequency_allow').change(function(){
+        $('.Frequency_allow_setup').toggle("slow");
+    });
+    $('#allow_flash_sale').change(function(){
+        $('.allow_flash_setup').toggle("slow");
+    });
+    $('#allow_whole_sale').change(function(){
+        $('.whole_sale_setup').toggle("slow");
+    });
+    
     //summernote
     $(document).ready(function() {
         $('.summernote').summernote({
