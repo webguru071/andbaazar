@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
                 DB::table('couriers')->truncate();
                 DB::table('currencies')->truncate();
                 DB::table('promotion_heads')->truncate();
-                DB::table('merchants')->truncate();
-                DB::table('customers')->truncate();
+                DB::table('merchant_profile')->truncate();
+                DB::table('customer_profile')->truncate();
                 DB::table('shops')->truncate();
                 DB::table('tags')->truncate();
                 DB::table('colors')->truncate();
@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
                 DB::table('inventory_attribute_options')->truncate();
                 DB::table('inventory_attribute_category')->truncate();
                 DB::table('rejects')->truncate();
-                DB::table('agents')->truncate();
+                DB::table('agent_profile')->truncate();
                 DB::table('users')->truncate();
 
 

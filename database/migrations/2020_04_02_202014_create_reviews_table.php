@@ -19,7 +19,7 @@ class CreateReviewsTable extends Migration
             $table->text('reply');
             $table->text('review_msg');
             $table->boolean('active')->default(1)->change();
-            $table->foreignId('customer_id')->constrained('customers')->references('id')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customer_profile')->references('id')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->references('id')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();

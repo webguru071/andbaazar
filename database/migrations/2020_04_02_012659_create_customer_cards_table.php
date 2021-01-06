@@ -21,7 +21,7 @@ class CreateCustomerCardsTable extends Migration
             $table->date('card_expire_date');
             $table->string('card_cvc');
             $table->boolean('active')->default(1)->change();
-            $table->foreignId('customer_id')->constrained('customers')->references('id')->onDelete('cascade');
+            // $table->foreignId('customer_id')->constrained('customers')->references('id')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

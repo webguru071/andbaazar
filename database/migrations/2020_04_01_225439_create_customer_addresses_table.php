@@ -15,7 +15,7 @@ class CreateCustomerAddressesTable extends Migration
     {
         Schema::create('customer_addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('customers')->references('id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->string('addressLabel')->nullable();
             $table->string('geoLocation')->nullable();
             $table->string('full_name');

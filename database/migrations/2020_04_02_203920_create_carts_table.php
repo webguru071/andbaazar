@@ -18,7 +18,7 @@ class CreateCartsTable extends Migration
             $table->decimal('rate',8,2);
             $table->decimal('qty',8,2);
             $table->boolean('active')->default(1)->change();
-            $table->foreignId('customer_id')->constrained('customers')->references('id')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customer_profile')->references('id')->onDelete('cascade');
             $table->foreignId('shop_id')->constrained('shops')->references('id')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->references('id')->onDelete('cascade');
             $table->foreignId('inventory_id')->constrained('inventories')->references('id')->onDelete('cascade');

@@ -17,7 +17,7 @@ class CreateRejectValuesTable extends Migration
             $table->bigIncrements('id');
             $table->string('rej_name')->nullable();
             $table->string('type')->nullable();
-            $table->foreignId('merchant_id')->constrained('merchants')->references('id')->onDelete('cascade');
+            $table->foreignId('merchant_id')->constrained('merchant_profile')->references('id')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->references('id')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');
             $table->timestamps();

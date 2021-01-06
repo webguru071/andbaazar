@@ -19,7 +19,7 @@ class CreatePromotionUsesTable extends Migration
             $table->decimal('amount',8,2)->default(0);
             $table->text('description');
             $table->boolean('active')->default(1)->change();
-            $table->foreignId('buyer_id')->constrained('customers')->references('id')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customer_profile')->references('id')->onDelete('cascade');
             $table->foreignId('promotion_id')->constrained('promotions')->references('id')->onDelete('cascade');
             $table->foreignId('order_id')->constrained('orders')->references('id')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->references('id')->onDelete('cascade');

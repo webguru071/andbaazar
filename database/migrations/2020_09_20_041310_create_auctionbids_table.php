@@ -17,7 +17,7 @@ class CreateAuctionbidsTable extends Migration
             $table->bigIncrements('id');
             $table->date('date');
             $table->foreignId('auction_id')->constrained('auctions')->references('id')->onDelete('cascade');
-            $table->foreignId('customer_id')->constrained('customers')->references('id')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customer_profile')->references('id')->onDelete('cascade');
             $table->foreignId('auctionproduct_id')->constrained('auctionproducts')->references('id')->onDelete('cascade');
             $table->string('rate');
             $table->text('message')->nullable();

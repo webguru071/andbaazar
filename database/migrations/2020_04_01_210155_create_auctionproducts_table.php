@@ -27,7 +27,7 @@ class CreateAuctionproductsTable extends Migration
             $table->enum('status',['Active','Reject','Pending'])->default('Pending');
             $table->text('category_slug')->nullable();
             $table->foreignId('category_id')->constrained('categories')->references('id')->onDelete('cascade');
-            $table->foreignId('merchant_id')->constrained('merchants')->references('id')->onDelete('cascade');
+            $table->foreignId('merchant_id')->constrained('merchant_profile')->references('id')->onDelete('cascade');
             $table->foreignId('shop_id')->constrained('shops')->references('id')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users')->references('id')->onDelete('cascade');
             $table->timestamps();
