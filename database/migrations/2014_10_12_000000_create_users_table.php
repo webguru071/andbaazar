@@ -31,8 +31,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('last_login')->nullable();
             $table->tinyInteger('status')->default(0)->comment('0 for pending, 1 for active, 2 for rejected');
             $table->string('verification_token')->nullable();
-            // $table->string('remember_token')->nullable();
-            $table->string('remember_token_expired_at')->nullable();
+            $table->string('phone_otp')->nullable();
+            $table->string('phone_otp_expired_at')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
