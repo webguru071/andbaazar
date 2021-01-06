@@ -39,7 +39,24 @@ class User extends Authenticatable
 {
     use HasApiTokens,Notifiable;
     protected $fillable = [
-        'first_name','last_name','type','email','phone','password','api_token','login_area','business_types'
+      'first_name',
+      'last_name',
+      'email',
+      'email_verified_at',
+      'phone',
+      'phone_no_verified_at',
+      'password',
+      'type',
+      'login_area',
+      'login_area',
+      'business_types',
+      'api_token',
+      'permissions',
+      'last_login',
+      'status',
+      'verification_token',
+      'phone_otp',
+      'phone_otp_expired_at'
     ];
     protected $loginNames = ['email','type'];
 

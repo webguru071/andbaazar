@@ -67,7 +67,7 @@ class MerchantController extends Controller{
         $request->validate([
             'first_name' => 'required',
             'last_name'  => 'required',
-            'phone'      => 'required|unique:merchants,phone|unique:users,phone|min:11|max:11',
+            'phone'      => 'required|unique:users,phone|min:11|max:11',
             'email'      => 'nullable|unique:users,email',
             'password'   => 'required|min:8'
         ]);
@@ -78,57 +78,52 @@ class MerchantController extends Controller{
             'email'      => $request->email,
             'phone'      => $request->phone,
             'password' 	 => Hash::make($request->password),
+            'phone_otp'    => mt_rand(10000,99999),
+            'verification_token'        => Baazar::randString(24),
             'type'       => 'merchant',
             'create_at'  => now(),
         ]);
-        $slug = Baazar::getUniqueSlug($seller,$request->first_name);
+        $slug = Baazar::getUniqueSlug($seller,$request->first_name.' '.$request->last_name);
 
         $merchant = MerchantProfile::create([
-            'first_name'            => $request->first_name,
-            'last_name'             => $request->last_name,
-            'email'                 => $request->email,
-            'phone'                 => $request->phone,
             'slug'                  => $slug,
-            'verification_token'    => mt_rand(10000,99999),
-            'remember_token'        => Baazar::randString(24),
             'reg_step'              => 'otp-varification',
             'user_id'               => $user->id,
             'create_at'             => now(),
         ]);
         flash('Please verify your number')->success()->important();
-        return redirect('merchant/otp-varification'.'?token='.$merchant->remember_token);
+        return redirect('merchant/otp-varification'.'?token='.$user->verification_token);
     }
 
     public function getToken(Request $request){
-        $seller = MerchantProfile::where('remember_token',$request->token)->firstOrFail();
-        if($seller->reg_step != 'otp-varification'){
-            return redirect('merchant/'.$seller->reg_step.'?token='.$request->token);
+        $seller = User::where('verification_token',$request->token)->firstOrFail();
+        if($seller->merchantDetails->reg_step != 'otp-varification'){
+            return redirect('merchant/'.$seller->merchantDetails->reg_step.'?token='.$request->token);
         }
         return view('auth.merchant.otp-varification',compact('seller'));
 
     }
 
     public function updateToken(Request $request){
-        $seller    = MerchantProfile::where('remember_token',$request->token)->firstOrFail();
-        $verify_number = mt_rand(10000,99999);
-        $seller->update([
-            'verification_token' => $verify_number,
+        $user    = User::where('verification_token',$request->token)->firstOrFail();
+        $user->update([
+            'phone_otp' => mt_rand(10000,99999)
         ]);
         // session()->flash('success','Verify toke re-send successfully!');
         return redirect('merchant/otp-varification'.'?token='.$request->token);
     }
 
     public function postToken(Request $request){
-        $request->merge(['verification_token' => implode("",$request->digit)]);
-        $rules = array('verification_token' => 'required|exists:merchants,verification_token|max:5');
-        $inputs = array('verification_token' => $request->verification_token);
+        $request->merge(['phone_otp' => implode("",$request->digit)]);
+        $rules = array('phone_otp' => 'required|exists:users,phone_otp|max:5');
+        $inputs = array('phone_otp' => $request->phone_otp);
         $validator = \Validator::make($inputs, $rules);
 
         if($validator->fails()) {
             flash('Invalid OPT')->error()->important();
             return redirect()->back();
         }else{
-            $seller = MerchantProfile::where([['verification_token',$request->verification_token],['remember_token',$request->token]])->first();
+            $seller = User::where([['phone_otp',$request->phone_otp],['verification_token',$request->token]])->first();
                 $seller->update([
                     'verification_token' => 'varified',
                     'reg_step'           => 'shop-info',
@@ -139,7 +134,7 @@ class MerchantController extends Controller{
     }
 
     public function personalInfo(Request $request){
-        $seller = MerchantProfile::where('remember_token',$request->token)->first();
+        $seller = User::where('remember_token',$request->token)->first();
         if(!$seller){
             return redirect('/');
         }
@@ -166,7 +161,7 @@ class MerchantController extends Controller{
             ]);
 
 
-        $sellerId    = MerchantProfile::where('remember_token',$request->token)->first();
+        $sellerId    = User::where('remember_token',$request->token)->first();
         if(!$sellerId){
             return redirect('/');
         }
@@ -194,7 +189,7 @@ class MerchantController extends Controller{
     }
 
     public function shopRegistration(Request $request){
-        $seller = MerchantProfile::where('remember_token',$request->token)->first();
+        $seller = User::where('remember_token',$request->token)->first();
         if(!$seller){
             return redirect('/');
         }
@@ -226,7 +221,7 @@ class MerchantController extends Controller{
             'type'          => 'required',
             'address'       => 'required',
         ]);
-        $sellerId = MerchantProfile::where('remember_token',$request->token)->first();
+        $sellerId = User::where('remember_token',$request->token)->first();
         if(!$sellerId){return redirect('/');}
 
         $sellerId->update(['reg_step' => 'complete']);
@@ -269,7 +264,7 @@ class MerchantController extends Controller{
     }
 
     public function businessRegistration(Request $request){
-        $seller = MerchantProfile::where('remember_token',$request->token)->first();
+        $seller = User::where('remember_token',$request->token)->first();
         // dd($seller->shop[0]);
         if(!$seller){
             return redirect('/');
@@ -286,7 +281,7 @@ class MerchantController extends Controller{
 
         $types = $request->business_types;
 
-        $merchant = MerchantProfile::where('remember_token',$request->token)->first();
+        $merchant = User::where('remember_token',$request->token)->first();
         $shop = $merchant->shop[0];
         $shop->type = $types[0];
         $shop->slug = Baazar::getUniqueSlug($shop,$shop->name.'-'.$types[0]);

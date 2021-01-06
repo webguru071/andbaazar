@@ -5,7 +5,7 @@
     <div class="col-md-5 p-0 card-left"></div>
     <div class="col-md-7 p-0 card-right p">
         <div class="text-right">
-            <span class=""> {{  $seller->verification_token }}</span>
+            <span class=""> {{  $seller->phone_otp }}</span>
         </div>
         <div class="card tab2-card pt-5 pb-5">
             <div class="card-body">
