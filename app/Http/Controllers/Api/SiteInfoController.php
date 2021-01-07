@@ -78,4 +78,33 @@ class SiteInfoController extends Controller
     public function topRatedProducts(){
 
     }
+
+    public function generateCategories($categories,$arr = []){
+        foreach ($categories as $category) {
+            if (count($category->childs) > 0) {
+                $arr = $this->generateCategories($category->childs,$arr);
+            }
+            $arr[] = $category->id;
+        }
+        return $arr;
+    }
+
+
+    public function CategoryWiseProducts(Request $request,$parentCategoryId){
+        $limit = 20;
+        if($request->limit){
+            $limit = $request->limit;
+        }
+        $parentCategory = KrishiCategory::find($parentCategoryId);
+        $subCategories = $this->generateCategories($parentCategory->childs);
+        array_push($subCategories,(int)$parentCategoryId);
+        $products = KrishiProduct::whereIn('category_id', $subCategories)->where('status','active')->orderBy('id','desc')->paginate($limit);
+        $products->appends(['limit'=>$limit]);
+        return new KrishiProductCollection($products);
+    }
+
+    public function getSubCategories($parentCategoryId){
+        $parentCategory = KrishiCategory::find($parentCategoryId);
+        return new KrishiProductCategoryCollection($parentCategory->childs);
+    }
 }

@@ -54,6 +54,8 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
             Route::get('/new-arrival-products','SiteInfoController@newArrivalProducts');
             Route::get('/upcoming-products','SiteInfoController@upcomingProducts');
             Route::get('/top-rated-products','SiteInfoController@topRatedProducts');
+            Route::get('/category-wise-products/{parent_category}','SiteInfoController@CategoryWiseProducts');
+            Route::get('/sub-categories/{parent_category}','SiteInfoController@getSubCategories');
         });
 
     });
