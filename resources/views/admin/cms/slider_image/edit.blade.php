@@ -76,7 +76,7 @@
                                                 <div class="text-center">
                                                     <div class="fileinput fileinput-new" data-provides="fileinput">
                                                         <div class="fileinput-new thumbnail img-responsive" >
-                                                            <img src="{{ Storage::url($krishiBazarSlider->slider_image) }}" width="100%" alt="Slider Image">
+                                                            <img src="{{ $krishiBazarSlider->slider_image }}" width="100%" alt="Slider Image">
                                                         </div>
                                                         <div class="fileinput-preview fileinput-exists thumbnail"></div>
                                                         <div class="mt-1">

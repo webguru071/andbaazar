@@ -54,7 +54,7 @@
                             <tbody>
                                 @foreach($all_sliders as $index=>$slider)
                                     <tr>
-                                        <td><img class="img-fluid" src="{{ Storage::url($slider->slider_image) }}" style="height: 50px"></td>
+                                        <td><img class="img-fluid" src="{{ $slider->slider_image }}" style="height: 50px"></td>
                                         <td>{{ $slider->slider_url }}</td>
                                         <td>{{ Str::words($slider->slider_details, 5, ' >>>') }}</td>
                                         <td>{{ ($slider->status==1) ? 'Active' : 'Inactive' }}</td>

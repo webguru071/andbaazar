@@ -50,7 +50,7 @@
             .readonly {
                 opacity: .5;
                 cursor: not-allowed !important;
-            }     
+            }
             input[type=text],input[type=number],select,.input-group-text,.h-40{
                 height: 40px !important;
             }
@@ -112,7 +112,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-9">
-                                                
+
                                                 <div class="row">
                                                     <div class="form-group col-md-6">
                                                         <label for="name">Product Name <span class="text-danger">*</span></label>
@@ -227,7 +227,9 @@
                                                         <input type="text" class="form-control" onkeyup="categorySearch(1,this)" placeholder="search">
                                                         <ul class="cat-levels" id="">
                                                             @foreach ($categories as $row)
-                                                            <li onclick="getNextLevel({{$row->id}},1,this)" value="{{ $row->id }}">{{$row->name}} <span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li>
+                                                                <li onclick="getNextLevel({{$row->id}},1,this)" value="{{ $row->id }}">{{$row->name}}
+                                                                    <span class="float-right"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+                                                                </li>
                                                             @endforeach
                                                         </ul>
                                                     </div>
@@ -263,7 +265,7 @@
                                             <span class="text-danger">{{ $errors->first('description') }}</span>
                                             @endif
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label for="returnPolicy" class="">Return Policy (if any)</label>
                                             <textarea class="form-control" rows="3" id="returnPolicy" name="return_policy" placeholder="Your custom return policy ..."></textarea>
@@ -273,9 +275,9 @@
                             </div>
                         </div>
                         <div class="card mb-4">
-                            <h5 class="card-header">Product Publis on news feed (optional)</h5>
+                            <h5 class="card-header">Product Publish on news feed (optional)</h5>
                             <div class="card-body">
-                                <div class="contianer"> 
+                                <div class="contianer">
                                     <div class="form-group">
                                         <div class="checkbox">
                                             <label data-toggle="collapse" data-target="#collapseable" aria-expanded="false" aria-controls="collapseable">
@@ -287,7 +289,7 @@
                                         <div class="well">
                                             <div class="form-group row">
                                                 <div class="col-md-6 text-left">
-                                                    <label for="image">News feed Image</label> 
+                                                    <label for="image">News feed Image</label>
                                                     <div class="mt-0">
                                                         <img id="outputs"  class="imagestyle" src="{{ asset('/images/demo-product.jpg') }}" />
                                                     </div>
@@ -303,7 +305,7 @@
                                                 <span class="text-danger" id="message_title"></span>
                                                 @if ($errors->has('title'))
                                                     <span class="text-danger">{{ $errors->first('title') }}</span>
-                                                @endif 
+                                                @endif
                                             </div>
                                             <div class="form-group">
                                                 <label for="news_desc" class="">Description<span class="text-danger"> *</span></label>
@@ -511,16 +513,16 @@
 
         $('#check').click(function(){
             var txt = $('textarea#description').val();
-            $('#newsDesctiption').summernote('code',txt); 
+            $('#newsDesctiption').summernote('code',txt);
         });
         $(function() {
-            var checkbox = $("#check"); 
+            var checkbox = $("#check");
             checkbox.change(function() {
-                if (checkbox.is(':checked')) { 
-                    $('#title').prop('required', true); 
-                } else { 
+                if (checkbox.is(':checked')) {
+                    $('#title').prop('required', true);
+                } else {
                     $("#title").val("");
-                    $('#title').prop('required', false); 
+                    $('#title').prop('required', false);
                 }
             });
         });

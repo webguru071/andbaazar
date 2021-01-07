@@ -58,6 +58,7 @@ class User extends Authenticatable
       'phone_otp',
       'phone_otp_expired_at'
     ];
+
     protected $loginNames = ['email','type'];
 
     public function customerDetails(){
@@ -159,5 +160,5 @@ class User extends Authenticatable
       public function news(){
         return $this->hasOne(Newsfeed::class,'newsfeed_id');
       }
-      protected $casts = ['business_types'=>'array'];
+      protected $casts = ['business_types'=>'array', 'phone_otp_expired_at'=>'date'];
     }

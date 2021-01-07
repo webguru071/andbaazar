@@ -267,6 +267,7 @@ class MerchantController extends Controller{
 
     public function businessRegistration(Request $request){
         $seller = User::where('verification_token',$request->token)->first();
+//        dd($seller->merchantDetails);
         // dd($seller->shop[0]);
         if($seller->merchantDetails->reg_step != 'business-info'){
             return redirect('merchant/'.$seller->merchantDetails->reg_step.'?token='.$request->token);

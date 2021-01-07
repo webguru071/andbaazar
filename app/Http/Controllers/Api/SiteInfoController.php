@@ -27,17 +27,23 @@ class SiteInfoController extends Controller
     }
 
     public function risingStarShops(){
-        $now = Carbon::now()->format('Y-m-d');
         $previous = Carbon::now()->subWeeks(8)->format('Y-m-d');
         $popularProducts = KrishiProduct::select('shop_id', DB::raw('SUM(total_unit_sold) as total_sold'))
             ->where('status','Active')
-            ->whereDate('available_from','>=', $previous)->whereDate('available_to','<=', $now)
+            ->whereDate('available_from','>=', $previous)
             ->groupBy('shop_id')
             ->orderBy('total_sold','desc')
             ->take(10)->get()
             ->pluck('shop_id')->all();
         $risingStarShops = Shop::whereIn('id',$popularProducts)->get();
-        return new ShopCollection($risingStarShops);
+        $data = new ShopCollection($risingStarShops);
+
+        return response()->json(
+            [
+                $data,
+                'status'=>'success',
+            ]
+        );
     }
 
     public function flashDealProducts(){
@@ -49,12 +55,13 @@ class SiteInfoController extends Controller
             ->where([['status','Active'],['available_stock','>',0]])
             ->orderBy('total_sold','desc')
             ->take(10)->get();
+        dd($bestSellerProducts->toArray());
         return new KrishiProductCollection($bestSellerProducts);
     }
 
     public function popularCategories(){
         $popularProducts = KrishiProduct::select('category_id', DB::raw('SUM(total_unit_sold) as total_sold'))
-            ->where([['status','Active'],['available_stock','>',0]])
+            ->where([['status','Active']])
             ->groupBy('category_id')
             ->orderBy('total_sold','desc')
             ->take(10)->get()
@@ -64,9 +71,8 @@ class SiteInfoController extends Controller
     }
 
     public function newArrivalProducts(){
-        $now = Carbon::now()->format('Y-m-d');
         $previous = Carbon::now()->subWeeks(4)->format('Y-m-d');
-        $newArrivalProducts = KrishiProduct::where([['status','Active'],['available_stock','>',0]])->whereDate('available_from','>=', $previous)->whereDate('available_to','<=', $now)->orderBy('available_from')->take(10)->get();
+        $newArrivalProducts = KrishiProduct::where([['status','Active'],['available_stock','>',0]])->whereDate('available_from','>=', $previous)->orderBy('available_from')->take(10)->get();
         return new KrishiProductCollection($newArrivalProducts);
     }
 

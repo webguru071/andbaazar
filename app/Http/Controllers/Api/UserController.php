@@ -62,7 +62,7 @@ class UserController extends Controller
     //    Forget Password
     public function forgetPassword(Request $request){
         $validator=Validator::make($request->all(), [
-            'phone'=>'required|numeric|exists:customers,phone',
+            'phone'=>'required|numeric|exists:users,phone',
         ]);
 
         if ($validator->fails()){
@@ -70,8 +70,8 @@ class UserController extends Controller
         }
         $otp_code = rand(10000,99999);
         $customer=User::where('phone',$request->phone)->firstOrFail();
-        $customer->remember_token = $otp_code;
-        $customer->remember_token_expired_at = Carbon::now()->addMinute();
+        $customer->phone_otp = $otp_code;
+        $customer->phone_otp_expired_at = Carbon::now()->addMinute();
         $customer->save();
 
         //    Now Send the OTP code via SMS Gateway
@@ -86,14 +86,14 @@ class UserController extends Controller
     //    Verify OTP
     public function verifyOTP(Request $request){
         $validator=Validator::make($request->all(), [
-            'phone'=>'required|numeric|exists:customers,phone',
+            'phone'=>'required|numeric|exists:users,phone',
             'otp_code'=>'required|string'
         ]);
 
         if ($validator->fails()){
             return response()->json($validator->messages()->first(), 422);
         }
-        $verifyOTP = User::where([['phone',$request->phone],['remember_token',$request->otp_code]])->whareDate('remember_token_expired_at','<=',Carbon::now())->first();
+        $verifyOTP = User::where([['phone',$request->phone],['phone_otp',$request->otp_code]])->where('phone_otp_expired_at','>',Carbon::now())->first();
         if (is_null($verifyOTP)){
             return response()->json([
                 'data'=>[
@@ -145,7 +145,7 @@ class UserController extends Controller
             return response()->json($validator->messages()->first(), 422);
         }
 
-        $credentials = ['type'=>'customers', 'status'=>1, 'password'=>$request->password];
+        $credentials = ['status'=>1, 'password'=>$request->password];
 
         if(is_numeric($request->uname)){
             $credentials['phone']=$request->uname;

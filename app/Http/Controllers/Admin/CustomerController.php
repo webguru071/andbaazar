@@ -15,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers=User::with('customerDetails')->where('type','customers')->get();
+        $customers=User::with('customerDetails')->where('type','customer')->get();
         return view('admin.customer.index',compact('customers'));
     }
 

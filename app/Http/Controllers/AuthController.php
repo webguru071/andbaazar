@@ -95,7 +95,11 @@ class AuthController extends Controller{
     public function selectDefaultService(){
         $user= Auth::user();
         $userServices = $user->business_types;
-        if (count($userServices)<=0){
+        if (!in_array(Auth::user()->type, ['merchant','agent'])){
+            Auth::logout();
+            return redirect('/');
+        }
+        elseif (is_null($userServices) || count($userServices)<=0){
             return redirect()->action('AuthController@selectBusinessInfo');
         }
         elseif (count($userServices)<=1){

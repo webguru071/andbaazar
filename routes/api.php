@@ -37,10 +37,13 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
     Route::post('/registration','UserController@registration');
     Route::post('/login','UserController@login');
     Route::post('/forget-password','UserController@forgetPassword');
+    Route::post('/verify-otp','UserController@verifyOTP');
+
     Route::group(['middleware'=>['auth:api','isActive']],function (){
         //   For User Authentication
-        Route::get('/logout','UserController@logout');
         Route::get('/profile','UserController@profile');
+        Route::post('/reset-password','UserController@resetPassword');
+        Route::get('/logout','UserController@logout');
     });
     Route::group(['prefix'=>'krishibazar'],function (){
         Route::group(['prefix'=>'site-info'],function (){
