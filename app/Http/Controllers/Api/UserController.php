@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Http\Traits\apiTrait;
 use App\Models\AgentProfile;
 use App\Models\CustomerProfile;
 use App\Models\MerchantProfile;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    use apiTrait;
     //    For user registration
     public function registration(Request $request){
         $validator=Validator::make($request->all(), [
@@ -33,7 +35,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()){
-            return response()->json($validator->messages()->first(), 422);
+            return $this->jsonResponse([],$validator->messages()->first(),'failed');
         }
         $allData=$request->all();
         $allData['password']=Hash::make($request->password);
@@ -52,11 +54,7 @@ class UserController extends Controller
                 break;
         }
 
-        return response()->json([
-            'data'=>[
-                'status'=>'success'
-            ]
-        ]);
+        return $this->jsonResponse([],"Yor have been register successfully",'success');
     }
 
     //    Forget Password
@@ -66,7 +64,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()){
-            return response()->json($validator->messages()->first(), 422);
+            return $this->jsonResponse([],$validator->messages()->first(),'failed');
         }
         $otp_code = rand(10000,99999);
         $customer=User::where('phone',$request->phone)->firstOrFail();
@@ -75,12 +73,7 @@ class UserController extends Controller
         $customer->save();
 
         //    Now Send the OTP code via SMS Gateway
-
-        return response()->json([
-            'data'=>[
-                'status'=>'success'
-            ]
-        ]);
+        return $this->jsonResponse([],"OTP send to your mobile number",'success');
     }
 
     //    Verify OTP
@@ -91,26 +84,23 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()){
-            return response()->json($validator->messages()->first(), 422);
+            return $this->jsonResponse([],$validator->messages()->first(),'failed');
         }
         $verifyOTP = User::where([['phone',$request->phone],['phone_otp',$request->otp_code]])->where('phone_otp_expired_at','>',Carbon::now())->first();
         if (is_null($verifyOTP)){
             return response()->json([
-                'data'=>[
-                    'status'=>'failed',
-                    'message'=>'Invalid OTP Code'
-                ]
+                'status'=>'failed',
+                'message'=>'Invalid OTP Code'
             ]);
         }
         else{
             $tokenResult=$verifyOTP->createToken('Personal Access Token');
             $token=$tokenResult->accessToken;
-            return response()->json([
-                'data'=>[
-                    'status'=>'success',
-                    'access_token'=>$token
-                ]
-            ]);
+            $data = [
+                'status'=>'success',
+                'access_token'=>$token
+            ];
+            return $this->jsonResponse($data,"Login successfully",'success');
         }
     }
 
@@ -121,17 +111,12 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()){
-            return response()->json($validator->messages()->first(), 422);
+            return $this->jsonResponse([],$validator->messages()->first(),'failed');
         }
         $user=$request->user();
         $user->password=Hash::make($request->password);
         $user->save();
-        return response()->json([
-            'data'=>[
-                'status'=>'success',
-                'message'=>'Your password updated successfully'
-            ]
-        ]);
+        return $this->jsonResponse([],"Your password updated successfully",'success');
     }
 
     //    For user login
@@ -142,7 +127,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()){
-            return response()->json($validator->messages()->first(), 422);
+            return $this->jsonResponse([],$validator->messages()->first(),'failed');
         }
 
         $credentials = ['status'=>1, 'password'=>$request->password];
@@ -170,28 +155,21 @@ class UserController extends Controller
             $token->save();
         }
 
-        return response()->json([
-            'data'=>[
-                'status'=>'success',
-                'access_token'=>$tokenResult->accessToken,
-            ]
-        ]);
+        $data=[
+            'access_token'=>$tokenResult->accessToken,
+        ];
 
-
+        return $this->jsonResponse($data,"You logged in successfully",'success');
     }
 
     //    For user profile
     public function profile(Request $request){
-        return new UserResource($request->user());
+        return $this->jsonResponse(new UserResource($request->user()));
     }
 
     //     For logout
     public function logout(Request $request){
         $request->user()->token()->revoke();
-        return response()->json([
-            'data'=>[
-                'status'=>'success'
-            ]
-        ]);
+        return $this->jsonResponse([],'You logout successfully','success');
     }
 }

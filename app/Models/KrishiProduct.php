@@ -42,7 +42,7 @@ class KrishiProduct extends Model
         'total_order_no'
     ];
 
-    protected $casts =['frequency'=>'array'];
+    protected $casts =['frequency'=>'array', 'available_from'=>'date', 'available_to'=>'date'];
 
     public function getRouteKeyName()
     {

@@ -12,18 +12,20 @@ use App\Models\KrishiProduct;
 use App\Models\Shop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Traits\apiTrait;
 use Illuminate\Support\Facades\DB;
 
 class SiteInfoController extends Controller
 {
+    use apiTrait;
     public function productCategories(){
         $productCategories = KrishiCategory::where([['active',1],['parent_id',0]])->get();
-        return new KrishiProductCategoryCollection($productCategories);
+        return $this->jsonResponse(new KrishiProductCategoryCollection($productCategories));
     }
 
     public function sliderList(){
         $sliders = KrishiBazarSlider::select('slider_image','slider_url')->where('status',1)->get();
-        return response()->json(['data'=>$sliders]);
+        return $this->jsonResponse($sliders);
     }
 
     public function risingStarShops(){
@@ -36,14 +38,8 @@ class SiteInfoController extends Controller
             ->take(10)->get()
             ->pluck('shop_id')->all();
         $risingStarShops = Shop::whereIn('id',$popularProducts)->get();
-        $data = new ShopCollection($risingStarShops);
 
-        return response()->json(
-            [
-                $data,
-                'status'=>'success',
-            ]
-        );
+        return $this->jsonResponse(new ShopCollection($risingStarShops));
     }
 
     public function flashDealProducts(){
@@ -55,8 +51,7 @@ class SiteInfoController extends Controller
             ->where([['status','Active'],['available_stock','>',0]])
             ->orderBy('total_sold','desc')
             ->take(10)->get();
-        dd($bestSellerProducts->toArray());
-        return new KrishiProductCollection($bestSellerProducts);
+            return $this->jsonResponse(new KrishiProductCollection($bestSellerProducts));
     }
 
     public function popularCategories(){
@@ -67,21 +62,39 @@ class SiteInfoController extends Controller
             ->take(10)->get()
             ->pluck('category_id')->all();
         $popularCategories = KrishiCategory::whereIn('id',$popularProducts)->where([['active',1],['parent_id',0]])->get();
-        return new KrishiProductCategoryCollection($popularCategories);
+        return $this->jsonResponse(new KrishiProductCategoryCollection($popularCategories));
     }
 
     public function newArrivalProducts(){
         $previous = Carbon::now()->subWeeks(4)->format('Y-m-d');
         $newArrivalProducts = KrishiProduct::where([['status','Active'],['available_stock','>',0]])->whereDate('available_from','>=', $previous)->orderBy('available_from')->take(10)->get();
-        return new KrishiProductCollection($newArrivalProducts);
+        return $this->jsonResponse(new KrishiProductCollection($newArrivalProducts));
     }
 
     public function upcomingProducts(){
         $upcomingProducts = KrishiProduct::where([['status','Active'],['available_stock','>',0]])->whereDate('available_from','>', Carbon::now())->orderBy('available_from')->take(8)->get();
-        return new KrishiProductCollection($upcomingProducts);
+        return $this->jsonResponse(new KrishiProductCollection($upcomingProducts));
     }
 
     public function topRatedProducts(){
 
+    }
+
+    public function CategoryWiseProducts(Request $request,$parentCategoryId){
+        $limit = 20;
+        if($request->limit){
+            $limit = $request->limit;
+        }
+        $parentCategory = KrishiCategory::find($parentCategoryId);
+        $subCategories = $this->generateCategories($parentCategory->childs);
+        array_push($subCategories,(int)$parentCategoryId);
+        $products = KrishiProduct::whereIn('category_id', $subCategories)->where('status','active')->orderBy('id','desc')->paginate($limit);
+        $products->appends(['limit'=>$limit]);
+        return $this->jsonResponse(new KrishiProductCollection($products));
+    }
+
+    public function getSubCategories($parentCategoryId){
+        $parentCategory = KrishiCategory::find($parentCategoryId);
+        return $this->jsonResponse(new KrishiProductCategoryCollection($parentCategory->childs));
     }
 }

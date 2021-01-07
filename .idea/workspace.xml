@@ -2,21 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Resources/KrishiCategoryWiseProductCollection.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Resources/KrishiCategoryWiseProductResource.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Traits/apiTrait.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/krishi/fulcoppy-210107050121-fulcoppy840117166.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/krishi/fulcoppy-210107050122-fulcoppy1475428718.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/krishi/fulcoppy-210107050123-fulcoppy1210871097.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/krishi/fulcoppy-210107050124-fulcoppy109055185.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/krishi/fulcoppy-210107050124-fulcoppy190238288.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/krishi/orgimg-210107050124-orgimg311693121.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/krishi/orgimg-210107050124-orgimg833698303.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CustomerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminHomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminHomeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/SiteInfoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/SiteInfoController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MerchantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MerchantController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/KrishiBazarSlider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/KrishiBazarSlider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/UserTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/UserTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/cms/slider_image/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/cms/slider_image/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/cms/slider_image/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/cms/slider_image/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/error/404.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/error/404.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/product/krishibaazar/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/KrishiCategory.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/KrishiCategory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/KrishiProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/KrishiProduct.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_21_091828_create_krishi_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_21_091828_create_krishi_products_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -248,7 +249,7 @@
       <workItem from="1609819049534" duration="22433000" />
       <workItem from="1609848912826" duration="34000" />
       <workItem from="1609907123766" duration="14674000" />
-      <workItem from="1609993126937" duration="5888000" />
+      <workItem from="1609993126937" duration="10335000" />
     </task>
     <servers />
   </component>
