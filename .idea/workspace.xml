@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/images/logo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/merchant/sell-on-andbaazar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/sell-on-andbaazar.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,8 +170,13 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/images" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -182,11 +188,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\xampp\htdocs\andbaazar\public\images" />
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin\cms\slider_image" />
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin\order_tracking_stage" />
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin" />
       <recent name="E:\xampp\htdocs\andbaazar\public\frontend\assets\images\dashboard" />
-      <recent name="E:\xampp\htdocs\andbaazar\resources\views\auth\merchant" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\user" />
@@ -234,7 +240,8 @@
       <workItem from="1609819049534" duration="22433000" />
       <workItem from="1609848912826" duration="34000" />
       <workItem from="1609907123766" duration="14674000" />
-      <workItem from="1609993126937" duration="10974000" />
+      <workItem from="1609993126937" duration="15430000" />
+      <workItem from="1610252541216" duration="7425000" />
     </task>
     <servers />
   </component>

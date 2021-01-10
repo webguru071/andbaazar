@@ -28,7 +28,7 @@
       <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/color1.css" media="screen" id="color">
       <!-- Croppie css -->
       <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/croppie.css>
-         <link rel="stylesheet" type="text/css" href=" https://cdnjs.cloudflare.com/ajax/libs/css-loader/3.3.3/css-loader.css">
+         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/css-loader/3.3.3/css-loader.css">
       <!-- <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/preloader.min.css> -->
       <link rel="stylesheet" type="text/css" href="/css/custom.css">
       <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
@@ -40,7 +40,7 @@
             <div class="row     align-items-center">
                <div class="col-lg-6">
                   <div class="sell-logo">
-                     <img src="http://andbaazar.com/_nuxt/img/logo.362cfea.png" alt="img">
+                     <img src="/images/logo.png" alt="img">
                   </div>
                </div>
                <div class="col-lg-6">
@@ -273,7 +273,7 @@
                <div class="col-lg-6">
                   <div class="footer-left-side">
                      <p>
-                        <a href="#!"><img src="http://andbaazar.com/_nuxt/img/logo.362cfea.png" alt="img"></a>
+                        <a href="#!"><img src="/images/logo.png" alt="img"></a>
                         <a href="#!">Sitemap</a>
                         <a href="#!">Our Partner </a>
                         <a href="#!">Andbaazar Blog </a>
@@ -353,7 +353,7 @@
          function openSearch() {
              document.getElementById("search-overlay").style.display = "block";
          }
-         
+
          function closeSearch() {
              document.getElementById("search-overlay").style.display = "none";
          }
