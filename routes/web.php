@@ -12,8 +12,26 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-route::get('check',function(){
-    return response()->json(['amer'=>'ki','ta'=>'jani na']);
+route::get('some-expriment',function(){
+    // is_dir("/home/andbaazar/domains/andbaazar.com/public_html/app");
+    $d = symlink('/home/andbaazar/domains/andbaazar.com/app/storage/app/public','/home/andbaazar/domains/andbaazar.com/public_html/app/storage');
+    dd($d);
+    // echo storage_path('app/public')."<br>";
+    // echo public_path('../');
+    // die(351);
+    // $storage = is_dir("/home/andbaazar/domains/andbaazar.com/app/storage/app/public");
+    // $public = is_dir("/home/andbaazar/domains/andbaazar.com");
+    // // dd($public);
+    // if(!file_exists($storage)) {
+    //     $dd = \App::make('files')->link($storage, $public);
+    //     dd($dd);
+    // }else{
+    //     echo 'dfs';
+    // }
+    // symlink('/home/andbaazar/app.andbaazar.com/storage/app/public','/home/andbaazar/public_html/app/storage');
+    // shell_exec('php ../artisan passport:install');
+    // Artisan::call('passport:install');
+    // return response()->json(['amer'=>'ki','ta'=>'jani na']);
 });
 Route::get('/', 'MerchantController@sellOnAndbaazar');
 Route::get('/login', 'AuthController@userLogin')->name('login');
