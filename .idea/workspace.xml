@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/images/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/customer/pending_customers.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/customer/rejected_customers.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/merchant/sell-on-andbaazar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/sell-on-andbaazar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CustomerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/customer/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/customer/active_customers.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/left-sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/elements/myjs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/elements/myjs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +182,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/customer" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -188,11 +194,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin\customer" />
       <recent name="E:\xampp\htdocs\andbaazar\public\images" />
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin\cms\slider_image" />
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin\order_tracking_stage" />
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin" />
-      <recent name="E:\xampp\htdocs\andbaazar\public\frontend\assets\images\dashboard" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\user" />
@@ -241,7 +247,7 @@
       <workItem from="1609848912826" duration="34000" />
       <workItem from="1609907123766" duration="14674000" />
       <workItem from="1609993126937" duration="15430000" />
-      <workItem from="1610252541216" duration="7425000" />
+      <workItem from="1610252541216" duration="19039000" />
     </task>
     <servers />
   </component>

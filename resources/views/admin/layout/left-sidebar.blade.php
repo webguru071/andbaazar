@@ -13,7 +13,15 @@
                 <ul class="sidebar-menu">
                     <li><a class="sidebar-header {{ request()->is('andbaazaradmin/dashboard') ? 'active' : '' }}" href="{{ url('andbaazaradmin/dashboard') }}"><i data-feather="home"></i><span>Dashboard</span></a></li>
 
-                    <li><a class="sidebar-header {{ request()->is('andbaazaradmin/customers') ? 'active' : '' }}"  href="{{ action('Admin\CustomerController@index') }}"><i data-feather="users"></i><span>Customers</span></a> </li>
+{{--                    <li><a class="sidebar-header {{ request()->is('andbaazaradmin/customers') ? 'active' : '' }}"  href="{{ action('Admin\CustomerController@index') }}"><i data-feather="users"></i><span>Customers</span></a> </li>--}}
+
+                    <li class="{{ request()->is('andbaazaradmin/customers*') ? 'active' : '' }}"><a class="sidebar-header {{ request()->is('andbaazaradmin/customers*') ? 'active' : '' }}" href="#"><i data-feather="user"></i> <span>Customers</span><i class="fa fa-angle-right pull-right"></i></a>
+                        <ul class="sidebar-submenu">
+                            <li class="{{ (request()->is('andbaazaradmin/customers') || request()->is('andbaazaradmin/customers/active')) ? 'active' : '' }}"><a href="{{ action('Admin\CustomerController@active_customers') }}" class="{{ (request()->is('andbaazaradmin/customers') || request()->is('andbaazaradmin/customers/active')) ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Active Customers</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/customers/pending') ? 'active' : '' }}"><a href="{{ action('Admin\CustomerController@pending_customers') }}" class="{{ request()->is('andbaazaradmin/customers/pending') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Pending Customers</span></a></li>
+                            <li class="{{ request()->is('andbaazaradmin/customers/rejected') ? 'active' : '' }}"><a href="{{ action('Admin\CustomerController@rejected_customers') }}" class="{{ request()->is('andbaazaradmin/customers/rejected') ? 'active' : '' }}"><i class="fa fa-circle"></i> <span>Rejected Customers</span></a></li>
+                        </ul>
+                    </li>
 
                     <li class="{{ request()->is('andbaazaradmin/merchants*') ? 'active' : '' }}"><a class="sidebar-header {{ request()->is('andbaazaradmin/merchants*') ? 'active' : '' }}" href="#"><i data-feather="user"></i> <span>Merchants</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">

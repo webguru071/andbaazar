@@ -90,6 +90,50 @@ $('.updateNotification').click(function(){
       });
 });
 
+function makeApproveRequest(event, id) {
+  event.preventDefault();
+  Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to approve this customer!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, approve it!'
+  }).then((result) => {
+      if (result.value) {
+          Swal.fire(
+              'Approve!',
+              'Approve action processed successfully.',
+              'success'
+          );
+          $("#approveButton"+id).submit();
+      }
+  })
+}
+
+function makeRejectRequest(event, id) {
+  event.preventDefault();
+  Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to reject this customer!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, reject it!'
+  }).then((result) => {
+      if (result.value) {
+          Swal.fire(
+              'Reject!',
+              'Reject action processed successfully.',
+              'success'
+          );
+          $("#rejectButton"+id).submit();
+      }
+  })
+}
+
 function makeDeleteRequest(event, id) {
   event.preventDefault();
   Swal.fire({

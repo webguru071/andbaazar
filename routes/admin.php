@@ -51,6 +51,17 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
     Route::get('/agents/rejected','Admin\AgentController@rejected_agents');
     //    ==============================
 
+    //    For Customers
+    //    ==============================
+    Route::get('/customers','Admin\CustomerController@active_customers');
+    Route::get('/customers/active','Admin\CustomerController@active_customers');
+    Route::get('/customers/pending','Admin\CustomerController@pending_customers');
+    Route::get('/customers/rejected','Admin\CustomerController@rejected_customers');
+    Route::post('/customers/approve-customer/{id}','Admin\CustomerController@approve_customer');
+    Route::post('/customers/reject-customer/{id}','Admin\CustomerController@reject_customer');
+    Route::post('/customers/delete-customer/{id}','Admin\CustomerController@destroy');
+    //    ==============================
+
     //    For Order Tracking Stage
     //    ==============================
     Route::post('/update-tracking-stages-order','Admin\OrderTrackingStageController@updateTrackingStageOrder');
@@ -125,8 +136,6 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
     Route::get('village/export', 'VillageExportImportController@export')->name('villageexport');
 
     // Village import End//
-
-    Route::get('customers', 'Admin\CustomerController@index');
 
 });
 
