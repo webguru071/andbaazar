@@ -59,7 +59,7 @@ class KrishiProduct extends Model
         return $this->belongsTo(MerchantProfile::class,'merchant_id');
     }
     public function shop(){
-        return $this->belongsTo(MerchantProfile::class,'shop_id');
+        return $this->belongsTo(Shop::class,'shop_id');
     }
     public function itemimage(){
         return $this->hasMany(KrishiProductItemImage::class,'product_id');

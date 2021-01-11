@@ -59,6 +59,7 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
             Route::get('/top-rated-products','SiteInfoController@topRatedProducts');
             Route::get('/category-wise-products/{parent_category}','SiteInfoController@CategoryWiseProducts');
             Route::get('/sub-categories/{parent_category}','SiteInfoController@getSubCategories');
+            Route::get('/search','SiteInfoController@search');
         });
 
     });

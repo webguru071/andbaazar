@@ -97,4 +97,47 @@ class SiteInfoController extends Controller
         $parentCategory = KrishiCategory::find($parentCategoryId);
         return $this->jsonResponse(new KrishiProductCategoryCollection($parentCategory->childs));
     }
+
+    public function search(Request $request){
+        if(!$request->type){
+            return $this->jsonResponse([],'Must select search type',true);
+        }
+        
+        if(!$request->keyword){
+            return $this->jsonResponse([],'Must select search keyword',true);
+        }
+        
+        if($request->type === 'product' || $request->type === 'shop'){
+            if($request->category){
+                $cat = KrishiCategory::find($request->category);
+                if(!$cat){
+                    return $this->jsonResponse([],'Invalid Category',true);
+                }
+            }
+            
+            //start to search
+            $limit = 20;
+            if($request->limit){
+                $limit = $request->limit;
+            }
+            $results = KrishiProduct::where('category_id',$request->category)
+                ->where('name','like','%'.$request->keyword.'%')
+                ->orWhere('description','like','%'.$request->keyword.'%')
+                ->orWhere('slug','like','%'.$request->keyword.'%')
+                ->orWhere('return_policy','like','%'.$request->keyword.'%');
+
+            if($request->type === 'shop'){ //find & return shops
+                $results = $results->groupBy('shop_id')->select('shop_id')->pluck('shop_id');//->first();
+                $shops = Shop::whereIn('id', $results)->orderBy('id','desc')->where('status','active')->paginate($limit);
+                $shops->appends(['type'=>$request->type,'keyword' => $request->keyword,'category'=>$request->category,'limit'=>$limit]);
+                return new ShopCollection($shops);
+            }
+            $results = $results->orderBy('id','desc')->where('status','active')->paginate($limit);
+            $results->appends(['type'=>$request->type,'keyword' => $request->keyword,'category'=>$request->category,'limit'=>$limit]);
+            return new KrishiProductCollection($results);
+        }else{
+            return $this->jsonResponse([],'Invalid search type',true);
+        }
+
+    }
 }

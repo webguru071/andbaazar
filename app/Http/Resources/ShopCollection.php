@@ -14,6 +14,10 @@ class ShopCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return ShopResource::collection($this->collection);
+        return [
+            'error' => false,
+            'msg'   => 'success',
+            'data' => ShopResource::collection($this->collection)
+        ];
     }
 }
