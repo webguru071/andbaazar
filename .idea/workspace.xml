@@ -2,9 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.env1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/SiteInfoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/SiteInfoController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/KrishiProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/KrishiProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/KrishiCategoryWiseProductCollection.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/KrishiCategoryWiseProductCollection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/KrishiProductCategoryCollection.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/KrishiProductCategoryCollection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/KrishiProductResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/KrishiProductResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/UserResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/UserResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Traits/apiTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Traits/apiTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/geotableseeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/geotableseeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/krishi/dal-210111100110-dal1722321984.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/krishi/orgimg-210111090143-orgimg896110396.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/krishi/orgimg-210111090143-orgimg987161662.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/krishi/orgimg-210111090144-orgimg1260041236.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/krishi/orgimg-210111090144-orgimg603769123.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/krishi/orgimg-210111100110-orgimg105877246.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/krishi/orgimg-210111100110-orgimg469576540.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/krishi/potato-210111090144-potato90682920.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/krishi/shariful-islam-210111090143-shariful-islam19322191.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/newsfeed_image/1610336634.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/newsfeed_image/1610336662.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/newsfeed_image/1610338235.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,7 +264,7 @@
       <workItem from="1609907123766" duration="14674000" />
       <workItem from="1609993126937" duration="15430000" />
       <workItem from="1610252541216" duration="19475000" />
-      <workItem from="1610343212124" duration="11777000" />
+      <workItem from="1610343212124" duration="14385000" />
     </task>
     <servers />
   </component>

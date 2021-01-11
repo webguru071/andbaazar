@@ -44,6 +44,7 @@ Route::post('/business-info','AuthController@updateBusinessInfo')->middleware('a
 Route::get('/change-business-info','UserController@changeBusinessInfo')->middleware('auth');
 Route::post('/change-business-info','UserController@updateBusinessInfo')->middleware('auth');
 Route::get('/logout','AuthController@logout');
+Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.verify');
 // include('frontend.php');
 include('merchant.php');
 include('agent.php');

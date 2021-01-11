@@ -20,12 +20,12 @@ class SiteInfoController extends Controller
     use apiTrait;
     public function productCategories(){
         $productCategories = KrishiCategory::where([['active',1],['parent_id',0]])->get();
-        return $this->jsonResponse(new KrishiProductCategoryCollection($productCategories));
+        return new KrishiProductCategoryCollection($productCategories);
     }
 
     public function sliderList(){
         $sliders = KrishiBazarSlider::select('slider_image','slider_url')->where('status',1)->get();
-        return $this->jsonResponse($sliders);
+        return $this->jsonResponse($sliders,false);
     }
 
     public function risingStarShops(){
@@ -39,7 +39,7 @@ class SiteInfoController extends Controller
             ->pluck('shop_id')->all();
         $risingStarShops = Shop::whereIn('id',$popularProducts)->get();
 
-        return $this->jsonResponse(new ShopCollection($risingStarShops));
+        return new ShopCollection($risingStarShops);
     }
 
     public function flashDealProducts(){
@@ -51,7 +51,7 @@ class SiteInfoController extends Controller
             ->where([['status','Active'],['available_stock','>',0]])
             ->orderBy('total_sold','desc')
             ->take(10)->get();
-            return $this->jsonResponse(new KrishiProductCollection($bestSellerProducts));
+            return new KrishiProductCollection($bestSellerProducts);
     }
 
     public function popularCategories(){
@@ -62,18 +62,18 @@ class SiteInfoController extends Controller
             ->take(10)->get()
             ->pluck('category_id')->all();
         $popularCategories = KrishiCategory::whereIn('id',$popularProducts)->where([['active',1],['parent_id',0]])->get();
-        return $this->jsonResponse(new KrishiProductCategoryCollection($popularCategories));
+        return new KrishiProductCategoryCollection($popularCategories);
     }
 
     public function newArrivalProducts(){
         $previous = Carbon::now()->subWeeks(4)->format('Y-m-d');
         $newArrivalProducts = KrishiProduct::where([['status','Active'],['available_stock','>',0]])->whereDate('available_from','>=', $previous)->orderBy('available_from')->take(10)->get();
-        return $this->jsonResponse(new KrishiProductCollection($newArrivalProducts));
+        return new KrishiProductCollection($newArrivalProducts);
     }
 
     public function upcomingProducts(){
         $upcomingProducts = KrishiProduct::where([['status','Active'],['available_stock','>',0]])->whereDate('available_from','>', Carbon::now())->orderBy('available_from')->take(8)->get();
-        return $this->jsonResponse(new KrishiProductCollection($upcomingProducts));
+        return new KrishiProductCollection($upcomingProducts);
     }
 
     public function topRatedProducts(){
@@ -90,28 +90,28 @@ class SiteInfoController extends Controller
         array_push($subCategories,(int)$parentCategoryId);
         $products = KrishiProduct::whereIn('category_id', $subCategories)->where('status','active')->orderBy('id','desc')->paginate($limit);
         $products->appends(['limit'=>$limit]);
-        return $this->jsonResponse(new KrishiProductCollection($products));
+        return new KrishiProductCollection($products);
     }
 
     public function getSubCategories($parentCategoryId){
         $parentCategory = KrishiCategory::find($parentCategoryId);
-        return $this->jsonResponse(new KrishiProductCategoryCollection($parentCategory->childs));
+        return new KrishiProductCategoryCollection($parentCategory->childs);
     }
 
     public function search(Request $request){
         if(!$request->type){
-            return $this->jsonResponse([],'Must select search type',true);
+            return $this->jsonResponse([],'Must select search type');
         }
         
         if(!$request->keyword){
-            return $this->jsonResponse([],'Must select search keyword',true);
+            return $this->jsonResponse([],'Must select search keyword');
         }
         
         if($request->type === 'product' || $request->type === 'shop'){
             if($request->category){
                 $cat = KrishiCategory::find($request->category);
                 if(!$cat){
-                    return $this->jsonResponse([],'Invalid Category',true);
+                    return $this->jsonResponse([],'Invalid Category');
                 }
             }
             
@@ -136,7 +136,7 @@ class SiteInfoController extends Controller
             $results->appends(['type'=>$request->type,'keyword' => $request->keyword,'category'=>$request->category,'limit'=>$limit]);
             return new KrishiProductCollection($results);
         }else{
-            return $this->jsonResponse([],'Invalid search type',true);
+            return $this->jsonResponse([],'Invalid search type');
         }
 
     }

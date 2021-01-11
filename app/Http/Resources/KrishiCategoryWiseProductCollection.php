@@ -14,6 +14,11 @@ class KrishiCategoryWiseProductCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return [
+            'error' => false,
+            'msg'   => 'success',
+            'data'  => KrishiCategoryWiseProductResource::collection($this->collection)
+        ];
     }
 }

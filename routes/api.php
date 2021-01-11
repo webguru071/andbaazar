@@ -14,25 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-//route::get('checks','CategoriesController@getData');
-//route::get('product/{slug}','ApiRequestConrtoller@singleProduct');
-//route::get('products','ApiRequestConrtoller@products');
-//route::get('unique-colors','ApiRequestConrtoller@getColors');
-//route::get('unique-size','ApiRequestConrtoller@getSizes');
-//Route::post('registration','Api\CustomerApiController@registration');
-//Route::post('login','Api\CustomerApiController@login');
-//Route::get('me','Api\CustomerApiController@me')->middleware('ApiAuth');
-//// Route::post('login','CustomerController@userloginprocess')->name('userloginprocess');
-//Route::prefix('customer')->group(function () {
-//    Route::get('shipping','Api\CustomerApiController@shipping');
-//});
-
-
-
 Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
     Route::post('/registration','UserController@registration');
     Route::post('/login','UserController@login');
@@ -45,6 +26,13 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
         Route::post('/reset-password','UserController@resetPassword');
         Route::get('/logout','UserController@logout');
     });
+
+    Route::group(['middleware'=>['auth:api']],function (){
+        //   For User Authentication
+        Route::get('/user-verify-otp','UserController@sendVerifyOTP');
+        Route::get('/user-verify-email-link','UserController@sendEmailVerificationLink');
+    });
+
     Route::group(['prefix'=>'krishibazar'],function (){
         Route::group(['prefix'=>'site-info'],function (){
             //   For Website Info
