@@ -127,25 +127,32 @@ class UserController extends Controller
             return $this->jsonResponse([],$validator->messages()->first(),true);
         }
 
+        $validationType = '';
         $credentials = ['status'=>1, 'password'=>$request->password];
 
         if(is_numeric($request->uname)){
             $credentials['phone']=$request->uname;
+            $validationType = 'phone';
         }
         elseif (filter_var($request->uname, FILTER_VALIDATE_EMAIL)) {
             $credentials['email']=$request->uname;
+            $validationType = 'phone';
         }
 
 
         if (!Auth::attempt($credentials)){
             return $this->jsonResponse([],'Invalid login',true);
-
-            // return response()->json([
-            //     'message'=>'Unauthorized'
-            // ], 401);
+        }
+        else{
+            $user=$request->user();
+            if (($validationType == 'phone') && (is_null($user->phone_no_verified_at))){
+                return $this->jsonResponse([],'Please verify your phone number',true);
+            }
+            elseif (($validationType == 'email') && (is_null($user->email_verified_at))){
+                return $this->jsonResponse([],'Please verify your email address',true);
+            }
         }
 
-        $user=$request->user();
         $tokenResult=$user->createToken('Personal Access Token');
         $token=$tokenResult->token;
 
