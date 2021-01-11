@@ -35,7 +35,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()){
-            return $this->jsonResponse([],$validator->messages()->first(),true);
+            return $this->jsonResponse([],$validator->messages()->first());
         }
         $allData=$request->all();
         $allData['password']=Hash::make($request->password);
@@ -44,6 +44,8 @@ class UserController extends Controller
         $allData['user_id']=$user->id;
         switch ($request->user_type) {
             case "customer":
+                $user->status = 1;
+                $user->save();
                 CustomerProfile::create($allData);
                 break;
             case "merchant":
@@ -54,7 +56,7 @@ class UserController extends Controller
                 break;
         }
 
-        return $this->jsonResponse([],"Yor have been register successfully");
+        return $this->jsonResponse([],"Yor have been register successfully",false);
     }
 
     //    Forget Password
@@ -64,7 +66,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()){
-            return $this->jsonResponse([],$validator->messages()->first(),true);
+            return $this->jsonResponse([],$validator->messages()->first());
         }
         $otp_code = rand(10000,99999);
         $customer=User::where('phone',$request->phone)->firstOrFail();
@@ -73,7 +75,7 @@ class UserController extends Controller
         $customer->save();
 
         //    Now Send the OTP code via SMS Gateway
-        return $this->jsonResponse([],"OTP send to your mobile number");
+        return $this->jsonResponse([],"OTP send to your mobile number",false);
     }
 
     //    Verify OTP
@@ -84,7 +86,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()){
-            return $this->jsonResponse([],$validator->messages()->first(),true);
+            return $this->jsonResponse([],$validator->messages()->first());
         }
         $verifyOTP = User::where([['phone',$request->phone],['phone_otp',$request->otp_code]])->where('phone_otp_expired_at','>',Carbon::now())->first();
         if (is_null($verifyOTP)){
@@ -97,7 +99,7 @@ class UserController extends Controller
                 'status'=>'success',
                 'access_token'=>$token
             ];
-            return $this->jsonResponse($data,"Login successfully");
+            return $this->jsonResponse($data,"Login successfully",false);
         }
     }
 
@@ -108,12 +110,12 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()){
-            return $this->jsonResponse([],$validator->messages()->first(),true);
+            return $this->jsonResponse([],$validator->messages()->first());
         }
         $user=$request->user();
         $user->password=Hash::make($request->password);
         $user->save();
-        return $this->jsonResponse([],"Your password updated successfully");
+        return $this->jsonResponse([],"Your password updated successfully",false);
     }
 
     //    For user login
@@ -124,7 +126,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()){
-            return $this->jsonResponse([],$validator->messages()->first(),true);
+            return $this->jsonResponse([],$validator->messages()->first());
         }
 
         $credentials = ['status'=>1, 'password'=>$request->password];
@@ -138,7 +140,7 @@ class UserController extends Controller
 
 
         if (!Auth::attempt($credentials)){
-            return $this->jsonResponse([],'Invalid login',true);
+            return $this->jsonResponse([],'Invalid login');
 
             // return response()->json([
             //     'message'=>'Unauthorized'
@@ -158,17 +160,17 @@ class UserController extends Controller
             'access_token'=>$tokenResult->accessToken,
         ];
 
-        return $this->jsonResponse($data,"You logged in successfully");
+        return $this->jsonResponse($data,"You logged in successfully",false);
     }
 
     //    For user profile
     public function profile(Request $request){
-        return $this->jsonResponse(new UserResource($request->user()));
+        return new UserResource($request->user());
     }
 
     //     For logout
     public function logout(Request $request){
         $request->user()->token()->revoke();
-        return $this->jsonResponse([],'You logout successfully');
+        return $this->jsonResponse([],'You logout successfully',false);
     }
 }

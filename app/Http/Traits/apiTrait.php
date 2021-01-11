@@ -4,7 +4,7 @@ namespace App\Http\Traits;
 
 trait apiTrait {
 
-    public function jsonResponse($data=[],$msg="success",$status = false){
+    public function jsonResponse($data=[],$msg="success",$status = true){
         return response()->json([
             'msg'   => $msg,
             'error' => $status,
