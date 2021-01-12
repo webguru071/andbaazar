@@ -18,11 +18,11 @@ class KrishiProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'thumbnail_image' => $this->thumbnail_image,
+            'thumbnail_image' => (!is_null($this->thumbnail_image)) ? asset($this->thumbnail_image) : asset('images/avatar-product.png'),
             'description' => $this->description,
             'video_url' => $this->video_url,
-            'available_from' => $this->available_from,
-            'available_to' => $this->available_to,
+            'available_from' => $this->available_from->format('Y-m-d'),
+            'available_to' => $this->available_to->format('Y-m-d'),
             'available_stock' => $this->available_stock .$this->productUnit['symbol'],
             'frequency_support' => $this->frequency_support,
             'frequency' => $this->frequency,
@@ -32,8 +32,8 @@ class KrishiProductResource extends JsonResource
             'wholesale_price' => $this->wholesale_price,
             'min_wholesale_quantity' => $this->min_wholesale_quantity,
             'return_policy' => $this->return_policy,
-            'total_unit_sold' => $this->total_unit_sold
-
+            'total_unit_sold' => $this->total_unit_sold,
+            'flash_sale_discount_price' => (float)$this->flash_sale_discount_rate,
         ];
     }
 }

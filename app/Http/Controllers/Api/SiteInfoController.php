@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\KrishiProductCategoryCollection;
 use App\Http\Resources\KrishiProductCollection;
 use App\Http\Resources\ShopCollection;
+use App\Models\FlashSellSetting;
 use App\Models\KrishiBazarSlider;
 use App\Models\KrishiCategory;
 use App\Models\KrishiProduct;
@@ -43,7 +44,12 @@ class SiteInfoController extends Controller
     }
 
     public function flashDealProducts(){
-
+        $flashSaleSetting=FlashSellSetting::whereTime('start_time','<=',Carbon::now())->whereTime('end_time','>=',Carbon::now())->where('status',1)->first();
+        if (is_null($flashSaleSetting)){
+            return $this->jsonResponse([],'No flash sale found', true);
+        }
+        $flashSaleProducts = KrishiProduct::where([['allow_flash_sale',1],['status','Active'],['available_stock','>',0]])->whereDate('available_from','<=', Carbon::now())->take(10)->get();
+        return new KrishiProductCollection($flashSaleProducts);
     }
 
     public function bestSellerProducts(){
@@ -103,11 +109,11 @@ class SiteInfoController extends Controller
         if(!$request->type){
             return $this->jsonResponse([],'Must select search type');
         }
-        
+
         if(!$request->keyword){
             return $this->jsonResponse([],'Must select search keyword');
         }
-        
+
         if($request->type === 'product' || $request->type === 'shop'){
             if($request->category){
                 $cat = KrishiCategory::find($request->category);
@@ -115,7 +121,7 @@ class SiteInfoController extends Controller
                     return $this->jsonResponse([],'Invalid Category');
                 }
             }
-            
+
             //start to search
             $limit = 20;
             if($request->limit){

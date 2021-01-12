@@ -22,10 +22,10 @@ class UserResource extends JsonResource
                 'first_name'    => $this->first_name,
                 'last_name'     => $this->last_name,
                 'email'         => $this->email,
-                'phone_no'      => $this->phone_no,
+                'phone_no'      => $this->phone,
                 'date_of_birth' => $this->customerDetails['dob'],
                 'gender'        => $this->customerDetails['gender'],
-                'picture'       => (!is_null($this->customerDetails['picture'])) ? $this->customerDetails['picture'] : asset('images/avatar-user.png'),
+                'picture'       => (!is_null($this->customerDetails['picture'])) ? asset($this->customerDetails['picture']) : asset('images/avatar-user.png'),
                 'description'   => $this->customerDetails['description'],
                 'joining_date'  => $this->created_at->format('Y-m-d'),
             ]

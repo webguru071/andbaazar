@@ -51,5 +51,9 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
             Route::get('/search','SiteInfoController@search');
         });
 
+        //     For product info
+        Route::get('/product-details','KrishiProductController@product_details');
+        Route::get('/related-products','KrishiProductController@related_products');
+
     });
 });
