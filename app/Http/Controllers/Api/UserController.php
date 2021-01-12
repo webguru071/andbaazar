@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Http\Traits\apiTrait;
+use App\Mail\VerifyEmail;
 use App\Models\AgentProfile;
 use App\Models\CustomerProfile;
 use App\Models\MerchantProfile;
@@ -12,6 +13,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Validator;
 use Illuminate\Validation\Rule;
@@ -80,8 +82,15 @@ class UserController extends Controller
 
     //    Send Verify OTP
     public function sendVerifyOTP(Request $request){
+        $validator=Validator::make($request->all(), [
+            'phone'=>'required|numeric|exists:users,phone',
+        ]);
+
+        if ($validator->fails()){
+            return $this->jsonResponse([],$validator->messages()->first());
+        }
         $otp_code = rand(10000,99999);
-        $customer=$request->user();
+        $customer=User::where('phone',$request->phone)->firstOrFail();
         $customer->phone_otp = $otp_code;
         $customer->phone_otp_expired_at = Carbon::now()->addMinute();
         $customer->save();
@@ -92,7 +101,22 @@ class UserController extends Controller
 
     //    Send Email Verification Link
     public function sendEmailVerificationLink(Request $request){
-        $request->user()->sendEmailVerificationNotification();
+        $validator=Validator::make($request->all(), [
+            'email'=>'required|email|exists:users,email',
+        ]);
+
+        if ($validator->fails()){
+            return $this->jsonResponse([],$validator->messages()->first());
+        }
+
+        $customer=User::where('email',$request->email)->firstOrFail();
+        $email_verification_code = Str::random(60);
+        $customer->email_verification_code = $email_verification_code;
+        $customer->email_verification_code_expired_at = Carbon::now()->addDays(2);
+        $customer->save();
+        $emailData['user_name']=$customer->first_name .' ' .$customer->last_name;
+        $emailData['verificationURL']=env('APP_URL') .'/email/verify/' .$customer->id .'/' .$email_verification_code;
+        Mail::to($request->email)->send(new VerifyEmail($emailData));
         return $this->jsonResponse([],"Verification link send to your email address",false);
     }
 
@@ -111,6 +135,8 @@ class UserController extends Controller
             return $this->jsonResponse([],'opt verified failed');
         }
         else{
+            $verifyOTP->phone_no_verified_at = Carbon::now();
+            $verifyOTP->save();
             $tokenResult=$verifyOTP->createToken('Personal Access Token');
             $token=$tokenResult->accessToken;
             $data = [
@@ -156,7 +182,7 @@ class UserController extends Controller
         }
         elseif (filter_var($request->uname, FILTER_VALIDATE_EMAIL)) {
             $credentials['email']=$request->uname;
-            $validationType = 'phone';
+            $validationType = 'email';
         }
 
         if (!Auth::attempt($credentials)){
@@ -165,10 +191,20 @@ class UserController extends Controller
         else{
             $user=$request->user();
             if (($validationType == 'phone') && (is_null($user->phone_no_verified_at))){
-                return $this->jsonResponse([],'Please verify your phone number',true);
+                return response()->json([
+                    'error'=>true,
+                    'msg'=>'Please verify your phone number',
+                    'data'=>[],
+                    "flag"=> "mobile"
+                ]);
             }
             elseif (($validationType == 'email') && (is_null($user->email_verified_at))){
-                return $this->jsonResponse([],'Please verify your email address',true);
+                return response()->json([
+                    'error'=>true,
+                    'msg'=>'Please verify your email address',
+                    'data'=>[],
+                    "flag"=> "email"
+                ]);
             }
         }
 

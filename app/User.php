@@ -161,5 +161,5 @@ class User extends Authenticatable
       public function news(){
         return $this->hasOne(Newsfeed::class,'newsfeed_id');
       }
-      protected $casts = ['business_types'=>'array', 'phone_otp_expired_at'=>'date'];
+      protected $casts = ['business_types'=>'array', 'phone_otp_expired_at'=>'datetime', 'email_verified_at'=>'datetime', 'email_verification_code_expired_at'=>'datetime'];
     }
