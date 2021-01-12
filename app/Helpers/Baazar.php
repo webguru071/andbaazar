@@ -173,7 +173,7 @@ class Baazar
                 return $db_img;
             }
         }else{
-            // dd($image_file);
+            dd($image_file);
             $path = explode('/uploads/',$image_file);
             return 'uploads/'.$path[1];
         }

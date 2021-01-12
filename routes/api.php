@@ -18,6 +18,8 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
     Route::post('/registration','UserController@registration');
     Route::post('/login','UserController@login');
     Route::post('/forget-password','UserController@forgetPassword');
+    Route::post('/user-verify-otp','UserController@sendVerifyOTP');
+    Route::post('/user-verify-email-link','UserController@sendEmailVerificationLink');
     Route::post('/verify-otp','UserController@verifyOTP');
 
     Route::group(['middleware'=>['auth:api','isActive']],function (){
@@ -29,8 +31,7 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
 
     Route::group(['middleware'=>['auth:api']],function (){
         //   For User Authentication
-        Route::get('/user-verify-otp','UserController@sendVerifyOTP');
-        Route::get('/user-verify-email-link','UserController@sendEmailVerificationLink');
+
     });
 
     Route::group(['prefix'=>'krishibazar'],function (){

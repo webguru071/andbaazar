@@ -59,15 +59,16 @@ class SiteInfoController extends Controller
             ->where([['status','Active']])
             ->groupBy('category_id')
             ->orderBy('total_sold','desc')
-            ->take(10)->get()
+            ->take(6)->get()
             ->pluck('category_id')->all();
-        $popularCategories = KrishiCategory::whereIn('id',$popularProducts)->where([['active',1],['parent_id',0]])->get();
+        $popularCategories = KrishiCategory::whereIn('id',$popularProducts)->where('active',1)->get();
         return new KrishiProductCategoryCollection($popularCategories);
     }
 
     public function newArrivalProducts(){
         $previous = Carbon::now()->subWeeks(4)->format('Y-m-d');
-        $newArrivalProducts = KrishiProduct::where([['status','Active'],['available_stock','>',0]])->whereDate('available_from','>=', $previous)->orderBy('available_from')->take(10)->get();
+        $now = Carbon::now()->format('Y-m-d');
+        $newArrivalProducts = KrishiProduct::where([['status','Active'],['available_stock','>',0]])->whereDate('available_from','>=', $previous)->whereDate('available_from','<=', $now)->orderBy('available_from')->take(10)->get();
         return new KrishiProductCollection($newArrivalProducts);
     }
 

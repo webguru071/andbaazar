@@ -79,7 +79,8 @@ include('merchant.php');
 include('agent.php');
 include('admin.php');
 
+Route::get('/email/verify/{userID}/{verificationCode}','UserController@verifyEmailAddress');
 
+//Auth::routes(['verify' => true]);
 
-
-
+//Route::get('/home', 'HomeController@index')->name('home');

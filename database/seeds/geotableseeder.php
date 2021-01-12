@@ -71,19 +71,19 @@ class geotableseeder extends Seeder
         echo 'Upazila Inserted! --';
 
 
-        // $unionData = [];
-        // foreach($unions as $union){
-        //     $unionData = [
-        //         'id'            => $union['id'],
-        //         'upazila_id'    => $union['upazilla_id'],
-        //         'name'          => $union['name'],
-        //         'bn_name'       => $union['bn_name'],
-        //         'slug'          => isset($union['slug']) ? $union['slug'] :$this->getUniqueSlug($union['name']),
-        //         'url'           => $union['url'],
-        //         'created_at'    => now()
-        //     ];
-        //     DB::table('unions')->insert($unionData);
-        // }
+        $unionData = [];
+        foreach($unions as $union){
+            $unionData = [
+                'id'            => $union['id'],
+                'upazila_id'    => $union['upazilla_id'],
+                'name'          => $union['name'],
+                'bn_name'       => $union['bn_name'],
+                'slug'          => isset($union['slug']) ? $union['slug'] :$this->getUniqueSlug($union['name']),
+                'url'           => $union['url'],
+                'created_at'    => now()
+            ];
+            DB::table('unions')->insert($unionData);
+        }
         echo 'Union Inserted!';
 
         //Union data
