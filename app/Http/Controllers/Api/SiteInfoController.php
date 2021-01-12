@@ -25,7 +25,7 @@ class SiteInfoController extends Controller
 
     public function sliderList(){
         $sliders = KrishiBazarSlider::select('slider_image','slider_url')->where('status',1)->get();
-        return $this->jsonResponse($sliders,false);
+        return $this->jsonResponse($sliders,'success');
     }
 
     public function risingStarShops(){

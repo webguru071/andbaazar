@@ -21,7 +21,8 @@
         "maatwebsite/excel": "^3.1",
         "orangehill/iseed": "^2.6",
         "paragonie/random_compat": "2.*",
-        "realrashid/sweet-alert": "^3.1"
+        "realrashid/sweet-alert": "^3.1",
+        "laravel-notification-channels/twilio": "^2.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
