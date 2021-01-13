@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Validator;
 use Illuminate\Validation\Rule;
+use App\Notifications\PhoneVerification;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -94,8 +95,8 @@ class UserController extends Controller
         $customer->phone_otp = $otp_code;
         $customer->phone_otp_expired_at = Carbon::now()->addMinute();
         $customer->save();
-
-        //    Now Send the OTP code via SMS Gateway
+        //Now Send the OTP code via SMS Gateway
+        $customer->notify(new PhoneVerification($customer));
         return $this->jsonResponse([],"OTP send to your mobile number",false);
     }
 

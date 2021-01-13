@@ -168,12 +168,13 @@ class Baazar
                 $image_file = base64_decode($image_file);
                 $image_name= $name.rand().'.png';
                 $db_img = 'uploads/krishi/'.$name.'-'.date('ymdhmi').'-'.$image_name;
-                $path = public_path($db_img);
+                $path = env('UP_DIR').$db_img;
+                // dd($db_img);
                 file_put_contents($path, $image_file);
                 return $db_img;
             }
         }else{
-            dd($image_file);
+            // dd($image_file);
             $path = explode('/uploads/',$image_file);
             return 'uploads/'.$path[1];
         }

@@ -36,11 +36,11 @@ route::get('some-expriment',function(){
     // );
     // dd($d);
 
-    $user = App\User::find(18);
+    // $user = App\User::find(18);
 
-    $user->notify(new App\Notifications\PhoneVerification($user));
-    echo 'dd';
-    dd($user);
+    // $user->notify(new App\Notifications\PhoneVerification($user));
+    // echo 'dd';
+    // dd($user);
 
     // is_dir("/home/andbaazar/domains/andbaazar.com/public_html/app");
     // $d = symlink('/home/andbaazar/domains/andbaazar.com/app/storage/app/public','/home/andbaazar/domains/andbaazar.com/public_html/app/storage');

@@ -63,9 +63,9 @@ class User extends Authenticatable
     protected $loginNames = ['email','type'];
 
     public function routeNotificationForTwilio(){
-      // $phone = phoneFormatInt($this->phone, $this->country_code);
-      // $phone = setPhoneSign($phone, 'twilio');  
-      return '+8801969516500';
+      // return '+88'.$this->phone; 
+      // return '+8801969516500';
+      return '+8801882453300';
     }
 
     public function customerDetails(){
