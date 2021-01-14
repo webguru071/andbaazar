@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/images/avatar-product.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/SiteInfoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/SiteInfoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/KrishiProductCategoryResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/KrishiProductCategoryResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/KrishiProductResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/KrishiProductResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/UserResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/UserResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,7 +243,15 @@
       <workItem from="1609993126937" duration="15430000" />
       <workItem from="1610252541216" duration="19475000" />
       <workItem from="1610343212124" duration="14849000" />
-      <workItem from="1610424823674" duration="23193000" />
+      <workItem from="1610424823674" duration="23347000" />
+      <workItem from="1610511182760" duration="669000" />
+      <workItem from="1610513105406" duration="1311000" />
+      <workItem from="1610518513667" duration="2102000" />
+      <workItem from="1610530632424" duration="1846000" />
+      <workItem from="1610533693756" duration="56000" />
+      <workItem from="1610598890531" duration="249000" />
+      <workItem from="1610599151497" duration="19000" />
+      <workItem from="1610601347561" duration="752000" />
     </task>
     <servers />
   </component>

@@ -43,6 +43,9 @@ class UserController extends Controller
         $allData=$request->all();
         $allData['password']=Hash::make($request->password);
         $allData['type']=$request->user_type;
+        $otp_code = rand(10000,99999);
+        $allData['phone_otp']=$otp_code;
+        $allData['phone_otp_expired_at']=Carbon::now()->addMinute();
         $user=User::create($allData);
         $allData['user_id']=$user->id;
         switch ($request->user_type) {
@@ -59,6 +62,8 @@ class UserController extends Controller
                 break;
         }
 
+        //Now Send the OTP code via SMS Gateway
+        $user->notify(new PhoneVerification($user));
         return $this->jsonResponse([],"Yor have been register successfully",false);
     }
 
