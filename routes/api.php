@@ -49,10 +49,13 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
             Route::get('/category-wise-products/{parent_category}','SiteInfoController@CategoryWiseProducts');
             Route::get('/sub-categories/{parent_category}','SiteInfoController@getSubCategories');
             Route::get('/search','SiteInfoController@search');
+            Route::get('/shops','SiteInfoController@shops');
+            Route::get('/shop-products','SiteInfoController@shopProducts');
         });
 
         //     For product info
         Route::get('/product-details','KrishiProductController@product_details');
+        Route::get('/product-reviews','KrishiProductController@product_reviews');
         Route::get('/related-products','KrishiProductController@related_products');
 
     });

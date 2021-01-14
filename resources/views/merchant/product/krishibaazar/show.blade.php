@@ -208,9 +208,11 @@
                             {!!$parent_comment->review_msg!!}
                         </p>
                         <ul class="mb-4">
-                            @foreach (json_decode($parent_comment->images) as $item)
-                                <li><a data-fancybox="gallery" href="{{url($item)}}"><img height="100" src="{{url($item)}}"></a></li>
-                            @endforeach
+                            @if($parent_comment->images)
+                                @foreach (json_decode($parent_comment->images) as $item)
+                                    <li><a data-fancybox="gallery" href="{{url($item)}}"><img height="100" src="{{url($item)}}"></a></li>
+                                @endforeach
+                            @endif
                         </ul>
                         <button type="button" onclick="replayComment({{$parent_comment->id}})" class="btn btn-primary">Reply</button>
                     </div>

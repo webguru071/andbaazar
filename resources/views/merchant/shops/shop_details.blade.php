@@ -72,7 +72,7 @@
                 <div class="vendor-cover">
                     <div>
                         <div class="mt-0">
-                            <img  id="banner-outputs" src="{{!empty($shopProfile->banner) ? asset($shopProfile->banner) : asset('frontend/assets/images/vendor/profile.jpg')}}" alt="" class="bg-img lazyload blur-up">
+                            <img  id="banner-outputs" src="{{!empty($shopProfile->banner) ? asset($shopProfile->banner) : asset('images/banner-bg.jpg')}}" alt="" class="bg-img lazyload blur-up">
                             <label for="banar-upload" class="banar-upload"><i class="fa fa-camera" aria-hidden="true"> Edit Banar</i></label>
                             <input id="banar-upload" accept="image/*"  class ="d-none" type="file" name="logo"/>
                         </div>
@@ -90,9 +90,9 @@
                                         <div>
                                             <label for="shop-img-upload" class="custom-file-upload shop-image-upload"><i class="fa fa-camera" aria-hidden="true"></i></label>
                                             <input id="shop-img-upload" accept="image/*"  class ="d-none" type="file" name="shop-logo"/>
-                                            <img id="shop-img" src="{{!empty($shopProfile->logo) ? asset($shopProfile->logo) : asset('/uploads/shops/logos/shop-1.png')}}" alt="" class="img-fluid imagestyle">
+                                            <img id="shop-img" src="{{!empty($shopProfile->logo) ? asset($shopProfile->logo) : asset('images/avatar-shop.png')}}" alt="" class="img-fluid imagestyle">
                                             <div id="loader" class=""></div>
-                                            <h3 class="mt-1">Fashion Store</h3>
+                                            <h3 class="mt-1">{{$shopProfile->name}}</h3>
                                             <div class="rating">
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>

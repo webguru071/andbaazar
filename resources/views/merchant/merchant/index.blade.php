@@ -101,7 +101,7 @@
 
                                                             <div class="col-md-6">
                                                                 <div class="float-left modal-logo">
-                                                                    <img src="{{ !empty($row->shop->logo) ? asset($row->shop->logo) : asset('/uploads/shops/logos/shop-1.png') }}" class="" height="100" width="100" alt="Logo" />
+                                                                    <img src="{{ !empty($row->shop->logo) ? asset($row->shop->logo) : asset('/images/avatar-shop.png') }}" class="" height="100" width="100" alt="Logo" />
                                                                 </div>
                                                                 <div>
                                                                     <h3 class="display-5 font-weight-bold">{{ $row->shop->name }}</h3>
@@ -183,7 +183,7 @@
 
                                                             <div class="col-md-6">
                                                                 <div class="float-left modal-logo">
-                                                                    <img src="{{ !empty($row->shop->logo) ? asset($row->shop->logo) : asset('/uploads/shops/logos/shop-1.png') }}" class="" height="100" width="100" alt="Logo" />
+                                                                    <img src="{{ !empty($row->shop->logo) ? asset($row->shop->logo) : asset('/images/avatar-shop.png') }}" class="" height="100" width="100" alt="Logo" />
                                                                 </div>
                                                                 <div>
                                                                     <h3 class="display-5 font-weight-bold">{{!empty($row->shop->name) ? $row->shop->name : 'no shop'}}</h3>
@@ -319,7 +319,7 @@
 
                                                             <div class="col-md-6">
                                                                 <div class="float-left modal-logo">
-                                                                    <img src="{{ !empty($row->shop->logo) ? asset($row->shop->logo) : asset('/uploads/shops/logos/shop-1.png') }}" class="" height="100" width="100" alt="Logo" />
+                                                                    <img src="{{ !empty($row->shop->logo) ? asset($row->shop->logo) : asset('/images/avatar-shop.png') }}" class="" height="100" width="100" alt="Logo" />
                                                                 </div>
                                                                 <div>
                                                                     <h3 class="display-5 font-weight-bold">{{ $row->shop->name }}</h3>

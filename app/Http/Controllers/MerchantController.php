@@ -333,7 +333,7 @@ class MerchantController extends Controller{
             $image_file = base64_decode($image_file);
             $image_name= "shop-".$shop->id.'.png';
             $db_img = 'uploads/shops/logos/'.$image_name;
-            $path = public_path($db_img);
+            $path = env('UP_DIR').$db_img;
             file_put_contents($path, $image_file);
             $done = $shop->update(['logo' => $db_img]);
             // session()->forget('logininfo');
@@ -353,7 +353,7 @@ class MerchantController extends Controller{
             $image_file = base64_decode($image_file);
             $image_name= "banner-".$shop->id.'.png';
             $db_img = 'uploads/shops/banners/'.$image_name;
-            $path = public_path($db_img);
+            $path = env('UP_DIR').$db_img;
             file_put_contents($path, $image_file);
             $done = $shop->update(['banner' => $db_img]);
             // session()->forget('logininfo');
