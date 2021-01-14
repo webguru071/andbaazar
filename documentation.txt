@@ -1,6 +1,9 @@
 validator js:
 https://jqueryvalidation.org/
 
+"remotePath": "/domains/andbaazar.com/app",
+"remotePath": "/public_html/app",
+
 Date Pickers
 https://github.com/eternicode/bootstrap-datepicker
 

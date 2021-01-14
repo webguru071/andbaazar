@@ -107,7 +107,7 @@ html, body {
                                 @if(!empty($shopProfile->logo))
                                  <img id="output"  class="imagestyle" src="{{ asset($shopProfile->logo) }}"/>
                                 @else
-                                 <img id="output"  class="imagestyle" src="{{ asset('/uploads/shops/logos/shop-1.png') }}" />
+                                 <img id="output"  class="imagestyle" src="{{ asset('/images/avatar-shop.png') }}" />
                                 @endif
                             </div>
                             <div class="uploadbtn">

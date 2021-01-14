@@ -30,7 +30,7 @@ class UserController extends Controller
             'last_name'=>'required|string',
             'email'=>'email|unique:users',
             'phone'=>'required|unique:users,phone|min:11|max:11',
-            'password'=>'required|string',
+            'password'=>'required|string|min:8',
             'user_type' => [
                 'required',
                 Rule::in(['customer', 'merchant', 'agent']),

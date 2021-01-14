@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\KrishiProductCategoryCollection;
 use App\Http\Resources\KrishiProductCollection;
+use App\Http\Resources\KrishiProductFlashSaleCollection;
 use App\Http\Resources\ShopCollection;
 use App\Models\FlashSellSetting;
 use App\Models\KrishiBazarSlider;
@@ -43,13 +44,41 @@ class SiteInfoController extends Controller
         return new ShopCollection($risingStarShops);
     }
 
+    public function shops(Request $request){
+        $limit = 20;
+        if($request->limit){
+            $limit = $request->limit;
+        }
+        $shops = Shop::where('status','Active')->orderBy('id','desc')->paginate($limit);
+        $shops->appends(['limit' => $limit]);
+        return new ShopCollection($shops);
+    }
+
+    public function shopProducts(Request $request){
+        $limit = 20;
+        if($request->limit){
+            $limit = $request->limit;
+        }
+        $products = KrishiProduct::where('status','Active')->where('shop_id',$request->shop)->orderBy('id','desc')->paginate($limit);
+        $products->appends(['limit' => $limit,'shop'=>$request->shop]);
+        return new KrishiProductCollection($products);
+    }
+
     public function flashDealProducts(){
         $flashSaleSetting=FlashSellSetting::whereTime('start_time','<=',Carbon::now())->whereTime('end_time','>=',Carbon::now())->where('status',1)->first();
         if (is_null($flashSaleSetting)){
             return $this->jsonResponse([],'No flash sale found', true);
         }
         $flashSaleProducts = KrishiProduct::where([['allow_flash_sale',1],['status','Active'],['available_stock','>',0]])->whereDate('available_from','<=', Carbon::now())->take(10)->get();
-        return new KrishiProductCollection($flashSaleProducts);
+        $data = new KrishiProductFlashSaleCollection($flashSaleProducts);
+        return $this->jsonResponse([
+            'flash' => [
+                'name' => $flashSaleSetting->name,
+                'start' => $flashSaleSetting->start_time,
+                'end'   => $flashSaleSetting->end_time
+            ],
+            'product_lists' => $data
+        ],'success',false);
     }
 
     public function bestSellerProducts(){
@@ -109,38 +138,46 @@ class SiteInfoController extends Controller
         if(!$request->type){
             return $this->jsonResponse([],'Must select search type');
         }
-
+        
         if(!$request->keyword){
             return $this->jsonResponse([],'Must select search keyword');
         }
-
+        
         if($request->type === 'product' || $request->type === 'shop'){
-            if($request->category){
-                $cat = KrishiCategory::find($request->category);
-                if(!$cat){
-                    return $this->jsonResponse([],'Invalid Category');
-                }
-            }
-
             //start to search
             $limit = 20;
             if($request->limit){
                 $limit = $request->limit;
             }
-            $results = KrishiProduct::where('category_id',$request->category)
-                ->where('name','like','%'.$request->keyword.'%')
-                ->orWhere('description','like','%'.$request->keyword.'%')
-                ->orWhere('slug','like','%'.$request->keyword.'%')
-                ->orWhere('return_policy','like','%'.$request->keyword.'%');
+            $paginationMeta = ['type'=>$request->type,'keyword' => $request->keyword,'limit'=>$limit];
+            $results = KrishiProduct::where('status','active');
+
+            if($request->category){
+                $cat = KrishiCategory::find($request->category);
+                if(!$cat){
+                    return $this->jsonResponse([],'Invalid Category');
+                }
+                $results = $results->where('category_id',$request->category);
+                $paginationMeta = array_merge($paginationMeta,['category'=>$request->category]);
+            }
+
+            $results = $results->where(function($query) use ($request){
+                    $query->orWhere('slug','like','%'.$request->keyword.'%')
+                          ->orWhere('return_policy','like','%'.$request->keyword.'%')
+                          ->orWhere('description','like','%'.$request->keyword.'%')
+                          ->orWhere('name','like','%'.$request->keyword.'%');
+                });
 
             if($request->type === 'shop'){ //find & return shops
                 $results = $results->groupBy('shop_id')->select('shop_id')->pluck('shop_id');//->first();
                 $shops = Shop::whereIn('id', $results)->orderBy('id','desc')->where('status','active')->paginate($limit);
-                $shops->appends(['type'=>$request->type,'keyword' => $request->keyword,'category'=>$request->category,'limit'=>$limit]);
+                $shops->appends($paginationMeta);
                 return new ShopCollection($shops);
             }
-            $results = $results->orderBy('id','desc')->where('status','active')->paginate($limit);
-            $results->appends(['type'=>$request->type,'keyword' => $request->keyword,'category'=>$request->category,'limit'=>$limit]);
+            $results = $results->orderBy('id','desc')->paginate($limit);
+            
+            // dd($results);
+            $results->appends($paginationMeta);
             return new KrishiProductCollection($results);
         }else{
             return $this->jsonResponse([],'Invalid search type');

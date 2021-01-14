@@ -52,7 +52,7 @@
                               <td>{{ $row->seller->first_name . " " .$row->seller->last_name}}</td>
                                <td>{{ $row->name }}</td>
                                <td>{{ $row->web }}</td>
-                               <td><img  src="{{ !empty($row->logo) ? asset($row->logo) : asset('/uploads/shops/logos/shop-1.png') }}" style = "height:40px;width:70px;"></td>
+                               <td><img  src="{{ !empty($row->logo) ? asset($row->logo) : asset('/images/avatar-shop.png') }}" style = "height:40px;width:70px;"></td>
                                <td class="d-flex justify-content-between">
                                    <ul> 
                                         <li><a href="#" id="{{ url('/andbaazaradmin/shop/'.$row->slug).'/view' }}"><button class="btn btn-sm btn-secondary"  data-toggle="modal" data-original-title="test" data-target="#tagEditModal{{$row->id}}"> View</button></a></li>
@@ -81,7 +81,7 @@
                                                             <div> {{ $row->seller->phone }}</div>                         
                                                         </div>
                                                         <div class="float-left modal-logo">
-                                                            <img  src="{{ !empty($row->logo) ? asset($row->logo) : asset('/uploads/shops/logos/shop-1.png') }}" width="100" height="100" class="pl-3 pr-3 pb-3 pr-0" > 
+                                                            <img  src="{{ !empty($row->logo) ? asset($row->logo) : asset('/images/avatar-shop.png') }}" width="100" height="100" class="pl-3 pr-3 pb-3 pr-0" > 
                                                         </div>
                                                         <div>
                                                             <h3 class="display-5 font-weight-bold">{{ $row->name }}</h3>

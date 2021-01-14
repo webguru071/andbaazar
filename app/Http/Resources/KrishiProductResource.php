@@ -28,11 +28,14 @@ class KrishiProductResource extends JsonResource
             'frequency' => $this->frequency,
             'frequency_quantity' => $this->frequency_quantity,
             'price' => $this->price,
+            'unit' => $this->productUnit->symbol,
             'allow_wholesale' => $this->allow_wholesale,
             'wholesale_price' => $this->wholesale_price,
             'min_wholesale_quantity' => $this->min_wholesale_quantity,
             'return_policy' => $this->return_policy,
             'total_unit_sold' => $this->total_unit_sold,
+            'shop' => $this->shop->name,
+            'images' => new KrishiProductImageCollection($this->itemimage),
             'flash_sale_discount_price' => (float)$this->flash_sale_discount_rate,
         ];
     }

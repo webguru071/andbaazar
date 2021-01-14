@@ -329,8 +329,8 @@ class KrishiProductController extends Controller
         $paths = [];
         if($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
-                $name = $file->getClientOriginalName();
-                $file->move(public_path() . '/uploads/krishi/reviews/', $name);
+                $name = \Str::slug($file->getClientOriginalName());
+                $file->move(env('UP_DIR') . '/uploads/krishi/reviews/', $name);
                 $paths[] = '/uploads/krishi/reviews/'.$name;
             }
         }

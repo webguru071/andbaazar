@@ -3,7 +3,7 @@
     <div class="dashboard-sidebar">
         <div class="profile-top">
             <div class="profile-image">
-                <img id="shop-img-sidebar" src="{{!empty($shop->logo) ? asset($shop->logo) : asset('/uploads/shops/logos/shop-1.png')}}" alt="" class="img-fluid">
+                <img id="shop-img-sidebar" src="{{!empty($shop->logo) ? asset($shop->logo) : asset('/images/avatar-shop.png')}}" alt="" class="img-fluid">
             </div>
             <div class="profile-detail">
                 <h5><a href="{{ url('merchant/shop') }}">{{ $shop->name }}</a></h5>
