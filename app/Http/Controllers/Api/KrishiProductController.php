@@ -43,15 +43,17 @@ class KrishiProductController extends Controller
     }
 
     public function product_reviews(Request $request){
-        // $limit = 20;
-        // if($request->limit){
-        //     $limit = $request->limit;
-        // }
+        $limit = 20;
+        if($request->limit){
+            $limit = $request->limit;
+        }
         $reviews = KrishiReviews::where('krishi_product_id',$request->productId)->where('parent_id',0)->get();
         if (is_null($reviews)){
             return $this->jsonResponse([],'No product found',true);
         }
+        
         // $reviews->appends(['productId' => $request->productId, 'limit'=>$limit]);
-        return new KrishiProductReviewCollection($reviews);
+        $data =  new KrishiProductReviewCollection($reviews);
+        return $this->jsonResponse($data,'success',false);
     }
 }

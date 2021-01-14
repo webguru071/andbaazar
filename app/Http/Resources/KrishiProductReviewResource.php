@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Resources;
-
+use App\Models\KrishiReviews;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\KrishiProductReviewCollection;
 class KrishiProductReviewResource extends JsonResource
@@ -20,10 +20,7 @@ class KrishiProductReviewResource extends JsonResource
                 array_push($images,asset($img));
             }
         }
-        // dd($this->getChilds($this->id));
-        // if($this->childs){
-        //     $reviews = $this->childs
-        // }
+        $child = KrishiReviews::where('parent_id',$this->id)->get();
         return [
             'id'            => $this->id,
             'date'          => $this->created_at,
@@ -33,7 +30,7 @@ class KrishiProductReviewResource extends JsonResource
             'images'        => $images,
             'user_name'     => $this->user->first_name.' '.$this->user->last_name,
             'user_picture'  => asset('images/avatar-user.png'),
-            'childs'        => new KrishiProductReviewCollection($this->getChilds($this->id)) //KrishiProductReviewResource::collection($this->collection)
+            'replies'        => new KrishiProductReviewCollection($child) //KrishiProductReviewResource::collection($this->collection)
         ];
     }
 }

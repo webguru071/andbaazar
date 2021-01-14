@@ -15,10 +15,6 @@ class KrishiProductReviewCollection extends ResourceCollection
     public function toArray($request)
     {
         //return parent::toArray($request);
-        return [
-            'error' => false,
-            'msg'   => 'success',
-            'data' => KrishiProductReviewResource::collection($this->collection)
-        ];
+        return  KrishiProductReviewResource::collection($this->collection);
     }
 }
