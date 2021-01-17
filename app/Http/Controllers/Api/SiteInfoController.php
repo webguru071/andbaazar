@@ -127,15 +127,24 @@ class SiteInfoController extends Controller
         }
         $cat = KrishiCategory::where('slug',$parentCategory)->first();
         $subCategories = $this->generateCategories($cat->childs);
-        array_push($subCategories,(int)$parentCategory);
+        array_push($subCategories,(int)$cat->id);
         $products = KrishiProduct::whereIn('category_id', $subCategories)->where('status','active')->orderBy('id','desc')->paginate($limit);
         $products->appends(['limit'=>$limit]);
         return new KrishiProductCollection($products);
     }
 
-    public function getSubCategories($parentCategoryId){
-        $parentCategory = KrishiCategory::find($parentCategoryId);
+    public function getSubCategories($slug){
+        $parentCategory = KrishiCategory::where('slug',$slug)->first();
         return new KrishiProductCategoryCollection($parentCategory->childs);
+    }
+
+    public function getParentCategories($slug){
+        $parentCategory = KrishiCategory::where('slug',$slug)->first();
+        if(!$parentCategory){
+            return $this->jsonResponse([],'Category not found', true);
+        }
+        $data = $parentCategory->parents->reverse();
+        return new KrishiProductCategoryCollection($data->push($parentCategory));
     }
 
     public function search(Request $request){

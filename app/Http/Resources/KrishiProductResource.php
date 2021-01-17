@@ -35,6 +35,7 @@ class KrishiProductResource extends JsonResource
             'return_policy' => $this->return_policy,
             'total_unit_sold' => $this->total_unit_sold,
             'shop' => $this->shop->name,
+            'category' => new KrishiProductCategoryResource($this->category),
             'images' => new KrishiProductImageCollection($this->itemimage),
             'flash_sale_discount_price' => (float)$this->flash_sale_discount_rate,
         ];

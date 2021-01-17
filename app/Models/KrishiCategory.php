@@ -21,6 +21,16 @@ class KrishiCategory extends Model
         return $this->belongsTo(self::class, 'parent_id','id');
     }
 
+    public function getParentsAttribute(){
+        $parents = collect([]);
+        $parent = $this->parent;
+        while(!is_null($parent)) {
+            $parents->push($parent);
+            $parent = $parent->parent;
+        }
+        return $parents;
+    }
+
     public function childs() {
         return $this->hasMany(self::class, 'parent_id','id');//->with('childs');
     }
