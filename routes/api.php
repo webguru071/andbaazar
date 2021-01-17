@@ -50,13 +50,13 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
             Route::get('/sub-categories/{parent_category}','SiteInfoController@getSubCategories');
             Route::get('/search','SiteInfoController@search');
             Route::get('/shops','SiteInfoController@shops');
-            Route::get('/shop-products','SiteInfoController@shopProducts');
+            Route::get('/shop-products/{slug}','SiteInfoController@shopProducts');
         });
 
         //     For product info
-        Route::get('/product-details','KrishiProductController@product_details');
-        Route::get('/product-reviews','KrishiProductController@product_reviews');
-        Route::get('/related-products','KrishiProductController@related_products');
+        Route::get('/product-details/{slug}','KrishiProductController@product_details');
+        Route::get('/product-reviews/{slug}','KrishiProductController@product_reviews');
+        Route::get('/related-products/{slug}','KrishiProductController@related_products');
 
     });
 });

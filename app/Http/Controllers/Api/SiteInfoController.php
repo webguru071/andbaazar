@@ -54,13 +54,17 @@ class SiteInfoController extends Controller
         return new ShopCollection($shops);
     }
 
-    public function shopProducts(Request $request){
+    public function shopProducts(Request $request,$slug){
         $limit = 20;
         if($request->limit){
             $limit = $request->limit;
         }
-        $products = KrishiProduct::where('status','Active')->where('shop_id',$request->shop)->orderBy('id','desc')->paginate($limit);
-        $products->appends(['limit' => $limit,'shop'=>$request->shop]);
+        $shop = Shop::where('status','Active')->where('slug',$slug)->first();
+        if(!$shop){
+            return $this->jsonResponse([],'Shop not found', true);
+        }
+        $products = KrishiProduct::where('status','Active')->where('shop_id',$shop->id)->orderBy('id','desc')->paginate($limit);
+        $products->appends(['limit' => $limit,'shop'=>$slug]);
         return new KrishiProductCollection($products);
     }
 
@@ -116,14 +120,14 @@ class SiteInfoController extends Controller
 
     }
 
-    public function CategoryWiseProducts(Request $request,$parentCategoryId){
+    public function CategoryWiseProducts(Request $request,$parentCategory){
         $limit = 20;
         if($request->limit){
             $limit = $request->limit;
         }
-        $parentCategory = KrishiCategory::find($parentCategoryId);
-        $subCategories = $this->generateCategories($parentCategory->childs);
-        array_push($subCategories,(int)$parentCategoryId);
+        $cat = KrishiCategory::where('slug',$parentCategory)->first();
+        $subCategories = $this->generateCategories($cat->childs);
+        array_push($subCategories,(int)$parentCategory);
         $products = KrishiProduct::whereIn('category_id', $subCategories)->where('status','active')->orderBy('id','desc')->paginate($limit);
         $products->appends(['limit'=>$limit]);
         return new KrishiProductCollection($products);
@@ -153,11 +157,11 @@ class SiteInfoController extends Controller
             $results = KrishiProduct::where('status','active');
 
             if($request->category){
-                $cat = KrishiCategory::find($request->category);
+                $cat = KrishiCategory::where('slug',$request->category)->first();
                 if(!$cat){
                     return $this->jsonResponse([],'Invalid Category');
                 }
-                $results = $results->where('category_id',$request->category);
+                $results = $results->where('category_id',$cat->id);
                 $paginationMeta = array_merge($paginationMeta,['category'=>$request->category]);
             }
 

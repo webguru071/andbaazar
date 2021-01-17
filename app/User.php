@@ -64,8 +64,8 @@ class User extends Authenticatable
 
     public function routeNotificationForTwilio(){
       // return '+88'.$this->phone; 
-      // return '+8801969516500';
-      return '+8801882453300';
+      return '+8801969516500';
+      // return '+8801882453300';
     }
 
     public function customerDetails(){
