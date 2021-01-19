@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Illuminate\Support\Facades\Storage;
 class KrishiProductResource extends JsonResource
 {
     /**
@@ -18,7 +18,7 @@ class KrishiProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'thumbnail_image' => (!is_null($this->thumbnail_image)) ? asset($this->thumbnail_image) : asset('images/avatar-product.png'),
+            'thumbnail_image' => (!is_null($this->thumbnail_image)) ? Storage::url($this->thumbnail_image) : asset('images/avatar-product.png'),
             'description' => $this->description,
             'video_url' => $this->video_url,
             'available_from' => $this->available_from->format('Y-m-d'),

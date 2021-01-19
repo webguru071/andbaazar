@@ -45,6 +45,8 @@ use App\Models\Geo\District;
 use App\Models\Geo\Division;
 use App\Models\Geo\MunicipalWard;
 use App\Models\Geo\Municipal;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Session;
 
 class Baazar
@@ -159,24 +161,19 @@ class Baazar
         }
     }
 
-    public function base64Uploadkrishi($image_file,$name){
+    public function base64Uploadkrishi($image_file,$name=null){
         $t = substr($image_file,0,11);
         if($t == 'data:image/'){
-            list($type, $image_file) = explode(';', $image_file);
-            list(, $image_file)      = explode(',', $image_file);
-            if($this->is_base64($image_file)){
-                $image_file = base64_decode($image_file);
-                $image_name= $name.rand().'.png';
-                $db_img = 'uploads/krishi/'.$name.'-'.date('ymdhmi').'-'.$image_name;
-                $path = env('UP_DIR').$db_img;
-                // dd($db_img);
-                file_put_contents($path, $image_file);
-                return $db_img;
-            }
+            $poster = explode(";base64", $image_file);
+            $image_type = explode("image/", $poster[0]);
+            $mime_type = '.'.$image_type[1];
+            $path = 'images/krishiproducts/'.$name.time().rand().$mime_type;
+            $image = Image::make($image_file)->fit(560, 560)->encode();
+            Storage::put($path, $image);
+            return $path;
         }else{
-            // dd($image_file);
-            $path = explode('/uploads/',$image_file);
-            return 'uploads/'.$path[1];
+            $path = explode('/storage/',$image_file);
+            return $path[1];
         }
     }
 

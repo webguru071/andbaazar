@@ -40,6 +40,7 @@
     <link rel="stylesheet" type="text/css" href="/css/custom.css">
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sweetalert.min.css') }}">
 
 
     <!-- <link rel="stylesheet" type="text/css" href="{{asset('/css/summernote.min.css')}}"> -->

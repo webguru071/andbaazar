@@ -14,6 +14,6 @@ class KrishiProductImageResource extends JsonResource
      */
     public function toArray($request)
     {
-        return asset($this->org_img);
+        return \Storage::url($this->org_img);
     }
 }

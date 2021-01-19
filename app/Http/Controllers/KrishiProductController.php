@@ -23,6 +23,7 @@ use App\Models\Reject;
 use App\Models\RejectValue;
 use App\Mail\KrishiProductApprovemail;
 use App\Mail\KrishiProductRejectMail;
+use Illuminate\Support\Facades\Storage;
 
 class KrishiProductController extends Controller
 {
@@ -31,45 +32,42 @@ class KrishiProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        $product      = KrishiProduct::where('shop_id',Baazar::shop()->id);
-      $filter = [
-        'category'  => '',
-        'status'  => '',
-        'keyword'  => '',
-      ];
+    public function index(Request $request){
+        $product  = KrishiProduct::where('shop_id',Baazar::shop()->id);
+        $filter = [
+            'category'  => '',
+            'status'    => '',
+            'keyword'   => '',
+        ];
 
-      $findCat = KrishiProduct::where('shop_id',Baazar::shop()->id);
-      $categories = $findCat->select('category_id')->with('category')->distinct()->get();
+        $findCat = KrishiProduct::where('shop_id',Baazar::shop()->id);
+        $categories = $findCat->select('category_id')->with('category')->distinct()->get();
 
-      //Category Filter
-      if ($request->has('category') && !empty($request->category)){
-        $catId = Category::where('slug',$request->category)->first();
-        if($catId){
-          $product = $product->where('category_id',$catId->id);
+        //Category Filter
+        if ($request->has('category') && !empty($request->category)){
+            $catId = Category::where('slug',$request->category)->first();
+            if($catId){
+                $product = $product->where('category_id',$catId->id);
+            }
+            $filter['category'] = $request->category;
         }
-        $filter['category'] = $request->category;
 
-      }
+        //status Filter
+        if ($request->has('status') && !empty($request->status)){
+            $product = $product->where('status',$request->status);
+            $filter['status'] = $request->status;
+        }
 
-      //status Filter
-      if ($request->has('status') && !empty($request->status)){
-        $product = $product->where('status',$request->status);
-        $filter['status'] = $request->status;
-      }
+        //status Filter
+        if ($request->has('keyword') && !empty($request->keyword)){
+            $product = $product->where('name','like','%'.$request->keyword.'%');
+            $filter['keyword'] = $request->keyword;
+        }
 
-      //status Filter
-      if ($request->has('keyword') && !empty($request->keyword)){
-        $product = $product->where('name','like','%'.$request->keyword.'%');
-        $filter['keyword'] = $request->keyword;
-      }
-
-      // dd($product);
-      $product = $product->paginate(10);
-      $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
-      return view ('merchant.product.krishibaazar.index',compact('product','categories','filter'));
-
+        // dd($product);
+        $product = $product->paginate(10);
+        $product = $product->withPath("products?keyword={$filter['keyword']}&category={$filter['category']}&status={$filter['status']}");
+        return view ('merchant.product.krishibaazar.index',compact('product','categories','filter'));
     }
 
     /**
@@ -90,7 +88,7 @@ class KrishiProductController extends Controller
            $image = [
             'product_id' => $itemId,
             'sort'       => (int)$index+1,
-            'org_img'    => Baazar::base64Uploadkrishi($img,'orgimg'),
+            'org_img'    => Baazar::base64Uploadkrishi($img),
           ];
            KrishiProductItemImage::create($image);
         }
@@ -102,11 +100,16 @@ class KrishiProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,KrishiProduct $krishiProduct)
-    {
+    public function store(Request $request,KrishiProduct $krishiProduct){
+        // $request->validate([
+        //     'thumbnail_image'   => 'required'
+        // ]);
+        $thumbnail_image = '';
         $shop_id = Shop::where('user_id',Auth::id())->where('type',Auth::user()->login_area)->first()->id;
         $slug = Baazar::getUniqueSlug($krishiProduct,$request->name);
-        $thumbnail_image    = Baazar::base64Uploadkrishi($request->thumbnail_image,$slug,'featured');
+        if($request->thumbnail_image){
+            $thumbnail_image = Baazar::base64Uploadkrishi($request->thumbnail_image,$slug);
+        }
         $allData=$request->all();
         $allData['slug']=$slug;
         $allData['thumbnail_image']=$thumbnail_image;
@@ -156,17 +159,8 @@ class KrishiProductController extends Controller
        return view('merchant.product.krishibaazar.show',compact('krishiproduct','reviews','rejectlist'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\KrishiProduct  $krishiProduct
-     * @return \Illuminate\Http\Response
-     */
-
     //  Krishi Product List in Admin Panel //
-
     public function krishiProductList(){
-
         $krishiproduct = KrishiProduct::distinct()->get();
         return view('merchant.product.krishibaazar.product_list',compact('krishiproduct'));
     }
@@ -174,62 +168,44 @@ class KrishiProductController extends Controller
 
     public function approvemetnt($slug){
         $data = KrishiProduct::where('slug',$slug)->first();
-        // dd( $data);
-
         $data->update(['status' => 'Active']);
-        // dd($data);
-
         $name =  $data['name'];
         \Mail::to($data['email'])->send(new KrishiProductApprovemail($data, $name));
-
         Session::flash('success', 'Krishi Product Approve Successfully!');
-
         return back();
       }
 
 
-      public function rejected(Request $request,$slug){
+    public function rejected(Request $request,$slug){
         $data = KrishiProduct::where('slug',$slug)->first();
-        // dd($data);
-
         $data->update([
           'status' => 'Reject',
           'rej_desc' => $request->rej_desc,
-          ]);
+        ]);
 
-          $rejct_value = RejectValue::where('user_id', $data->user_id)->first();
-          //  dd($rejct_value);
+        $rejct_value = RejectValue::where('user_id', $data->user_id)->first();
+        $rej_list = count($_POST['rej_name']);
 
-          $rej_list = count($_POST['rej_name']);
-
-          for($i = 0; $i<$rej_list; $i++){
-                  $rejct_value=RejectValue::create([
-                  'rej_name'      => $request->rej_name[$i],
-                  'type'          => $request->type,
-                  'merchant_id'   => $data->id,
-                  'user_id'       => $data->user_id,
-              ]);
-              // dd($data);
-          }
-
-
-          $rej_desc = RejectValue::where('type','krishi')->latest()->get();
-          // dd($rej_desc);
-
-          $name = $data['name'];
-          // $rej_desc = $rejct_value['rej_name'];
-          \Mail::to($data['email'])->send(new KrishiProductRejectMail($data, $name,$rej_desc));
-
-          Session::flash('warning', 'Krishi Product Rejected Successfully!');
-
-          return back();
-      }
+        for($i = 0; $i<$rej_list; $i++){
+            $rejct_value=RejectValue::create([
+                'rej_name'      => $request->rej_name[$i],
+                'type'          => $request->type,
+                'merchant_id'   => $data->id,
+                'user_id'       => $data->user_id,
+            ]);
+        }
+        $rej_desc = RejectValue::where('type','krishi')->latest()->get();
+        $name = $data['name'];
+        // $rej_desc = $rejct_value['rej_name'];
+        \Mail::to($data['email'])->send(new KrishiProductRejectMail($data, $name,$rej_desc));
+        Session::flash('warning', 'Krishi Product Rejected Successfully!');
+        return back();
+    }
 
 
      //  Krishi Product List in Admin Panel End //
 
-    public function edit($slug)
-    {
+    public function edit($slug){
         $krishiproduct = KrishiProduct::where('slug',$slug)->firstOrFail();
         if (Auth::id() !== $krishiproduct->user_id){
             flash('Invaild product item')->error();
@@ -246,16 +222,8 @@ class KrishiProductController extends Controller
         return view('merchant.product.krishibaazar.edit',compact('krishiproduct','frequencyname','itemImages','categories','productUnits'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\KrishiProduct  $krishiProduct
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, KrishiProduct $krishiProduct,$slug)
-    {
-        // dd($request->all());
+    public function update(Request $request, KrishiProduct $krishiProduct,$slug){
+
         $krishiProductDetails = KrishiProduct::where('slug',$slug)->firstOrFail();
         if (Auth::id() !== $krishiProductDetails->user_id){
             flash('Invaild product item')->error();
@@ -275,22 +243,38 @@ class KrishiProductController extends Controller
         $krishiProductDetails->return_policy=$request->return_policy;
         $krishiProductDetails->product_unit_id=$request->product_unit_id;
         $krishiProductDetails->category_id=$request->category_id;
-        if (isset($request->thumbnail_image)){
-            if (file_exists('/'.$krishiProductDetails->thumbnail_image)) {
-                unlink('/'.$krishiProductDetails->thumbnail_image);
-            }
-            $krishiProductDetails->thumbnail_image=Baazar::base64Uploadkrishi($request->thumbnail_image,$slug,'featured');
+
+        if ($request->thumbnail_image){
+            Storage::delete($krishiProductDetails->thumbnail_image);
+            $krishiProductDetails->thumbnail_image=Baazar::base64Uploadkrishi($request->thumbnail_image,$slug);
         }
+
         $krishiProductDetails->save();
-
-        $krishiProductDetails->itemimage()->delete();
-
-        if($request->images){
-            $this->addImages($request->images['main'],$krishiProductDetails->id);
+        //dropzone images unlink & restore
+        $arr = [];
+        foreach($krishiProductDetails->itemimage as $img){
+            $arr[] = $img->org_img;
         }
+        $krishiProductDetails->itemimage()->delete();
+        foreach($request->images['main'] as $index=>$img){
+            $newImg = Baazar::base64Uploadkrishi($img);
+            if (($key = array_search($newImg, $arr)) !== false) {
+                unset($arr[$key]);
+            }
+            $image = [
+             'product_id' => $krishiProductDetails->id,
+             'sort'       => (int)$index+1,
+             'org_img'    => $newImg,
+           ];
+            KrishiProductItemImage::create($image);
+         }
+         if(count($arr) > 0){
+            foreach($arr as $a){
+                Storage::delete($a);
+            }
+         }
 
         Session::flash('success', 'Krishi Product Update Successfully!');
-
         return redirect()->action('KrishiProductController@index');
     }
 
@@ -305,7 +289,7 @@ class KrishiProductController extends Controller
         $krishiId = KrishiProduct::find($id);
         $krishiId->delete();
 
-        Session::flash('error', 'Krishi Product Deleted Successfully!');
+        Session::flash('success', 'Krishi Product Deleted Successfully!');
 
         return redirect('merchant/krishi/products');
     }

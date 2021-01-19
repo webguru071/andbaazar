@@ -84,7 +84,7 @@
                     <tbody>
                         @forelse($product as $row)
                         <tr>
-                            <th scope="row" class="text-center"><img src="{{asset($row->thumbnail_image)}}" style="height: 35px" class="blur-up lazyloaded img-fluid" /></th>
+                            <th scope="row" class="text-center"><img src="{{Storage::url($row->thumbnail_image)}}" style="height: 35px" class="blur-up lazyloaded img-fluid" /></th>
                             <td class="text-left">{{$row->name}}</td>
                             <td class="text-left">{{$row->category['name']}}</td>
                             <td>{{ $row->available_from }}</td>

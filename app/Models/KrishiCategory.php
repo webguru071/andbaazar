@@ -31,12 +31,16 @@ class KrishiCategory extends Model
         return $parents;
     }
 
+    public function childrenProducts(){
+        return $this->hasManyThrough(KrishiProduct::class, KrishiCategory::class, 'parent_id','category_id');
+    }
+
+    public function getProductqtyAttribute(){
+        return $this->products()->count() + $this->childrenProducts()->count(); 
+    }
+
     public function childs() {
         return $this->hasMany(self::class, 'parent_id','id');//->with('childs');
     }
-
-    // public function childrenRecursive(){
-    //     return $this->childs()->with('childrenRecursive');
-    // }
 
 }

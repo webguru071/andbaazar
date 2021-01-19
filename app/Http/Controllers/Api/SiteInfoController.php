@@ -125,11 +125,45 @@ class SiteInfoController extends Controller
         if($request->limit){
             $limit = $request->limit;
         }
+        $paginationMeta = ['limit'=>$limit];
         $cat = KrishiCategory::where('slug',$parentCategory)->first();
         $subCategories = $this->generateCategories($cat->childs);
         array_push($subCategories,(int)$cat->id);
-        $products = KrishiProduct::whereIn('category_id', $subCategories)->where('status','active')->orderBy('id','desc')->paginate($limit);
-        $products->appends(['limit'=>$limit]);
+        $products = KrishiProduct::whereIn('category_id', $subCategories)->where('status','active');
+        if($request->sortBy){
+            switch ($request->sortBy) {
+                case "newest":
+                    $products = $products->orderBy('id','desc');
+                    break;
+                case "popular":
+                    $products = $products->orderBy('total_unit_sold','desc');
+                    break;
+                case "price-lowest":
+                    $products = $products->orderBy('price','asc');
+                    break;
+                case "price-highest":
+                    $products = $products->orderBy('price','desc');
+                    break;
+                default:
+                    $products = $products;
+            }
+            $paginationMeta =  array_merge($paginationMeta,['sortBy'=>$request->sortBy]);
+        }
+
+        if($request->min){
+            $products = $products->where('price','>=',$request->min);
+            $paginationMeta =  array_merge($paginationMeta,['min'=>$request->min]);
+        }
+        if($request->max){
+            $products = $products->where('price','<=',$request->max);
+            $paginationMeta =  array_merge($paginationMeta,['max'=>$request->max]);
+        }
+        if($request->tags){
+            //will be come
+            $paginationMeta =  array_merge($paginationMeta,['tags'=>$request->tags]);
+        }
+        $products = $products->paginate($limit);
+        $products->appends($paginationMeta);
         return new KrishiProductCollection($products);
     }
 

@@ -19,11 +19,12 @@ class KrishiProductController extends Controller
 
     public function product_details($slug){
         $product_details = KrishiProduct::with('itemimage')->where('slug',$slug)->first();
-        // dd($product_details);
         if (is_null($product_details)){
             return $this->jsonResponse([],'No product found',true);
         }
-        return new KrishiProductResource($product_details);
+        $data = new KrishiProductResource($product_details);
+        return $this->jsonResponse($data,'success',false);
+
     }
 
     public function related_products($slug){
