@@ -81,6 +81,11 @@ include('admin.php');
 
 Route::get('/email/verify/{userID}/{verificationCode}','UserController@verifyEmailAddress');
 
+
+Route::group(['prefix' => 'andbaazar-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+
 //Auth::routes(['verify' => true]);
 
 //Route::get('/home', 'HomeController@index')->name('home');

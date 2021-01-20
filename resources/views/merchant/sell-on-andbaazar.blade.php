@@ -27,7 +27,7 @@
       <!-- Theme css -->
       <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/color1.css" media="screen" id="color">
       <!-- Croppie css -->
-      <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/croppie.css>
+      <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/croppie.css">
          <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/css-loader/3.3.3/css-loader.css">
       <!-- <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/preloader.min.css> -->
       <link rel="stylesheet" type="text/css" href="/css/custom.css">

@@ -92,20 +92,16 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
     //Auctionproduct list start
 
     Route::get('auction/products/','AuctionproductController@auctionProductList');
-
     Route::get('color-image/{color_slug}','ProductsController@colorWiseImage');
-
     Route::resource('/shop','ShopsController');
-
     Route::get('category_setup','CategorySetupController@index');
 
 
     //    Krishi Product  Start //
 
-    Route::get('krishi/products/','KrishiProductController@krishiProductList');
+    Route::resource('krishi/products/category','Admin\KrishiProductCategoryController');
+    Route::get('krishi/products','KrishiProductController@krishiProductList');
 
-
-    // Route::resource('products/krishi/category','KrishiCategoryController');
 
 
     // Attribute import Start//
