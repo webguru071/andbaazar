@@ -9,6 +9,7 @@ use App\Mail\VerifyEmail;
 use App\Models\AgentProfile;
 use App\Models\CustomerProfile;
 use App\Models\MerchantProfile;
+use App\Notifications\EmailVerification;
 use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -65,8 +66,8 @@ class UserController extends Controller
         return $this->jsonResponse([],"Your have been register successfully",false);
     }
 
-    public function userProfileUpdate(Request $request,$userId){
-        $user = User::find($userId);
+    public function userProfileUpdate(Request $request){
+        $user = $request->user();
         if(!$user){
             return $this->jsonResponse([],'User not found!');
         }
@@ -81,22 +82,45 @@ class UserController extends Controller
         if($validator->fails()){
             return $this->jsonResponse([],$validator->getMessageBag()->first());
         }
-        if($user->phone != $request->phone){ //send Phone Verifaction
-            $user->notify(new PhoneVerification($user));
-            $user->phone = $request->phone;
-        }
-        if($user->email != $request->email){ //send email verifation
-            // $user->notify(new PhoneVerification($user));
-            // $user->email = $request->email;
-        }
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
+
+        if($user->phone != $request->phone){ //send Phone Verifaction
+            $user->phone = $request->phone;
+            $user->notify(new PhoneVerification($user));
+        }
+        if($user->email != $request->email){ //send email verifation
+            $user->email = $request->email;
+            $user->notify(new EmailVerification());
+        }
+        
         $user->save();
+        
         $user->customerDetails->dob = $request->dob;
         $user->customerDetails->gender = $request->gender;
         $user->customerDetails->description = $request->description;
         $user->customerDetails->save();
         return $this->jsonResponse(new UserResource($user),'success',false);
+    }
+
+    //    Change Password
+    public function changePassword(Request $request){
+        $user = $request->user();
+        $validator=Validator::make($request->all(), [
+            'password' => 'required|confirmed|min:8',
+            'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
+                if (!Hash::check($value, $user->password)) {
+                    return $fail(__('The current password is incorrect.'));
+                }
+            }],
+        ]);
+
+        if ($validator->fails()){
+            return $this->jsonResponse([],$validator->getMessageBag()->first());
+        }
+        $user->password=Hash::make($request->password);
+        $user->save();
+        return $this->jsonResponse([],"Your password updated successfully",false);
     }
 
     //    Forget Password
@@ -148,13 +172,7 @@ class UserController extends Controller
         }
 
         $customer=User::where('email',$request->email)->firstOrFail();
-        $email_verification_code = Str::random(60);
-        $customer->email_verification_code = $email_verification_code;
-        $customer->email_verification_code_expired_at = Carbon::now()->addDays(2);
-        $customer->save();
-        $emailData['user_name']=$customer->first_name .' ' .$customer->last_name;
-        $emailData['verificationURL']=env('APP_URL') .'/email/verify/' .$customer->id .'/' .$email_verification_code;
-        Mail::to($request->email)->send(new VerifyEmail($emailData));
+        $customer->notify(new EmailVerification());
         return $this->jsonResponse([],"Verification link send to your email address",false);
     }
 
@@ -170,9 +188,11 @@ class UserController extends Controller
         }
         $verifyOTP = User::where([['phone',$request->phone],['phone_otp',$request->otp_code]])->where('phone_otp_expired_at','>',Carbon::now())->first();
         if (is_null($verifyOTP)){
-            return $this->jsonResponse([],'opt verified failed');
+            return $this->jsonResponse([],'opt verified failed or expire');
         }
         else{
+            $verifyOTP->phone_otp = null;
+            $verifyOTP->phone_otp_expired_at = null;
             $verifyOTP->phone_no_verified_at = Carbon::now();
             $verifyOTP->save();
             $tokenResult=$verifyOTP->createToken('Personal Access Token');

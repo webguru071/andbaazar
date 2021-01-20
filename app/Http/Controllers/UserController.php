@@ -42,6 +42,8 @@ class UserController extends Controller
             return redirect('/');
         }
         else{
+            $verifyEmail->email_verification_code = null;
+            $verifyEmail->email_verification_code_expired_at = null;
             $verifyEmail->email_verified_at = Carbon::now();
             $verifyEmail->save();
             flash('Email verified successfully')->success();

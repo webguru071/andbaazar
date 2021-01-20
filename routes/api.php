@@ -27,6 +27,7 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
         Route::get('/profile','UserController@profile');
         Route::post('/profile-update/{userId}','UserController@userProfileUpdate');
         Route::post('/reset-password','UserController@resetPassword');
+        Route::post('/change-password','UserController@changePassword');
         Route::get('/logout','UserController@logout');
     });
 
