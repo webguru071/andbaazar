@@ -83,6 +83,7 @@ class UserController extends Controller
         $customer->save();
 
         //    Now Send the OTP code via SMS Gateway
+        $customer->notify(new PhoneVerification($customer));
         return $this->jsonResponse([],"OTP send to your mobile number",false);
     }
 
