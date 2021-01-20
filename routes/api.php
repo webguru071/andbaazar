@@ -25,6 +25,7 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
     Route::group(['middleware'=>['auth:api','isActive']],function (){
         //   For User Authentication
         Route::get('/profile','UserController@profile');
+        Route::post('/profile-update/{userId}','UserController@userProfileUpdate');
         Route::post('/reset-password','UserController@resetPassword');
         Route::get('/logout','UserController@logout');
     });
