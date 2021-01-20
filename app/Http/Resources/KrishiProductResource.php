@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Illuminate\Support\Facades\Storage;
 class KrishiProductResource extends JsonResource
 {
     /**
@@ -18,7 +18,7 @@ class KrishiProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'thumbnail_image' => (!is_null($this->thumbnail_image)) ? asset($this->thumbnail_image) : asset('images/avatar-product.png'),
+            'thumbnail_image' => (!is_null($this->thumbnail_image)) ? Storage::url($this->thumbnail_image) : asset('images/avatar-product.png'),
             'description' => $this->description,
             'video_url' => $this->video_url,
             'available_from' => $this->available_from->format('Y-m-d'),
@@ -35,6 +35,7 @@ class KrishiProductResource extends JsonResource
             'return_policy' => $this->return_policy,
             'total_unit_sold' => $this->total_unit_sold,
             'shop' => $this->shop->name,
+            'category' => new KrishiProductCategoryResource($this->category),
             'images' => new KrishiProductImageCollection($this->itemimage),
             'flash_sale_discount_price' => (float)$this->flash_sale_discount_rate,
         ];

@@ -19,6 +19,7 @@ class KrishiProductCategoryResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'icon' => $this->icon,
+            'product'   => $this->productqty,
             'thumbnail_image' => (!is_null($this->thumbnail_image)) ? asset($this->thumbnail_image) : asset('images/avatar-product.png'),
         ];
     }

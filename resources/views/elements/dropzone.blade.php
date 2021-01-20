@@ -61,7 +61,7 @@
             mockFiles = {
                 name:'img-'+'product-image',
                 size:{{$img->id}},
-                dataURL: "{{asset('/')}}"+"{{$img->org_img}}"
+                dataURL: "{{Storage::url($img->org_img)}}",//+"{{$img->org_img}}"
             }
             mockFile.push(mockFiles);
         @endforeach

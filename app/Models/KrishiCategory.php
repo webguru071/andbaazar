@@ -22,6 +22,24 @@ class KrishiCategory extends Model
         return $this->belongsTo(self::class, 'parent_id','id');
     }
 
+    public function getParentsAttribute(){
+        $parents = collect([]);
+        $parent = $this->parent;
+        while(!is_null($parent)) {
+            $parents->push($parent);
+            $parent = $parent->parent;
+        }
+        return $parents;
+    }
+
+    public function childrenProducts(){
+        return $this->hasManyThrough(KrishiProduct::class, KrishiCategory::class, 'parent_id','category_id');
+    }
+
+    public function getProductqtyAttribute(){
+        return $this->products()->count() + $this->childrenProducts()->count();
+    }
+
     public function childs() {
         return $this->hasMany(self::class, 'parent_id','id');//->with('childs');
     }

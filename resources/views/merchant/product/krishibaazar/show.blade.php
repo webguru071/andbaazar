@@ -77,7 +77,7 @@
                                     @foreach ($krishiproduct->itemimage as $item)
                                         {{-- {{dd($item)}} --}}
                                         <div class="carousel-item {{$i == 0 ? 'active': ''}}">
-                                            <img class="d-block w-100" src="{{url($item->org_img)}}" alt="First slide">
+                                            <img class="d-block w-100" src="{{Storage::url($item->org_img)}}" alt="First slide">
                                         </div>
                                         @php $i++ @endphp
                                     @endforeach

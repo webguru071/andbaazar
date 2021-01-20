@@ -105,7 +105,7 @@
                                             <div class="form-group">
                                                 <label for="picture">Thumbnail Image</label>
                                                 <div class="mt-0">
-                                                    <img id="output"  class="imagestyle" src="{{ (!is_null($krishiproduct->thumbnail_image)) ? asset($krishiproduct->thumbnail_image) : asset('/images/demo-product.jpg') }}" />
+                                                    <img id="output"  class="imagestyle" src="{{ (!is_null($krishiproduct->thumbnail_image)) ? Storage::url($krishiproduct->thumbnail_image) : asset('/images/demo-product.jpg') }}" />
                                                 </div>
                                                 <div class="uploadbtn">
                                                     <label for="img-upload" class="custom-file-upload image-upload"><i aria-hidden="true"></i> Upload Here</label>

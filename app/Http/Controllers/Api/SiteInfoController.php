@@ -54,13 +54,17 @@ class SiteInfoController extends Controller
         return new ShopCollection($shops);
     }
 
-    public function shopProducts(Request $request){
+    public function shopProducts(Request $request,$slug){
         $limit = 20;
         if($request->limit){
             $limit = $request->limit;
         }
-        $products = KrishiProduct::where('status','Active')->where('shop_id',$request->shop)->orderBy('id','desc')->paginate($limit);
-        $products->appends(['limit' => $limit,'shop'=>$request->shop]);
+        $shop = Shop::where('status','Active')->where('slug',$slug)->first();
+        if(!$shop){
+            return $this->jsonResponse([],'Shop not found', true);
+        }
+        $products = KrishiProduct::where('status','Active')->where('shop_id',$shop->id)->orderBy('id','desc')->paginate($limit);
+        $products->appends(['limit' => $limit,'shop'=>$slug]);
         return new KrishiProductCollection($products);
     }
 
@@ -116,22 +120,65 @@ class SiteInfoController extends Controller
 
     }
 
-    public function CategoryWiseProducts(Request $request,$parentCategoryId){
+    public function CategoryWiseProducts(Request $request,$parentCategory){
         $limit = 20;
         if($request->limit){
             $limit = $request->limit;
         }
-        $parentCategory = KrishiCategory::find($parentCategoryId);
-        $subCategories = $this->generateCategories($parentCategory->childs);
-        array_push($subCategories,(int)$parentCategoryId);
-        $products = KrishiProduct::whereIn('category_id', $subCategories)->where('status','active')->orderBy('id','desc')->paginate($limit);
-        $products->appends(['limit'=>$limit]);
+        $paginationMeta = ['limit'=>$limit];
+        $cat = KrishiCategory::where('slug',$parentCategory)->first();
+        $subCategories = $this->generateCategories($cat->childs);
+        array_push($subCategories,(int)$cat->id);
+        $products = KrishiProduct::whereIn('category_id', $subCategories)->where('status','active');
+        if($request->sortBy){
+            switch ($request->sortBy) {
+                case "newest":
+                    $products = $products->orderBy('id','desc');
+                    break;
+                case "popular":
+                    $products = $products->orderBy('total_unit_sold','desc');
+                    break;
+                case "price-lowest":
+                    $products = $products->orderBy('price','asc');
+                    break;
+                case "price-highest":
+                    $products = $products->orderBy('price','desc');
+                    break;
+                default:
+                    $products = $products;
+            }
+            $paginationMeta =  array_merge($paginationMeta,['sortBy'=>$request->sortBy]);
+        }
+
+        if($request->min){
+            $products = $products->where('price','>=',$request->min);
+            $paginationMeta =  array_merge($paginationMeta,['min'=>$request->min]);
+        }
+        if($request->max){
+            $products = $products->where('price','<=',$request->max);
+            $paginationMeta =  array_merge($paginationMeta,['max'=>$request->max]);
+        }
+        if($request->tags){
+            //will be come
+            $paginationMeta =  array_merge($paginationMeta,['tags'=>$request->tags]);
+        }
+        $products = $products->paginate($limit);
+        $products->appends($paginationMeta);
         return new KrishiProductCollection($products);
     }
 
-    public function getSubCategories($parentCategoryId){
-        $parentCategory = KrishiCategory::find($parentCategoryId);
+    public function getSubCategories($slug){
+        $parentCategory = KrishiCategory::where('slug',$slug)->first();
         return new KrishiProductCategoryCollection($parentCategory->childs);
+    }
+
+    public function getParentCategories($slug){
+        $parentCategory = KrishiCategory::where('slug',$slug)->first();
+        if(!$parentCategory){
+            return $this->jsonResponse([],'Category not found', true);
+        }
+        $data = $parentCategory->parents->reverse();
+        return new KrishiProductCategoryCollection($data->push($parentCategory));
     }
 
     public function search(Request $request){
@@ -153,11 +200,11 @@ class SiteInfoController extends Controller
             $results = KrishiProduct::where('status','active');
 
             if($request->category){
-                $cat = KrishiCategory::find($request->category);
+                $cat = KrishiCategory::where('slug',$request->category)->first();
                 if(!$cat){
                     return $this->jsonResponse([],'Invalid Category');
                 }
-                $results = $results->where('category_id',$request->category);
+                $results = $results->where('category_id',$cat->id);
                 $paginationMeta = array_merge($paginationMeta,['category'=>$request->category]);
             }
 

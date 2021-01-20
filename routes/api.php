@@ -47,16 +47,17 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
             Route::get('/upcoming-products','SiteInfoController@upcomingProducts');
             Route::get('/top-rated-products','SiteInfoController@topRatedProducts');
             Route::get('/category-wise-products/{parent_category}','SiteInfoController@CategoryWiseProducts');
-            Route::get('/sub-categories/{parent_category}','SiteInfoController@getSubCategories');
+            Route::get('/sub-categories/{parent_slug}','SiteInfoController@getSubCategories');
+            Route::get('/parent-categories/{slug}','SiteInfoController@getParentCategories');
             Route::get('/search','SiteInfoController@search');
             Route::get('/shops','SiteInfoController@shops');
-            Route::get('/shop-products','SiteInfoController@shopProducts');
+            Route::get('/shop-products/{slug}','SiteInfoController@shopProducts');
         });
 
         //     For product info
-        Route::get('/product-details','KrishiProductController@product_details');
-        Route::get('/product-reviews','KrishiProductController@product_reviews');
-        Route::get('/related-products','KrishiProductController@related_products');
+        Route::get('/product-details/{slug}','KrishiProductController@product_details');
+        Route::get('/product-reviews/{slug}','KrishiProductController@product_reviews');
+        Route::get('/related-products/{slug}','KrishiProductController@related_products');
 
     });
 });

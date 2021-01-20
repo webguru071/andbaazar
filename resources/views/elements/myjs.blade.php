@@ -2,7 +2,7 @@
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
 {{--    For Sweet Aleart  --}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> --}}
 
 <script>
     function newWindow(url) {

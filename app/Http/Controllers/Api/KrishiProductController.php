@@ -17,37 +17,35 @@ class KrishiProductController extends Controller
 {
     use apiTrait;
 
-    public function product_details(Request $request){
-        $product_details = KrishiProduct::with('itemimage')->find($request->productId);
-        // dd($product_details);
+    public function product_details($slug){
+        $product_details = KrishiProduct::with('itemimage')->where('slug',$slug)->first();
         if (is_null($product_details)){
             return $this->jsonResponse([],'No product found',true);
         }
-        return new KrishiProductResource($product_details);
+        $data = new KrishiProductResource($product_details);
+        return $this->jsonResponse($data,'success',false);
+
     }
 
-    public function related_products(Request $request){
-        $validator=Validator::make($request->all(), [
-            'productId'=>'required|numeric|exists:krishi_products,id',
-        ]);
-
-        if ($validator->fails()){
-            return $this->jsonResponse([],$validator->messages()->first());
-        }
-        $product_details = KrishiProduct::find($request->productId);
+    public function related_products($slug){
+        $product_details = KrishiProduct::where('slug',$slug)->first();
         if (is_null($product_details)){
-            return $this->jsonResponse([],'No related product found',true);
+            return $this->jsonResponse([],'No product found',true);
         }
         $related_products = KrishiProduct::where([['id','!=',$product_details->id],['category_id',$product_details->category_id],['status','Active'],['available_stock','>',0]])->whereDate('available_from','<=', Carbon::now())->take(10)->get();
         return new KrishiProductCollection($related_products);
     }
 
-    public function product_reviews(Request $request){
-        $limit = 20;
-        if($request->limit){
-            $limit = $request->limit;
+    public function product_reviews(Request $request,$slug){
+        $product_details = KrishiProduct::where('slug',$slug)->first();
+        if (is_null($product_details)){
+            return $this->jsonResponse([],'No product found',true);
         }
-        $reviews = KrishiReviews::where('krishi_product_id',$request->productId)->where('parent_id',0)->get();
+        // $limit = 20;
+        // if($request->limit){
+        //     $limit = $request->limit;
+        // }
+        $reviews = KrishiReviews::where('krishi_product_id',$product_details->id)->where('parent_id',0)->get();
         if (is_null($reviews)){
             return $this->jsonResponse([],'No product found',true);
         }
