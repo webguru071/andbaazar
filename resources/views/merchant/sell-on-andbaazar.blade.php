@@ -68,18 +68,30 @@
                                 <img src="/images/login.png" alt="login">
                                 <div class="step-content d-flex align-center"><span>1</span><p>রেজিস্ট্রেশন করুন</p></div>
                             </div>
+
+                            <div class="arrow"><img src="/images/right-arrow.png" alt="arrow"></div>
+
                             <div class="step-box">
                                 <img src="/images/shipping.png" alt="login">
                                 <div class="step-content d-flex align-center"><span>2</span><p>পণ্য লিস্টিং করুন</p></div>
                             </div>
+
+                            <div class="arrow"><img src="/images/right-arrow.png" alt="arrow"></div>
+
                             <div class="step-box">
                                 <img src="/images/order.png" alt="login">
                                 <div class="step-content d-flex align-center"><span>3</span><p>অর্ডার গ্রহন করুন</p></div>
                             </div>
+
+                            <div class="arrow"><img src="/images/right-arrow.png" alt="arrow"></div>
+
                             <div class="step-box">
                                 <img src="/images/gift.png" alt="login">
                                 <div class="step-content d-flex align-center"><span>4</span><p>পণ্য ডেলিভারী করুন</p></div>
                             </div>
+
+                            <div class="arrow"><img src="/images/right-arrow.png" alt="arrow"></div>
+
                             <div class="step-box">
                                 <img src="/images/money.png" alt="login">
                                 <div class="step-content d-flex align-center"><span>5</span><p>মূল্য গ্রহন করুন</p></div>
