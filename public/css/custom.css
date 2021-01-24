@@ -97,18 +97,17 @@ input.form-control.error {
 /*Main Sections CSS Start*/
 .seller-center-wrap {
     background-color: #fff;
-    height: 440px;
+    min-height: 540px;
+    padding: 45px 45px 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
 }
 /*Main Sections CSS End*/
 
 
 /*Seller Center Start*/
-.seller-center-wrap {
-    background-color: #fff;
-}
 .seller-center-wrap h2 {
     margin-bottom: 50px;
 }
@@ -121,12 +120,14 @@ input.form-control.error {
     margin-bottom: 15px;
 }
 .step-box {
-    width: 105px;
+    width: 100px;
     margin: 10px;
 }
 .step-box p {
     margin-bottom: 0;
     font-size: 13px;
+    font-weight: 700;
+    color: #212529;
 }
 .step-content {
     align-items: center;
@@ -137,19 +138,46 @@ input.form-control.error {
 /*Seller Center End*/
 
 /*Seller Features Start*/
-.selling-steps-wrap h4 {
+.seller-features {
+    margin-top: 30px;
+}
+.selling-steps-wrap h4, .seller-features h4 {
     font-weight: 700;
     font-size: 21px;
     margin-bottom: 30px;
+    color: #f4650f;
 }
 .seller-features span {
     font-weight: 700;
+    font-size: 15px;
+    margin: 0 15px;
 }
 .seller-features img {
-    height: 19px;
+    height: 30px;
     margin-right: 8px;
 }
 /*Seller Features End*/
+
+/*Seller Footer Part Start*/
+.seller-center-footer {
+    justify-content: space-between;
+    margin-top: 40px;
+    align-items: center;
+}
+.logo-wrap img {
+    height: 30px;
+}
+.app-download-text {
+    width: 130px;
+    text-align: left;
+    font-size: 13px;
+    margin-left: 13px;
+}
+.seller-center-footer {
+    justify-content: space-between;
+    margin-top: 40px;
+}
+/*Seller Footer Part End*/
 
 /*Registration Form CSS Start*/
 #reg-from-area h3 {
@@ -162,7 +190,30 @@ input.form-control.error {
     color: #fff;
     font-size: 17px;
     border: none;
-    padding: 7px;
+    padding: 7px 7px 10px;
+    height: 50px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+#reg-from-area .form-control {
+    background-color: rgb(237, 242, 247);
+    border-color: transparent;
+    height: 50px;
+    padding: 14px 15px 19px;
+}
+#reg-from-area .form-control:focus {
+    box-shadow: none;
+}
+#reg-from-area .input-group-text {
+    background-color: rgb(237, 242, 247);
+    border: none;
+    border-right: 1px solid rgb(213, 225, 236);
+    border-radius: 0;
+    padding: 0 10px 4px;
+}
+#reg-from-area .input-group-prepend {
+    height: 48px;
+    margin-top: 1px;
 }
 /*Registration Form CSS End*/
 
@@ -171,6 +222,8 @@ input.form-control.error {
     text-align: center;
     min-height: 100vh;
     background-color: #f7fafc;
+    display: flex;
+    align-items: center;
 }
 .sell-link-top a{
 /* color: #fff; */
@@ -185,8 +238,11 @@ font-size: 24px;
     /* color: #fff; */
     font-size: 24px;
 }
-.sell-register-from{
+.sell-register-from {
     background-color: #fff;
+    min-height: 540px;
+    padding: 30px 25px;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
 }
 .register-from-top-sell{
 background-color: #0258a8;
@@ -195,21 +251,8 @@ padding: 20px 20px;
 .register-from-top-sell h3{
     color: #fff;
 }
-#reg-from-area {
-    padding: 30px 25px;
-    background-color: #fff;
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
-}
-#reg-from-area .form-control {
-    /* margin-bottom: 10px; */
-    background-color: rgb(237, 242, 247);
-    border-color: transparent;
-}
 .login-buttons{
     margin-top: 15px;
-}
-.reg-form-button button{
-    width: 100%;
 }
 .reg-form-button button.btn-solid {
     background-image: linear-gradient(30deg, #0258a8 50%, transparent 50%);
@@ -363,6 +406,13 @@ color: #fff;
     width: 100%;
 }
    }
+
+@media (max-width:991px) {
+    .sell-register-from {
+        box-shadow: 0 0 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
+        margin-top: 50px;
+    }
+}
 @media (max-width:768px) {
     .time-line-area ul {
         display: grid;
@@ -379,10 +429,57 @@ color: #fff;
       display: none;
     }
    }
-@media (max-width:480px) {
-    .time-line-area ul {
-        display: grid;
-        grid-template-columns:auto auto;
+
+@media (max-width:575px) {
+    .seller-center-wrap {
+        padding: 12px 17px 15px;
     }
-   }
+    .step-box p {
+        font-size: 12px;
+    }
+    .step-box .step-content span {
+        font-size: 22px;
+    }
+    .step-box img {
+        width: 31px;
+    }
+    .seller-features img {
+        height: 24px;
+    }
+    .seller-features span {
+        font-size: 13px;
+        margin: 0 9px;
+    }
+    .app-download-text {
+        width: 125px;
+        font-size: 12px;
+    }
+    .qr-img-wrap img {
+        height: 42px;
+    }
+    .logo-wrap img {
+        height: 24px;
+    }
+}
+@media (max-width:479px) {
+    .seller-center-wrap h2 {
+        margin-bottom: 30px;
+    }
+    .seller-features {
+        margin-top: 0;
+    }
+    .selling-steps {
+        flex-direction: column;
+        align-items: center;
+    }
+    .step-box {
+        width: auto;
+    }
+    .seller-center-footer {
+        flex-direction: column;
+    }
+    .logo-wrap {
+        margin-bottom: 15px;
+    }
+}
 

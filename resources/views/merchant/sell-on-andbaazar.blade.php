@@ -52,95 +52,112 @@
 {{--            </div>--}}
 {{--         </div>--}}
 {{--      </header>--}}
+
       <!-- Banner Area Start -->
       <section id="sell_on_andbaazar_banner">
       <div class="container">
-         <div class="row justify-content-center">
-            <div class="col-12 col-md-6">
+         <div class="row justify-content-center merchent-row">
+            <div class="col-12 col-md-12 col-lg-8 col-xl-7">
                 <div class="seller-center-wrap">
                     <h2 class="text-uppercase">Welcome to seller center</h2>
 
                     <div class="selling-steps-wrap">
-                        <h4>5 Simple Steps to Sell on Andbaazar</h4>
+                        <h4 class="text-capitalize">5 Simple Steps to Sell on Andbaazar</h4>
                         <div class="selling-steps d-flex">
                             <div class="step-box">
                                 <img src="/images/login.png" alt="login">
                                 <div class="step-content d-flex align-center"><span>1</span><p>রেজিস্ট্রেশন করুন</p></div>
                             </div>
                             <div class="step-box">
-                                <img src="/images/login.png" alt="login">
-                                <div class="step-content d-flex align-center"><span>1</span><p>পণ্য লিস্টিং করুন</p></div>
+                                <img src="/images/shipping.png" alt="login">
+                                <div class="step-content d-flex align-center"><span>2</span><p>পণ্য লিস্টিং করুন</p></div>
                             </div>
                             <div class="step-box">
-                                <img src="/images/login.png" alt="login">
-                                <div class="step-content d-flex align-center"><span>1</span><p>অর্ডার গ্রহন করুন</p></div>
+                                <img src="/images/order.png" alt="login">
+                                <div class="step-content d-flex align-center"><span>3</span><p>অর্ডার গ্রহন করুন</p></div>
                             </div>
                             <div class="step-box">
-                                <img src="/images/login.png" alt="login">
-                                <div class="step-content d-flex align-center"><span>1</span><p>রপণ্য ডেলিভারী করুন</p></div>
+                                <img src="/images/gift.png" alt="login">
+                                <div class="step-content d-flex align-center"><span>4</span><p>পণ্য ডেলিভারী করুন</p></div>
                             </div>
                             <div class="step-box">
-                                <img src="/images/login.png" alt="login">
-                                <div class="step-content d-flex align-center"><span>1</span><p>মূল্য গ্রহন করুন</p></div>
+                                <img src="/images/money.png" alt="login">
+                                <div class="step-content d-flex align-center"><span>5</span><p>মূল্য গ্রহন করুন</p></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="seller-features">
-                        <span><img src="/images/pencil.png" alt="icon">Store Builder</span>
-                        <span><img src="/images/pencil.png" alt="icon">Voucher + Bundles</span>
-                        <span><img src="/images/pencil.png" alt="icon">Campaigns</span>
+                        <h4 class="text-capitalize">Seller center features</h4>
+                        <span><img src="/images/online-shopping.png" alt="icon">Store Builder</span>
+                        <span><img src="/images/gift-card.png" alt="icon">Voucher + Bundles</span>
+                        <span><img src="/images/megaphone.png" alt="icon">Campaigns</span>
+                    </div>
+
+                    <div class="seller-center-footer d-flex">
+                        <div class="logo-wrap"><img src="/images/logo.png" alt="Andbaazar"></div>
+                        <div class="qr-code-wrap d-flex align-items-center">
+                            <div class="qr-img-wrap"><img src="/images/qr-code.png" alt="qr-code"></div>
+                            <div class="text-uppercase app-download-text">Scan the QR Code and download the APP now</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-             <div class="col-12 col-md-4">
+             <div class="col-12 col-md-12 col-lg-4 col-xl-4">
 
                  <div class="sell-register-from">
-                     <div class="sell-register-form-inner">
-                         @if(session('flash_notification'))
-                             <div class="flash-message">
-                                 @include('flash::message')
-                             </div>
-                         @endif
-                         <form action="{{route('sellOnAndbaazarPost')}}" id="reg-from-area" class="form" method="post">
+                     @if(session('flash_notification'))
+                         <div class="flash-message">
+                             @include('flash::message')
+                         </div>
+                     @endif
+                     <form action="{{route('sellOnAndbaazarPost')}}" id="reg-from-area" class="form" method="post">
 
-                             <h3>Register</h3>
+                         <h3>Register</h3>
 
-                             @csrf
-                             <div class="row">
-                                 <div class="col">
-                                     <input type="text" value="{{old('first_name')}}" class="form-control" name="first_name" placeholder="First name" required>
-                                     <span class="text-danger">{{ $errors->first('first_name') }}</span>
+                         @csrf
+{{--                             <div class="form-row">--}}
+{{--                                 <div class="col">--}}
+{{--                                     <input type="text" value="{{old('first_name')}}" class="form-control" name="first_name" placeholder="First name" required>--}}
+{{--                                     <span class="text-danger">{{ $errors->first('first_name') }}</span>--}}
+{{--                                 </div>--}}
+{{--                                 <div class="col">--}}
+{{--                                     <input type="text" value="{{old('last_name')}}" class="form-control" name="last_name" placeholder="Last name" required>--}}
+{{--                                     <span class="text-danger">{{ $errors->first('last_name') }}</span>--}}
+{{--                                 </div>--}}
+{{--                             </div>--}}
+                         <div class="form-group">
+                             <input type="text" value="{{old('first_name')}}" class="form-control" name="first_name" placeholder="First name" required>
+                             <span class="text-danger">{{ $errors->first('first_name') }}</span>
+                         </div>
+                         <div class="form-group">
+                             <input type="text" value="{{old('last_name')}}" class="form-control" name="last_name" placeholder="Last name" required>
+                             <span class="text-danger">{{ $errors->first('last_name') }}</span>
+                         </div>
+
+                         <div class="form-group">
+                             <div class="input-group">
+                                 <div class="input-group-prepend">
+                                     <span class="input-group-text">+88</span>
                                  </div>
-                                 <div class="col">
-                                     <input type="text" value="{{old('last_name')}}" class="form-control" name="last_name" placeholder="Last name" required>
-                                     <span class="text-danger">{{ $errors->first('last_name') }}</span>
-                                 </div>
+                                 <input type="text" name="phone" value="{{old('phone')}}" class="form-control" placeholder="01XX-XXXXXX" id="PhoneNumberInput" autocomplete="off" required>
                              </div>
-                             <div class="form-group mt-3">
-                                 <div class="input-group">
-                                     <div class="input-group-prepend">
-                                         <span class="input-group-text">+88</span>
-                                     </div>
-                                     <input type="text" name="phone" value="{{old('phone')}}" class="form-control" placeholder="01XX-XXXXXX" id="PhoneNumberInput" autocomplete="off" required>
-                                 </div>
-                                 <span class="text-danger">{{ $errors->first('phone') }}</span>
-                             </div>
-                             <div class="form-group">
-                                 <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="your email (optional)">
-                                 <span class="text-danger">{{ $errors->first('email') }}</span>
-                             </div>
-                             <div class="form-group">
-                                 <input type="password" name="password" class="form-control" placeholder="your password" required>
-                                 <span class="text-danger">{{ $errors->first('password') }}</span>
-                             </div>
-                             <div class="reg-form-button mb-2">
-                                 <button class="">Create account</button>
-                             </div>
-                             <a href="/login">Already have an account</a>
-                         </form>
-                     </div>
+                             <span class="text-danger">{{ $errors->first('phone') }}</span>
+                         </div>
+                         <div class="form-group">
+                             <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="Your email (optional)">
+                             <span class="text-danger">{{ $errors->first('email') }}</span>
+                         </div>
+                         <div class="form-group">
+                             <input type="password" name="password" class="form-control" placeholder="Your password" required>
+                             <span class="text-danger">{{ $errors->first('password') }}</span>
+                         </div>
+                         <div class="reg-form-button mb-2">
+                             <button class="w-100">Create Account</button>
+                         </div>
+                         <a href="/login">Already have an account</a>
+                     </form>
                  </div>
              </div>
 
