@@ -74,8 +74,6 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
     //    ==============================
 
     Route::get('/newsfeed','NewsfeedController@feedlist');
-    Route::get('/contact-us','ContactController@contactmailList');
-    Route::put('/contact-us/{id}','ContactController@replayMail');
 
     Route::resource('products/size','SizesController');
     Route::resource('products/tag','TagsController');

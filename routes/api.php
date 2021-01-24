@@ -25,8 +25,23 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
     Route::group(['middleware'=>['auth:api','isActive']],function (){
         //   For User Authentication
         Route::get('/profile','UserController@profile');
+        Route::post('/profile-update','UserController@userProfileUpdate');
         Route::post('/reset-password','UserController@resetPassword');
+        Route::post('/change-password','UserController@changePassword');
         Route::get('/logout','UserController@logout');
+
+        //Address
+        Route::get('address','Customer\CustomerAddressController@index');
+        Route::post('create-address','Customer\CustomerAddressController@createAddress');
+
+        //get Geo Address
+        Route::get('divisions','GeoController@getDivisions');
+        Route::get('districts','GeoController@getDistricts');
+        Route::get('upazilas','GeoController@getUpazilas');
+        Route::get('unions','GeoController@getUnions');
+        Route::get('villages','GeoController@getVillages');
+        Route::get('municipals','GeoController@getMunicipals');
+        Route::get('municipal-wards','GeoController@getMunicipalsWards');
     });
 
     Route::group(['middleware'=>['auth:api']],function (){

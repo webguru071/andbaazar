@@ -30,6 +30,7 @@ class KrishiProductResource extends JsonResource
             'price' => $this->price,
             'unit' => $this->productUnit->symbol,
             'allow_wholesale' => $this->allow_wholesale,
+            'allow_flash_sale' => $this->allow_flash_sale,
             'wholesale_price' => $this->wholesale_price,
             'min_wholesale_quantity' => $this->min_wholesale_quantity,
             'return_policy' => $this->return_policy,
@@ -38,6 +39,7 @@ class KrishiProductResource extends JsonResource
             'category' => new KrishiProductCategoryResource($this->category),
             'images' => new KrishiProductImageCollection($this->itemimage),
             'flash_sale_discount_price' => (float)$this->flash_sale_discount_rate,
+            'max_flash_sale_quantity' => 3,
         ];
     }
 }

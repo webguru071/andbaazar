@@ -28,6 +28,8 @@ class UserResource extends JsonResource
                 'picture'       => (!is_null($this->customerDetails['picture'])) ? asset($this->customerDetails['picture']) : asset('images/avatar-user.png'),
                 'description'   => $this->customerDetails['description'],
                 'joining_date'  => $this->created_at->format('Y-m-d'),
+                'phone_verified'=> ($this->phone_otp == '') ? true : false,
+                'email_verified'=> ($this->email_verification_code == '') ? true : false,
             ]
         ];
     }
