@@ -35,23 +35,6 @@
       @stack('css')
    </head>
    <body>
-{{--      <header id="header-area">--}}
-{{--         <div class="container">--}}
-{{--            <div class="row     align-items-center">--}}
-{{--               <div class="col-lg-6">--}}
-{{--                  <div class="sell-logo">--}}
-{{--                     <img src="/images/logo.png" alt="img">--}}
-{{--                  </div>--}}
-{{--               </div>--}}
-{{--               <div class="col-lg-6">--}}
-{{--                  <div class="sell-link-top">--}}
-{{--                     <i class="fa fa-phone" aria-hidden="true"></i>--}}
-{{--                     <a href="tel:+৮৮-০৯৬৩৮০০০৭৭৭">+৮৮-০৯৬৩৮০০০৭৭৭</a>--}}
-{{--                  </div>--}}
-{{--               </div>--}}
-{{--            </div>--}}
-{{--         </div>--}}
-{{--      </header>--}}
 
       <!-- Banner Area Start -->
       <section id="sell_on_andbaazar_banner">
@@ -59,10 +42,10 @@
          <div class="row justify-content-center merchent-row">
             <div class="col-12 col-md-12 col-lg-8 col-xl-7">
                 <div class="seller-center-wrap">
-                    <h2 class="text-uppercase">Welcome to seller center</h2>
+                    <h2 class="text-uppercase">Welcome to merchant center</h2>
 
                     <div class="selling-steps-wrap">
-                        <h4 class="text-capitalize">5 Simple Steps to Sell on Andbaazar</h4>
+                        <h4 class="text-capitalize">5 Simple steps to sell on Andbaazar</h4>
                         <div class="selling-steps d-flex">
                             <div class="step-box">
                                 <img src="/images/login.png" alt="login">
@@ -129,16 +112,7 @@
                          <h3>Register</h3>
 
                          @csrf
-{{--                             <div class="form-row">--}}
-{{--                                 <div class="col">--}}
-{{--                                     <input type="text" value="{{old('first_name')}}" class="form-control" name="first_name" placeholder="First name" required>--}}
-{{--                                     <span class="text-danger">{{ $errors->first('first_name') }}</span>--}}
-{{--                                 </div>--}}
-{{--                                 <div class="col">--}}
-{{--                                     <input type="text" value="{{old('last_name')}}" class="form-control" name="last_name" placeholder="Last name" required>--}}
-{{--                                     <span class="text-danger">{{ $errors->first('last_name') }}</span>--}}
-{{--                                 </div>--}}
-{{--                             </div>--}}
+
                          <div class="form-group">
                              <input type="text" value="{{old('first_name')}}" class="form-control" name="first_name" placeholder="First name" required>
                              <span class="text-danger">{{ $errors->first('first_name') }}</span>
@@ -177,73 +151,6 @@
       </div>
       </section>
       <!-- Banner Area End -->
-
-
-{{--    Test Test--}}
-
-{{--<div class="col-lg-12 text-center">--}}
-{{--    <div class="time-line-area">--}}
-{{--        <ul>--}}
-{{--            <li>--}}
-{{--                <div class="time-line-items">--}}
-{{--                    <div class="arrows">--}}
-{{--                        <i class="fa fa-angle-right " aria-hidden="true"></i>--}}
-{{--                    </div>--}}
-{{--                    <div class="inners-text">--}}
-{{--                        <i class="fa fa-edit" aria-hidden="true"></i>--}}
-{{--                        <p>রেজিস্ট্রেশন করুন</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </li>--}}
-{{--            <li>--}}
-{{--                <div class="time-line-items">--}}
-{{--                    <div class="arrows">--}}
-{{--                        <i class="fa fa-angle-right " aria-hidden="true"></i>--}}
-{{--                    </div>--}}
-{{--                    <div class="inners-text">--}}
-{{--                        <i class="fa fa-th-list" aria-hidden="true"></i>--}}
-{{--                        <p>পণ্য লিস্টিং করুন</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </li>--}}
-{{--            <li>--}}
-{{--                <div class="time-line-items">--}}
-{{--                    <div class="arrows">--}}
-{{--                        <i class="fa fa-angle-right " aria-hidden="true"></i>--}}
-{{--                    </div>--}}
-{{--                    <div class="inners-text">--}}
-{{--                        <i class="fa fa-address-book-o" aria-hidden="true"></i>--}}
-{{--                        <p>অর্ডার গ্রহন করুন</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </li>--}}
-{{--            <li>--}}
-{{--                <div class="time-line-items">--}}
-{{--                    <div class="arrows">--}}
-{{--                        <i class="fa fa-angle-right " aria-hidden="true"></i>--}}
-{{--                    </div>--}}
-{{--                    <div class="inners-text">--}}
-{{--                        <i class="fa fa-address-book-o" aria-hidden="true"></i>--}}
-{{--                        <p>পণ্য ডেলিভারী করুন</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </li>--}}
-{{--            <li>--}}
-{{--                <div class="time-line-items">--}}
-{{--                    <div class="arrows">--}}
-{{--                        <i class="fa fa-angle-right " aria-hidden="true"></i>--}}
-{{--                    </div>--}}
-{{--                    <div class="inners-text">--}}
-{{--                        <i class="fa fa-address-book-o" aria-hidden="true"></i>--}}
-{{--                        <p>মূল্য গ্রহন করুন</p>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </li>--}}
-{{--        </ul>--}}
-{{--    </div>--}}
-{{--</div>--}}
-
-{{--    Test Test--}}
 
       <!-- latest jquery-->
       <script src="{{asset('frontend')}}/assets/js/jquery-3.3.1.min.js"></script>
