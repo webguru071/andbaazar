@@ -31,7 +31,7 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
         Route::get('/logout','UserController@logout');
 
         //Address
-        Route::get('address','Customer\CustomerAddressController@index');
+        Route::get('address-book','Customer\CustomerAddressController@index');
         Route::post('create-address','Customer\CustomerAddressController@createAddress');
 
         //get Geo Address
