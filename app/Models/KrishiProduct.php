@@ -7,10 +7,13 @@ use App\User;
 use App\Models\Category;
 use App\Models\Shop;
 use App\Models\KrishiReviews;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class KrishiProduct extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'id',
         'name',
@@ -62,7 +65,7 @@ class KrishiProduct extends Model
         return $this->belongsTo(Shop::class,'shop_id');
     }
     public function itemimage(){
-        return $this->hasMany(KrishiProductItemImage::class,'product_id');
+        return $this->hasMany(KrishiProductItemImage::class,'product_id','id');
     }
     public function reviews(){
         return $this->hasMany(KrishiReviews::class,'krishi_product_id');

@@ -100,8 +100,15 @@ Route::middleware(['auth','admin'])->prefix('andbaazaradmin')->group(function ()
     //    Krishi Product  Start //
 
     Route::resource('krishi/products/category','Admin\KrishiProductCategoryController');
-    Route::get('krishi/products','KrishiProductController@krishiProductList');
-
+    Route::get('krishi/products/active','Admin\KrishiProductController@activeProducts');
+    Route::get('krishi/products/upcoming','Admin\KrishiProductController@upcomingProducts');
+    Route::get('krishi/products/pending','Admin\KrishiProductController@pendingProducts');
+    Route::get('krishi/products/rejected','Admin\KrishiProductController@rejectedProducts');
+    Route::get('krishi/products/{productSlug}','Admin\KrishiProductController@show');
+    Route::get('krishi/approve-product/{productId}','Admin\KrishiProductController@approveProduct');
+    Route::get('krishi/reject-product/{productId}','Admin\KrishiProductController@rejectProduct');
+    Route::delete('krishi/product/{productId}','Admin\KrishiProductController@destroy');
+    Route::get('krishi/products','Admin\KrishiProductController@activeProducts');
 
 
     // Attribute import Start//
