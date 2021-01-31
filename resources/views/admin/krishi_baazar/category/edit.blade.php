@@ -137,7 +137,7 @@
                                                 <div class="text-center">
                                                     <div class="fileinput fileinput-new" data-provides="fileinput">
                                                         <div class="fileinput-new thumbnail img-responsive" >
-                                                            <img src="{{ $krishi_category->thumbnail_image }}" width="100%" alt="Thumbnail Image">
+                                                            <img src="{{ Storage::url($krishi_category->thumbnail_image) }}" width="100%" alt="Thumbnail Images">
                                                         </div>
                                                         <div class="fileinput-preview fileinput-exists thumbnail"></div>
                                                         <div class="mt-1">

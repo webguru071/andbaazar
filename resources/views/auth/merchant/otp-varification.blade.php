@@ -46,6 +46,7 @@
 </div>
 
 @endsection
+@push('css')
 <style>
     .disabled{
         pointer-events: none;
@@ -75,6 +76,7 @@
     color: white;
     }
 </style>
+@endpush
 @push('js')
     <script>
         $('.digit-group').find('input').each(function() {

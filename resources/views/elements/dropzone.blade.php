@@ -182,6 +182,8 @@
     
     guidline to implement
     -------------------------------------------------------------------------------------------------on html
+    @include('elements.dropzone',['oldImages' => $itemImages]) //edit
+    @include('elements.dropzone') //on insert
     <div class="form-group">
         <div id="dropzone-main" class="img-upload-area" data-color="main"><label>Product Images<span class="text-danger" id="message_main_img"></span></label>
             <div class="border m-0 collpanel drop-area row my-awesome-dropzone-main" id="sortable-main">
@@ -203,23 +205,19 @@
            KrishiProductItemImage::create($image);
         }
     --------------------------------------------------------------------------------------------------on helper
-    public function base64Uploadkrishi($image_file,$name){
+    public function base64Uploadkrishi($image_file,$name=null){
         $t = substr($image_file,0,11);
         if($t == 'data:image/'){
-            list($type, $image_file) = explode(';', $image_file);
-            list(, $image_file)      = explode(',', $image_file);
-            if($this->is_base64($image_file)){
-                $image_file = base64_decode($image_file);
-                $image_name= $name.rand().'.png';
-                $db_img = 'uploads/krishi/'.$name.'-'.date('ymdhmi').'-'.$image_name;
-                $path = public_path($db_img);
-                file_put_contents($path, $image_file);
-                return $db_img;
-            }
+            $poster = explode(";base64", $image_file);
+            $image_type = explode("image/", $poster[0]);
+            $mime_type = '.'.$image_type[1];
+            $path = 'images/krishiproducts/'.$name.time().rand().$mime_type;
+            $image = Image::make($image_file)->fit(560, 560)->encode();
+            Storage::put($path, $image);
+            return $path;
         }else{
-            // dd($image_file);
-            $path = explode('/uploads/',$image_file);
-            return 'uploads/'.$path[1];
+            $path = explode('/storage/',$image_file);
+            return $path[1];
         }
     }
     

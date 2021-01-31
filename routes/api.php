@@ -32,7 +32,9 @@ Route::group(['prefix'=>'v-1','namespace'=>'Api'],function (){
 
         //Address
         Route::get('address-book','Customer\CustomerAddressController@index');
+        Route::delete('delete-address/{id}','Customer\CustomerAddressController@delete');
         Route::post('create-address','Customer\CustomerAddressController@createAddress');
+        Route::put('update-address/{id}','Customer\CustomerAddressController@updateAddress');
 
         //get Geo Address
         Route::get('divisions','GeoController@getDivisions');
