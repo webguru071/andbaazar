@@ -116,6 +116,7 @@ class KrishiBazarSliderController extends Controller
         flash('Slider updated successfully');
         return redirect()->action('Admin\KrishiBazarSliderController@index');
 
+
     }
 
     /**

@@ -2,16 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f74d9db3-abb2-4742-84cc-dfada0ff8906" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/frontend/assets/images/pro3/1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/frontend/assets/images/pro3/2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/frontend/assets/images/pro3/27.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/frontend/assets/images/pro3/28.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/frontend/assets/images/pro3/33.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/frontend/assets/images/pro3/34.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/frontend/assets/images/pro3/35.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/frontend/assets/images/pro3/36.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/frontend/assets/images/size-chart.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/krishi_baazar/product/active.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/krishi_baazar/product/pending.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/krishi_baazar/product/rejected.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/krishi_baazar/product/show.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/krishi_baazar/product/upcoming.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/merchant/sell-on-andbaazar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/merchant/sell-on-andbaazar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/KrishiBazarSliderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/KrishiBazarSliderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/KrishiProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/KrishiProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/KrishiProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/KrishiProduct.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layout/left-sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layout/left-sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/elements/myjs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/elements/myjs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" doNotAsk="true">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -179,7 +197,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/merchant" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/krishi_baazar/product" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -191,11 +209,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin\krishi_baazar\product" />
+      <recent name="E:\xampp\htdocs\andbaazar\public\frontend\assets\images" />
       <recent name="G:\Suraiya Aysha\Xampp\htdocs\andbaazar\resources\views\merchant" />
       <recent name="E:\xampp\htdocs\andbaazar\public\frontend\assets\images\pro" />
       <recent name="E:\xampp\htdocs\andbaazar\public\images" />
-      <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin\customer" />
-      <recent name="E:\xampp\htdocs\andbaazar\resources\views\admin\cms\slider_image" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\xampp\htdocs\andbaazar\resources\views\user" />
@@ -267,6 +285,10 @@
       <workItem from="1611229125945" duration="6524000" />
       <workItem from="1611462075701" duration="10058000" />
       <workItem from="1611478675371" duration="2302000" />
+      <workItem from="1611571872245" duration="43000" />
+      <workItem from="1611571918252" duration="1737000" />
+      <workItem from="1611659244518" duration="4238000" />
+      <workItem from="1611721571123" duration="19814000" />
     </task>
     <servers />
   </component>
